@@ -7,13 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
 
-blue = Blueprint('', __name__)  # cal_u is name of blueprint
-
-
-@blue.route('/')
-@blue.route('/main')
-def main():
-    return render_template('')
+government = Blueprint('government', __name__)  # government is name of blueprint
 
 
 

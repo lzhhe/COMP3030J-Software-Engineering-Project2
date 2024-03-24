@@ -4,11 +4,16 @@ import mimetypes
 from flask import Flask
 
 from .extents import init_exts
+from .views_department import department
+from .views_government import government
+from .views_individual import individual
+from .views_waste import waste
 
 HOSTNAME = "127.0.0.1"
 PORT = 3306
 USERNAME = "root"
-PASSWORD = "131a2abLZH"
+# PASSWORD = "131a2abLZH"
+PASSWORD = "123456"
 FLASK_DB = "waste_management"
 
 
@@ -16,9 +21,10 @@ def create_app():
     app = Flask(__name__, static_folder='static')
 
     # 注册蓝图
-    # app.register_blueprint(blueprint=blue)
-    # app.register_blueprint(blueprint=admin)
-    # app.register_blueprint(blueprint=teacher)
+    app.register_blueprint(blueprint=department)
+    app.register_blueprint(blueprint=government)
+    app.register_blueprint(blueprint=individual)
+    app.register_blueprint(blueprint=waste)
 
     app.config['SECRET_KEY'] = 'COMP3019J'
 

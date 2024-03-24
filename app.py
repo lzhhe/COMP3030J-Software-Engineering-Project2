@@ -11,9 +11,9 @@ app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 babel = Babel(app)
 
 
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(['zh', 'en'])
+# @babel.localeselector
+# def get_locale():
+#     return request.accept_languages.best_match(['zh', 'en'])
 
 
 # 这一块是为了实现用户登录后，自动获取用户信息，并将其存储在全局变量g中，供模板文件使用
@@ -28,33 +28,33 @@ def get_locale():
 #         setattr(g, 'user', None)
 
 # 全局user变量
-@app.context_processor
-def my_context():
-    return {'user': g.user}
-
-
-# 根据不同的用户状态，返回不同的上级页面
-@app.route('/back')
-def back():
-    # 检查用户是否登录
-    if g.user:
-        if g.user.status == 0:
-            return redirect(url_for('cal_a.adminView'))
-        if g.user.status == 1:
-            # 从会话中获取上一个子页面的标识
-            last_page = session.get('last_page', 'yearView')
-
-            # 根据上一个子页面的标识来决定重定向到哪个页面
-            if last_page == 'weekView':
-                return redirect(url_for('cal_u.weekView'))
-            elif last_page == 'monthView':
-                return redirect(url_for('cal_u.monthView'))
-            elif last_page == 'yearView':
-                return redirect(url_for('cal_u.yearView'))
-        if g.user.status == 2:
-            return redirect(url_for('cal_t.teacherView'))
-    else:
-        return redirect(url_for('cal_u.main'))
+# @app.context_processor
+# def my_context():
+#     return {'user': g.user}
+#
+#
+# # 根据不同的用户状态，返回不同的上级页面
+# @app.route('/back')
+# def back():
+#     # 检查用户是否登录
+#     if g.user:
+#         if g.user.status == 0:
+#             return redirect(url_for('cal_a.adminView'))
+#         if g.user.status == 1:
+#             # 从会话中获取上一个子页面的标识
+#             last_page = session.get('last_page', 'yearView')
+#
+#             # 根据上一个子页面的标识来决定重定向到哪个页面
+#             if last_page == 'weekView':
+#                 return redirect(url_for('cal_u.weekView'))
+#             elif last_page == 'monthView':
+#                 return redirect(url_for('cal_u.monthView'))
+#             elif last_page == 'yearView':
+#                 return redirect(url_for('cal_u.yearView'))
+#         if g.user.status == 2:
+#             return redirect(url_for('cal_t.teacherView'))
+#     else:
+#         return redirect(url_for('cal_u.main'))
 
 
 if __name__ == '__main__':
