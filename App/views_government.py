@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
 
-government = Blueprint('government', __name__)  # government is name of blueprint
+government = Blueprint('government', __name__, url_prefix='/government')  # government is name of blueprint
 
 
 

@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
 
-waste = Blueprint('waste', __name__)  # waste is name of blueprint
+waste = Blueprint('waste', __name__, template_folder='templates')  # waste is name of blueprint
 
 
 

@@ -7,9 +7,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
 
-individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
+login = Blueprint('login', __name__)  # department is name of blueprint
 
 
+@login.route('/')
+@login.route('/index')
+def main():
+    return render_template('index.html')
 
 
 

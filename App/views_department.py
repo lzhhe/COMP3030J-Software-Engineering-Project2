@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
 
-department = Blueprint('department', __name__)  # department is name of blueprint
+department = Blueprint('department', __name__, url_prefix='/department')  # department is name of blueprint
 
 
 @department.route('/')
