@@ -6,7 +6,7 @@ from enum import Enum, auto
 
 
 @unique
-class DepartmentKind(Enum):
+class DepartmentType(Enum):
     METALLURGY = auto()  # 冶金
     EQUIPMENT_MANUFACTURING = auto()  # 高端机械设备制造
     COMPOSITE_MATERIAL = auto()  # 复合材料制造
@@ -19,28 +19,60 @@ class DepartmentKind(Enum):
 
 
 @unique
-class WasteKind(Enum):
-    METALLURGY = ["heavy metal wastewater", "exhaust gas", "mineral residue"]  # 冶金：重金属废水，废气，矿物残渣
-    EQUIPMENT_MANUFACTURING = ["cutting fluid", "metal chips", "plastic", "composite material cutting waste",
-                               "paint solvents", "waste paint"]  # 高端机械设备制造：切削液和金属屑，塑料和复合材料切割废料，油漆溶剂和废漆
-    COMPOSITE_MATERIAL = ["dust", "required chemicals"]  # 复合材料制造：粉尘和所需化学品
-    NEW_ENERGY = ["chemical propellants", "fuel residues"]  # 新能源：化学推进剂和燃料残留物
-    AUTOMATION_SYSTEM = ["discarded electronic components"]  # 自动化系统：废弃电子元器件
-    MAINTENANCE = ["hydraulic oil", "lubricant waste"]  # 设备维护：液压油和润滑油废料
-    LABORATORY = ["Hazardous chemicals", "waste experimental equipment"]  # 实验室：有害化学品和废弃实验器材
-    DATA_CENTER = [" Waste paper", "household waste"]  # 行政：废纸和生活垃圾
-    OFFICE = ["waste heat"]  # 数据中心：废热
+class WasteType(Enum):
+    # 冶金类废物
+    METALLURGY_HEAVY_METAL_WASTEWATER = auto()  # 重金属废水
+    METALLURGY_EXHAUST_GAS = auto()  # 废气
+    METALLURGY_MINERAL_RESIDUE = auto()  # 矿物残渣
+
+    # 高端机械设备制造类废物
+    EQUIPMENT_MANUFACTURING_CUTTING_FLUID = auto()  # 切削液
+    EQUIPMENT_MANUFACTURING_METAL_CHIPS = auto()  # 金属屑
+    EQUIPMENT_MANUFACTURING_PLASTIC = auto()  # 塑料
+    EQUIPMENT_MANUFACTURING_COMPOSITE_MATERIAL_CUTTING_WASTE = auto()  # 复合材料切割废料
+    EQUIPMENT_MANUFACTURING_WASTE_PAINT = auto()  # 废漆
+
+    # 复合材料制造类废物
+    COMPOSITE_MATERIAL_DUST = auto()  # 粉尘
+    COMPOSITE_MATERIAL_CHEMICALS = auto()  # 化学品
+    COMPOSITE_MATERIAL_CATALYZER = auto()  # 催化剂
+
+    # 新能源类废物
+    NEW_ENERGY_CHEMICAL_PROPELLANTS = auto()  # 化学推进剂
+    NEW_ENERGY_FUEL_RESIDUES = auto()  # 燃料残渣
+
+    # 自动化系统类废物
+    AUTOMATION_SYSTEM_DISCARDED_ELECTRONIC_COMPONENTS = auto()  # 废弃电子元器件
+
+    # 设备维护类废物
+    MAINTENANCE_HYDRAULIC_OIL = auto()  # 液压油
+    MAINTENANCE_LUBRICANT_WASTE = auto()  # 润滑油废料
+
+    # 实验室类废物
+    LABORATORY_HAZARDOUS_CHEMICALS = auto()  # 有害化学品
+    LABORATORY_WASTE_EXPERIMENTAL_EQUIPMENT = auto()  # 废弃实验器材
+
+    # 行政类废物
+    DATA_CENTER_WASTE_PAPER = auto()  # 废纸
+    DATA_CENTER_HOUSEHOLD_WASTE = auto()  # 生活垃圾
+
+    # 数据中心类废物
+    OFFICE_WASTE_HEAT = auto()  # 废热
+
+
+@unique
+class WasteSource(Enum):
+    INTERNAL = auto()  # 内部
+    EXTERNAL = auto()  # 外部
+    EXTERNALFREE = auto()  # 外部免费
 
 
 @unique
 class OrderStatus(Enum):
-    UNREGISTERED = auto()  # 未登记
     UNCONFIRMED = auto()  # 未确认
     CONFIRM = auto()  # 确认
-    UNTRANSPORTED = auto()  # 未运输
-    TRANSPORTATION = auto()  # 运输途中
     UNPROCESSED = auto()  # 未处理
-    PROCESSED = auto()  # 已处理
+    PROCESSING = auto()  # 处理中
     DISCHARGED = auto()  # 已排放
 
 
@@ -66,13 +98,55 @@ class Department(db.Model):
     __tablename__ = 'department'
     DID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # id唯一
     departmentName = db.Column(db.String(200), nullable=False)
-    departmentKind = db.Column(SQLEnum(DepartmentKind), nullable=False)
+    departmentType = db.Column(SQLEnum(DepartmentType), nullable=False)
     departmentAddress = db.Column(db.String(500), nullable=False)
     managerId = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)  # 添加部门经理外键字段
     manager = db.relationship('User', backref='managed_departments', lazy=True)  # 设置relationship (如果需要的话)
 
 
-class Order(db.Model):  # 提交需要处理的表单
+class Waste(db.Model):  # 对应部门
+    __tablename__ = 'waste'
+    WID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # id唯一
+    wasteType = Column(SQLEnum(WasteType), nullable=False)
+    wasteDepartment = db.Column(SQLEnum(DepartmentType), nullable=True)
+    wasteSource = Column(SQLEnum(WasteSource), nullable=False, default=WasteSource.INTERNAL)
+
+
+class WasteStorage(db.Model):  # 储存能力
+    __tablename__ = 'wasteStorage'
+    WSID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
+    maxCapacity = db.Column(db.Integer, nullable=False)  # 最大存储量
+    currentCapacity = db.Column(db.Integer, default=0, nullable=False)  # 当前存储量，默认为0
+
+    def __repr__(self):
+        return f'<WasteStorage {self.wasteType} max:{self.maxCapacity} current:{self.currentCapacity}>'
+
+
+class ProcessCapacity(db.Model):  # 处理能力
+    __tablename__ = 'processCapacity'
+    PCID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
+    maxCapacity = db.Column(db.Integer, nullable=False)  # 最大同时处理量
+    currentCapacity = db.Column(db.Integer, default=0, nullable=False)  # 当前处理量，默认为0
+
+    def __repr__(self):
+        return f'<ProcessCapacity {self.wasteType} max:{self.maxCapacity} current:{self.currentCapacity}>'
+
+
+class Order(db.Model):  # 工单
     __tablename__ = 'order'
-    OID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # id唯一
-    orderName = db.Column(db.String(100), nullable=False)
+    OID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 工单唯一ID
+    DID = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=False)  # 部门ID外键
+    date = db.Column(db.Date, default=datetime.utcnow, nullable=False)  # 工单日期，默认为当前日期
+    orderName = db.Column(db.String(100), nullable=False)  # 工单名称
+    weight = db.Column(db.Integer, nullable=False)  # 废弃物重量
+    attribution = db.Column(db.Text, nullable=False)  # 属性
+    multiplier = db.Column(db.Integer, nullable=False, default=1)
+    comment = db.Column(db.Text, nullable=True)  # 备注
+    orderStatus = Column(SQLEnum(OrderStatus), nullable=False)  # 处理状态
+    # 设置与Department表的关系
+    department = db.relationship('Department', backref=db.backref('orders', lazy=True))
+
+    def __repr__(self):
+        return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'
