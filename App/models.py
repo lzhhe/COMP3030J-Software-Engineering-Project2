@@ -1,4 +1,5 @@
 from datetime import datetime, date
+
 from .extents import db
 from enum import Enum, unique
 from sqlalchemy import Column, Integer, Enum as SQLEnum
@@ -21,43 +22,43 @@ class DepartmentType(Enum):
 @unique
 class WasteType(Enum):
     # 冶金类废物
-    METALLURGY_HEAVY_METAL_WASTEWATER = auto()  # 重金属废水
-    METALLURGY_EXHAUST_GAS = auto()  # 废气
-    METALLURGY_MINERAL_RESIDUE = auto()  # 矿物残渣
+    HEAVY_METAL_WASTEWATER = auto()  # 重金属废水
+    EXHAUST_GAS = auto()  # 废气
+    MINERAL_RESIDUE = auto()  # 矿物残渣
 
     # 高端机械设备制造类废物
-    EQUIPMENT_MANUFACTURING_CUTTING_FLUID = auto()  # 切削液
-    EQUIPMENT_MANUFACTURING_METAL_CHIPS = auto()  # 金属屑
-    EQUIPMENT_MANUFACTURING_PLASTIC = auto()  # 塑料
-    EQUIPMENT_MANUFACTURING_COMPOSITE_MATERIAL_CUTTING_WASTE = auto()  # 复合材料切割废料
-    EQUIPMENT_MANUFACTURING_WASTE_PAINT = auto()  # 废漆
+    CUTTING_FLUID = auto()  # 切削液
+    METAL_CHIPS = auto()  # 金属屑
+    PLASTIC = auto()  # 塑料
+    COMPOSITE_MATERIAL_CUTTING_WASTE = auto()  # 复合材料切割废料
+    WASTE_PAINT = auto()  # 废漆
 
     # 复合材料制造类废物
-    COMPOSITE_MATERIAL_DUST = auto()  # 粉尘
-    COMPOSITE_MATERIAL_CHEMICALS = auto()  # 化学品
-    COMPOSITE_MATERIAL_CATALYZER = auto()  # 催化剂
+    DUST = auto()  # 粉尘
+    CHEMICALS = auto()  # 化学品
+    CATALYZER = auto()  # 催化剂
 
     # 新能源类废物
-    NEW_ENERGY_CHEMICAL_PROPELLANTS = auto()  # 化学推进剂
-    NEW_ENERGY_FUEL_RESIDUES = auto()  # 燃料残渣
+    CHEMICAL_PROPELLANTS = auto()  # 化学推进剂
+    FUEL_RESIDUES = auto()  # 燃料残渣
 
     # 自动化系统类废物
-    AUTOMATION_SYSTEM_DISCARDED_ELECTRONIC_COMPONENTS = auto()  # 废弃电子元器件
+    DISCARDED_ELECTRONIC_COMPONENTS = auto()  # 废弃电子元器件
 
     # 设备维护类废物
-    MAINTENANCE_HYDRAULIC_OIL = auto()  # 液压油
-    MAINTENANCE_LUBRICANT_WASTE = auto()  # 润滑油废料
+    HYDRAULIC_OIL = auto()  # 液压油
+    LUBRICANT_WASTE = auto()  # 润滑油废料
 
     # 实验室类废物
-    LABORATORY_HAZARDOUS_CHEMICALS = auto()  # 有害化学品
-    LABORATORY_WASTE_EXPERIMENTAL_EQUIPMENT = auto()  # 废弃实验器材
+    HAZARDOUS_CHEMICALS = auto()  # 有害化学品
+    WASTE_EXPERIMENTAL_EQUIPMENT = auto()  # 废弃实验器材
 
     # 行政类废物
-    DATA_CENTER_WASTE_PAPER = auto()  # 废纸
-    DATA_CENTER_HOUSEHOLD_WASTE = auto()  # 生活垃圾
+    WASTE_PAPER = auto()  # 废纸
+    HOUSEHOLD_WASTE = auto()  # 生活垃圾
 
     # 数据中心类废物
-    OFFICE_WASTE_HEAT = auto()  # 废热
+    WASTE_HEAT = auto()  # 废热
 
 
 @unique
@@ -86,12 +87,13 @@ class UserStatus(Enum):
 
 class User(db.Model):
     __tablename__ = 'user'
-    UID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # id唯一
-    username = db.Column(db.String(30), unique=True, nullable=False)  # 用户名
-    password = db.Column(db.String(256), nullable=False)  # 密码
-    email = db.Column(db.String(100), nullable=False)  # 邮箱
+    UID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(256), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
     status = Column(SQLEnum(UserStatus), nullable=False)
-    department = db.Column(db.String(100), nullable=True)
+    departmentID = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=True)
+    department = db.relationship('Department', back_populates='users')
 
 
 class Department(db.Model):
@@ -100,11 +102,11 @@ class Department(db.Model):
     departmentName = db.Column(db.String(200), nullable=False)
     departmentType = db.Column(SQLEnum(DepartmentType), nullable=False)
     departmentAddress = db.Column(db.String(500), nullable=False)
-    managerId = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)  # 添加部门经理外键字段
-    manager = db.relationship('User', backref='managed_departments', lazy=True)  # 设置relationship (如果需要的话)
+    managerId = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)
+    manager = db.relationship('User', backref='managed_department', lazy=True)
 
 
-class Waste(db.Model):  # 对应部门
+class Waste(db.Model):  # 产生的废物映射部门种类
     __tablename__ = 'waste'
     WID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # id唯一
     wasteType = Column(SQLEnum(WasteType), nullable=False)
@@ -146,7 +148,7 @@ class Order(db.Model):  # 工单
     comment = db.Column(db.Text, nullable=True)  # 备注
     orderStatus = Column(SQLEnum(OrderStatus), nullable=False)  # 处理状态
     # 设置与Department表的关系
-    department = db.relationship('Department', backref=db.backref('orders', lazy=True))
+    departmentID = db.relationship('Department', backref=db.backref('orders', lazy=True))
 
     def __repr__(self):
         return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'
