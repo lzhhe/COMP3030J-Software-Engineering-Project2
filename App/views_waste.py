@@ -12,4 +12,22 @@ waste = Blueprint('waste', __name__, template_folder='templates')  # waste is na
 
 
 
+@waste.route('/confirm', methods=['POST'])
+def confirm():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+    data = request.get_json()
+    OID = data.get('OID')
+    if OID is None:
+        return jsonify({"error": "Missing OID in request"}), 400
+    order = Order.query.filter_by(OID=OID).first()
+    if order:
+        # 更新工单状态为CONFIRM
+        order.orderStatus = OrderStatus.CONFIRM
+        db.session.commit()
+        return jsonify({"message": "Order confirmed successfully"}), 200
+    else:
+        return jsonify({"error": "Order not found"}), 404
+
+
 
