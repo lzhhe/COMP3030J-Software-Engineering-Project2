@@ -401,12 +401,5 @@ span.remind {
     color: var(--login-button);
 }
 
-#toggleTheme {
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-    padding: 10px;
-    cursor: pointer;
-}
 
 

@@ -8,9 +8,33 @@
           rel="stylesheet">
     <link rel="stylesheet" href="../static/css/login_style.css"/>
     <link rel="stylesheet" href="../static/css/colors.css"/>
+    <link rel="stylesheet" href="../static/css/switch.css"/>
     {#    <link rel="stylesheet" href="../static/css/pico.conditional.min.css">#}
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <script src="../static/js/jquery-3.7.1.min.js"></script>
+    <script>
+        (function () {
+            // 立即应用主题和语言设置
+            const savedTheme = localStorage.getItem('theme') || 'light'; // 默认为 'light'
+            const savedLanguage = localStorage.getItem('language') || 'en'; // 默认为 'en'
+
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.documentElement.setAttribute('lang', savedLanguage);
+
+            // 为了避免视觉上的变化，还可以预先设置切换按钮的状态
+            document.addEventListener('DOMContentLoaded', function () {
+                const themeSwitch = document.querySelector('#themeSwitch input');
+                const languageSwitch = document.querySelector('#languageSwitch input');
+
+                if (themeSwitch) {
+                    themeSwitch.checked = (savedTheme === 'dark');
+                }
+                if (languageSwitch) {
+                    languageSwitch.checked = (savedLanguage === 'zh');
+                }
+            });
+        })();
+    </script>
 
     <title>Login Page</title>
 </head>
@@ -141,7 +165,16 @@
         </div>
     </form>
 </div>
-<button id="toggleTheme">明暗模式切换</button>
+
+<label id="languageSwitch">
+    <input type="checkbox">
+    <span class="slider"></span>
+</label>
+<label id="themeSwitch">
+    <input type="checkbox">
+    <span class="slider"></span>
+</label>
+
 <script>
     const container = document.getElementById("login_container"),
         registerBtn = document.getElementById("register"),
@@ -298,14 +331,35 @@
         }
     }
     $(document).ready(function () {
-        $('#toggleTheme').click(function () {
-            if ($('html').attr('data-theme') === 'dark') {
-                $('html').attr('data-theme', 'light');
+        // 一开始就检查存储的主题和语言设置
+        const theme = $('#themeSwitch input');
+        const language = $('#languageSwitch input');
+        // 监听主题切换的点击事件
+        theme.change(function () {
+            const html = $('html');
+            if (html.attr('data-theme') === 'dark') {
+                html.attr('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
             } else {
-                $('html').attr('data-theme', 'dark');
+                html.attr('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // 监听语言切换的点击事件
+        language.change(function () {
+            const html = $('html');
+            if (html.attr('lang') === 'en') {
+                html.attr('lang', 'zh');
+                localStorage.setItem('language', 'zh');
+            } else {
+                html.attr('lang', 'en');
+                localStorage.setItem('language', 'en');
+                // 类似地，处理语言切换回英文的逻辑
             }
         });
     });
+
 
 </script>
 </body>

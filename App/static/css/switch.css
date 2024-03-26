@@ -1,0 +1,92 @@
+#languageSwitch {
+    position: fixed; /* 使用 fixed 而不是 absolute 以固定位置于视口 */
+    left: 20px; /* 距离屏幕左边的距离 */
+    bottom: 3.5em; /* 距离屏幕底部的距离 */
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+}
+
+#themeSwitch {
+    position: fixed; /* 使用 fixed 而不是 absolute 以固定位置于视口 */
+    left: 20px; /* 距离屏幕左边的距离 */
+    bottom: 20px; /* 距离屏幕底部的距离 */
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+}
+
+/* Hide default HTML checkbox */
+#themeSwitch input, #languageSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+#languageSwitch .slider {
+    --background: linear-gradient(to right, rgba(21, 10, 31, 0.71), #2c2638);
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background);
+    transition: background-color 0.5s;
+    border-radius: 30px;
+}
+
+/* The slider */
+#themeSwitch .slider {
+    --background: linear-gradient(to right, #090613ef, #18151f);
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background);
+    transition: background-color 0.5s;
+    border-radius: 30px;
+}
+
+
+#languageSwitch .slider:before {
+    position: absolute;
+    content: "En";
+    color: var(--sky1);
+    font-family: Modern Antiqua, sans-serif;
+    font-size: 1em;
+    height: 1.4em;
+    width: 1.4em;
+    left: 15%;
+    bottom: 12%;
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+#themeSwitch .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    left: 10%;
+    bottom: 15%;
+    border-radius: 50%;
+    box-shadow: inset 15px -4px 0 15px #f8ea27;
+    background: var(--background);
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+
+#themeSwitch input:checked + .slider {
+    background-color: #000;
+}
+#languageSwitch input:checked + .slider:before {
+    transform: translateX(100%);
+    content: "Zh";
+    font-family: Modern Antiqua, sans-serif;
+    color: var(--todoback);
+    font-size: 1em;
+}
+#themeSwitch input:checked + .slider:before {
+    transform: translateX(100%);
+    box-shadow: inset 8px -4px 0 0 #f8f8f4;
+}
