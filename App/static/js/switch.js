@@ -13,7 +13,6 @@ $(document).ready(function () {
     }
 
 
-    html.attr('data-theme', 'dark');
     theme.change(function () {
         if (html.attr('data-theme') === 'dark') {
             html.attr('data-theme', 'light');
