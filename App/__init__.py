@@ -9,6 +9,7 @@ from .views_government import government
 from .views_individual import individual
 from .views_waste import waste
 from .views_login import login
+from .views_utils import utils
 
 HOSTNAME = "127.0.0.1"
 PORT = 3306
@@ -27,6 +28,7 @@ def create_app():
     app.register_blueprint(blueprint=government)
     app.register_blueprint(blueprint=individual)
     app.register_blueprint(blueprint=waste)
+    app.register_blueprint(blueprint=utils)
 
     app.config['SECRET_KEY'] = 'COMP3019J'
 
