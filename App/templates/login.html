@@ -13,6 +13,8 @@
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <script src="../static/js/jquery-3.7.1.min.js"></script>
     <script>
+        const loginUrl = "{{ url_for('login.log') }}";
+        const indexUrl = "{{ url_for('department.main') }}";
         (function () {
             // 立即应用主题和语言设置
             const savedTheme = localStorage.getItem('theme') || 'light'; // 默认为 'light'
@@ -80,7 +82,7 @@
                     name="signUpPasswordField"
             />
             <button type="button" id="changeSignUpPassword" class="show">Show Password</button>
-            <button type="submit" id="signUpSubmitField">Register</button>
+            <button type="button" id="signUpSubmitField">Register</button>
         </form>
     </div>
 
@@ -106,7 +108,7 @@
             <a href="#" class="findPassword" onclick="document.getElementById('getPassword').style.display='block'">
                 Forget Your Password?
             </a>
-            <button type="submit" id="signInSubmitField">Login</button>
+            <button type="button" id="signInSubmitField">Login</button>
         </form>
     </div>
 
@@ -357,6 +359,38 @@
                 localStorage.setItem('language', 'en');
                 // 类似地，处理语言切换回英文的逻辑
             }
+        });
+        $('#signInSubmitField').click(function () {
+            const username = $('#signInUsernameField').val();
+            const password = $('#signInPasswordField').val();
+
+            // 构造要发送的数据
+            const loginData = {
+                username: username,
+                password: password
+            };
+            // 使用 jQuery 发送 AJAX POST 请求
+            $.ajax({
+                url: loginUrl,  // Flask 路由的 URL
+                type: 'POST',
+                contentType: 'application/json',  // 发送数据的格式
+                data: JSON.stringify(loginData),  // 将 JavaScript 对象转换为字符串
+                dataType: 'json',  // 预期的服务器响应的数据类型
+                success: function (response) {
+                    console.log(response);
+                    // 根据响应处理逻辑，例如重定向或显示消息
+                    if (response.message === 'Login successful') {
+                        window.location.href = indexUrl;  // 登录成功后的重定向
+                    } else {
+                        console.error(response.message);  // 显示错误消息
+                        alert(response.message);  // 显示错误消息
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // 处理错误情况
+                    console.error("Error: " + status + " " + error);
+                }
+            });
         });
     });
 

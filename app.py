@@ -2,6 +2,7 @@ from flask import Flask, session, g, request, jsonify, redirect, url_for, send_f
 from flask_babel import Babel, gettext as _
 from App import create_app
 from App.extents import db
+from App.models import User
 
 app = create_app()
 
@@ -15,22 +16,25 @@ babel = Babel(app)
 # def get_locale():
 #     return request.accept_languages.best_match(['zh', 'en'])
 
-
+#
 # 这一块是为了实现用户登录后，自动获取用户信息，并将其存储在全局变量g中，供模板文件使用
 # 并且是确保用户登录后才能访问某些界面，否则会重定向到登录页面
-# @app.before_request
-# def my_before():
-#     uid = session.get('uid')
-#     if uid:
-#         user = db.session.get(User, uid)
-#         setattr(g, 'user', user)
-#     else:
-#         setattr(g, 'user', None)
+@app.before_request
+def my_before():
+    uid = session.get('uid')
+    if uid:
+        user = db.session.get(User, uid)
+        setattr(g, 'user', user)
+    else:
+        setattr(g, 'user', None)
+
 
 # 全局user变量
-# @app.context_processor
-# def my_context():
-#     return {'user': g.user}
+@app.context_processor
+def my_context():
+    return {'user': g.user}
+
+
 #
 #
 # # 根据不同的用户状态，返回不同的上级页面

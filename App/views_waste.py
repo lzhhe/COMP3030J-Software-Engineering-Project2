@@ -10,8 +10,6 @@ from .models import *
 waste = Blueprint('waste', __name__, template_folder='templates')  # waste is name of blueprint
 
 
-
-
 @waste.route('/confirm', methods=['POST'])
 def confirm():
     if not request.is_json:
@@ -28,6 +26,3 @@ def confirm():
         return jsonify({"message": "Order confirmed successfully"}), 200
     else:
         return jsonify({"error": "Order not found"}), 404
-
-
-
