@@ -11,7 +11,7 @@ department = Blueprint('department', __name__, url_prefix='/department')  # depa
 
 
 @department.route('/')
-def main():
+def index():
     return render_template('department/index.html')
 
 
