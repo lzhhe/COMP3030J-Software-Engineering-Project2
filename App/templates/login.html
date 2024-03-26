@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googlefonts.cn/css?family=Do+Hyeon|Libre+Baskerville|Merriweather|Modern+Antiqua|Roboto+Slab|Slabo+27px|Ubuntu"
+          rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/login_style.css"/>
+    <link rel="stylesheet" href="../static/css/colors.css"/>
+    {#    <link rel="stylesheet" href="../static/css/pico.conditional.min.css">#}
+    <link rel="shortcut icon" href="../static/image/icon/skyline.png">
+    <script src="../static/js/jquery-3.7.1.min.js"></script>
+
+    <title>Login Page</title>
+</head>
+
+<body>
+{% if errors %}
+    <script>
+        let errorMsgs;
+        {% if errors is string %}
+            errorMsgs = "{{ errors }}";
+        {% else %}
+            errorMsgs = [
+                {% for field, error_messages in errors.items() %}
+                    "{{ error_messages|join(', ') }}",
+                {% endfor %}
+            ].join("\n");  // 使用换行符将每个字段的错误分隔开
+        {% endif %}
+        alert(errorMsgs);
+    </script>
+{% endif %}
+
+<!-- Main login container -->
+<div class="login_container" id="login_container">
+
+    <!-- Registration form container -->
+    <div class="form-container sign-up">
+        <!-- 默认访问当前的路由 -->
+        <!-- 可以url -->
+        <!-- 可以直接路由名 -->
+        <form id="registerForm" method="post">
+            <h1>Create Account</h1>
+            <div class="information"></div>
+            <span style="text-align: center" class="remind">by use your email for registering<br>
+            password needs [a-z], [A-Z], [0-9] and [@$!%*?&#]</span>
+
+            <input type="text" placeholder="Username" id="signUpUsernameField" name="signUpUsernameField"/>
+            <input type="email" placeholder="Email" id="signUpEmailField" name="signUpEmailField"/>
+
+            <input
+                    type="password"
+                    placeholder="Password"
+                    id="signUpPasswordField"
+                    name="signUpPasswordField"
+            />
+            <button type="button" id="changeSignUpPassword" class="show">Show Password</button>
+            <button type="submit" id="signUpSubmitField">Register</button>
+        </form>
+    </div>
+
+    <!-- Login form container -->
+    <div class="form-container sign-in">
+        <form id="loginForm" method="post">
+            <h1>Enter System</h1>
+            <div class="information"></div>
+            <span class="remind">by use your username and password</span>
+            <input type="text" placeholder="Username" id="signInUsernameField" name="signInUsernameField"/>
+
+            <input
+                    type="password"
+                    placeholder="Password"
+                    id="signInPasswordField"
+                    name="signInPasswordField"
+            />
+
+            {#            {{ form.login_form.login_username(placeholder="Username",id="signInUsernameField") }}#}
+            {#            {{ form.login_form.login_password(placeholder="Password",id="signInPasswordField") }}#}
+
+            <button type="button" id="changeSignInPassword" class="show">Show Password</button>
+            <a href="#" class="findPassword" onclick="document.getElementById('getPassword').style.display='block'">
+                Forget Your Password?
+            </a>
+            <button type="submit" id="signInSubmitField">Login</button>
+        </form>
+    </div>
+
+    <!-- Change form panels (Register and Login switches) -->
+    <div class="change-container">
+        <div class="change">
+            <div class="change-panel change-left">
+                <h1>Welcome Back!</h1>
+                <p>Enter your personal details to use all site features</p>
+                <button class="hidden" id="login">Switch to Login</button>
+                <div id="register-message">
+                    <span>Password must contain the following:</span> <br>
+                    <div id="length" class="invalid remind">length from <b>4</b> to <b>20</b></div>
+                    <br>
+                    <div id="letter" class="invalid remind">A <b>lowercase</b> letter</div>
+                    <br>
+                    <div id="capital" class="invalid remind">A <b>uppercase</b> letter</div>
+                    <br>
+                    <div id="number" class="invalid remind">A <b>number</b></div>
+                    <br>
+                    <div id="special" class="invalid remind">A <b>special</b> letter</div>
+                    <br>
+                </div>
+            </div>
+
+            <div class="change-panel change-right">
+                <h1>Hello Friend!</h1>
+                <p>Register with your personal details to use all site features</p>
+                <button class="hidden" id="register">Switch to Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Password reset modal -->
+<div id="getPassword" class="modal">
+    <form class="modal-content animate" method="post" id="findForm">
+        <div class="imgcontainer">
+                <span onclick="document.getElementById('getPassword').style.display='none'" class="close"
+                      title="Close Modal">&times;</span>
+            <img src="../static/image/forgetHead.png" alt="头像" class="avatar"/>
+        </div>
+        <div class="find-container">
+            <label for="find_uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" id="find_uname" name="find_uname"/>
+
+            {#            {{ form.find_form.find_username(placeholder="Enter Username" ,id="find_uname") }}#}
+            <label for="find_email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" id="find_email" name="find_email"/>
+
+            <label for="find_password"><b>New password</b></label>
+            <input type="password" placeholder="Enter new password" id="find_password" name="find_password"/>
+
+            {#            {{ form.find_form.find_email(placeholder="Enter Email",id="find_email") }}#}
+            <button type="submit" id="findPassword">Retrieve Password</button>
+        </div>
+    </form>
+</div>
+<button id="toggleTheme">明暗模式切换</button>
+<script>
+    const container = document.getElementById("login_container"),
+        registerBtn = document.getElementById("register"),
+        loginBtn = document.getElementById("login"),
+        registerButton = document.getElementById("signUpSubmitField");
+    const signUpUsernameField = document.getElementById("signUpUsernameField");
+    const signUpEmailField = document.getElementById("signUpEmailField");
+    const signUpPasswordField = document.getElementById("signUpPasswordField");
+    const signInUsernameField = document.getElementById("signInUsernameField");
+    const signInPasswordField = document.getElementById("signInPasswordField");
+    const findUsernameField = document.getElementById("find_uname");
+    const findEmailField = document.getElementById("find_email");
+    const letter = document.getElementById("letter");
+    const capital = document.getElementById("capital");
+    const number = document.getElementById("number");
+    const special = document.getElementById("special");
+    const length = document.getElementById("length");
+    let couldType = false;
+
+    registerBtn.addEventListener("click", () => {
+        clearFormFields();
+        container.classList.add("active");
+    });
+
+    loginBtn.addEventListener("click", () => {
+        clearFormFields();
+        container.classList.remove("active");
+    });
+
+    function clearFormFields() {
+        signUpUsernameField.value = "";
+        signUpEmailField.value = "";
+        signUpPasswordField.value = "";
+        signInUsernameField.value = "";
+        signInPasswordField.value = "";
+        findUsernameField.value = "";
+        findEmailField.value = "";
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+        special.classList.remove("valid");
+        special.classList.add("invalid");
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+        couldType = false;
+        registerButton.classList.add("notallow");
+        registerButton.disabled = true;
+    }
+
+    const changeSignUpPassword = document.getElementById(
+        "changeSignUpPassword"
+    );
+    const changeSignInPassword = document.getElementById(
+        "changeSignInPassword"
+    );
+
+    changeSignUpPassword.addEventListener("click", function () {
+        changePasswordVisibility(signUpPasswordField, changeSignUpPassword);
+    });
+
+    changeSignInPassword.addEventListener("click", function () {
+        changePasswordVisibility(signInPasswordField, changeSignInPassword);
+    });
+
+    function changePasswordVisibility(passwordField, changeButton) {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            changeButton.textContent = "Hide Password";
+        } else {
+            passwordField.type = "password";
+            changeButton.textContent = "Show Password";
+        }
+    }
+
+    const modal = document.getElementById("getPassword");
+
+    // 当用户点击模态之外的任何地方时，关闭它
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+    signUpPasswordField.onfocus = function () {
+        document.getElementById("register-message").style.visibility = "visible";
+    }
+
+    // 当用户在密码字段外点击时，隐藏消息框
+    signUpPasswordField.onblur = function () {
+        document.getElementById("register-message").style.visibility = "hidden";
+    }
+
+
+    signUpPasswordField.onkeyup = function () {
+        // 验证小写字母
+        let lowerCaseLetters = /[a-z]/g;
+        if (signUpPasswordField.value.match(lowerCaseLetters)) {
+            letter.classList.remove("invalid");
+            letter.classList.add("valid");
+        } else {
+            letter.classList.remove("valid");
+            letter.classList.add("invalid");
+        }
+
+        // 验证大写字母
+        const upperCaseLetters = /[A-Z]/g;
+        if (signUpPasswordField.value.match(upperCaseLetters)) {
+            capital.classList.remove("invalid");
+            capital.classList.add("valid");
+        } else {
+            capital.classList.remove("valid");
+            capital.classList.add("invalid");
+        }
+
+        // 验证数字
+        const numbers = /[0-9]/g;
+        if (signUpPasswordField.value.match(numbers)) {
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+        } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+        }
+
+        const specialLetters = /[@$!%*?&#]/g;
+        if (signUpPasswordField.value.match(specialLetters)) {
+            special.classList.remove("invalid");
+            special.classList.add("valid");
+        } else {
+            special.classList.remove("valid");
+            special.classList.add("invalid");
+        }
+
+        const minLength = 4;
+        const maxLength = 20;
+        if (signUpPasswordField.value.length >= minLength && signUpPasswordField.value.length <= maxLength) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+            couldType = true;
+        } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+            couldType = false;
+        }
+
+        if (couldType) {
+            registerButton.classList.remove("notallow");
+            registerButton.disabled = false;
+        } else {
+            registerButton.classList.add("notallow");
+            registerButton.disabled = true;
+        }
+    }
+    $(document).ready(function () {
+        $('#toggleTheme').click(function () {
+            if ($('html').attr('data-theme') === 'dark') {
+                $('html').attr('data-theme', 'light');
+            } else {
+                $('html').attr('data-theme', 'dark');
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
+
+

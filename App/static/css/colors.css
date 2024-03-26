@@ -1,0 +1,272 @@
+:root[data-theme="light"] {
+    --sky1: #40A2E3;
+    --sky2: #FFF6E9;
+    --sky3: #BBE2EC;
+    --sky4: #0D9276;
+    --land1: #88AB8E;
+    --land2: #AFC8AD;
+    --land3: #EEE7DA;
+    --land4: #F2F1EB;
+    --skin1: #F3C5C5;
+    --skin2: #C1A3A3;
+    --skin3: #886F6F;
+    --skin4: #694E4E;
+
+    --loginpage-body-background-color1: #c9d6ff;
+    --loginpage-body-background-color2: #e2e2e2;
+    --loginpage-body-background-color3: #c9d6ff;
+    --purple1: #5f2e8b;
+    --purple2: #512da8;
+    --login-button: #616161;
+    --login-button-hover: #3498db;
+    --login-button-shadow: #4d4d4d;
+    --login-input: #eee;
+    --login-focus: rgba(0, 123, 255, 0.15);
+    --login-focus2: rgba(8, 0, 255, 0.13);
+    --login-change: #6b6a6a75;
+    --login-valid: #56e056;
+    --login-invalid: #f64949;
+    --login-show: #607D8B;
+    --login-find: #39080846;
+
+
+    /**/
+    /**/
+    /*下面的是web里的变量*/
+    --main-color: #fff;
+    --input-color: #fff;
+    --text-color: #4d4d4d; /* 白色 */
+    --title-background-color: #333;
+    --title-border: #cccccc;
+    --title-color: aliceblue;
+    --hamburger-hover: #ab8e8e;
+    --hamburger-hover-shadow: rgba(0, 0, 0, 0.5);
+    --header-background-color: #e5e7e9;
+    --today-color: #fff;
+    --today-background-color: #ab8e8eb3;
+    --today-shadow: #999;
+    --today-active-shadow: #666;
+    --changeView-color: #734444;
+    --changeViewDrop-background-color: #f1f1f1;
+    --changeViewDrop-shadow: rgba(0, 0, 0, 0.2);
+    --changeViewDrop-a: #333333;
+    --changeViewDrop-a-hover: #e8dede;
+    --changeMonth_button-background: linear-gradient(225deg, #e6e2e2, #f2f1f1);
+    --changeMonth_button-hover: linear-gradient(225deg, #d0c9c9, #afa9a9);
+    --changeMonth_button-shadow1: #a5a0a0;
+    --changeMonth_button-shadow2: #dfd8d8;
+    --information-hover: #c7c3c3;
+    --information-hover-shadow: rgba(0, 0, 0, 0.5);
+    --information-a-hover: #0077cc;
+    --leftNav-background: #f2f3f4e7;
+    --smallCalendar-hover-border: #c0c0c0;
+    --smallCalendar-hover-shadow: rgba(152, 144, 144, 0.5);
+    --smBtn-background: linear-gradient(225deg, #b3a8a8, #f2f1f1);
+    --smBtn-active-shadow1: #f3eae2e9;
+    --smBtn-active-shadow2: #dfd8d8db;
+    --smCDayItem-color: #666666;
+    --sm-calendar-date-hover: #e1eaff;
+    --sm-date-text-color: #000000;
+    --sm-pre-next-color: #a69f9f;
+    --sm-today-border-color: #3370ff;
+    --sm-selected-color: #ffffff;
+    --weather-container-border: rgba(122, 56, 56, 60%);
+    --weather-search-box-input-color: #06283D;
+    --weather-search-box-button: #DFF6FF;
+    --weather-search-box-button-hover: #06283Ddc;
+    --week-item-border: #968585;
+    --week-item-hover: #f9f2f2f6;
+    --week-item-active: #efefef;
+    --is-passed-color: #999999;
+    --is-weekend-background: #f6e1e1;
+    --admin-search-border: #ccc;
+    --admin-search-focus: #007bff;
+    --admin-searchButton-hover: #0056b3;
+    --admin-back: #6c757d;
+    --admin-back-hover: #565e63;
+    --pagination-a: #337ab7;
+    --admin-thead: #2f4050;
+    --admin-botton-hover: #286090;
+    --admin-male: #1e1515;
+    --admin-female: #734444;
+    --admin-teacher: #020215;
+    --admin-student: rgba(5, 0, 0, 0.73);
+
+    --modal-option-blue: #00A8FF;
+    --modal-content-background: #fefefe;
+    --modal-change-info: rgba(35, 5, 5, 0.27);
+
+    --shadow-1: rgba(0, 0, 0, 0.1);
+    --color-fff: #fff;
+    --color-ddd: #ddd;
+    --color-ccc: #ccc;
+    --color-aaa: #aaa;
+    --color-333: #333;
+    --color-888: #888;
+    --color-000: #000000;
+    --color-red: #FF0000;
+    --select-hover: #f0f0f0;
+
+    --canvas-background: #f0f0f0;
+
+    --todo1: #4a90e2;
+    --todo2: #7cafdc;
+    --doing1: #e1a659;
+    --doing2: #f7cc9b;
+    --done1: #4ebc86;
+    --done2: #a4d7c6;
+    --draggable-text: #e9550c;
+    --draggable-backgound: rgba(240, 240, 240, 0.7);
+
+    --draggable-border1: #743ad5;
+    --draggable-border2: #d53a9d;
+
+    --todobutton: #4caf50;
+    --todobutton-hover: #45a049;
+    --todocreate: #337ab7;
+    --todoback: #d9534f;
+    --todoclose: #d9534f;
+    --tododelete: #f44336;
+    --tododeletehover: #c9302c;
+
+}
+
+:root[data-theme="dark"] {
+    /* Sky */
+    --sky1: #3075a3; /* 深天蓝 */
+    --sky2: #b2a48b; /* 暗沙色 */
+    --sky3: #8ba0ac; /* 暗灰蓝 */
+    --sky4: #065750; /* 暗青绿 */
+
+    /* Land */
+    --land1: #50675a; /* 暗橄榄绿 */
+    --land2: #687f72; /* 暗灰绿 */
+    --land3: #a9a291; /* 暗卡其色 */
+    --land4: #bcbab0; /* 暗灰白 */
+
+    /* Skin */
+    --skin1: #a17878; /* 暗玫瑰色 */
+    --skin2: #745858; /* 暗褐色 */
+    --skin3: #554343; /* 暗赭色 */
+    --skin4: #3d2e2e; /* 暗栗色 */
+
+    /* Login Page */
+    --loginpage-body-background-color1: #7a89a3; /* 暗灰蓝 */
+    --loginpage-body-background-color2: #a1a1a1; /* 暗银色 */
+    --loginpage-body-background-color3: #7a89a3; /* 暗灰蓝 */
+    --purple1: #3d1c53; /* 暗紫 */
+    --purple2: #3a1d63; /* 深紫罗兰色 */
+    --login-button: #7a7878; /* 暗灰 */
+    --login-button-hover: #1d5a7a; /* 暗天蓝 */
+    --login-button-shadow: #2d2d2d; /* 深灰 */
+    --login-input: #888; /* 暗银色 */
+    --login-focus: rgba(0, 73, 147, 0.15); /* 暗蓝 */
+    --login-focus2: rgba(3, 0, 153, 0.13); /* 暗宝蓝 */
+    --login-change: #504f4f7d; /* 暗灰 */
+    --login-valid: #3a8f3a; /* 暗绿 */
+    --login-invalid: #b42e2e; /* 暗红 */
+    --login-show: #3a5a6b; /* 暗灰蓝 */
+    --login-find: #24202159; /* 暗棕灰 */
+
+
+    /**/
+    /**/
+    /*下面的是web里的变量*/
+    --main-color: #4d4d4d;
+    --input-color: #5d4343;
+    --text-color: #bebeb5; /* 白色 */
+    --title-background-color: #1c1c1c; /* Dark background for titles */
+    --title-border: #444444; /* Darker border for a subtle appearance */
+    --title-color: #d0d4da; /* Lighter text color for contrast against dark background */
+    --hamburger-hover: #7c6f6f; /* Muted color for hover effect */
+    --hamburger-hover-shadow: rgba(255, 255, 255, 0.1); /* Lighter shadow for depth */
+    --header-background-color: #202428; /* Dark shade for header background */
+    --today-color: #ffffff; /* White color for contrast on dark backgrounds */
+    --today-background-color: #505050; /* Darker background for today */
+    --today-shadow: #333333; /* Dark shadow for depth */
+    --today-active-shadow: #111111; /* Even darker shadow for active state */
+    --changeView-color: #9b8d8d; /* Subdued color for change view */
+    --changeViewDrop-background-color: #2b2b2b; /* Dark background for dropdown */
+    --changeViewDrop-shadow: rgba(255, 255, 255, 0.05); /* Subtle shadow for dropdown */
+    --changeViewDrop-a: #bbbbbb; /* Light color for dropdown links */
+    --changeViewDrop-a-hover: #353535; /* Dark hover state for links */
+    --changeMonth_button-background: linear-gradient(225deg, #393939, #2f2f2f); /* Gradients in darker tones */
+    --changeMonth_button-hover: linear-gradient(225deg, #2c2c2c, #242424); /* Dark hover gradient */
+    --changeMonth_button-shadow1: #1c1c1c; /* Dark shadow for buttons */
+    --changeMonth_button-shadow2: #262626; /* Slightly lighter shadow for layered effect */
+    --information-hover: #3d3838; /* Dark hover state */
+    --information-hover-shadow: rgba(255, 255, 255, 0.1); /* Light shadow for information hover */
+    --information-a-hover: #4080ff; /* Bright color for links to stand out on hover */
+    --leftNav-background: #2a2e32; /* Dark background for navigation */
+    --smallCalendar-hover-border: #575757; /* Dark border for small calendar hover */
+    --smallCalendar-hover-shadow: rgba(200, 200, 200, 0.5); /* Lighter shadow for contrast */
+    --smBtn-background: linear-gradient(225deg, #4a4040, #3a3333); /* Dark button gradient */
+    --smBtn-active-shadow1: #2d2d2d; /* Dark shadow for button active state */
+    --smBtn-active-shadow2: #232323; /* Consistent with dark mode shadowing */
+    --smCDayItem-color: #cccccc; /* Lighter color for readability */
+    --sm-calendar-date-hover: #374151; /* Dark hover state for calendar dates */
+    --sm-date-text-color: #e0e0e0; /* Bright text color for contrast */
+    --sm-pre-next-color: #848484; /* Subdued color for prev-next buttons in dark mode */
+
+
+    --sm-today-border-color: #1A49AB; /* Darker shade of blue */
+    --sm-selected-color: #000000; /* Typically dark mode has light text, so keeping white */
+    --weather-container-border: rgba(122, 56, 56, 0.8); /* Darker and more opaque */
+    --weather-search-box-input-color: #DFF6FF; /* Lighter color for contrast */
+    --weather-search-box-button: #325A70; /* Darker button color */
+    --weather-search-box-button-hover: #06283D; /* Slightly lighter for hover effect */
+    --week-item-border: #5C3C3C; /* Darker border color */
+    --week-item-hover: #2d2d2d; /* Darker hover state */
+    --week-item-active: #1e1e1e; /* Even darker for active state */
+    --is-passed-color: #666666; /* Lighter gray for passed items */
+    --is-weekend-background: #3c2c2c; /* Darker shade for weekend */
+    --admin-search-border: #555; /* Darker border for search */
+    --admin-search-focus: #0056b3; /* Brighter color for focus to stand out */
+    --admin-searchButton-hover: #004080; /* Darker hover color */
+    --admin-back: #343a40; /* Darker back color */
+    --admin-back-hover: #23272b; /* Hover state even darker */
+    --pagination-a: #5796d2; /* Darker link color */
+    --admin-thead: #1f2a36; /* Darker table header */
+    --admin-botton-hover: #204d74; /* Darker button hover */
+    --admin-male: #262626; /* Much darker for male identifier */
+    --admin-female: #503030; /* Darker for female identifier */
+    --admin-teacher: #191d26; /* Darker for teacher identifier */
+    --admin-student: rgba(5, 5, 5, 0.73); /* Darken student identifier */
+
+    --modal-option-blue: #007ACC; /* Darker modal option blue */
+    --modal-content-background: #121212; /* Very dark grey for modal background */
+    --modal-change-info: rgba(35, 5, 5, 0.5); /* Darker and more opaque */
+
+    --shadow-1: rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
+    --color-fff: #121212; /* Near black for backgrounds */
+    --color-ddd: #333; /* Darker gray for borders */
+    --color-ccc: #444; /* Even darker gray */
+    --color-aaa: #555; /* And darker... */
+    --color-333: #ddd; /* Much lighter for text */
+    --color-888: #aaa; /* Lighter gray for less prominent text */
+    --color-000: #ffffff; /* White text on dark backgrounds */
+    --color-red: #FF0000; /* Red can remain the same as it stands out on dark */
+    --select-hover: #a69191;
+
+    --canvas-background: #757575;
+
+    --todo1: #345b7b;
+    --todo2: #567d96;
+    --doing1: #a67c52;
+    --doing2: #b89a78;
+    --done1: #357f5c;
+    --done2: #60997e;
+    --draggable-text: #be8260;
+    --draggable-backgound: rgba(40, 40, 40, 0.7);
+
+    --draggable-border1: #5c3a9d;
+    --draggable-border2: #9d3a78;
+
+    --todobutton: #357a38;
+    --todobutton-hover: #2e6f2e;
+    --todocreate: #285a8f;
+    --todoback: #a63e2b;
+    --todoclose: #a63e2b;
+    --tododelete: #d32f2f;
+    --tododeletehover: #b71c1c;
+}

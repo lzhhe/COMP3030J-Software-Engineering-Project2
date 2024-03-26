@@ -13,7 +13,7 @@ login = Blueprint('login', __name__)  # department is name of blueprint
 @login.route('/')
 @login.route('/index')
 def main():
-    return render_template('index.html')
+    return render_template('login.html')
 
 
 

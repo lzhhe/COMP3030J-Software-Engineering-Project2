@@ -1,0 +1,412 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*让整个界面的设置是这样的*/
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background: var(--loginpage-body-background-color1) linear-gradient(to right, var(--loginpage-body-background-color2), var(--loginpage-body-background-color3));
+    display: flex;
+    /*浮动布局*/
+    justify-content: center;
+    align-items: center;
+    /*居中显示*/
+    flex-direction: column;
+    /*子元素垂直排放*/
+    min-height: 100vh;
+}
+
+/*整个登录页面的最外层的div*/
+.login_container {
+    background-color: var(--main-color);
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    /*相对布局*/
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+
+.login_container p {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+}
+
+.login_container span {
+    font-size: 12px;
+}
+
+.login_container a {
+    color: var(--color-333);
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+}
+
+.findPassword:hover {
+    color: var(--purple1); /* 鼠标悬停时的文字颜色 */
+    text-decoration: dotted; /* 去掉下划线 */
+    text-shadow: var(--purple1) 0px 0px 1px; /* 文字阴影 */
+}
+
+button {
+    background-color: var(--login-button);
+    color: var(--main-color);
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    /*大写文字*/
+    margin-top: 10px;
+    cursor: pointer;
+    /*变手*/
+}
+
+
+button:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--login-button-hover);
+}
+
+.notallow:hover {
+    cursor: not-allowed;
+    background-color: var(--login-button);
+}
+
+.login_container button.hidden {
+    background-color: transparent;
+    border-color: var(--main-color);
+}
+
+/*设置所有表单的整体样式*/
+.login_container form {
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 40px;
+    height: 100%;
+}
+
+/*设置登录和注册表单内部的文本框的格式*/
+.login_container input {
+    background-color: var(--login-input);
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+}
+
+input:focus {
+    border-bottom: 1px solid var(--login-focus);
+    box-shadow: 0 0 5px var(--login-focus2);
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+/*登录form的div，在第二层*/
+.sign-in {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+/*如果有了动画效果，此div向右移动到另一边*/
+.login_container.active .sign-in {
+    transform: translateX(100%);
+}
+
+/*注册form的div，在第一层，默认不可见*/
+.sign-up {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+/*有了动画效果并且可见，层次较高*/
+.login_container.active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: SignUpMove 0.6s;
+}
+
+/*这是注册表单的移动动画*/
+@keyframes SignUpMove {
+    0%,
+    49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    50%,
+    100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+/*这是提示区域的css，占据另一半*/
+.change-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    border-radius: 100px 0 0 50px;
+    z-index: 10;
+}
+
+/*这是提示区域的css，会向另一边移动*/
+.login_container.active .change-container {
+    transform: translateX(-100%);
+    border-radius: 0 100px 50px 0;
+}
+
+/*里面存的提示语句*/
+.change {
+    height: 100%;
+    background: var(--login-change) linear-gradient(to right, var(--login-button), var(--login-change));
+    color: var(--text-color);
+    position: relative;
+    left: -100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+#register-message {
+    width: auto;
+    height: auto;
+    font-size: 6px;
+    position: absolute;
+    bottom: 4%;
+    display: inline-block;
+    visibility: hidden;
+}
+
+.valid {
+    color: var(--login-valid);
+    font-size: 10px;
+
+}
+
+/* 添加红色文本颜色和“x”； 要求错误时的图标 */
+.invalid {
+    color: var(--login-invalid);
+    font-size: 10px;
+}
+
+#register-message span {
+    position: relative;
+    padding-left: 30px; /* 提供左侧的空间来显示对号或错号 */
+}
+
+/* 当span有.valid类时显示对号 */
+#register-message .valid:before {
+    content: "\2714"; /* 对号 */
+    position: absolute;
+    left: 30px; /* 您可以根据需要调整此值以固定到左侧的距离 */
+}
+
+/* 当span有.invalid类时显示错号 */
+#register-message .invalid:before {
+    content: "\2716"; /* 错号 */
+    position: absolute;
+    left: 30px; /* 您可以根据需要调整此值以固定到左侧的距离 */
+}
+
+/*移动一半，如果缺失了会不显示*/
+.login_container.active .change {
+    transform: translateX(50%);
+}
+
+.change-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.change-left {
+    transform: translateX(-200%);
+}
+
+.login_container.active .change-left {
+    transform: translateX(0);
+}
+
+.change-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.login_container.active .change-right {
+    transform: translateX(200%);
+}
+
+/*展示密码的按钮的css*/
+.show {
+    width: 220px;
+    background-color: var(--login-show);
+}
+
+
+/* 全宽输入框 */
+#find_email, #find_uname, #find_password {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid var(--title-color);
+    box-sizing: border-box;
+}
+
+/* 为查找按钮设置样式 */
+#findPassword {
+    background-color: var(--login-find);
+    color: var(--main-color);
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#findPassword:hover {
+    opacity: 0.8;
+}
+
+/* 居中图像并定位关闭按钮 */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+img.avatar {
+    /*相对来说更合适的大小*/
+    width: 40%;
+    border-radius: 50%;
+    height: 40%;
+}
+
+.find-container {
+    padding: 16px;
+}
+
+/* 模态（背景）*/
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed; /* 留在原地 */
+    left: 0;
+    top: 0;
+    width: 100%; /* 全屏宽度 */
+    height: 100%; /* 全高 */
+    /*overflow: none; !* 如果需要启用滚动 *!*/
+    background-color: rgb(0, 0, 0); /* 后备颜色 */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+    z-index: 10;
+}
+
+.modal input {
+    background-color: var(--login-input);
+
+}
+
+/* 模态内容/框 */
+.modal-content {
+    background-color: var(--modal-content-background);
+    margin: 5% auto 15% auto; /* 距顶部 5%，距底部 15% 并居中 */
+    border: 1px solid var(--color-888);
+    width: 20%; /* 让大小更加合适 */
+    border-radius: 20px; /* 添加圆角 */
+}
+
+/* 关闭按钮 (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: var(--color-000);
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--color-red);
+    cursor: pointer;
+}
+
+/* 添加缩放动画 */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+.remind {
+    font-family: Ubuntu, serif;
+    font-size: 12px;
+}
+
+span.remind {
+    color: var(--login-button);
+}
+
+#toggleTheme {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+

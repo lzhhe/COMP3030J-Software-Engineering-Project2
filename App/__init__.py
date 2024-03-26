@@ -8,6 +8,7 @@ from .views_department import department
 from .views_government import government
 from .views_individual import individual
 from .views_waste import waste
+from .views_login import login
 
 HOSTNAME = "127.0.0.1"
 PORT = 3306
@@ -21,6 +22,7 @@ def create_app():
     app = Flask(__name__, static_folder='static')
 
     # 注册蓝图
+    app.register_blueprint(blueprint=login)
     app.register_blueprint(blueprint=department)
     app.register_blueprint(blueprint=government)
     app.register_blueprint(blueprint=individual)
