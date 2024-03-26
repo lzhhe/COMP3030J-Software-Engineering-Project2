@@ -16,7 +16,6 @@ def main():
     return render_template('index.html')
 
 
-
 @department.route('/register', methods=['POST'])
 def register():
     if not request.is_json:
@@ -42,7 +41,6 @@ def register():
         orderName=order_name,
         weight=weight,
         attribution=attribution,
-        multiplier=data.get('multiplier', 1),  # 使用提供的值或默认为1
         comment=comment
     )
 
@@ -52,5 +50,3 @@ def register():
 
     # 返回成功消息
     return jsonify({"message": "Order created successfully"}), 201
-
-
