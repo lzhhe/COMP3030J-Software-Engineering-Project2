@@ -10,6 +10,11 @@ from .models import *
 waste = Blueprint('waste', __name__, template_folder='templates')  # waste is name of blueprint
 
 
+@waste.route('/')
+def index():
+    return render_template('waste/index.html')
+
+
 @waste.route('/confirm', methods=['POST'])
 def confirm():
     if not request.is_json:

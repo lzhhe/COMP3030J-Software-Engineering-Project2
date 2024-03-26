@@ -10,6 +10,6 @@ from .models import *
 government = Blueprint('government', __name__, url_prefix='/government')  # government is name of blueprint
 
 
-
-
-
+@government.route('/')
+def index():
+    return render_template('government/index.html')

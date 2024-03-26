@@ -15,29 +15,16 @@
     <script src="../static/js/switch.js"></script>
     <script>
         const loginUrl = "{{ url_for('login.log') }}";
-        const indexUrl = "{{ url_for('department.main') }}";
+        const departmentUrl = "{{ url_for('department.index') }}";
+        const governmentUrl = "{{ url_for('government.index') }}";
+        const individualUrl = "{{ url_for('individual.index') }}";
+        const wasteUrl = "{{ url_for('waste.index') }}";
     </script>
 
     <title>Login Page</title>
 </head>
 
 <body>
-{% if errors %}
-    <script>
-        let errorMsgs;
-        {% if errors is string %}
-            errorMsgs = "{{ errors }}";
-        {% else %}
-            errorMsgs = [
-                {% for field, error_messages in errors.items() %}
-                    "{{ error_messages|join(', ') }}",
-                {% endfor %}
-            ].join("\n");  // 使用换行符将每个字段的错误分隔开
-        {% endif %}
-        alert(errorMsgs);
-    </script>
-{% endif %}
-
 <!-- Main login container -->
 <div class="login_container" id="login_container">
 
@@ -326,7 +313,16 @@
                     console.log(response);
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'Login successful') {
-                        window.location.href = indexUrl;  // 登录成功后的重定向
+                        const target = response.target;
+                        if (target === 'department') {
+                            window.location.href = departmentUrl;  // 登录成功后的重定向
+                        } else if (target === 'government') {
+                            window.location.href = governmentUrl;  // 登录成功后的重定向
+                        } else if (target === 'waste') {
+                            window.location.href = wasteUrl;  // 登录成功后的重定向
+                        } else {
+                            window.location.href = individualUrl;  // 登录成功后的重定向
+                        }
                     } else {
                         console.error(response.message);  // 显示错误消息
                         alert(response.message);  // 显示错误消息

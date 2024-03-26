@@ -10,8 +10,6 @@ from .models import *
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
 
 
-
-
-
-
-
+@individual.route('/')
+def index():
+    return render_template('individual/index.html')

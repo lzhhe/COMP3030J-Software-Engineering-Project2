@@ -23,10 +23,16 @@ def log():
     username = data.get('username')
     password = data.get('password')
 
-    if username == 'zx' and password == '123456':
-        return jsonify({'message': 'Login successful'}), 200
+    if username == 'zx' and password == '1':
+        return jsonify({'message': 'Login successful', 'target': 'department'}), 200
+    elif username == 'zx' and password == '2':
+        return jsonify({'message': 'Login successful', 'target': 'government'}), 200
+    elif username == 'zx' and password == '3':
+        return jsonify({'message': 'Login successful', 'target': 'individual'}), 200
+    elif username == 'zx' and password == '4':
+        return jsonify({'message': 'Login successful', 'target': 'waste'}), 200
     else:
-        return jsonify({'message': 'Invalid username or password'}), 200
+        return jsonify({'message': 'Login failed'}), 200
 
     # if not username or not password:
     #     return jsonify({'message': 'Username and password are required'}), 400

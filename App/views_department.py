@@ -12,7 +12,7 @@ department = Blueprint('department', __name__, url_prefix='/department')  # depa
 
 @department.route('/')
 def main():
-    return render_template('index.html')
+    return render_template('department/index.html')
 
 
 # @department.route('/register', methods=['POST'])
