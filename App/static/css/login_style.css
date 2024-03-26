@@ -402,4 +402,76 @@ span.remind {
 }
 
 
+/* 对话框样式 */
+dialog {
+    position: fixed; /* 使用固定定位 */
+    top: 50%; /* 距离顶部50% */
+    left: 50%; /* 距离左边50% */
+    transform: translate(-50%, -50%);
+    /* 用于确保对话框准确居中 *
+        /* 移除边框 */
+    border: none;
+    border-radius: 10px; /* 圆角边框 */
+    padding: 20px; /* 内边距 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    width: auto; /* 宽度自适应内容 */
+    max-width: 20%; /* 最大宽度，确保对话框不会过大 */
+    height: 30%;
+    display: flex; /* 使用Flex布局 */
+    flex-direction: column; /* 子元素垂直排列 */
+    gap: 15px; /* 子元素之间的间隔 */
+}
+
+/* 对话框背景模糊 */
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+/* 标签和选择框样式 */
+dialog label {
+    display: block; /* 使标签块级显示 */
+    margin-bottom: 5px; /* 标签和选择框之间的间距 */
+}
+
+dialog select {
+    width: 100%; /* 选择框宽度填满容器 */
+    padding: 8px 10px; /* 内边距 */
+    border-radius: 5px; /* 圆角 */
+    border: 1px solid #ccc; /* 边框 */
+}
+
+/* 按钮样式 */
+dialog button {
+    padding: 10px 15px; /* 按钮内边距 */
+    border-radius: 5px; /* 圆角 */
+    border: none; /* 移除边框 */
+    cursor: pointer; /* 鼠标样式 */
+    font-weight: bold; /* 字体加粗 */
+}
+
+/* 按钮容器样式，使按钮水平分布 */
+.dialog-buttons {
+    display: flex; /* 使用Flex布局 */
+    justify-content: space-between; /* 按钮分别对齐到两侧 */
+}
+
+/* 取消按钮 */
+#closeDialog {
+    background-color: #f44336; /* 背景颜色 */
+    color: white; /* 文字颜色 */
+}
+
+/* 确认按钮 */
+#confirmBtn {
+    background-color: #4CAF50; /* 背景颜色 */
+    color: white; /* 文字颜色 */
+}
+
+/* 按钮悬停效果 */
+dialog button:hover {
+    opacity: 0.9; /* 透明度变化 */
+}
+
+
 

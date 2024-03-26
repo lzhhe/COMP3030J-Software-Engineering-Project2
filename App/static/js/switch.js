@@ -29,11 +29,11 @@ $(document).ready(function () {
     // 监听语言切换的点击事件
     languageButton.change(function () {
         if (languageButton.is(':checked')) {
-            html.attr('lang', 'en');
-            localStorage.setItem('language', 'en');
-        } else {
             html.attr('lang', 'zh');
             localStorage.setItem('language', 'zh');
+        } else {
+            html.attr('lang', 'en');
+            localStorage.setItem('language', 'en');
         }
     });
 });

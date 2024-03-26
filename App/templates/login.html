@@ -15,6 +15,8 @@
     <script src="../static/js/switch.js"></script>
     <script>
         const loginUrl = "{{ url_for('login.log') }}";
+        const registerUrl = "{{ url_for('login.register') }}";
+        const forgetUrl = "{{ url_for('login.forget') }}";
         const departmentUrl = "{{ url_for('department.index') }}";
         const governmentUrl = "{{ url_for('government.index') }}";
         const individualUrl = "{{ url_for('individual.index') }}";
@@ -26,6 +28,28 @@
 </head>
 
 <body>
+<dialog id="myDialog">
+    <h2>Choose your identity</h2>
+    <form method="dialog">
+        <p>
+            <label>
+                Three types:
+                <select id="status">
+                    <option value="default" disabled>Choose…</option>
+                    <option value="DEPARTMENT_MANAGER">Development</option>
+                    <option value="GOVERNMENT_MANAGER">Government</option>
+                    <option value="INDIVIDUAL_USER">Individual user</option>
+                </select>
+            </label>
+        </p>
+        <div class="dialog-buttons">
+            <button type="button" id="closeDialog">Cancel</button>
+            <button type="submit" id="confirmBtn">Confirm</button>
+        </div>
+    </form>
+</dialog>
+
+
 <!-- Main login container -->
 <div class="login_container" id="login_container">
 
@@ -50,7 +74,11 @@
                     name="signUpPasswordField"
             />
             <button type="button" id="changeSignUpPassword" class="show">Show Password</button>
+            <a href="#" class="findPassword" onclick=showDialog()>
+                Choose one identity?
+            </a>
             <button type="button" id="signUpSubmitField">Register</button>
+            <h3 id="identity"></h3>
         </form>
     </div>
 
@@ -284,7 +312,6 @@
             length.classList.add("invalid");
             couldType = false;
         }
-
         if (couldType) {
             registerButton.classList.remove("notallow");
             registerButton.disabled = false;
@@ -293,6 +320,30 @@
             registerButton.disabled = true;
         }
     }
+
+    const dialog = document.getElementById('myDialog');
+    const closeButton = document.getElementById('closeDialog');
+
+    // 显示对话框
+    function showDialog() {
+        dialog.showModal(); // 或者 dialog.show() 根据你的需求
+    }
+
+    // 关闭对话框
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    });
+
+    const statusSelect = document.getElementById('status');
+    const identityDiv = document.getElementById('identity');
+    const confirmBtn = document.getElementById('confirmBtn');
+    confirmBtn.addEventListener('click', () => {
+        identityDiv.textContent = statusSelect.value;
+    });
+
+
+    // 假设有一个按钮用于打开对话框
+
     $(document).ready(function () {
         $('#signInSubmitField').click(function () {
             const username = $('#signInUsernameField').val();
@@ -314,6 +365,51 @@
                     console.log(response);
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'Login successful') {
+                        const target = response.target;
+                        if (target === 'department') {
+                            window.location.href = departmentUrl;  // 登录成功后的重定向
+                        } else if (target === 'government') {
+                            window.location.href = governmentUrl;  // 登录成功后的重定向
+                        } else if (target === 'waste') {
+                            window.location.href = wasteUrl;  // 登录成功后的重定向
+                        } else {
+                            window.location.href = individualUrl;  // 登录成功后的重定向
+                        }
+                    } else {
+                        console.error(response.message);  // 显示错误消息
+                        alert(response.message);  // 显示错误消息
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // 处理错误情况
+                    console.error("Error: " + status + " " + error);
+                }
+            });
+        });
+
+        $('#signUpSubmitField').click(function () {
+            const username = $('#signUpUsernameField').val();
+            const email = $('#signUpEmailField').val();
+            const password = $('#signUpPasswordField').val();
+            const status = $('#status').val();
+            // 构造要发送的数据
+            const registerData = {
+                username: username,
+                email: email,
+                password: password,
+                status: status
+            };
+            // 使用 jQuery 发送 AJAX POST 请求
+            $.ajax({
+                url: registerUrl,  // Flask 路由的 URL
+                type: 'POST',
+                contentType: 'application/json',  // 发送数据的格式
+                data: JSON.stringify(registerData),  // 将 JavaScript 对象转换为字符串
+                dataType: 'json',  // 预期的服务器响应的数据类型
+                success: function (response) {
+                    console.log(response);
+                    // 根据响应处理逻辑，例如重定向或显示消息
+                    if (response.message === 'successful') {
                         const target = response.target;
                         if (target === 'department') {
                             window.location.href = departmentUrl;  // 登录成功后的重定向

@@ -50,85 +50,108 @@ def log():
     #     return jsonify({'message': 'Invalid username or password'}), 401
 
 
-# @login.route('/register', methods=['POST'])
-# def register():
-#     data = request.json
-#     username = data.get('username')
-#     password = data.get('password')
-#     email = data.get('email')
-#     status_str = data.get('status')
-#
-#     if not all([username, password, email, status_str]):
-#         return jsonify({'message': 'Missing registration information'}), 400
-#
-#     if User.query.filter_by(username=username).first():
-#         return jsonify({'message': 'Username already exists'}), 409
-#
-#     try:
-#         # 将状态字符串转换为枚举
-#         status = UserStatus[status_str]
-#
-#         department_id = None
-#         if status == UserStatus.DEPARTMENT_MANAGER:
-#             department_name = data.get('departmentName')
-#             department = Department.query.filter_by(departmentName=department_name).first()
-#             if not department:
-#                 return jsonify({'message': 'Invalid department name'}), 400
-#             department_id = department.DID
-#
-#         new_user = User(
-#             username=username,
-#             password=generate_password_hash(password),
-#             email=email,
-#             status=status,
-#             departmentID=department_id
-#         )
-#
-#         db.session.add(new_user)
-#         db.session.commit()
-#         return jsonify({'message': 'User registered successfully'}), 201
-#     except KeyError:
-#         return jsonify({'message': 'Invalid user status'}), 400
-#     except SQLAlchemyError as e:
-#         db.session.rollback()
-#         return jsonify({'message': 'Registration failed', 'error': str(e)}), 500
-#
-#
+@login.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    email = data.get('email')
+    status_str = data.get('status')
+
+    if username == 'zx' and password == '1!Aa' and email == '1@1.com' and status_str == 'DEPARTMENT_MANAGER':
+        return jsonify({'message': 'successful', 'target': 'department'}), 200
+    else:
+        return jsonify({'message': 'failed'}), 200
+    #
+    # if not all([username, password, email, status_str]):
+    #     return jsonify({'message': 'Missing registration information'}), 200
+    #
+    # if User.query.filter_by(username=username).first():
+    #     return jsonify({'message': 'Username already exists'}), 200
+    #
+    # try:
+    #     # 将状态字符串转换为枚举
+    #     status = UserStatus[status_str]
+    #
+    #     department_id = None
+    #     if status == UserStatus.DEPARTMENT_MANAGER:
+    #         department_name = data.get('departmentName')
+    #         department = Department.query.filter_by(departmentName=department_name).first()
+    #         if not department:
+    #             return jsonify({'message': 'Invalid department name'}), 400
+    #         department_id = department.DID
+    #
+    #     new_user = User(
+    #         username=username,
+    #         password=generate_password_hash(password),
+    #         email=email,
+    #         status=status,
+    #         departmentID=department_id
+    #     )
+    #
+    #     db.session.add(new_user)
+    #     db.session.commit()
+    #     return jsonify({'message': 'User registered successfully'}), 201
+    # except KeyError:
+    #     return jsonify({'message': 'Invalid user status'}), 400
+    # except SQLAlchemyError as e:
+    #     db.session.rollback()
+    #     return jsonify({'message': 'Registration failed', 'error': str(e)}), 500
+
+
+@login.route('/forget', methods=['POST'])
+def forget():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    email = data.get('email')
+
+
+@login.route('/logout', methods=['GET'])
+def logout():
+    session.pop('UID', None)
+    return jsonify({'message': 'Logout successful'}), 200
+
+
 # # 提供用户状态
-# @login.route('/user_statuses', methods=['GET'])
-# def get_user_statuses():
-#     statuses = [{"name": status.name, "value": status.value} for status in UserStatus]
-#     return jsonify(statuses)
+@login.route('/user_statuses', methods=['GET'])
+def get_user_statuses():
+    statuses = [{"name": status.name, "value": status.value} for status in UserStatus]
+    return jsonify(statuses)
+
+
 #
 #
-# # 给下拉菜单用
-# @login.route('/get_departments_name', methods=['GET'])
-# def get_departments_name():
-#     departments = Department.query.all()
-#     departments_list = []
+# 给下拉菜单用
+@login.route('/get_departments_name', methods=['GET'])
+def get_departments_name():
+    departments = Department.query.all()
+    departments_list = []
+
+    for department in departments:
+        dept_info = {
+            'departmentType': department.departmentType.name,
+        }
+        departments_list.append(dept_info)
+    return jsonify(departments_list)
+
+
 #
-#     for department in departments:
-#         dept_info = {
-#             'departmentType': department.departmentType.name,
-#         }
-#         departments_list.append(dept_info)
-#     return jsonify(departments_list)
 #
-#
-# # 获取所有部门信息
-# @login.route('/get_departments_info', methods=['GET'])
-# def get_departments_info():
-#     departments = Department.query.all()
-#     departments_list = []
-#
-#     for department in departments:
-#         dept_info = {
-#             'DID': department.DID,
-#             'departmentName': department.departmentName,
-#             'departmentType': department.departmentType.name,
-#             'departmentAddress': department.departmentAddress,
-#             'managerId': department.managerId
-#         }
-#         departments_list.append(dept_info)
-#
-#     return jsonify(departments_list)
+# 获取所有部门信息
+@login.route('/get_departments_info', methods=['GET'])
+def get_departments_info():
+    departments = Department.query.all()
+    departments_list = []
+
+    for department in departments:
+        dept_info = {
+            'DID': department.DID,
+            'departmentName': department.departmentName,
+            'departmentType': department.departmentType.name,
+            'departmentAddress': department.departmentAddress,
+            'managerId': department.managerId
+        }
+        departments_list.append(dept_info)
+
+    return jsonify(departments_list)
