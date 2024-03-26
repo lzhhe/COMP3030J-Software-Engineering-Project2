@@ -15,27 +15,6 @@
     <script>
         const loginUrl = "{{ url_for('login.log') }}";
         const indexUrl = "{{ url_for('department.main') }}";
-        (function () {
-            // 立即应用主题和语言设置
-            const savedTheme = localStorage.getItem('theme') || 'light'; // 默认为 'light'
-            const savedLanguage = localStorage.getItem('language') || 'en'; // 默认为 'en'
-
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            document.documentElement.setAttribute('lang', savedLanguage);
-
-            // 为了避免视觉上的变化，还可以预先设置切换按钮的状态
-            document.addEventListener('DOMContentLoaded', function () {
-                const themeSwitch = document.querySelector('#themeSwitch input');
-                const languageSwitch = document.querySelector('#languageSwitch input');
-
-                if (themeSwitch) {
-                    themeSwitch.checked = (savedTheme === 'dark');
-                }
-                if (languageSwitch) {
-                    languageSwitch.checked = (savedLanguage === 'zh');
-                }
-            });
-        })();
     </script>
 
     <title>Login Page</title>
@@ -168,14 +147,7 @@
     </form>
 </div>
 
-<label id="languageSwitch">
-    <input type="checkbox">
-    <span class="slider"></span>
-</label>
-<label id="themeSwitch">
-    <input type="checkbox">
-    <span class="slider"></span>
-</label>
+{% include 'switch.html' %}
 
 <script>
     const container = document.getElementById("login_container"),
@@ -333,33 +305,6 @@
         }
     }
     $(document).ready(function () {
-        // 一开始就检查存储的主题和语言设置
-        const theme = $('#themeSwitch input');
-        const language = $('#languageSwitch input');
-        // 监听主题切换的点击事件
-        theme.change(function () {
-            const html = $('html');
-            if (html.attr('data-theme') === 'dark') {
-                html.attr('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.attr('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-
-        // 监听语言切换的点击事件
-        language.change(function () {
-            const html = $('html');
-            if (html.attr('lang') === 'en') {
-                html.attr('lang', 'zh');
-                localStorage.setItem('language', 'zh');
-            } else {
-                html.attr('lang', 'en');
-                localStorage.setItem('language', 'en');
-                // 类似地，处理语言切换回英文的逻辑
-            }
-        });
         $('#signInSubmitField').click(function () {
             const username = $('#signInUsernameField').val();
             const password = $('#signInPasswordField').val();
