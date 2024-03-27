@@ -24,31 +24,20 @@ def log():
     username = data.get('username')
     password = data.get('password')
 
-    if username == 'zx' and password == '1':
-        return jsonify({'message': 'Login successful', 'target': 'department'}), 200
-    elif username == 'zx' and password == '2':
-        return jsonify({'message': 'Login successful', 'target': 'government'}), 200
-    elif username == 'zx' and password == '3':
-        return jsonify({'message': 'Login successful', 'target': 'individual'}), 200
-    elif username == 'zx' and password == '4':
-        return jsonify({'message': 'Login successful', 'target': 'waste'}), 200
-    else:
-        return jsonify({'message': _('Login failed')}), 200
+    if not username or not password:
+        return jsonify({'message': 'Username and password are required'}), 200
 
-    # if not username or not password:
-    #     return jsonify({'message': 'Username and password are required'}), 400
-    #
-    # # 在数据库中查找用户
-    # user = User.query.filter_by(username=username).first()
-    #
-    # # if user and check_password_hash(user.password, password):
-    # if user and user.password == password:
-    #     # 密码验证成功
-    #     session['UID'] = user.UID  # 使用Flask的session来保存用户状态
-    #     return jsonify({'message': 'Login successful'}), 200
-    # else:
-    #     # 用户名不存在或密码错误
-    #     return jsonify({'message': 'Invalid username or password'}), 401
+    # 在数据库中查找用户
+    user = User.query.filter_by(username=username).first()
+
+    # if user and check_password_hash(user.password, password):
+    if user and user.password == password:
+        # 密码验证成功
+        session['UID'] = user.UID  # 使用Flask的session来保存用户状态
+        return jsonify({'message': 'Login successful'}), 200
+    else:
+        # 用户名不存在或密码错误
+        return jsonify({'message': 'Invalid username or password'}), 200
 
 
 @login.route('/register', methods=['POST'])
@@ -59,45 +48,40 @@ def register():
     email = data.get('email')
     status_str = data.get('status')
 
-    if username == 'zx' and password == '1!Aa' and email == '1@1.com' and status_str == 'DEPARTMENT_MANAGER':
-        return jsonify({'message': 'successful', 'target': 'department'}), 200
-    else:
-        return jsonify({'message': 'failed'}), 200
-    #
-    # if not all([username, password, email, status_str]):
-    #     return jsonify({'message': 'Missing registration information'}), 200
-    #
-    # if User.query.filter_by(username=username).first():
-    #     return jsonify({'message': 'Username already exists'}), 200
-    #
-    # try:
-    #     # 将状态字符串转换为枚举
-    #     status = UserStatus[status_str]
-    #
-    #     department_id = None
-    #     if status == UserStatus.DEPARTMENT_MANAGER:
-    #         department_name = data.get('departmentName')
-    #         department = Department.query.filter_by(departmentName=department_name).first()
-    #         if not department:
-    #             return jsonify({'message': 'Invalid department name'}), 400
-    #         department_id = department.DID
-    #
-    #     new_user = User(
-    #         username=username,
-    #         password=generate_password_hash(password),
-    #         email=email,
-    #         status=status,
-    #         departmentID=department_id
-    #     )
-    #
-    #     db.session.add(new_user)
-    #     db.session.commit()
-    #     return jsonify({'message': 'User registered successfully'}), 201
-    # except KeyError:
-    #     return jsonify({'message': 'Invalid user status'}), 400
-    # except SQLAlchemyError as e:
-    #     db.session.rollback()
-    #     return jsonify({'message': 'Registration failed', 'error': str(e)}), 500
+    if not all([username, password, email, status_str]):
+        return jsonify({'message': 'Missing registration information'}), 200
+
+    if User.query.filter_by(username=username).first():
+        return jsonify({'message': 'Username already exists'}), 200
+
+    try:
+        # 将状态字符串转换为枚举
+        status = UserStatus[status_str]
+
+        department_id = None
+        if status == UserStatus.DEPARTMENT_MANAGER:
+            department_name = data.get('departmentName')
+            department = Department.query.filter_by(departmentName=department_name).first()
+            if not department:
+                return jsonify({'message': 'Invalid department name'}), 200
+            department_id = department.DID
+
+        new_user = User(
+            username=username,
+            password=generate_password_hash(password),
+            email=email,
+            status=status,
+            departmentID=department_id
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User registered successfully'}), 200
+    except KeyError:
+        return jsonify({'message': 'Invalid user status'}), 200
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'message': 'Registration failed', 'error': str(e)}), 200
 
 
 @login.route('/forget', methods=['POST'])

@@ -92,8 +92,8 @@ class User(db.Model):
     password = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     status = Column(SQLEnum(UserStatus), nullable=False)
-    departmentID = db.Column(db.Integer, nullable=True)
-    department = db.relationship('Department', back_populates='users')
+    department_id = db.Column(db.Integer, db.ForeignKey('department.DID'))
+    department = db.relationship('Department', backref=db.backref('user', uselist=False), lazy=True)
 
 
 class Department(db.Model):
@@ -102,9 +102,6 @@ class Department(db.Model):
     departmentName = db.Column(db.String(200), nullable=False)
     departmentType = db.Column(SQLEnum(DepartmentType), nullable=False)
     departmentAddress = db.Column(db.String(500), nullable=False)
-    managerId = db.Column(db.Integer, nullable=True)
-    manager = db.relationship('User', backref='managed_department', lazy=True)
-
 
 
 class Waste(db.Model):  # 产生的废物映射部门种类
