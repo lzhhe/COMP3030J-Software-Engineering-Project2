@@ -46,17 +46,15 @@ def register():
     username = data.get('username')
     password = data.get('password')
     email = data.get('email')
-    status_str = data.get('status')
+    status = data.get('status')
 
-    if not all([username, password, email, status_str]):
+    if not all([username, password, email,status]):
         return jsonify({'message': 'Missing registration information'}), 200
 
     if User.query.filter_by(username=username).first():
         return jsonify({'message': 'Username already exists'}), 200
 
     try:
-        # 将状态字符串转换为枚举
-        status = UserStatus[status_str]
 
         department_id = None
         if status == UserStatus.DEPARTMENT_MANAGER:
