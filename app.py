@@ -25,7 +25,7 @@ babel.init_app(app, locale_selector=get_locale)
 # 并且是确保用户登录后才能访问某些界面，否则会重定向到登录页面
 @app.before_request
 def my_before():
-    uid = session.get('uid')
+    uid = session.get('UID')
     if uid:
         user = db.session.get(User, uid)
         setattr(g, 'user', user)

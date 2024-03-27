@@ -36,9 +36,12 @@
                 {{ _("Three types:") }}
                 <select id="status">
                     <option value="default" disabled>{{ _("Choose…") }}</option>
-                    <option value="DEPARTMENT_MANAGER" data-translation="{{ _("Department Manager") }}">{{ _("Development") }}</option>
-                    <option value="GOVERNMENT_MANAGER" data-translation="{{ _("Government Manager") }}">{{ _("Government") }}</option>
-                    <option value="INDIVIDUAL_USER" data-translation="{{ _("Individual User") }}">{{ _("Individual user") }}</option>
+                    <option value="DEPARTMENT_MANAGER"
+                            data-translation="{{ _("Department Manager") }}">{{ _("Development") }}</option>
+                    <option value="GOVERNMENT_MANAGER"
+                            data-translation="{{ _("Government Manager") }}">{{ _("Government") }}</option>
+                    <option value="INDIVIDUAL_USER"
+                            data-translation="{{ _("Individual User") }}">{{ _("Individual user") }}</option>
                 </select>
             </label>
         </p>
@@ -345,10 +348,9 @@
     const identityDiv = document.getElementById('identity');
     const confirmBtn = document.getElementById('confirmBtn');
     confirmBtn.addEventListener('click', () => {
-    const selectedOption = statusSelect.options[statusSelect.selectedIndex];
+        const selectedOption = statusSelect.options[statusSelect.selectedIndex];
         identityDiv.textContent = selectedOption.getAttribute('data-translation');
-});
-
+    });
 
 
     // 假设有一个按钮用于打开对话框
@@ -374,12 +376,12 @@
                     console.log(response);
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'Login successful') {
-                        const target = response.target;
-                        if (target === 'department') {
+                        const target = response.status;
+                        if (target === 'DEPARTMENT_MANAGER') {
                             window.location.href = departmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'government') {
+                        } else if (target === 'GOVERNMENT_MANAGER') {
                             window.location.href = governmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'waste') {
+                        } else if (target === 'WASTE_MANAGER') {
                             window.location.href = wasteUrl;  // 登录成功后的重定向
                         } else {
                             window.location.href = individualUrl;  // 登录成功后的重定向

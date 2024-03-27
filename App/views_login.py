@@ -34,7 +34,7 @@ def log():
     if user and user.password == password:
         # 密码验证成功
         session['UID'] = user.UID  # 使用Flask的session来保存用户状态
-        return jsonify({'message': 'Login successful'}), 200
+        return jsonify({'message': 'Login successful', 'status': user.status.name}), 200
     else:
         # 用户名不存在或密码错误
         return jsonify({'message': 'Invalid username or password'}), 200
