@@ -36,9 +36,9 @@
                 {{ _("Three types:") }}
                 <select id="status">
                     <option value="default" disabled>{{ _("Choose…") }}</option>
-                    <option value="DEPARTMENT_MANAGER">{{ _("Development") }}</option>
-                    <option value="GOVERNMENT_MANAGER">{{ _("Government") }}</option>
-                    <option value="INDIVIDUAL_USER">{{ _("Individual user") }}</option>
+                    <option value="DEPARTMENT_MANAGER" data-translation="{{ _("Department Manager") }}">{{ _("Development") }}</option>
+                    <option value="GOVERNMENT_MANAGER" data-translation="{{ _("Government Manager") }}">{{ _("Government") }}</option>
+                    <option value="INDIVIDUAL_USER" data-translation="{{ _("Individual User") }}">{{ _("Individual user") }}</option>
                 </select>
             </label>
         </p>
@@ -48,6 +48,8 @@
         </div>
     </form>
 </dialog>
+<span id="showPasswordText" style="display:none;">{{ _("Show Password") }}</span>
+<span id="hidePasswordText" style="display:none;">{{ _("Hide Password") }}</span>
 
 
 <!-- Main login container -->
@@ -187,6 +189,8 @@
     const special = document.getElementById("special");
     const length = document.getElementById("length");
     let couldType = false;
+    const showText = document.getElementById("showPasswordText");
+    const hideText = document.getElementById("hidePasswordText");
 
     registerBtn.addEventListener("click", () => {
         clearFormFields();
@@ -239,10 +243,10 @@
     function changePasswordVisibility(passwordField, changeButton) {
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            changeButton.textContent = "Hide Password";
+            changeButton.textContent = hideText.textContent;
         } else {
             passwordField.type = "password";
-            changeButton.textContent = "Show Password";
+            changeButton.textContent = showText.textContent;
         }
     }
 
@@ -341,8 +345,10 @@
     const identityDiv = document.getElementById('identity');
     const confirmBtn = document.getElementById('confirmBtn');
     confirmBtn.addEventListener('click', () => {
-        identityDiv.textContent = statusSelect.value;
-    });
+    const selectedOption = statusSelect.options[statusSelect.selectedIndex];
+        identityDiv.textContent = selectedOption.getAttribute('data-translation');
+});
+
 
 
     // 假设有一个按钮用于打开对话框
