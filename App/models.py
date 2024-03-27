@@ -92,7 +92,7 @@ class User(db.Model):
     password = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     status = Column(SQLEnum(UserStatus), nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey('department.DID'))
+    department_id = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=True)
     department = db.relationship('Department', backref=db.backref('user', uselist=False), lazy=True)
 
 

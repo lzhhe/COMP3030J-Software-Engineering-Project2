@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-27 16:38+0800\n"
+"POT-Creation-Date: 2024-03-27 21:59+0800\n"
 "PO-Revision-Date: 2024-03-27 14:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
-
-#: views_login.py:36
-msgid "Login failed"
-msgstr "登录失败"
 
 #: templates/login.html:27
 msgid "Login Page"
@@ -38,166 +34,177 @@ msgstr "三种类型："
 msgid "Choose…"
 msgstr "选择..."
 
-#: templates/login.html:39
+#: templates/login.html:40
 msgid "Department Manager"
-msgstr "项目人员"
-
-#: templates/login.html:39
-msgid "Development"
-msgstr "项目人员"
+msgstr "部门人员"
 
 #: templates/login.html:40
+msgid "Development"
+msgstr "部门人员"
+
+#: templates/login.html:42
 #, fuzzy
 msgid "Government Manager"
 msgstr "政府人员"
 
-#: templates/login.html:40
+#: templates/login.html:42
 msgid "Government"
 msgstr "政府人员"
 
-#: templates/login.html:41
+#: templates/login.html:44
+msgid "Waste Manager"
+msgstr "资源经理"
+
+#: templates/login.html:44
+msgid "Waste"
+msgstr "资源经理"
+
+#: templates/login.html:46
 #, fuzzy
 msgid "Individual User"
 msgstr "独立个体"
 
-#: templates/login.html:41
+#: templates/login.html:46
 msgid "Individual user"
 msgstr "独立个体"
 
-#: templates/login.html:46
+#: templates/login.html:51
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/login.html:47
+#: templates/login.html:52
 msgid "Confirm"
 msgstr "确认"
 
-#: templates/login.html:51 templates/login.html:78 templates/login.html:105
+#: templates/login.html:56 templates/login.html:83 templates/login.html:110
 msgid "Show Password"
 msgstr "展示密码"
 
-#: templates/login.html:52
+#: templates/login.html:57
 msgid "Hide Password"
 msgstr "隐藏密码"
 
-#: templates/login.html:64
+#: templates/login.html:69
 msgid "Create Account"
 msgstr "创建一个新账户"
 
-#: templates/login.html:66
+#: templates/login.html:71
 msgid "by use your email for registering"
 msgstr "通过邮箱注册"
 
-#: templates/login.html:69 templates/login.html:93 templates/login.html:156
+#: templates/login.html:74 templates/login.html:98 templates/login.html:161
 msgid "Username"
 msgstr "用户名"
 
-#: templates/login.html:70 templates/login.html:160
+#: templates/login.html:75 templates/login.html:165
 msgid "Email"
 msgstr "邮箱"
 
-#: templates/login.html:74 templates/login.html:97
+#: templates/login.html:79 templates/login.html:102
 msgid "Password"
 msgstr "密码"
 
-#: templates/login.html:80
+#: templates/login.html:85
 msgid "Choose one identity?"
 msgstr "选择一个身份？"
 
-#: templates/login.html:82
+#: templates/login.html:87
 msgid "Register"
 msgstr "注册"
 
-#: templates/login.html:90
+#: templates/login.html:95
 msgid "Enter System"
 msgstr "进入系统"
 
-#: templates/login.html:92
+#: templates/login.html:97
 msgid "by use your username and password"
 msgstr "通过用户名和密码登录"
 
-#: templates/login.html:107
+#: templates/login.html:112
 msgid "Forget Your Password?"
 msgstr "忘记密码？"
 
-#: templates/login.html:109
+#: templates/login.html:114
 msgid "Login"
 msgstr "登录"
 
-#: templates/login.html:117
+#: templates/login.html:122
 msgid "Welcome Back!"
 msgstr "欢迎回来"
 
-#: templates/login.html:118
+#: templates/login.html:123
 msgid "Enter your personal details to use all site features"
 msgstr "输入个人信息以便使用全部功能"
 
-#: templates/login.html:119
+#: templates/login.html:124
 msgid "Switch to Login"
 msgstr "返回登录"
 
-#: templates/login.html:121
+#: templates/login.html:126
 msgid "Password must contain the following:"
 msgstr "密码必须包含以下字符："
 
-#: templates/login.html:122
+#: templates/login.html:127
 msgid "length from"
 msgstr "长度是"
 
-#: templates/login.html:124 templates/login.html:127 templates/login.html:130
-#: templates/login.html:132
+#: templates/login.html:129 templates/login.html:132 templates/login.html:135
+#: templates/login.html:137
 msgid "A"
 msgstr "一个"
 
-#: templates/login.html:124
+#: templates/login.html:129
 msgid "lowercase"
 msgstr "小写"
 
-#: templates/login.html:124 templates/login.html:127 templates/login.html:132
+#: templates/login.html:129 templates/login.html:132 templates/login.html:137
 msgid "letter"
 msgstr "字母"
 
-#: templates/login.html:127
+#: templates/login.html:132
 msgid "uppercase"
 msgstr "大写"
 
-#: templates/login.html:130
+#: templates/login.html:135
 msgid "number"
 msgstr "数字"
 
-#: templates/login.html:132
+#: templates/login.html:137
 msgid "special"
 msgstr "特殊"
 
-#: templates/login.html:139
+#: templates/login.html:144
 msgid "Hello Friend!"
 msgstr "朋友你好！"
 
-#: templates/login.html:140
+#: templates/login.html:145
 msgid "Register with your personal details to use all site features"
 msgstr "使用个人信息注册以便使用全部功能"
 
-#: templates/login.html:141
+#: templates/login.html:146
 msgid "Switch to Register"
 msgstr "前去注册"
 
-#: templates/login.html:157
+#: templates/login.html:162
 msgid "Enter Username"
 msgstr "输入用户名"
 
-#: templates/login.html:161
+#: templates/login.html:166
 msgid "Enter Email"
 msgstr "输入邮箱"
 
-#: templates/login.html:163
+#: templates/login.html:168
 msgid "New password"
 msgstr "输入新密码"
 
-#: templates/login.html:164
+#: templates/login.html:169
 msgid "Enter new password"
 msgstr "输入新密码"
 
-#: templates/login.html:167
+#: templates/login.html:172
 msgid "Retrieve Password"
 msgstr "重设密码"
+
+#~ msgid "Login failed"
+#~ msgstr "登录失败"
 

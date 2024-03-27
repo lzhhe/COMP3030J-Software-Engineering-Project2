@@ -48,7 +48,7 @@ def register():
     email = data.get('email')
     status = data.get('status')
 
-    if not all([username, password, email,status]):
+    if not all([username, password, email, status]):
         return jsonify({'message': 'Missing registration information'}), 200
 
     if User.query.filter_by(username=username).first():
@@ -56,25 +56,26 @@ def register():
 
     try:
 
-        department_id = None
-        if status == UserStatus.DEPARTMENT_MANAGER:
-            department_name = data.get('departmentName')
-            department = Department.query.filter_by(departmentName=department_name).first()
-            if not department:
-                return jsonify({'message': 'Invalid department name'}), 200
-            department_id = department.DID
+        # department_id = None
+        # if status == UserStatus.DEPARTMENT_MANAGER:
+        #     department_name = data.get('departmentName')
+        #     department = Department.query.filter_by(departmentName=department_name).first()
+        #     if not department:
+        #         return jsonify({'message': 'Invalid department name'}), 200
+        #     department_id = department.DID
 
         new_user = User(
             username=username,
-            password=generate_password_hash(password),
+            password=password,
             email=email,
             status=status,
-            departmentID=department_id
         )
 
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({'message': 'User registered successfully'}), 200
+        session['UID'] = new_user.UID  # 使用Flask的session来保存用户状态
+
+        return jsonify({'message': 'successful', 'status': status}), 200
     except KeyError:
         return jsonify({'message': 'Invalid user status'}), 200
     except SQLAlchemyError as e:

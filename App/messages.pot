@@ -2,11 +2,13 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-27 16:38+0800\n"
+"POT-Creation-Date: 2024-03-27 21:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,10 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
-
-#: views_login.py:36
-msgid "Login failed"
-msgstr ""
 
 #: templates/login.html:27
 msgid "Login Page"
@@ -35,164 +33,172 @@ msgstr ""
 msgid "Choose…"
 msgstr ""
 
-#: templates/login.html:39
+#: templates/login.html:40
 msgid "Department Manager"
 msgstr ""
 
-#: templates/login.html:39
+#: templates/login.html:40
 msgid "Development"
 msgstr ""
 
-#: templates/login.html:40
+#: templates/login.html:42
 msgid "Government Manager"
 msgstr ""
 
-#: templates/login.html:40
+#: templates/login.html:42
 msgid "Government"
 msgstr ""
 
-#: templates/login.html:41
-msgid "Individual User"
+#: templates/login.html:44
+msgid "Waste Manager"
 msgstr ""
 
-#: templates/login.html:41
-msgid "Individual user"
+#: templates/login.html:44
+msgid "Waste"
 msgstr ""
 
 #: templates/login.html:46
+msgid "Individual User"
+msgstr ""
+
+#: templates/login.html:46
+msgid "Individual user"
+msgstr ""
+
+#: templates/login.html:51
 msgid "Cancel"
 msgstr ""
 
-#: templates/login.html:47
+#: templates/login.html:52
 msgid "Confirm"
 msgstr ""
 
-#: templates/login.html:51 templates/login.html:78 templates/login.html:105
+#: templates/login.html:56 templates/login.html:83 templates/login.html:110
 msgid "Show Password"
 msgstr ""
 
-#: templates/login.html:52
+#: templates/login.html:57
 msgid "Hide Password"
 msgstr ""
 
-#: templates/login.html:64
+#: templates/login.html:69
 msgid "Create Account"
 msgstr ""
 
-#: templates/login.html:66
+#: templates/login.html:71
 msgid "by use your email for registering"
 msgstr ""
 
-#: templates/login.html:69 templates/login.html:93 templates/login.html:156
+#: templates/login.html:74 templates/login.html:98 templates/login.html:161
 msgid "Username"
 msgstr ""
 
-#: templates/login.html:70 templates/login.html:160
+#: templates/login.html:75 templates/login.html:165
 msgid "Email"
 msgstr ""
 
-#: templates/login.html:74 templates/login.html:97
+#: templates/login.html:79 templates/login.html:102
 msgid "Password"
 msgstr ""
 
-#: templates/login.html:80
+#: templates/login.html:85
 msgid "Choose one identity?"
 msgstr ""
 
-#: templates/login.html:82
+#: templates/login.html:87
 msgid "Register"
 msgstr ""
 
-#: templates/login.html:90
+#: templates/login.html:95
 msgid "Enter System"
 msgstr ""
 
-#: templates/login.html:92
+#: templates/login.html:97
 msgid "by use your username and password"
 msgstr ""
 
-#: templates/login.html:107
+#: templates/login.html:112
 msgid "Forget Your Password?"
 msgstr ""
 
-#: templates/login.html:109
+#: templates/login.html:114
 msgid "Login"
 msgstr ""
 
-#: templates/login.html:117
+#: templates/login.html:122
 msgid "Welcome Back!"
 msgstr ""
 
-#: templates/login.html:118
+#: templates/login.html:123
 msgid "Enter your personal details to use all site features"
 msgstr ""
 
-#: templates/login.html:119
+#: templates/login.html:124
 msgid "Switch to Login"
 msgstr ""
 
-#: templates/login.html:121
+#: templates/login.html:126
 msgid "Password must contain the following:"
 msgstr ""
 
-#: templates/login.html:122
+#: templates/login.html:127
 msgid "length from"
 msgstr ""
 
-#: templates/login.html:124 templates/login.html:127 templates/login.html:130
-#: templates/login.html:132
+#: templates/login.html:129 templates/login.html:132 templates/login.html:135
+#: templates/login.html:137
 msgid "A"
 msgstr ""
 
-#: templates/login.html:124
+#: templates/login.html:129
 msgid "lowercase"
 msgstr ""
 
-#: templates/login.html:124 templates/login.html:127 templates/login.html:132
+#: templates/login.html:129 templates/login.html:132 templates/login.html:137
 msgid "letter"
 msgstr ""
 
-#: templates/login.html:127
+#: templates/login.html:132
 msgid "uppercase"
 msgstr ""
 
-#: templates/login.html:130
+#: templates/login.html:135
 msgid "number"
 msgstr ""
 
-#: templates/login.html:132
+#: templates/login.html:137
 msgid "special"
 msgstr ""
 
-#: templates/login.html:139
+#: templates/login.html:144
 msgid "Hello Friend!"
 msgstr ""
 
-#: templates/login.html:140
+#: templates/login.html:145
 msgid "Register with your personal details to use all site features"
 msgstr ""
 
-#: templates/login.html:141
+#: templates/login.html:146
 msgid "Switch to Register"
 msgstr ""
 
-#: templates/login.html:157
+#: templates/login.html:162
 msgid "Enter Username"
 msgstr ""
 
-#: templates/login.html:161
+#: templates/login.html:166
 msgid "Enter Email"
 msgstr ""
 
-#: templates/login.html:163
+#: templates/login.html:168
 msgid "New password"
 msgstr ""
 
-#: templates/login.html:164
+#: templates/login.html:169
 msgid "Enter new password"
 msgstr ""
 
-#: templates/login.html:167
+#: templates/login.html:172
 msgid "Retrieve Password"
 msgstr ""
 

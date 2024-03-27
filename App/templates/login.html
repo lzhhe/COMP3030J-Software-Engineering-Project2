@@ -40,6 +40,8 @@
                             data-translation="{{ _("Department Manager") }}">{{ _("Development") }}</option>
                     <option value="GOVERNMENT_MANAGER"
                             data-translation="{{ _("Government Manager") }}">{{ _("Government") }}</option>
+                    <option value="WASTE_MANAGER"
+                            data-translation="{{ _("Waste Manager") }}">{{ _("Waste") }}</option>
                     <option value="INDIVIDUAL_USER"
                             data-translation="{{ _("Individual User") }}">{{ _("Individual user") }}</option>
                 </select>
@@ -421,7 +423,7 @@
                     console.log(response);
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'successful') {
-                        const target = response.target;
+                        const target = response.status;
                         if (target === 'department') {
                             window.location.href = departmentUrl;  // 登录成功后的重定向
                         } else if (target === 'government') {
