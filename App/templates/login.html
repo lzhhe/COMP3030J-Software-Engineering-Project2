@@ -166,7 +166,7 @@
             <input type="email" placeholder={{ _("Enter Email") }} id="find_email" name="find_email"/>
 
             <label for="find_password"><b>{{ _("New password") }}</b></label>
-            <input type="password" placeholder={{ _("Enter new password") }} id="find_password" name="find_password"/>
+            <input type="text" placeholder={{ _("Enter new password") }} id="find_password" name="find_password"/>
 
             {#            {{ form.find_form.find_email(placeholder="Enter Email",id="find_email") }}#}
             <button type="submit" id="findPassword">{{ _("Retrieve Password") }}</button>
@@ -399,7 +399,6 @@
                 }
             });
         });
-
         $('#signUpSubmitField').click(function () {
             const username = $('#signUpUsernameField').val();
             const email = $('#signUpEmailField').val();
@@ -445,6 +444,48 @@
             });
         });
     });
+
+    $('#findPassword').click(function () {
+            const username = $('#find_uname').val();
+            const password = $('#find_password').val();
+            const email = $('#find_email').val();
+
+            // 构造要发送的数据
+            const Data = {
+                username: username,
+                email: email,
+                password: password
+            };
+            // 使用 jQuery 发送 AJAX POST 请求
+            $.ajax({
+                url: forgetUrl,  // Flask 路由的 URL
+                type: 'POST',
+                contentType: 'application/json',  // 发送数据的格式
+                data: JSON.stringify(Data),  // 将 JavaScript 对象转换为字符串
+                dataType: 'json',  // 预期的服务器响应的数据类型
+                success: function (response) {
+                    console.log(response);
+                    if (response.message === 'successful') {
+                        const target = response.status;
+                        if (target === 'DEPARTMENT_MANAGER') {
+                            window.location.href = departmentUrl;  // 登录成功后的重定向
+                        } else if (target === 'GOVERNMENT_MANAGER') {
+                            window.location.href = governmentUrl;  // 登录成功后的重定向
+                        } else if (target === 'WASTE_MANAGER') {
+                            window.location.href = wasteUrl;  // 登录成功后的重定向
+                        } else {
+                            window.location.href = individualUrl;  // 登录成功后的重定向
+                        }
+                    } else {
+                        alert(response.message);  // 显示错误消息
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // 处理错误情况
+                    console.error("Error: " + status + " " + error);
+                }
+            });
+        });
 
 
 </script>

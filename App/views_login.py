@@ -87,14 +87,29 @@ def register():
 def forget():
     data = request.json
     username = data.get('username')
-    password = data.get('password')
     email = data.get('email')
+    password = data.get('password')
+    print(username, password, email)
+
+    if not username or not password or not email:
+        return jsonify({'message': 'Missing registration information'}), 200
+    else:
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return jsonify({'message': 'Invalid username'}), 200
+        elif user and email != user.email:
+            return jsonify({'message': 'Invalid email'}), 200
+        else:
+            user.password = password
+            db.session.commit()
+            session['UID'] = user.UID  # 使用Flask的session来保存用户状态
+            return jsonify({'message': 'successful', 'status': user.status.name}), 200
 
 
-@login.route('/logout', methods=['GET'])
+@login.route('/logout', methods=['POST'])
 def logout():
     session.pop('UID', None)
-    return jsonify({'message': 'Logout successful'}), 200
+    return render_template('login.html')
 
 
 # # 提供用户状态
