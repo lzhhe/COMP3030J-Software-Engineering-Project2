@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="{{ session.get('language', 'en') }}" data-theme="{{ session.get('theme', 'light') }}">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}WasteManger{% endblock %}</title>
@@ -12,7 +12,10 @@
     {% block extra_js %}{% endblock %}
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <script src="../../static/js/switch.js"></script>
-
+    <script>
+        const themeUrl = "{{ url_for('utils.switchTheme') }}";
+        const langUrl = "{{ url_for('utils.switchLanguage') }}";
+    </script>
 
 </head>
 <body>

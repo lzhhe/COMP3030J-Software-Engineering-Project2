@@ -473,5 +473,10 @@ dialog button:hover {
     opacity: 0.9; /* 透明度变化 */
 }
 
+#identity {
+    font-family: "Gen Jyuu Gothic Monospace Heavy", sans-serif;
+    font-size: 16px;
+}
+
 
 

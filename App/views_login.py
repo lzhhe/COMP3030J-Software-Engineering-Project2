@@ -2,6 +2,7 @@ from datetime import datetime
 from functools import wraps
 
 from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
+from flask_babel import Babel, gettext as _
 from sqlalchemy import and_, or_
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -32,7 +33,7 @@ def log():
     elif username == 'zx' and password == '4':
         return jsonify({'message': 'Login successful', 'target': 'waste'}), 200
     else:
-        return jsonify({'message': 'Login failed'}), 200
+        return jsonify({'message': _('Login failed')}), 200
 
     # if not username or not password:
     #     return jsonify({'message': 'Username and password are required'}), 400

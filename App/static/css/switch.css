@@ -52,6 +52,7 @@
 
 
 #languageSwitch .slider:before {
+    will-change: transform;
     position: absolute;
     content: "En";
     color: var(--sky1);
@@ -62,8 +63,11 @@
     left: 15%;
     bottom: 12%;
     transition: transform 0.5s, box-shadow 0.5s;
+    animation: fadeIn 0.6s;
 }
+
 #themeSwitch .slider:before {
+    will-change: transform;
     position: absolute;
     content: "";
     height: 1.4em;
@@ -79,14 +83,30 @@
 #themeSwitch input:checked + .slider {
     background-color: #000;
 }
+
 #languageSwitch input:checked + .slider:before {
     transform: translateX(100%);
-    content: "Zh";
+    content: "中";
     font-family: Modern Antiqua, sans-serif;
     color: var(--todoback);
     font-size: 1em;
+    animation: fadeIn 0.6s;
+
 }
+
 #themeSwitch input:checked + .slider:before {
     transform: translateX(100%);
     box-shadow: inset 8px -4px 0 0 #f8f8f4;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

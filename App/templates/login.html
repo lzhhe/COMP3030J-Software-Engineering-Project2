@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-
+<html lang="{{ session.get('language', 'en') }}" data-theme="{{ session.get('theme', 'light') }}">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -21,30 +20,31 @@
         const governmentUrl = "{{ url_for('government.index') }}";
         const individualUrl = "{{ url_for('individual.index') }}";
         const wasteUrl = "{{ url_for('waste.index') }}";
-        const utilsUrl = "{{ url_for('utils.switch') }}";
+        const themeUrl = "{{ url_for('utils.switchTheme') }}";
+        const langUrl = "{{ url_for('utils.switchLanguage') }}";
     </script>
 
-    <title>Login Page</title>
+    <title>{{ _("Login Page") }}</title>
 </head>
 
 <body>
 <dialog id="myDialog">
-    <h2>Choose your identity</h2>
+    <h2>{{ _("Choose your identity") }}</h2>
     <form method="dialog">
         <p>
             <label>
-                Three types:
+                {{ _("Three types:") }}
                 <select id="status">
-                    <option value="default" disabled>Choose…</option>
-                    <option value="DEPARTMENT_MANAGER">Development</option>
-                    <option value="GOVERNMENT_MANAGER">Government</option>
-                    <option value="INDIVIDUAL_USER">Individual user</option>
+                    <option value="default" disabled>{{ _("Choose…") }}</option>
+                    <option value="DEPARTMENT_MANAGER">{{ _("Development") }}</option>
+                    <option value="GOVERNMENT_MANAGER">{{ _("Government") }}</option>
+                    <option value="INDIVIDUAL_USER">{{ _("Individual user") }}</option>
                 </select>
             </label>
         </p>
         <div class="dialog-buttons">
-            <button type="button" id="closeDialog">Cancel</button>
-            <button type="submit" id="confirmBtn">Confirm</button>
+            <button type="button" id="closeDialog">{{ _("Cancel") }}</button>
+            <button type="submit" id="confirmBtn">{{ _("Confirm") }}</button>
         </div>
     </form>
 </dialog>
@@ -59,25 +59,25 @@
         <!-- 可以url -->
         <!-- 可以直接路由名 -->
         <form id="registerForm" method="post">
-            <h1>Create Account</h1>
+            <h1>{{ _("Create Account") }}</h1>
             <div class="information"></div>
-            <span style="text-align: center" class="remind">by use your email for registering<br>
+            <span style="text-align: center" class="remind">{{ _("by use your email for registering") }}<br>
             password needs [a-z], [A-Z], [0-9] and [@$!%*?&#]</span>
 
-            <input type="text" placeholder="Username" id="signUpUsernameField" name="signUpUsernameField"/>
-            <input type="email" placeholder="Email" id="signUpEmailField" name="signUpEmailField"/>
+            <input type="text" placeholder={{ _("Username") }} id="signUpUsernameField" name="signUpUsernameField"/>
+            <input type="email" placeholder={{ _("Email") }} id="signUpEmailField" name="signUpEmailField"/>
 
             <input
                     type="password"
-                    placeholder="Password"
-                    id="signUpPasswordField"
+                    placeholder={{ _("Password") }}
+                            id="signUpPasswordField"
                     name="signUpPasswordField"
             />
-            <button type="button" id="changeSignUpPassword" class="show">Show Password</button>
+            <button type="button" id="changeSignUpPassword" class="show">{{ _("Show Password") }}</button>
             <a href="#" class="findPassword" onclick=showDialog()>
-                Choose one identity?
+                {{ _("Choose one identity?") }}
             </a>
-            <button type="button" id="signUpSubmitField">Register</button>
+            <button type="button" id="signUpSubmitField">{{ _("Register") }}</button>
             <h3 id="identity"></h3>
         </form>
     </div>
@@ -85,26 +85,26 @@
     <!-- Login form container -->
     <div class="form-container sign-in">
         <form id="loginForm" method="post">
-            <h1>Enter System</h1>
+            <h1>{{ _("Enter System") }}</h1>
             <div class="information"></div>
-            <span class="remind">by use your username and password</span>
-            <input type="text" placeholder="Username" id="signInUsernameField" name="signInUsernameField"/>
+            <span class="remind">{{ _("by use your username and password") }}</span>
+            <input type="text" placeholder={{ _("Username") }} id="signInUsernameField" name="signInUsernameField"/>
 
             <input
                     type="password"
-                    placeholder="Password"
-                    id="signInPasswordField"
+                    placeholder={{ _("Password") }}
+                            id="signInPasswordField"
                     name="signInPasswordField"
             />
 
             {#            {{ form.login_form.login_username(placeholder="Username",id="signInUsernameField") }}#}
             {#            {{ form.login_form.login_password(placeholder="Password",id="signInPasswordField") }}#}
 
-            <button type="button" id="changeSignInPassword" class="show">Show Password</button>
+            <button type="button" id="changeSignInPassword" class="show">{{ _("Show Password") }}</button>
             <a href="#" class="findPassword" onclick="document.getElementById('getPassword').style.display='block'">
-                Forget Your Password?
+                {{ _("Forget Your Password?") }}
             </a>
-            <button type="button" id="signInSubmitField">Login</button>
+            <button type="button" id="signInSubmitField">{{ _("Login") }}</button>
         </form>
     </div>
 
@@ -112,28 +112,31 @@
     <div class="change-container">
         <div class="change">
             <div class="change-panel change-left">
-                <h1>Welcome Back!</h1>
-                <p>Enter your personal details to use all site features</p>
-                <button class="hidden" id="login">Switch to Login</button>
+                <h1>{{ _("Welcome Back!") }}</h1>
+                <p>{{ _("Enter your personal details to use all site features") }}</p>
+                <button class="hidden" id="login">{{ _("Switch to Login") }}</button>
                 <div id="register-message">
-                    <span>Password must contain the following:</span> <br>
-                    <div id="length" class="invalid remind">length from <b>4</b> to <b>20</b></div>
+                    <span>{{ _("Password must contain the following:") }}</span> <br>
+                    <div id="length" class="invalid remind">{{ _("length from") }} <b>4</b> - <b>20</b></div>
                     <br>
-                    <div id="letter" class="invalid remind">A <b>lowercase</b> letter</div>
+                    <div id="letter" class="invalid remind">{{ _("A") }} <b>{{ _("lowercase") }}</b> {{ _("letter") }}
+                    </div>
                     <br>
-                    <div id="capital" class="invalid remind">A <b>uppercase</b> letter</div>
+                    <div id="capital" class="invalid remind">{{ _("A") }} <b>{{ _("uppercase") }}</b> {{ _("letter") }}
+                    </div>
                     <br>
-                    <div id="number" class="invalid remind">A <b>number</b></div>
+                    <div id="number" class="invalid remind">{{ _("A") }} <b>{{ _("number") }}</b></div>
                     <br>
-                    <div id="special" class="invalid remind">A <b>special</b> letter</div>
+                    <div id="special" class="invalid remind">{{ _("A") }} <b>{{ _("special") }}</b> {{ _("letter") }}
+                    </div>
                     <br>
                 </div>
             </div>
 
             <div class="change-panel change-right">
-                <h1>Hello Friend!</h1>
-                <p>Register with your personal details to use all site features</p>
-                <button class="hidden" id="register">Switch to Register</button>
+                <h1>{{ _("Hello Friend!") }}</h1>
+                <p>{{ _("Register with your personal details to use all site features") }}</p>
+                <button class="hidden" id="register">{{ _("Switch to Register") }}</button>
             </div>
         </div>
     </div>
@@ -148,18 +151,18 @@
             <img src="../static/image/forgetHead.png" alt="头像" class="avatar"/>
         </div>
         <div class="find-container">
-            <label for="find_uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" id="find_uname" name="find_uname"/>
+            <label for="find_uname"><b>{{ _("Username") }}</b></label>
+            <input type="text" placeholder={{ _("Enter Username") }} id="find_uname" name="find_uname"/>
 
             {#            {{ form.find_form.find_username(placeholder="Enter Username" ,id="find_uname") }}#}
-            <label for="find_email"><b>Email</b></label>
-            <input type="email" placeholder="Enter Email" id="find_email" name="find_email"/>
+            <label for="find_email"><b>{{ _("Email") }}</b></label>
+            <input type="email" placeholder={{ _("Enter Email") }} id="find_email" name="find_email"/>
 
-            <label for="find_password"><b>New password</b></label>
-            <input type="password" placeholder="Enter new password" id="find_password" name="find_password"/>
+            <label for="find_password"><b>{{ _("New password") }}</b></label>
+            <input type="password" placeholder={{ _("Enter new password") }} id="find_password" name="find_password"/>
 
             {#            {{ form.find_form.find_email(placeholder="Enter Email",id="find_email") }}#}
-            <button type="submit" id="findPassword">Retrieve Password</button>
+            <button type="submit" id="findPassword">{{ _("Retrieve Password") }}</button>
         </div>
     </form>
 </div>

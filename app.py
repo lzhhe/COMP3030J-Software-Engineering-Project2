@@ -12,9 +12,13 @@ app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 babel = Babel(app)
 
 
-# @babel.localeselector
-# def get_locale():
-#     return request.accept_languages.best_match(['zh', 'en'])
+def get_locale():
+    # 检查用户是否通过界面选择了语言，并在 session 中存储了该选择
+    return session.get('language', request.accept_languages.best_match(['en']))
+
+
+babel.init_app(app, locale_selector=get_locale)
+
 
 #
 # 这一块是为了实现用户登录后，自动获取用户信息，并将其存储在全局变量g中，供模板文件使用
