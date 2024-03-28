@@ -137,16 +137,17 @@ class ProcessCapacity(db.Model):  # 处理能力
 class Order(db.Model):  # 工单
     __tablename__ = 'order'
     OID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 工单唯一ID
-    DID = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=False)  # 部门ID外键
+    UID = db.Column(db.Integer)
     date = db.Column(db.Date, default=datetime.utcnow, nullable=False)  # 工单日期，默认为当前日期
-    orderName = db.Column(db.String(100), nullable=False)  # 工单名称
+    orderName = db.Column(db.String(300), nullable=False)  # 工单名称
+    wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
     weight = db.Column(db.Integer, nullable=False)  # 废弃物重量
     attribution = db.Column(db.Text, nullable=False)  # 属性
     multiplier = db.Column(db.Integer, nullable=False, default=1)
     comment = db.Column(db.Text, nullable=True)  # 备注
     orderStatus = Column(SQLEnum(OrderStatus), nullable=False)  # 处理状态
     # 设置与Department表的关系
-    departmentID = db.relationship('Department', backref=db.backref('orders', lazy=True))
+    department = db.relationship('Department', backref=db.backref('orders', lazy=True))
 
     def __repr__(self):
         return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'

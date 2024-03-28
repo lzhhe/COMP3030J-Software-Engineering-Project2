@@ -56,14 +56,6 @@ def register():
 
     try:
 
-        # department_id = None
-        # if status == UserStatus.DEPARTMENT_MANAGER:
-        #     department_name = data.get('departmentName')
-        #     department = Department.query.filter_by(departmentName=department_name).first()
-        #     if not department:
-        #         return jsonify({'message': 'Invalid department name'}), 200
-        #     department_id = department.DID
-
         new_user = User(
             username=username,
             password=password,
