@@ -110,3 +110,15 @@
         opacity: 1;
     }
 }
+.languageSwitch_nav {
+    display: flex;
+    align-items: center;
+}
+
+.languageSwitch_nav span {
+    margin-right: 5px; /* Optional: Add margin between the span and input */
+}
+
+.languageSwitch_nav .icons {
+    vertical-align: middle; /* Align the image vertically in the middle */
+}
