@@ -358,7 +358,8 @@
     // 假设有一个按钮用于打开对话框
 
     $(document).ready(function () {
-        $('#signInSubmitField').click(function () {
+        $('#signInSubmitField').click(function (event) {
+            event.preventDefault();
             const username = $('#signInUsernameField').val();
             const password = $('#signInPasswordField').val();
 
@@ -399,7 +400,8 @@
                 }
             });
         });
-        $('#signUpSubmitField').click(function () {
+        $('#signUpSubmitField').click(function (event) {
+            event.preventDefault();
             const username = $('#signUpUsernameField').val();
             const email = $('#signUpEmailField').val();
             const password = $('#signUpPasswordField').val();
@@ -443,9 +445,8 @@
                 }
             });
         });
-    });
-
-    $('#findPassword').click(function () {
+        $('#findPassword').click(function (event) {
+            event.preventDefault();
             const username = $('#find_uname').val();
             const password = $('#find_password').val();
             const email = $('#find_email').val();
@@ -486,6 +487,7 @@
                 }
             });
         });
+    });
 
 
 </script>
