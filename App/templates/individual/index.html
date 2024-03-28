@@ -7,6 +7,9 @@
           rel="stylesheet">
     <link rel="shortcut icon" href="../../static/image/icon/skyline.png">
     <link rel="stylesheet" href="../../static/css/pico.conditional.min.css">
+    <link rel="stylesheet" href="../../static/css/colors.css"/>
+    <link rel="stylesheet" href="../../static/css/switch.css"/>
+    <link rel="stylesheet" href="../../static/css/index.css"/>
 
     {% block extra_css %}{% endblock %}
     {% block extra_js %}{% endblock %}
@@ -23,5 +26,7 @@
 {% if user %}
     <h2>{{ user.username }}</h2>
 {% endif %}
+<img src="../../static/image/icon/try.svg" alt="" class="icons">
+{% include 'switch.html' %}
 </body>
 </html>
