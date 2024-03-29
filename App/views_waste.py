@@ -46,9 +46,6 @@ def orderList():
     return jsonify(order_list)
 
 
-
-
-
 @waste.route('/confirm', methods=['POST'])
 def confirm():
     data = request.get_json()
@@ -91,6 +88,7 @@ def process():
             return jsonify({"message": f"This order ({order.OID})has not confirmed yet "})
 
         else:
+            multiplier = order.multiplier
 
             wasteType = order.wasteType
             weight = order.weight
@@ -100,12 +98,43 @@ def process():
             maxCapacity = processCapacity.maxCapacity
             currentCapacity = processCapacity.currentCapacity
 
-            if currentCapacity + weight <= maxCapacity:
-                order.orderStatus = OrderStatus.CONFIRM
+            if currentCapacity + weight * multiplier <= maxCapacity:  # 增加处理能力占用倍率
+                order.orderStatus = OrderStatus.PROCESSING
                 db.session.commit()
                 return jsonify({"message": "Order will be in process"}), 200
             else:
                 return jsonify({
-                                   "message": f"The capacity of this type ({wasteType}) is overload if add this order into process"}), 200
+                    "message": f"The capacity of this type ({wasteType}) is overload if add this order into process"}), 200
     else:
         return jsonify({"error": "Order not found"}), 200
+
+
+@waste.route('/finish', methods=['POST'])
+def finish():
+    data = request.get_json()
+    OID = data.get('OID')
+    if OID is None:
+        return jsonify({"error": "Missing OID in request"}), 200
+    order = Order.query.filter_by(OID=OID).first()
+    if order:
+        if order.orderStatus != OrderStatus.PROCESSING:
+            return jsonify({"message": f"This order ({order.OID}) has not been in processing yet "})
+
+        else:
+
+            order.orderStatus = OrderStatus.FINISHED
+            db.session.commit()
+            return jsonify({"message": f"This order status ({order.OID}) has been changed to finish "})
+
+    else:
+        return jsonify({"error": "Order not found"}), 200
+
+
+@waste.route('/modifyMultiplier', methods=['POST'])
+def modifyMultiplier():
+    data = request.get_json()
+    OID = data.get('OID')
+    newMultiplier = data.get('multiplier')
+    order = Order.query.filter_by(OID=OID).first()
+    order.multiplier = newMultiplier
+    db.session.commit()

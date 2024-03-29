@@ -15,8 +15,8 @@ class DepartmentType(Enum):
     AUTOMATION_SYSTEM = auto()  # 自动化系统
     MAINTENANCE = auto()  # 设备维护
     LABORATORY = auto()  # 实验室
-    DATA_CENTER = auto()  # 行政
-    OFFICE = auto()  # 数据中心
+    DATA_CENTER = auto()  # 数据中心
+    OFFICE = auto()  # 行政
 
 
 @unique
@@ -72,8 +72,9 @@ class WasteSource(Enum):
 class OrderStatus(Enum):
     UNCONFIRMED = auto()  # 未确认
     CONFIRM = auto()  # 确认
-    UNPROCESSED = auto()  # 未处理
+    STORAGE = auto() # 已经储存
     PROCESSING = auto()  # 处理中
+    FINISHED = auto()
     DISCHARGED = auto()  # 已排放
 
 
