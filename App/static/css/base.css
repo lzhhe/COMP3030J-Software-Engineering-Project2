@@ -1,6 +1,10 @@
 body{
     min-height: 100vh;
-    background-color: var(--meun);
+    background-color: #e5e7e9;
+}
+
+body .dark{
+    background-color: var(--color-ddd);
 }
 .icon-dark {
     filter: invert(1) hue-rotate(180deg);
@@ -10,7 +14,7 @@ nav{
     top: 0;
     left: 0;
     height: 100%;
-    width: 250px;
+    width: 210px;
     padding: 10px 14px;
     background-color: var(--background_base_nav);
 }
@@ -23,7 +27,7 @@ nav .logo-name{
 nav .logo-name #logo_name {
     font-size: 22px;
     font-weight: 500;
-    color:var();
+    color:var(--admin-back);
     margin-left: 14px;
 }
 
@@ -63,13 +67,14 @@ nav .menu-items{
 
 .menu-items .mode-toggle{
     position: absolute;
-    right: 14px;
+    right: 10px;
     height: 50px;
     min-width: 45px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color: var(--background_meun_nav);
+    justify-content: center;
+    /*background-color: var(--background_base_nav_logoName);*/
 }
 .mode-toggle .switch{
     position: relative;
@@ -77,18 +82,19 @@ nav .menu-items{
     width: 40px;
     height: 22px;
     border-radius: 25px;
-    background-color: var(--background_meun_nav);
+    background-color: black;
 }
 
-.switch{
-    position: absolute;
+.switch:before{
     content: "";
-    height: 15px;
-    width: 15px;
+    position: absolute;
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    background-color: var(--meun);
+    height: 15px;
+    width: 15px;
+    border-radius: 70%;
+    background-color: tan;
 }
 
 .nav-links li a:hover:before {
