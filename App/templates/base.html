@@ -1,76 +1,409 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ session.get('language', 'en') }}" data-theme="{{ session.get('theme', 'light') }}">
 <head>
-    <meta charset="UTF-8">
-    <script src="../static/js/switch.js"></script>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googlefonts.cn/css?family=Do+Hyeon|Libre+Baskerville|Merriweather|Modern+Antiqua|Roboto+Slab|Slabo+27px|Ubuntu"
+          rel="stylesheet">
     <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/colors.css">
     <link rel="stylesheet" href="../static/css/switch.css"/>
+    <link rel="stylesheet" href="../static/css/utils/hover-min.css"/>
+    <link rel="stylesheet" href="../static/css/pico.conditional.min.css"/>
+    <style>
+        .underline {
+            cursor: pointer;
+            background: linear-gradient(to right, #82b7a3, #67a7d1) no-repeat right bottom;
+            background-size: 0 2px;
+            transition: background-size .6s;
+        }
+
+        .underline:hover {
+            background-size: 100% 2px;
+            background-position-x: left;
+        }
+
+        .icon-dark {
+            filter: invert(1) hue-rotate(180deg);
+        }
+    </style>
+    <script src="../static/js/switch.js"></script>
+    <script src="../static/js/jquery-3.7.1.min.js"></script>
+    <script src="../static/js/utils/apexcharts.min.js"></script>
     <title>Base</title>
 </head>
 <body>
-    <nav>
-        <div class="logo-name">
-            <div class="logo_image">
-                <img src="../static/image/icon/user%20(1).svg" alt="user_avatar" >
-            </div>
-            <span id="logo_name">user
-{#{% if user %}
-    <h2>{{ user.username }}</h2>
-{% endif %}#}
-            </span>
+<nav>
+    <div class="logo-name">
+        <div class="logo-img">
+            <img src="../static/image/icon/skyline.png" alt="logo">
         </div>
+        <span class="logo-text">Management System</span>
+    </div>
+    <div class="menu-items">
+        <ul class="nav-links">
+            <li class="underline"><a href="#">
+                <img src="../static/image/icon/home.svg" alt="home" class="icons icon-nav" title="Home"
+                     data-placement="right">
+                <span class="link-name">Home</span>
+            </a></li>
 
-        <div class="menu-items">
-            <ul class="nav-links">
-                <li><a href="#">
-                    <span>
-                     <img src="../static/image/icon/home.png" alt="" class="icons nav-icons">
-                    </span>
-                    <span class="link-name">link1</span></a>
-                </li>
-                 <li><a href="#">
-                    <span>
-                     <img src="../static/image/icon/government.png" alt="" class="icons nav-icons">
-                    </span>
-                    <span class="link-name">link2</span></a>
-                </li>
-                <li><a href="#">
-                    <span>
-                     <img src="../static/image/icon/individual.png" alt="" class="icons nav-icons">
-                    </span>
-                    <span class="link-name">link3</span></a>
-                </li>
-                <li><a href="#">
-                    <span>
-                     <img src="../static/image/icon/waste-restore.png" alt="" class="icons nav-icons">
-                    </span>
-                    <span class="link-name">link4</span></a>
-                </li>
+            <li class="underline"><a href="#">
+                <img src="../static/image/icon/analyze.svg" alt="home" class="icons icon-nav" title="Analyze">
+                <span class="link-name">Analyze</span>
+            </a></li>
 
-            </ul>
+            <li class="underline"><a href="#">
+                <img src="../static/image/icon/scene.svg" alt="home" class="icons icon-nav" title="Scene">
+                <span class="link-name">Scene</span>
+            </a></li>
 
-{# including the logout  and switch mode  #}
-        <ul class="switch-mode">
-            <li><a href="#LogOut">
-                <span>
-                 <img src="../static/image/icon/logout.png" alt="" class="icons nav-icons">
-                </span>
-                <span class="link-name">Logout</span></a>
-            </li>
-            <li class="mode">
-            <a href="#Switch">
-                <span>
-                 <img src="../static/image/icon/languageIcon.png" alt="" class="icons nav-icons">
-                </span>
-                <span class="link-name">Switch</span></a>
-                <div class="mode-toggle">
-                    <span class="switch"> </span>
-                </div>
-            </li>
+            <li class="underline"><a href="#">
+                <img src="../static/image/icon/details.svg" alt="home" class="icons icon-nav" title="Details">
+                <span class="link-name">Details</span>
+            </a></li>
+
+            <li class="underline"><a href="#">
+                <img src="../static/image/icon/resource.svg" alt="home" class="icons icon-nav" title="Resource">
+                <span class="link-name">Resource</span>
+            </a></li>
+
+            <li class="underline"><a href="#">
+                <img src="../static/image/icon/structure.svg" alt="home" class="icons icon-nav" title="Structure">
+                <span class="link-name">Structure</span>
+            </a></li>
         </ul>
-         </div>
-    </nav>
 
-<script src="../static/js/base.js"></script>
+        <ul class="logout-mod">
+            <li><a href="{{ url_for('login.logout') }}">
+                <img src="../static/image/icon/exit.svg" alt="exit" class="icons icon-nav">
+                <span class="link-name">Logout</span>
+            </a></li>
+
+        </ul>
+
+        {% include 'switch.html' %}
+    </div>
+</nav>
+
+<section class="dashboard">
+    <div class="top">
+        <img src="../static/image/icon/menu.svg" alt="menu" class="icon-menu icons sidebar-toggle">
+        <div class="search-box">
+            <label>
+                <img src="../static/image/icon/search.svg" alt="search" class="icons icon-search">
+                <input type="text" placeholder="Search...">
+            </label>
+        </div>
+        <img src="../static/image/forgetHead.png" alt="user" class="icon-user">
+    </div>
+
+    <div class="content">
+        {% block contents %}
+        {% endblock %}
+        <div class="content1">
+            <div class="content1-title">
+                <h1>Welcome to Management System</h1>
+            </div>
+            <div class="boxes">
+                <div class="box box1">
+                    <span class="box-text">Box 1</span>
+                    <span class="box-number">Number 1</span>
+                </div>
+                <div class="box box2">
+                    <span class="box-text">Box 2</span>
+                    <span class="box-number">Number 2</span>
+                </div>
+                <div class="box box3">
+                    <span class="box-text">Box 3</span>
+                    <span class="box-number">Number 3</span>
+                </div>
+                <div class="box box4">
+                    <span class="box-text">Box 4</span>
+                    <span class="box-number">Number 4</span>
+                </div>
+            </div>
+        </div>
+        <div class="content2">
+
+            <div class="content2-title">
+                <h1>Tables and Charts</h1>
+            </div>
+            <div class="tables">
+                <div class="table">
+                    <h2 class="table-title">Top 5 Products</h2>
+                    <div id="bar-chart"></div>
+                </div>
+                <div class="table">
+                    <h2 class="table-title">Purchase and Sales Orders</h2>
+                    <div id="area-chart"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+<script>
+    $(document).ready(function () {
+        // 你现有的点击事件逻辑
+        $('.sidebar-toggle').click(toggleSidebar);
+
+        // 监听窗口尺寸变化
+        $(window).resize(function () {
+            if ($(window).width() < 1000) {
+                setSidebar('75px', 0, 'none');
+            } else {
+                setSidebar('250px', 1, 'auto');
+            }
+        }).trigger('resize'); // 触发一次resize事件，以便在页面加载时应用适当的样式
+    });
+
+    function toggleSidebar() {
+        const currentWidth = getComputedStyle(document.documentElement).getPropertyValue('--nav-width').trim();
+        let newWidth = (currentWidth === '250px') ? '75px' : '250px';
+        setSidebar(newWidth, newWidth === '250px' ? 1 : 0, newWidth === '250px' ? 'auto' : 'none');
+    }
+
+    function setSidebar(width, opacity, pointerEvents) {
+        document.documentElement.style.setProperty('--nav-width', width);
+        $('.link-name, .logo-text, .switch-text').css({
+            opacity: opacity,
+            pointerEvents: pointerEvents
+        });
+    }
+
+    const barChartOptions = {
+        series: [
+            {
+                data: [10, 8, 6, 4, 2],
+                name: 'Products',
+            },
+        ],
+        chart: {
+            type: 'bar',
+            background: 'transparent',
+            height: 350,
+            toolbar: {
+                show: false,
+            },
+        },
+        colors: ['#2962ff', '#d50000', '#2e7d32', '#ff6d00', '#583cb3'],
+        plotOptions: {
+            bar: {
+                distributed: true,
+                borderRadius: 4,
+                horizontal: false,
+                columnWidth: '40%',
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        fill: {
+            opacity: 1,
+        },
+        grid: {
+            borderColor: '#55596e',
+            yaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+            xaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+        },
+        legend: {
+            labels: {
+                colors: '#f5f7ff',
+            },
+            show: true,
+            position: 'top',
+        },
+        stroke: {
+            colors: ['transparent'],
+            show: true,
+            width: 2,
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            theme: 'dark',
+        },
+        xaxis: {
+            categories: ['Laptop', 'Phone', 'Monitor', 'Headphones', 'Camera'],
+            title: {
+                style: {
+                    color: '#f5f7ff',
+                },
+            },
+            axisBorder: {
+                show: true,
+                color: '#55596e',
+            },
+            axisTicks: {
+                show: true,
+                color: '#55596e',
+            },
+            labels: {
+                style: {
+                    colors: '#f5f7ff',
+                },
+            },
+        },
+        yaxis: {
+            title: {
+                text: 'Count',
+                style: {
+                    color: '#f5f7ff',
+                },
+            },
+            axisBorder: {
+                color: '#55596e',
+                show: true,
+            },
+            axisTicks: {
+                color: '#55596e',
+                show: true,
+            },
+            labels: {
+                style: {
+                    colors: '#f5f7ff',
+                },
+            },
+        },
+    };
+
+    const barChart = new ApexCharts(
+        document.querySelector('#bar-chart'),
+        barChartOptions
+    );
+    barChart.render();
+
+    // AREA CHART
+    const areaChartOptions = {
+        series: [
+            {
+                name: 'Purchase Orders',
+                data: [31, 40, 28, 51, 42, 109, 100],
+            },
+            {
+                name: 'Sales Orders',
+                data: [11, 32, 45, 32, 34, 52, 41],
+            },
+        ],
+        chart: {
+            type: 'area',
+            background: 'transparent',
+            height: 350,
+            stacked: false,
+            toolbar: {
+                show: false,
+            },
+        },
+        colors: ['#00ab57', '#d50000'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        dataLabels: {
+            enabled: false,
+        },
+        fill: {
+            gradient: {
+                opacityFrom: 0.4,
+                opacityTo: 0.1,
+                shadeIntensity: 1,
+                stops: [0, 100],
+                type: 'vertical',
+            },
+            type: 'gradient',
+        },
+        grid: {
+            borderColor: '#55596e',
+            yaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+            xaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+        },
+        legend: {
+            labels: {
+                colors: '#f5f7ff',
+            },
+            show: true,
+            position: 'top',
+        },
+        markers: {
+            size: 6,
+            strokeColors: '#1b2635',
+            strokeWidth: 3,
+        },
+        stroke: {
+            curve: 'smooth',
+        },
+        xaxis: {
+            axisBorder: {
+                color: '#55596e',
+                show: true,
+            },
+            axisTicks: {
+                color: '#55596e',
+                show: true,
+            },
+            labels: {
+                offsetY: 5,
+                style: {
+                    colors: '#f5f7ff',
+                },
+            },
+        },
+        yaxis: [
+            {
+                title: {
+                    text: 'Purchase Orders',
+                    style: {
+                        color: '#f5f7ff',
+                    },
+                },
+                labels: {
+                    style: {
+                        colors: ['#f5f7ff'],
+                    },
+                },
+            },
+            {
+                opposite: true,
+                title: {
+                    text: 'Sales Orders',
+                    style: {
+                        color: '#f5f7ff',
+                    },
+                },
+                labels: {
+                    style: {
+                        colors: ['#f5f7ff'],
+                    },
+                },
+            },
+        ],
+        tooltip: {
+            shared: true,
+            intersect: false,
+            theme: 'dark',
+        },
+    };
+
+    const areaChart = new ApexCharts(
+        document.querySelector('#area-chart'),
+        areaChartOptions
+    );
+    areaChart.render();
+</script>
 </body>
 </html>

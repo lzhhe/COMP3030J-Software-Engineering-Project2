@@ -14,7 +14,7 @@ login = Blueprint('login', __name__)  # department is name of blueprint
 
 @login.route('/')
 def main():
-    return render_template('login.html')
+    return render_template('base.html')
 
 
 @login.route('/login', methods=['POST'])
@@ -98,7 +98,7 @@ def forget():
             return jsonify({'message': 'successful', 'status': user.status.name}), 200
 
 
-@login.route('/logout', methods=['POST'])
+@login.route('/logout', methods=['GET'])
 def logout():
     session.pop('UID', None)
     return render_template('login.html')

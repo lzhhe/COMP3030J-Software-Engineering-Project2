@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../static/css/login_style.css"/>
     <link rel="stylesheet" href="../static/css/colors.css"/>
     <link rel="stylesheet" href="../static/css/switch.css"/>
-    {#    <link rel="stylesheet" href="../static/css/pico.conditional.min.css">#}
+        <link rel="stylesheet" href="../static/css/pico.conditional.min.css">
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <script src="../static/js/jquery-3.7.1.min.js"></script>
     <script src="../static/js/switch.js"></script>
@@ -29,7 +29,7 @@
 
 <body>
 <dialog id="myDialog">
-    <h2>{{ _("Choose your identity") }}</h2>
+    <h3>{{ _("Choose your identity") }}</h3>
     <form method="dialog">
         <p>
             <label>
@@ -66,7 +66,7 @@
         <!-- 可以url -->
         <!-- 可以直接路由名 -->
         <form id="registerForm" method="post">
-            <h1>{{ _("Create Account") }}</h1>
+            <h2>{{ _("Create Account") }}</h2>
             <div class="information"></div>
             <span style="text-align: center" class="remind">{{ _("by use your email for registering") }}<br>
             password needs [a-z], [A-Z], [0-9] and [@$!%*?&#]</span>
@@ -92,7 +92,7 @@
     <!-- Login form container -->
     <div class="form-container sign-in">
         <form id="loginForm" method="post">
-            <h1>{{ _("Enter System") }}</h1>
+            <h2>{{ _("Enter System") }}</h2>
             <div class="information"></div>
             <span class="remind">{{ _("by use your username and password") }}</span>
             <input type="text" placeholder={{ _("Username") }} id="signInUsernameField" name="signInUsernameField"/>
@@ -173,8 +173,9 @@
         </div>
     </form>
 </div>
-
-{% include 'switch.html' %}
+<div id="switch-container">
+    {% include 'switch.html' %}
+</div>
 
 <script>
     const container = document.getElementById("login_container"),

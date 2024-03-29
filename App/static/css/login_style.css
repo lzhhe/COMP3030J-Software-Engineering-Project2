@@ -200,7 +200,7 @@ input:focus {
     height: auto;
     font-size: 6px;
     position: absolute;
-    bottom: 4%;
+    bottom: 2%;
     display: inline-block;
     visibility: hidden;
 }
@@ -208,7 +208,6 @@ input:focus {
 .valid {
     color: var(--login-valid);
     font-size: 10px;
-
 }
 
 /* 添加红色文本颜色和“x”； 要求错误时的图标 */
@@ -219,21 +218,21 @@ input:focus {
 
 #register-message span {
     position: relative;
-    padding-left: 30px; /* 提供左侧的空间来显示对号或错号 */
+    padding-left: 20px; /* 提供左侧的空间来显示对号或错号 */
 }
 
 /* 当span有.valid类时显示对号 */
 #register-message .valid:before {
     content: "\2714"; /* 对号 */
     position: absolute;
-    left: 30px; /* 您可以根据需要调整此值以固定到左侧的距离 */
+    left: 20px; /* 您可以根据需要调整此值以固定到左侧的距离 */
 }
 
 /* 当span有.invalid类时显示错号 */
 #register-message .invalid:before {
     content: "\2716"; /* 错号 */
     position: absolute;
-    left: 30px; /* 您可以根据需要调整此值以固定到左侧的距离 */
+    left: 20px; /* 您可以根据需要调整此值以固定到左侧的距离 */
 }
 
 /*移动一半，如果缺失了会不显示*/
@@ -395,6 +394,8 @@ img.avatar {
 .remind {
     font-family: Ubuntu, serif;
     font-size: 12px;
+    height: auto;
+    line-height: 1;
 }
 
 span.remind {
@@ -478,5 +479,10 @@ dialog button:hover {
     font-size: 16px;
 }
 
+#switch-container {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+}
 
 
