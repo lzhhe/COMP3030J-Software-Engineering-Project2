@@ -26,11 +26,7 @@
 
 body {
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: var(--nav-width) 1fr;
-    grid-template-areas:
-    'nav dashboard';
-    overflow: hidden;
+    max-width: 100vw;
     /*background-color: var(--primary-color);*/
 }
 
@@ -40,13 +36,22 @@ a {
 
 /*侧边导航栏所有内容*/
 nav {
-    grid-area: nav;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
     height: 100%;
     padding: 10px 14px;
     background-color: var(--panel-color);
     border-right: 2px solid var(--border-color);
     overflow-y: auto;
     overflow-x: hidden;
+    transition: var(--tran-05);
+}
+
+nav.close {
+    width: 75px;
+    transition: var(--tran-05);
 }
 
 nav .logo-name {
@@ -151,8 +156,15 @@ nav a {
     width: 3em;
 }
 
+nav.close .logo-text, nav.close .link-name, nav.close .switch-text {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .dashboard {
-    grid-area: dashboard;
+    position: relative;
+    left: 250px;
+    width: calc(100% - 250px);
     background-color: var(--panel-color);
     padding: 10px 14px;
     transition: var(--tran-05);
@@ -164,6 +176,12 @@ nav a {
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+nav.close ~ .dashboard {
+    left: 75px;
+    width: calc(100% - 75px);
+    transition: var(--tran-05);
 }
 
 
@@ -267,6 +285,36 @@ nav a {
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
 }
 
+
+@media screen and (max-width: 1000px) {
+    nav {
+        width: 75px;
+    }
+
+    nav.close {
+        width: 250px;
+    }
+
+    nav .logo-text, nav .link-name, nav .switch-text {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .dashboard {
+        left: 75px;
+        width: calc(100% - 75px);
+    }
+
+    nav.close .logo-text, nav.close .link-name, nav.close .switch-text {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    nav.close ~ .dashboard {
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+}
 
 @media screen and (max-width: 780px) {
     .content .boxes {

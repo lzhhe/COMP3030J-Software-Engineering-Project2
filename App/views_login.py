@@ -14,7 +14,7 @@ login = Blueprint('login', __name__)  # department is name of blueprint
 
 @login.route('/')
 def main():
-    return render_template('base.html')
+    return render_template('login.html')
 
 
 @login.route('/login', methods=['POST'])

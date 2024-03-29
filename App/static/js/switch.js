@@ -11,7 +11,6 @@ $(document).ready(function () {
         languageButton.prop('checked', true);
     }
 
-
     // 监听主题切换的点击事件
     themeButton.change(function () {
         const theme = themeButton.is(':checked') ? 'dark' : 'light';
