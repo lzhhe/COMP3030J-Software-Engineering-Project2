@@ -2,7 +2,7 @@ $(document).ready(function () {
     const themeButton = $('#themeSwitch input');
     const languageButton = $('#languageSwitch input');
     const html = $('html');
-
+    updateIconsTheme();
     if (html.attr('data-theme') === 'dark') {
         themeButton.prop('checked', true);
     }
@@ -17,6 +17,7 @@ $(document).ready(function () {
         const theme = themeButton.is(':checked') ? 'dark' : 'light';
         $.post(themeUrl, {theme: theme}, function () {
             html.attr('data-theme', theme);
+            updateIconsTheme();
         });
     });
 
@@ -28,4 +29,15 @@ $(document).ready(function () {
             location.reload();
         });
     });
+
+    // 当文档加载完毕时运行
+
+    function updateIconsTheme() {
+        // 检查data-theme属性的值
+        if (html.attr('data-theme') === 'dark') {
+            $('.icons').addClass('icon-dark');
+        } else {
+            $('.icons').removeClass('icon-dark');
+        }
+    }
 });

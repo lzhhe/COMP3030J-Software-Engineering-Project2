@@ -1,4 +1,23 @@
+:root {
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-02: all 0.2s ease;
+    --nav-width: 250px;
+}
+
 :root[data-theme="light"] {
+    --primary-color: #0e4bf1;
+    --panel-color: #f2f2f2;
+    --t-color: #000;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #ddd;
+    --box1-color: #4da3ff;
+    --box2-color: #ffe6ac;
+    --box3-color: #e7d1fc;
+    --title-icon-color: #fff;
+
+
     --sky1: #40A2E3;
     --sky2: #FFF6E9;
     --sky3: #BBE2EC;
@@ -129,9 +148,31 @@
     --tododelete: #f44336;
     --tododeletehover: #c9302c;
 
+    /*base */
+    --meun: #4a90e2;
+    --meun_item: white;
+    --meun_nav_text_light: black;
+    --background_meun_nav: red;
+    --background_base_nav: red;
+    --background_base_nav_logoName: #337ab7;
+    --i_light: white;
+    --nav_user: #333;
+
 }
 
 :root[data-theme="dark"] {
+    --primary-color: #3a3b3c;
+    --panel-color: #242526;
+    --t-color: #ccc;
+    --black-light-color: #ccc;
+    --border-color: #4d4c4c;
+    --toggle-color: #fff;
+    --box1-color: #3a3b3c;
+    --box2-color: #3a3c3c;
+    --box3-color: #3a3b3c;
+    --title-icon-color: #ccc;
+
+
     /* Sky */
     --sky1: #3075a3; /* 深天蓝 */
     --sky2: #b2a48b; /* 暗沙色 */
