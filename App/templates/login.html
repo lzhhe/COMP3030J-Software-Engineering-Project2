@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../static/css/login_style.css"/>
     <link rel="stylesheet" href="../static/css/colors.css"/>
     <link rel="stylesheet" href="../static/css/switch.css"/>
-        <link rel="stylesheet" href="../static/css/pico.conditional.min.css">
+    <link rel="stylesheet" href="../static/css/pico.conditional.min.css">
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <script src="../static/js/jquery-3.7.1.min.js"></script>
     <script src="../static/js/switch.js"></script>
@@ -360,7 +360,17 @@
 
     $(document).ready(function () {
         $('#signInSubmitField').click(function (event) {
-            event.preventDefault();
+            submitLoginForm();
+        });
+
+        $('#signInUsernameField, #signInPasswordField').keypress(function (event) {
+            if (event.which === 13) { // 检测是否按下回车键
+                event.preventDefault(); // 阻止默认的回车键行为
+                submitLoginForm(); // 执行提交动作
+            }
+        });
+
+        function submitLoginForm() {
             const username = $('#signInUsernameField').val();
             const password = $('#signInPasswordField').val();
 
@@ -400,7 +410,8 @@
                     console.error("Error: " + status + " " + error);
                 }
             });
-        });
+        }
+
         $('#signUpSubmitField').click(function (event) {
             event.preventDefault();
             const username = $('#signUpUsernameField').val();

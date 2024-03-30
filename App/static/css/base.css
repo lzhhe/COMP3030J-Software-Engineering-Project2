@@ -49,6 +49,17 @@ nav {
     transition: var(--tran-05);
 }
 
+i {
+    min-width: 40px;
+    font-weight: 550;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    margin-right: 20px;
+}
+
 nav.close {
     width: 75px;
     transition: var(--tran-05);
@@ -111,12 +122,16 @@ nav a {
 
 .menu-items a .link-name {
     color: var(--black-light-color);
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 550;
     transition: var(--tran-05);
 }
+/*控制图标的大小的，必须父子情况一致才能修改*/
+.menu-items a i {
+    font-size: 30px;
+}
 
-.nav-links a:hover .link-name {
+.nav-links a:hover .link-name, .nav-links a:hover .iconfont {
     color: var(--primary-color);
 }
 

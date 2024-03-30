@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="../static/css/colors.css">
     <link rel="stylesheet" href="../static/css/switch.css"/>
     <link rel="stylesheet" href="../static/css/utils/hover-min.css"/>
+    <link rel="stylesheet" href="../static/css/iconfont/iconfont.css"/>
     <link rel="stylesheet" href="../static/css/pico.conditional.min.css"/>
+    <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <style>
         .underline {
             cursor: pointer;
@@ -76,10 +78,20 @@
                 <img src="../static/image/icon/structure.svg" alt="home" class="icons icon-nav" title="Structure">
                 <span class="link-name">Structure</span>
             </a></li>
+
+            <li class="underline"><a href="#">
+                <i class="iconfont icon-shuju"></i>
+                <span class="link-name">Data</span>
+            </a></li>
+
+            <li class="underline"><a href="#">
+                <i class="iconfont icon-Setting"></i>
+                <span class="link-name">Setting</span>
+            </a></li>
         </ul>
 
         <ul class="logout-mod">
-            <li><a href="{{ url_for('login.logout') }}">
+            <li><a href="#" id="logoutButton">
                 <img src="../static/image/icon/exit.svg" alt="exit" class="icons icon-nav">
                 <span class="link-name">Logout</span>
             </a></li>
@@ -150,6 +162,26 @@
 </section>
 <script>
     $(document).ready(function () {
+        // 添加点击事件监听器
+        $('#logoutButton').click(function (event) {
+            // 阻止默认的链接点击行为
+            event.preventDefault();
+            // 弹出确认对话框
+            const confirmLogout = confirm("are you sure to logout？");
+            // 如果用户点击了确定按钮
+            if (confirmLogout) {
+                window.location.href = "{{ url_for('login.logout') }}";
+            }
+        });
+        $(document).keydown(function (event) {
+            if (event.which === 27) {
+                const confirmLogout = confirm("are you sure to logout？");
+                // 如果用户点击了确定按钮
+                if (confirmLogout) {
+                    window.location.href = "{{ url_for('login.logout') }}";
+                }
+            }
+        });
         // 你现有的点击事件逻辑
         const nav = document.querySelector('nav');
         $('.sidebar-toggle').click(function () {
