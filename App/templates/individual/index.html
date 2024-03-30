@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}WasteManger{% endblock %}</title>
-    <link href="https://fonts.googlefonts.cn/css?family=Do+Hyeon|Libre+Baskerville|Merriweather|Modern+Antiqua|Roboto+Slab|Slabo+27px|Ubuntu"
-          rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/fonts.css"/>
+
     <link rel="shortcut icon" href="../../static/image/icon/skyline.png">
     <link rel="stylesheet" href="../../static/css/pico.conditional.min.css">
     <link rel="stylesheet" href="../../static/css/colors.css"/>
     <link rel="stylesheet" href="../../static/css/switch.css"/>
-    <link rel="stylesheet" href="../../static/css/index.css"/>
 
     {% block extra_css %}{% endblock %}
     {% block extra_js %}{% endblock %}
@@ -19,6 +18,11 @@
         const themeUrl = "{{ url_for('utils.switchTheme') }}";
         const langUrl = "{{ url_for('utils.switchLanguage') }}";
     </script>
+    <style>
+        body {
+            font-family: Ubuntu, serif;
+        }
+    </style>
 
 </head>
 <body>

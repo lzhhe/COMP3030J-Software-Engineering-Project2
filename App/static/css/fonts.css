@@ -1,0 +1,29 @@
+@font-face {
+    font-family: HanaleiFill;
+    src: url('./font/HanaleiFill-Regular.ttf');
+}
+
+@font-face {
+    font-family: Merriweather;
+    src: url('./font/Merriweather-Regular.ttf');
+}
+
+@font-face {
+    font-family: Roboto Slab;
+    src: url('./font/RobotoSlab-Regular.ttf');
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url('./font/Ubuntu-Regular.ttf');
+}
+
+@font-face {
+    font-family: ModernAntiqua;
+    src: url('./font/ModernAntiqua-Regular.ttf');
+}
+
+@font-face {
+    font-family: LibreBaskerville;
+    src: url('./font/LibreBaskerville-Regular.ttf');
+}
