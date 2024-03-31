@@ -1,0 +1,49 @@
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 20px 10px;
+    list-style: none;
+    counter-reset: order;
+}
+
+.progress-bar > li {
+    counter-increment: order;
+    flex: auto;
+    display: flex;
+    align-items: center;
+    color: var(--todo1);
+}
+
+.progress-bar > li:last-child {
+    flex: none;
+}
+
+.progress-bar > li::before {
+    content: counter(order);
+    display: inline-block;
+    width: 1.4em;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid;
+    flex-shrink: 0;
+}
+
+.progress-bar > li:not(:last-child)::after {
+    content: "";
+    flex: 1;
+    margin: 0 1em;
+    border-bottom: 1px solid;
+    opacity: 0.8;
+}
+
+.progress-bar > li.active::before {
+    color: var(--panel-color);
+    background-color: var(--todo1);
+    border-color: var(--todo1);
+}
+
+.progress-bar > li.active::after, .progress-bar > li.active ~ li {
+    color: var(--t-color);
+}
+
