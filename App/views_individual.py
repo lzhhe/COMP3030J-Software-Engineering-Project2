@@ -12,4 +12,14 @@ individual = Blueprint('individual', __name__, url_prefix='/individual')  # indi
 
 @individual.route('/')
 def index():
-    return render_template('base.html')
+    return render_template('individual/dashboard.html')
+
+
+@individual.route('/dashboard')
+def dashboard():
+    return render_template('individual/dashboard.html')
+
+
+@individual.route('/todo')
+def todo():
+    return render_template('individual/todo.html')

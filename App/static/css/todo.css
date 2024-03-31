@@ -1,0 +1,260 @@
+.todoContainer {
+    background-color: var(--main-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px var(--shadow-1);
+    overflow-y: auto;
+    margin-top: 10px;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+.functions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.boxes1 {
+    height: calc(100vh - 250px);
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px 10px;
+    grid-auto-flow: row;
+    grid-template-areas: ". . .";
+    width: 100%;
+    box-shadow: 0 2px 4px 0 var(--changeViewDrop-shadow);
+    margin-top: 60px;
+}
+
+.box1 {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.droppable {
+    flex: 1;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    overflow-y: auto;
+    height: 60vh;
+    box-shadow: 4px 4px 6px var(--shadow-1);
+}
+
+.todo .droppable {
+    background: linear-gradient(45deg, var(--todo1), var(--todo2));
+}
+
+.doing .droppable {
+    background: linear-gradient(45deg, var(--doing1), var(--doing2));
+}
+
+.done .droppable {
+    background: linear-gradient(45deg, var(--done1), var(--done2));
+}
+
+.draggable {
+    margin: 1rem 0;
+    line-height: 200%;
+    cursor: move;
+    overflow: hidden;
+    align-items: center;
+    font-size: x-large;
+    color: var(--draggable-text);
+    background-color: var(--draggable-backgound);
+    transition: 500ms;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-bottom: 3px solid; /* Solid border, you can change it to `dotted`, `dashed`, etc. */
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+    transition-duration: 500ms;
+
+}
+
+.draggable::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.draggable .content {
+    overflow-x: auto;
+    float: left;
+}
+
+.draggable .button-container {
+    float: right;
+}
+
+.draggable:hover {
+    scale: 105%;
+    transition-duration: 500ms;
+}
+
+.dragging {
+    scale: 105%;
+    opacity: 0.5;
+}
+
+.new-added {
+    animation: insert 500 linear;
+}
+
+.will-remove {
+    animation: remove 500 linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes insert {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 100vh;
+    }
+}
+
+@keyframes remove {
+    from {
+        max-height: 100vh;
+    }
+    to {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+.event-modal,
+.detail-modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+    z-index: 10;
+}
+
+.modal-content {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--modal-content-background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 400px;
+    width: 400px;
+    overflow-y: auto;
+}
+
+.close-button,
+.close-detail-modal {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.todoContainer input[type="text"],
+.todoContainer textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: var(--input-color);
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none; /* 禁止调整大小 */
+    min-height: 200px;
+}
+
+/* Global button styles */
+.todoContainer button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--todobutton);
+    color: var(--main-color);
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.todoContainer button:hover {
+    background-color: var(--todobutton-hover);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.todoContainer button:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+}
+
+/* Specific button styles */
+.todoContainer #create {
+    background-color: var(--todocreate);
+}
+
+.todoContainer #back {
+    background-color: var(--todoback);
+}
+
+.close-button:hover {
+    color: var(--todoclose);
+}
+
+button.delete-button {
+    background-color: var(--tododelete);
+    margin-top: 10px;
+}
+
+button.delete-button:hover {
+    background-color: var(--tododeletehover);
+}
+
+@media screen and (max-width: 1000px) {
+    .box1 {
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .boxes1 {
+        grid-template-columns: 1fr;
+        grid-auto-flow: column;
+        grid-template-areas: " ." " ." " .";
+        gap: 20px;
+    }
+
+    .droppable {
+        height: 50vh;
+    }
+}

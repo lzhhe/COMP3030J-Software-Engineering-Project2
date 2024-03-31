@@ -59,6 +59,7 @@ i {
     color: var(--text-color);
     margin-right: 20px;
 }
+
 nav.close {
     width: 75px;
     transition: var(--tran-05);
@@ -125,6 +126,7 @@ nav a {
     font-weight: 550;
     transition: var(--tran-05);
 }
+
 /*控制图标的大小的，必须父子情况一致才能修改*/
 .menu-items a i {
     font-size: 30px;
@@ -162,9 +164,6 @@ nav a {
     cursor: pointer;
 }
 
-.icon-search {
-    width: 1.5em;
-}
 
 .icon-user {
     width: 3em;
@@ -173,6 +172,10 @@ nav a {
 nav.close .logo-text, nav.close .link-name, nav.close .switch-text {
     opacity: 0;
     pointer-events: none;
+}
+
+.icon-search {
+    width: 1.5em;
 }
 
 .dashboard {
@@ -250,56 +253,6 @@ nav.close ~ .dashboard {
 
 }
 
-.dashboard .content {
-    grid-area: content;
-}
-
-/*内容的位置*/
-.content .content1-title, .content .content2-title {
-    margin: 10px 0 30px 0;
-}
-
-.content .boxes {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.boxes .box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 20px;
-    border-radius: 10px;
-    background-color: var(--box1-color);
-    transition: var(--tran-05);
-}
-
-.tables {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 60px;
-}
-
-.table-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.table {
-    background-color: var(--skin4);
-    margin-bottom: 20px;
-    padding: 25px;
-    box-sizing: border-box;
-    -webkit-column-break-inside: avoid;
-    border-radius: 5px;
-    box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
-
-
 @media screen and (max-width: 1000px) {
     nav {
         width: 75px;
@@ -329,31 +282,4 @@ nav.close ~ .dashboard {
         width: calc(100% - 250px);
     }
 }
-
-@media screen and (max-width: 780px) {
-    .content .boxes {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-
-    .tables {
-        grid-template-columns: 1fr;
-        gap: 10px;
-        margin-top: 30px;
-    }
-
-    .content {
-        overflow-x: auto;
-    }
-}
-
-@media screen and (max-width: 560px) {
-    .content .boxes {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-}
-
-
 

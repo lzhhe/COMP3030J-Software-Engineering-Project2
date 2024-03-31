@@ -1,35 +1,59 @@
-<!DOCTYPE html>
-<html lang="{{ session.get('language', 'en') }}" data-theme="{{ session.get('theme', 'light') }}">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}WasteManger{% endblock %}</title>
-    <link rel="stylesheet" href="../../static/css/fonts.css"/>
-
-    <link rel="shortcut icon" href="../../static/image/icon/skyline.png">
-    <link rel="stylesheet" href="../../static/css/pico.conditional.min.css">
-    <link rel="stylesheet" href="../../static/css/colors.css"/>
-    <link rel="stylesheet" href="../../static/css/switch.css"/>
-
-    {% block extra_css %}{% endblock %}
-    {% block extra_js %}{% endblock %}
-    <script src="../../static/js/jquery-3.7.1.min.js"></script>
-    <script src="../../static/js/switch.js"></script>
-    <script>
-        const themeUrl = "{{ url_for('utils.switchTheme') }}";
-        const langUrl = "{{ url_for('utils.switchLanguage') }}";
-    </script>
-    <style>
-        body {
-            font-family: Ubuntu, serif;
-        }
-    </style>
-
-</head>
-<body>
-<h1> individual</h1>
-{% if user %}
-    <h2>{{ user.username }}</h2>
-{% endif %}
-{% include 'switch.html' %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %} Individual{% endblock %}
+{% block extra_css %}{% endblock %}
+{% block extra_js %}{% endblock %}
+{% block navbar %}
+    <nav>
+        <div class="logo-name">
+            <div class="logo-img">
+                <img src="../../static/image/icon/skyline.png" alt="logo">
+            </div>
+            <span class="logo-text">Management System</span>
+        </div>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li class="underline"><a href="{{ url_for('individual.dashboard') }}">
+                    <i class="iconfont icon-shuju"></i>
+                    <span class="link-name">Dashboard</span>
+                </a></li>
+                <li class="underline"><a href="{{ url_for('individual.todo') }}">
+                    <i class="iconfont icon-xinicon_huabanfuben"></i>
+                    <span class="link-name">Kanban</span>
+                </a></li>
+                <li class="underline"><a href="#">
+                    <img src="../../static/image/icon/home.svg" alt="home" class="icons icon-nav" title="Home"
+                         data-placement="right">
+                    <span class="link-name">Home</span>
+                </a></li>
+                <li class="underline"><a href="#">
+                    <img src="../../static/image/icon/analyze.svg" alt="home" class="icons icon-nav" title="Analyze">
+                    <span class="link-name">Analyze</span>
+                </a></li>
+                <li class="underline"><a href="#">
+                    <img src="../../static/image/icon/scene.svg" alt="home" class="icons icon-nav" title="Scene">
+                    <span class="link-name">Scene</span>
+                </a></li>
+                <li class="underline"><a href="#">
+                    <img src="../../static/image/icon/details.svg" alt="home" class="icons icon-nav" title="Details">
+                    <span class="link-name">Details</span>
+                </a></li>
+                <li class="underline"><a href="#">
+                    <img src="../../static/image/icon/resource.svg" alt="home" class="icons icon-nav" title="Resource">
+                    <span class="link-name">Resource</span>
+                </a></li>
+                <li class="underline"><a href="#">
+                    <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                         title="Structure">
+                    <span class="link-name">Structure</span>
+                </a></li>
+            </ul>
+            <ul class="logout-mod">
+                <li><a href="#" id="logoutButton">
+                    <img src="../../static/image/icon/exit.svg" alt="exit" class="icons icon-nav">
+                    <span class="link-name">Logout</span>
+                </a></li>
+            </ul>
+            {% include 'switch.html' %}
+        </div>
+    </nav>
+{% endblock %}

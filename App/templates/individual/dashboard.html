@@ -1,0 +1,56 @@
+{% extends "individual/index.html" %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/dashboard.css"/>
+{% endblock %}
+{% block extra_js %}
+    <script src="../../static/js/utils/apexcharts.min.js"></script>
+    <script src="../../static/js/dashboard.js"></script>
+{% endblock %}
+{% block title %}Individual Dashboard{% endblock %}
+{% block mainBody %}
+    <section class="dashboard">
+        {% include "top.html" %}
+        <div class="content">
+            {% block contents %}
+            {% endblock %}
+            <div class="content1">
+                <div class="content1-title">
+                    <h1>Welcome to Management System</h1>
+                </div>
+                <div class="boxes">
+                    <div class="box box1">
+                        <span class="box-text">Box 1</span>
+                        <span class="box-number">Number 1</span>
+                    </div>
+                    <div class="box box2">
+                        <span class="box-text">Box 2</span>
+                        <span class="box-number">Number 2</span>
+                    </div>
+                    <div class="box box3">
+                        <span class="box-text">Box 3</span>
+                        <span class="box-number">Number 3</span>
+                    </div>
+                    <div class="box box4">
+                        <span class="box-text">Box 4</span>
+                        <span class="box-number">Number 4</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content2">
+                <div class="content2-title">
+                    <h1>Tables and Charts</h1>
+                </div>
+                <div class="tables">
+                    <div class="table">
+                        <h2 class="table-title">Top 5 Products</h2>
+                        <div id="bar-chart"></div>
+                    </div>
+                    <div class="table">
+                        <h2 class="table-title">Purchase and Sales Orders</h2>
+                        <div id="area-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
