@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../static/css/base.css">
     <link rel="stylesheet" href="../static/css/colors.css">
     <link rel="stylesheet" href="../static/css/switch.css"/>
+    <link rel="stylesheet" href="../static/css/context_menu.css"/>
     <link rel="stylesheet" href="../static/css/utils/hover-min.css"/>
     <link rel="stylesheet" href="../static/css/iconfont/iconfont.css"/>
     <link rel="stylesheet" href="../static/css/pico.conditional.min.css"/>
@@ -38,6 +39,7 @@
     <script src="../static/js/utils/apexcharts.min.js"></script>
 </head>
 <body>
+{% include 'context_menu.html' %}
 <nav>
     <div class="logo-name">
         <div class="logo-img">
@@ -187,6 +189,35 @@
             nav.classList.toggle('close');
 
         });
+        const MenuList = document.querySelector('.context-menu');
+        const menuHeight = MenuList.offsetHeight - parseInt(getComputedStyle(MenuList)['paddingTop']) -
+            parseInt(getComputedStyle(MenuList)['paddingBottom']);
+        const menuWidth = MenuList.offsetWidth;
+        MenuList.style.height = '0'
+
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const {clientX, clientY} = e;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            let top = clientY;
+            let left = clientX;
+            if (clientY + menuHeight > windowHeight) {
+                top = clientY - menuHeight;
+            }
+            if (clientX + menuWidth > windowWidth) {
+                left = Math.max(clientX - menuWidth, 0); // 同样确保 left 不为负数
+            }
+            MenuList.style.height = menuHeight + 'px';
+            MenuList.style.top = top + 'px';
+            MenuList.style.left = left + 'px';
+            MenuList.classList.add('is-active');
+        });
+        document.addEventListener('click', (e) => {
+            MenuList.style.height = '0';
+            MenuList.classList.remove('is-active');
+        });
+
 
         const barChartOptions = {
             series: [

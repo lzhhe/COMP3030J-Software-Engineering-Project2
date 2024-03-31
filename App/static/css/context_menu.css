@@ -1,0 +1,76 @@
+.context-menu {
+    position: fixed;
+    width: auto;
+    padding: 4px;
+    box-shadow: 0 1px 4px rgba(28, 28, 32, .04), 0 8px 24px rgba(28, 28, 32, .12);
+    border-radius: 10px;
+    background: white;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: opacity .2s ease, height .3s ease, visibility .3s ease;
+    z-index: 999;
+}
+
+.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.context-menu-list {
+    list-style: none;
+}
+
+/* 菜单中的选项 */
+.context-menu-list li:not(.context-menu-divider) {
+    display: flex;
+    border-radius: 4px;
+    padding: 6px 16px 9px 6px;
+    font-size: 14px;
+    user-select: none;
+    cursor: pointer;
+    color: var(--t-color);
+    margin: 2px;
+}
+
+.context-menu-list li i {
+    margin-right: 2px;
+}
+
+.context-menu-list li {
+    color: #25262b;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: background .3s ease;
+}
+
+/* 悬浮色 */
+.context-menu-list li:not(.context-menu-divider):hover {
+    background-color: rgba(10, 20, 28, 0.1);
+}
+
+.context-menu-list li.context-menu-last {
+    color: #ff6f66;
+    margin-bottom: 10px;
+}
+.context-menu-list li.context-menu-last i{
+    color: #ff6f66;
+}
+.context-menu-list li.context-menu-last:hover {
+    background: #fdd9d8;
+}
+
+
+/* 分割线 */
+.context-menu-list li.context-menu-divider {
+    height: 2px;
+    background-color: var(--hamburger-hover-shadow);
+    margin: 0 4px;
+    user-select: none;
+}
+
+

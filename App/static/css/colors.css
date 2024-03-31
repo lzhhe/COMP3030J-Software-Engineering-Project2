@@ -3,6 +3,7 @@
     --tran-03: all 0.3s ease;
     --tran-02: all 0.2s ease;
     --nav-width: 250px;
+    --context-menu-offset: -30px;
 }
 
 :root[data-theme="light"] {
@@ -158,6 +159,9 @@
     --i_light: white;
     --nav_user: #333;
 
+    --context-menu-background1: rgba(255, 255, 255, 0.45);
+    --context-menu-background2: rgba(255, 255, 255, 0.85);
+
 }
 
 :root[data-theme="dark"] {
@@ -310,4 +314,7 @@
     --todoclose: #a63e2b;
     --tododelete: #d32f2f;
     --tododeletehover: #b71c1c;
+
+    --context-menu-background1: rgba(10, 20, 28, 0.2);
+    --context-menu-background2: rgba(10, 20, 28, 0.7);
 }
