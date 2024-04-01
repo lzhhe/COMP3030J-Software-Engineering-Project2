@@ -1,0 +1,288 @@
+{% extends "individual/index.html" %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/draw.css">
+{% endblock %}
+{% block title %}Individual Canvas{% endblock %}
+{% block mainBody %}
+    <section class="dashboard">
+        {% include "top.html" %}
+        <div id="canvasContainer">
+
+            <canvas id="cavsElem">
+
+            </canvas>
+            <div class="controls">
+                <input type="hidden" id="canvasBackground">
+
+                <div>
+                    <label for="mycolor">choose pen color：</label>
+                    <input type="color" value="#ff0000" id="mycolor" onchange="colorChange()"/>
+                </div>
+                <div>
+                    <label for="gsize">width：</label>
+                    <input type="number" id="gsize" value="1" min="1" oninput="sizeChange()" max="50"/>
+                </div>
+                <input type="button" value="pen" id="pen" onclick="setPen()"/>
+                <input type="button" value="x-pen" id="x-pen" onclick="setLaserPen()"/>
+                <label for="shapeSelector"></label>
+                <select id="shapeSelector" onchange="setShape(this.value)">
+                    <option value="none">Choose a shape...</option>
+                    <option value="rectangle">Rectangle</option>
+                    <option value="circle">Circle</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="line">Line</option>
+                    <option value="arrow">Arrow</option>
+                </select>
+
+                <input type="button" value="eraser" id="eraser" onclick="setEraser()"/>
+                <input type="button" value="clear" id="clear" onclick="clearAll()"/>
+                <input type="button" value="prev" onclick="prevStep()"/>
+                <input type="button" value="next" onclick="nextStep()"/>
+                <button onClick="saveImg()">create pic</button>
+            </div>
+        </div>
+        <div id="imageContainer" class="hidden">
+            <img id='img' alt='请涂鸦……' src=""/>
+        </div>
+    </section>
+    <script>
+        const canvas = document.getElementById('cavsElem');
+        const context = canvas.getContext('2d');
+        let mode = 'pen'; // 默认为画笔模式
+        let currentShape = 'none';  // 默认不绘制任何形状
+        const imgList = [];
+        let prevIndex = 0;
+        let nextIndex = 0;
+        let currentIndex = 0;
+        let backColor;
+        const canvasBackground = document.getElementById('canvasBackground');
+        initCanvas();
+        addCanvasListeners();
+
+        function initCanvas() {
+            canvas.width = 1000;
+            canvas.height = 600;
+            context.globalCompositeOperation = 'source-over';
+            setPen(); // 设置默认为画笔模式
+            clearAll();
+        }
+
+        function addCanvasListeners() {
+            canvas.addEventListener('mousedown', handleMouseDown);
+            canvas.addEventListener('mouseup', handleMouseUp);
+            // 移除了mousemove监听器，它将在mousedown中按需添加
+        }
+
+        document.getElementById('shapeSelector').addEventListener('change', function (e) {
+            currentShape = e.target.value;
+        });
+
+        function handleMouseDown(e) {
+            startX = e.clientX - canvas.getBoundingClientRect().left;
+            startY = e.clientY - canvas.getBoundingClientRect().top;
+
+            if (mode === 'pen' || mode === 'eraser') {
+                context.beginPath();
+                context.moveTo(startX, startY);
+            } else if (mode === 'shape' && currentShape !== 'none') {
+                context.beginPath();
+            }
+
+            canvas.addEventListener('mousemove', handleMouseMove);
+        }
+
+        function handleMouseMove(event) {
+            if (mode === 'pen' || mode === 'eraser') {
+                const x = event.clientX - canvas.getBoundingClientRect().left;
+                const y = event.clientY - canvas.getBoundingClientRect().top;
+                context.lineTo(x, y);
+                context.stroke();
+            } else if (mode === 'shape' && currentShape !== 'none') {
+                const x = event.clientX - canvas.getBoundingClientRect().left;
+                const y = event.clientY - canvas.getBoundingClientRect().top;
+                redrawCanvas();
+                drawShape(startX, startY, x, y); // Draw the shape while moving
+            }
+        }
+
+        function handleMouseUp(event) {
+            if (mode === 'shape' && currentShape !== 'none') {
+                const x = event.clientX - canvas.getBoundingClientRect().left;
+                const y = event.clientY - canvas.getBoundingClientRect().top;
+                drawShape(startX, startY, x, y); // Finish drawing the shape
+                context.closePath();
+            }
+            canvas.removeEventListener('mousemove', handleMouseMove);
+            pushImg(); // Save the canvas state after the action is done
+        }
+
+        function redrawCanvas() {
+            context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            context.putImageData(imgList[currentIndex], 0, 0); // Redraw the image
+        }
+
+
+        function setPen() {
+            mode = 'pen';
+            canvas.style.cursor = 'auto';  // 默认鼠标样式
+            context.strokeStyle = document.getElementById("mycolor").value;
+            context.lineWidth = document.getElementById("gsize").value;
+        }
+
+        function setLaserPen() {
+            mode = 'laser';
+            canvas.style.cursor = 'crosshair';  // 使用交叉线样式模拟激光笔
+        }
+
+        function setEraser() {
+            mode = 'eraser';
+            canvas.style.cursor = 'not-allowed';  // 使用不允许的图标模拟橡皮擦
+            context.strokeStyle = backColor;
+            context.lineWidth = (document.getElementById("gsize").value > 15) ? document.getElementById("gsize").value : 15;
+        }
+
+        function setShape(shape) {
+            if (shape !== 'none') {
+                mode = 'shape';
+                currentShape = shape;
+                context.strokeStyle = document.getElementById("mycolor").value;
+                context.lineWidth = document.getElementById("gsize").value;
+                canvas.style.cursor = 'crosshair';
+            }
+        }
+
+
+        function drawShape(x1, y1, x2, y2) {
+            context.strokeStyle = document.getElementById("mycolor").value;
+            context.lineWidth = document.getElementById("gsize").value;
+            switch (currentShape) {
+                case 'rectangle':
+                    context.beginPath();
+                    context.rect(x1, y1, x2 - x1, y2 - y1);
+                    context.stroke();
+                    context.closePath();
+                    break;
+                case 'circle':
+                    let radiusX = Math.abs(x2 - x1) / 2; // 横轴半径
+                    let radiusY = Math.abs(y2 - y1) / 2; // 纵轴半径
+                    let centerX = (x2 + x1) / 2;         // 椭圆中心X坐标
+                    let centerY = (y2 + y1) / 2;         // 椭圆中心Y坐标
+                    let rotation = 0;                    // 旋转角度，这里我们不旋转椭圆
+
+                    context.beginPath();
+                    context.ellipse(centerX, centerY, radiusX, radiusY, rotation, 0, Math.PI * 2);
+                    context.stroke();
+                    context.closePath();
+                    break;
+                case 'triangle':
+                    context.beginPath();
+                    context.moveTo(x1, y1);
+                    context.lineTo(x2, y2); // Base of the triangle
+                    context.lineTo(x1 * 2 - x2, y2);
+                    context.closePath();
+                    context.stroke();
+                    break;
+                case 'line':
+                    context.beginPath();
+                    context.moveTo(x1, y1);
+                    context.lineTo(x2, y2);
+                    context.stroke();
+                    context.closePath();
+                    break;
+                case 'arrow':
+                    drawArrow(context, x1, y1, x2, y2, context.lineWidth);
+                    break;
+            }
+        }
+
+        function drawArrow(context, fromx, fromy, tox, toy, lineWidth) {
+            // Variables to be used when creating the arrow
+            var headlen = lineWidth * 8; // length of head in pixels
+            var angle = Math.atan2(toy - fromy, tox - fromx);
+
+            context.beginPath();
+            context.moveTo(fromx, fromy);
+            context.lineTo(tox, toy);
+
+            // Draw the two lines at the end of the arrow
+            context.moveTo(tox, toy);
+            context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 7), toy - headlen * Math.sin(angle - Math.PI / 7));
+            context.moveTo(tox, toy);
+            context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 7), toy - headlen * Math.sin(angle + Math.PI / 7));
+
+            context.strokeStyle = document.getElementById("mycolor").value;
+            context.lineWidth = document.getElementById("gsize").value;
+            context.stroke();
+            context.closePath();
+        }
+
+        function colorChange() {
+            if (mode === 'pen' || mode === 'shape') {
+                context.strokeStyle = document.getElementById("mycolor").value;
+            }
+        }
+
+        function sizeChange() {
+            const sizeInput = document.getElementById("gsize");
+            let sizeValue = parseInt(sizeInput.value, 10);
+
+            if (sizeValue > 50) {
+                sizeInput.value = 50;  // 超过50则设置为50
+                sizeValue = 50;
+            }
+            if (mode === 'pen') {
+                context.lineWidth = sizeValue;
+            }
+        }
+
+        function pushImg() {
+            imgList.splice(currentIndex + 1); // 删除当前索引后的所有图像
+            imgList.push(context.getImageData(0, 0, canvas.width, canvas.height)); // 保存当前状态
+            currentIndex = imgList.length - 1; // 更新当前索引
+        }
+
+        function prevStep() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                context.clearRect(0, 0, canvas.width, canvas.height); // 清除画布
+                context.putImageData(imgList[currentIndex], 0, 0); // 重新绘制之前的图像状态
+            }
+        }
+
+        function nextStep() {
+            if (currentIndex < imgList.length - 1) {
+                currentIndex++;
+                context.clearRect(0, 0, canvas.width, canvas.height); // 清除画布
+                context.putImageData(imgList[currentIndex], 0, 0); // 重新绘制下一个图像状态
+            }
+        }
+
+        function clearAll() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            backColor = getComputedStyle(document.documentElement).getPropertyValue('--canvas-background').trim();
+            canvasBackground.value = backColor;
+            context.fillStyle = canvasBackground.value;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            pushImg(); // 保存清空后的画布状态
+        }
+
+        function saveImg() {
+            document.getElementById('img').src = canvas.toDataURL();
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.classList.toggle('hidden');
+        }
+
+        const checkbox = document.getElementById('changeMode');
+        checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+                canvasBackground.value = '#f0f0f0';
+            } else {
+                canvasBackground.value = '#757575';
+            }
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = canvasBackground.value;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>
+{% endblock %}
+

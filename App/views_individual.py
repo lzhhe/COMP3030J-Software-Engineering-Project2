@@ -23,3 +23,8 @@ def dashboard():
 @individual.route('/todo')
 def todo():
     return render_template('individual/todo.html')
+
+
+@individual.route('/draw')
+def draw():
+    return render_template('individual/draw.html')
