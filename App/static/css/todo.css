@@ -151,7 +151,7 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    height: 400px;
+    height: 450px;
     width: 400px;
     overflow-y: auto;
 }
@@ -188,7 +188,7 @@ label {
 
 textarea {
     resize: none; /* 禁止调整大小 */
-    min-height: 200px;
+    height: 200px;
 }
 
 /* Global button styles */

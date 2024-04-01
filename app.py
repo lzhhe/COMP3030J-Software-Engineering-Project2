@@ -39,31 +39,5 @@ def my_context():
     return {'user': g.user}
 
 
-#
-#
-# # 根据不同的用户状态，返回不同的上级页面
-# @app.route('/back')
-# def back():
-#     # 检查用户是否登录
-#     if g.user:
-#         if g.user.status == 0:
-#             return redirect(url_for('cal_a.adminView'))
-#         if g.user.status == 1:
-#             # 从会话中获取上一个子页面的标识
-#             last_page = session.get('last_page', 'yearView')
-#
-#             # 根据上一个子页面的标识来决定重定向到哪个页面
-#             if last_page == 'weekView':
-#                 return redirect(url_for('cal_u.weekView'))
-#             elif last_page == 'monthView':
-#                 return redirect(url_for('cal_u.monthView'))
-#             elif last_page == 'yearView':
-#                 return redirect(url_for('cal_u.yearView'))
-#         if g.user.status == 2:
-#             return redirect(url_for('cal_t.teacherView'))
-#     else:
-#         return redirect(url_for('cal_u.main'))
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
