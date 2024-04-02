@@ -324,13 +324,6 @@
             length.classList.add("invalid");
             couldType = false;
         }
-        if (couldType) {
-            registerButton.classList.remove("notallow");
-            registerButton.disabled = false;
-        } else {
-            registerButton.classList.add("notallow");
-            registerButton.disabled = true;
-        }
     }
 
     const dialog = document.getElementById('myDialog');
@@ -352,6 +345,13 @@
     confirmBtn.addEventListener('click', () => {
         const selectedOption = statusSelect.options[statusSelect.selectedIndex];
         identityDiv.textContent = selectedOption.getAttribute('data-translation');
+        if (couldType) {
+            registerButton.classList.remove("notallow");
+            registerButton.disabled = false;
+        } else {
+            registerButton.classList.add("notallow");
+            registerButton.disabled = true;
+        }
     });
 
 
@@ -436,11 +436,11 @@
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'successful') {
                         const target = response.status;
-                        if (target === 'department') {
+                        if (target === 'DEPARTMENT_MANAGER') {
                             window.location.href = departmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'government') {
+                        } else if (target === 'GOVERNMENT_MANAGER') {
                             window.location.href = governmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'waste') {
+                        } else if (target === 'WASTE_MANAGER') {
                             window.location.href = wasteUrl;  // 登录成功后的重定向
                         } else {
                             window.location.href = individualUrl;  // 登录成功后的重定向
