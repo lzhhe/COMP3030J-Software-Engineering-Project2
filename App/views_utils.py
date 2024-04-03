@@ -27,5 +27,9 @@ def switchLanguage():
     return jsonify({'success': True, 'message': 'Language switched successfully'})
 
 
+def enum_to_string(enum):
+    return enum.name.replace('_', ' ').title()
 
 
+def string_to_enum(string):
+    return string.replace(' ', '_').upper()

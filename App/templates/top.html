@@ -6,5 +6,16 @@
             <input type="text" placeholder="Search...">
         </label>
     </div>
-    <img src="../static/image/forgetHead.png" alt="user" class="icon-user">
+    {% if user %}
+        <b>Welcome</b>
+        <div class="user-box">
+            <div class="user-info">
+                <p class="user-name">{{ user.username }}</p>
+                <p class="user-email">{{ user.email }}</p>
+                {% if department %}
+                    <p class="user-department">{{ department }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
 </div>

@@ -100,7 +100,7 @@ class User(db.Model):
 class Department(db.Model):
     __tablename__ = 'department'
     DID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    departmentName = db.Column(db.String(200), nullable=False)
+    departmentName = db.Column(db.String(200), nullable=False, unique=True)
     departmentType = db.Column(SQLEnum(DepartmentType), nullable=False)
     departmentAddress = db.Column(db.String(500), nullable=False)
 

@@ -3,16 +3,68 @@ from functools import wraps
 
 from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
 from sqlalchemy import and_, or_
+from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
+from .views_utils import enum_to_string, string_to_enum
 
 department = Blueprint('department', __name__, url_prefix='/department')  # department is name of blueprint
 
 
 @department.route('/')
 def index():
-    return render_template('department/index.html')
+    department = None
+    wastes = None
+    user = g.user
+    if user.department_id is not None:
+        d = user.department
+        department = d.departmentName
+        wasteTypes = Waste.query.filter_by(wasteDepartment=d.departmentType).all()
+        wastes = []
+        for wasteType in wasteTypes:
+            waste = enum_to_string(wasteType.wasteType)
+            wastes.append(waste)
+    return render_template('department/create_order.html', department=department, wastes=wastes)
+
+
+@department.route('/setdepartment', methods=['POST'])
+def setdepartment():
+    user = g.user
+    data = request.json
+    departmentType = data.get('departmentType')
+    departmentName = data.get('departmentName')
+    departmentAddress = data.get('departmentAddress')
+    if Department.query.filter_by(departmentName=departmentName).first():
+        return jsonify({"message": "Department name already exists"}), 200
+    try:
+        new_department = Department(departmentName=departmentName, departmentType=departmentType,
+                                    departmentAddress=departmentAddress)
+        db.session.add(new_department)
+        db.session.commit()
+        user.department_id = new_department.DID
+        db.session.commit()
+        return jsonify({"message": "successful"}), 200
+    except KeyError:
+        return jsonify({'message': 'Invalid user status'}), 200
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'message': 'Registration failed', 'error': str(e)}), 200
+
+
+@department.route('/edit')
+def edit():
+    return render_template('department/edit_order.html')
+
+
+@department.route('/history')
+def history():
+    return render_template('department/view_order.html')
+
+
+@department.route('/dashboard')
+def dashboard():
+    return render_template('department/dashboard.html')
 
 
 @department.route('/register', methods=['POST'])

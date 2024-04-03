@@ -8,35 +8,25 @@
             <div class="logo-img">
                 <img src="../../static/image/icon/skyline.png" alt="logo">
             </div>
-            <span class="logo-text">Management System</span>
+            <span class="logo-text">Department Manager</span>
         </div>
         <div class="menu-items">
             <ul class="nav-links">
-                <li class="underline"><a href="#">
-                    <img src="../../static/image/icon/home.svg" alt="home" class="icons icon-nav" title="Home"
-                         data-placement="right">
-                    <span class="link-name">Home</span>
+                <li class="underline"><a href="{{ url_for('department.index') }}">
+                    <i class="iconfont icon-wenjiantianjia1"></i>
+                    <span class="link-name">Create</span>
                 </a></li>
-                <li class="underline"><a href="#">
-                    <img src="../../static/image/icon/analyze.svg" alt="home" class="icons icon-nav" title="Analyze">
-                    <span class="link-name">Analyze</span>
+                <li class="underline"><a href="{{ url_for('department.edit') }}">
+                    <i class="iconfont icon-wenjianxiugai"></i>
+                    <span class="link-name">Edit</span>
                 </a></li>
-                <li class="underline"><a href="#">
-                    <img src="../../static/image/icon/scene.svg" alt="home" class="icons icon-nav" title="Scene">
-                    <span class="link-name">Scene</span>
+                <li class="underline"><a href="{{ url_for('department.history') }}">
+                    <i class="iconfont icon-lishibiaodan"></i>
+                    <span class="link-name">History</span>
                 </a></li>
-                <li class="underline"><a href="#">
-                    <img src="../../static/image/icon/details.svg" alt="home" class="icons icon-nav" title="Details">
-                    <span class="link-name">Details</span>
-                </a></li>
-                <li class="underline"><a href="#">
-                    <img src="../../static/image/icon/resource.svg" alt="home" class="icons icon-nav" title="Resource">
-                    <span class="link-name">Resource</span>
-                </a></li>
-                <li class="underline"><a href="#">
-                    <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
-                         title="Structure">
-                    <span class="link-name">Structure</span>
+                <li class="underline"><a href="{{ url_for('department.dashboard') }}">
+                    <i class="iconfont icon-shuju1"></i>
+                    <span class="link-name">Dashboard</span>
                 </a></li>
             </ul>
             <ul class="logout-mod">

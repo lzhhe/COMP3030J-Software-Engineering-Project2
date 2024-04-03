@@ -1,0 +1,100 @@
+{% extends 'department/index.html' %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/department/create_order.css"> {% endblock %}
+{% block extra_js %} {% endblock %}
+{% block title %}Create Order{% endblock %}
+
+{% block mainBody %}
+    <dialog id="createDepartment" class="pico">
+        <h4>{{ _("Please create a department") }}</h4>
+        <form method="dialog">
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="METALLURGY" required>
+                <i class="iconfont icon-caikuangyejin"></i>
+                <span>{{ _("Metallurgy") }}</span>
+            </label>
+            <label class="no-pico-label"><input type="radio" name="departmentType"
+                                                value="EQUIPMENT_MANUFACTURING">
+                <i class="iconfont icon-shengchan"></i>
+                <span>{{ _("Equipment Manufacturing") }}</span>
+            </label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="COMPOSITE_MATERIAL">
+                <i class="iconfont icon-duoyanghuacailiao"></i>
+                <span>{{ _("Composite Material") }}</span>
+            </label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="NEW_ENERGY">
+                <i class="iconfont icon-xinnengyuan"></i>
+                <span>{{ _("New Energy") }}</span>
+            </label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="AUTOMATION_SYSTEM">
+                <i class="iconfont icon-gongyezidonghua"></i>
+                <span>{{ _("Automation System") }}</span>
+            </label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="MAINTENANCE">
+                <i class="iconfont icon-shebeiweihuguanli"></i>
+                <span>{{ _("Equipment Maintenance") }}</span>
+            </label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="LABORATORY">
+                <i class="iconfont icon-shiyanshiyiqi"></i>
+                <span>{{ _("Laboratory") }}</span></label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="DATA_CENTER">
+                <i class="iconfont icon-yiqiyibiao"></i>
+                <span>{{ _("Data Center") }}</span></label>
+            <label class="no-pico-label"><input type="radio" name="departmentType" value="OFFICE">
+                <i class="iconfont icon-diannaobangong"></i>
+                <span>{{ _("Office") }}</span></label>
+            <label for="departmentName">{{ _("Department name:") }}
+                <input type="text" id="departmentName" name="departmentName" required>
+            </label>
+            <label for="departmentAddress">{{ _("Department address:") }}
+                <textarea rows="4" cols="50" id="departmentAddress" name="departmentAddress"></textarea>
+            </label>
+            <button type="button" id="createDepartmentBtn">{{ _("Create") }}</button>
+        </form>
+    </dialog>
+    <section class="dashboard">
+        {% include "top.html" %}
+        <div class="container">
+            {% for waste in wastes %}
+                <h2>{{ waste }}</h2>
+            {% endfor %}
+        </div>
+
+    </section>
+
+    <script>
+        const departmentDialog = document.getElementById("createDepartment");
+        {% if not department %}
+            departmentDialog.showModal(); // 如果用户没有部门，则展示对话框
+        {% endif %}
+
+        $(document).ready(function () {
+            $("#createDepartmentBtn").click(function (e) {
+                e.preventDefault();
+                const departmentType = $("input[name='departmentType']:checked").val();
+                const departmentName = $("#departmentName").val();
+                const departmentAddress = $("#departmentAddress").val();
+                if (departmentType === undefined || departmentName === "") {
+                    alert("Please select a department type and enter a department name.");
+                }
+                const departmentInfo = {
+                    departmentType: departmentType,
+                    departmentName: departmentName,
+                    departmentAddress: departmentAddress
+                };
+                $.ajax({
+                    url: "/department/setdepartment",
+                    type: "POST",
+                    data: JSON.stringify(departmentInfo),
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (response) {
+                        if (response.message === "successful") {
+                            window.location.href = "/department/";
+                        } else {
+                            alert(response.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
