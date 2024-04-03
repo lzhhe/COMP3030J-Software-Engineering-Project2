@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import wraps
 
 from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
@@ -101,3 +101,60 @@ def register():
 
     # 返回成功消息
     return jsonify({"message": "Order created successfully"}), 201
+
+
+@department.route('/getAllOrders', methods=['POST'])
+def getAllOrders():
+    data = request.get_json()
+    department_id = data.get('department_id')
+    orders = Order.query.filter_by(department_id=department_id)
+    if orders:
+        order_list = []
+        for order in orders:
+            order_data = {
+                'OID': order.OID,
+                'date': order.date.isoformat(),
+                'orderName': order.orderName,
+                'wasteType': order.wasteType.name,
+                'weight': order.weight,
+                'attribution': order.attribution,
+                'multiplier': order.multiplier,
+                'comment': order.comment,
+                'orderStatus': order.orderStatus.name,
+                'DID': order.department.DID,
+                'departmentName': order.department.departmentName
+            }
+            order_list.append(order_data)
+        return jsonify(order_list)
+    else:
+        return jsonify({"error": "You have not summit any order"}), 200
+
+
+@department.route('/getRecentOrders', methods=['POST'])
+def getRecentOrders(): # 需要一个天数作为参数，即多少天以前的，默认7天
+    data = request.get_json()
+    days_ago = data.get('date', 7)  # 获取多少天以前的
+    department_id = data.get('department_id')
+    past_date = datetime.now() - timedelta(days=days_ago)
+    orders = Order.query.filter(Order.department_id == department_id, Order.date >= past_date).all()
+    if orders:
+        order_list = []
+        for order in orders:
+            order_data = {
+                'OID': order.OID,
+                'date': order.date.isoformat(),
+                'orderName': order.orderName,
+                'wasteType': order.wasteType.name,
+                'weight': order.weight,
+                'attribution': order.attribution,
+                'multiplier': order.multiplier,
+                'comment': order.comment,
+                'orderStatus': order.orderStatus.name,
+                'DID': order.department.DID,
+                'departmentName': order.department.departmentName
+            }
+            order_list.append(order_data)
+        return jsonify(order_list)
+    else:
+        return jsonify({"error": "You have not summit any order"}), 200
+
