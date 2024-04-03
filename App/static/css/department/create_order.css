@@ -28,6 +28,84 @@ dialog::backdrop {
     font-size: 1.5em;
 }
 
+.pico .order-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-choose {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.order-choose .custom-select {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 5px 10px;
+    border-bottom: 3px solid #2872AE;
+    border-radius: 2px;
+    position: relative;
+}
+
+.order-choose .custom-select .selected-option {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.order-choose .custom-select .options-container {
+    font-size: 0.8em;
+    width: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--pico-background-color);
+    display: none;
+    z-index: 100;
+    transition: all 0.3s ease-in-out;
+}
+
+.order-choose .custom-select .options-container .option-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.order-choose .custom-select .options-container .option-item:hover i,
+.order-choose .custom-select .options-container .option-item:hover span {
+    color: var(--primary-color);
+}
+
+.order-choose .custom-select .options-container .option-item i {
+    font-size: 1.2em;
+    margin-right: 2px;
+}
+
+/* 当选项容器展开时的样式 */
+.order-choose .custom-select .show-options {
+    display: block;
+}
+
+.pico label.number-input input, .pico label.number-input select {
+    font-size: 0.8em;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
 .pico label.no-pico-label:hover i, .pico label.no-pico-label:hover span {
     color: var(--primary-color);
 }
@@ -41,4 +119,102 @@ dialog::backdrop {
 
 .dashboard .content {
     grid-area: content;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "details" "content";
+    margin: 10px 0 30px 0;
 }
+
+.content .details {
+    grid-area: details;
+    display: grid;
+    grid-template-rows: 45px 1fr;
+    grid-template-areas: "d1" "d2";
+    color: var(--t-color);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.content .details h2 {
+    grid-area: d1;
+}
+
+.content .details p {
+    grid-area: d2;
+}
+
+.content .create-order {
+    grid-area: content;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-template-areas: "form description";
+    color: var(--t-color);
+}
+
+.content .create-order .order-form {
+    grid-area: form;
+    padding-right: 10px;
+    border-right: 2px solid var(--border-color);
+}
+
+.content .create-order .order-cards {
+    grid-area: description;
+    padding-left: 10px;
+    position: relative;
+}
+
+/* 容器样式 */
+.swiper {
+    width: 50vw; /* 根据需求调整宽度 */
+    height: 400px; /* 根据需求调整高度 */
+    margin: 20px 10px;
+    border-radius: 10px; /* 轻微的圆角效果 */
+    overflow: hidden; /* 防止幻灯片超出容器边界 */
+    transition: .3s all ease;
+}
+
+/* 幻灯片样式 */
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff; /* 背景颜色 */
+    /* 居中显示幻灯片内容 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微的阴影效果 */
+    border-radius: 10px; /* 轻微的圆角效果 */
+    /* 为幻灯片添加内边距 */
+    padding: 20px;
+}
+
+.swiper-button-next {
+    right: 10px; /* 距离右侧边缘的位置 */
+}
+
+.swiper-button-prev {
+    left: 10px; /* 距离左侧边缘的位置 */
+}
+
+/* 分页器样式 */
+.swiper-pagination {
+    position: absolute;
+    text-align: center;
+    transition: .3s opacity;
+    transform: translate3d(0, 0, 0);
+    z-index: 10;
+    bottom: 5px; /* 距离底部的位置 */
+    left: 0;
+    width: 100%;
+}
+
+.swiper-pagination-bullet-active {
+    background: #007bff; /* 活动小圆点的颜色 */
+}
+
+@media screen and (max-width: 780px) {
+    .content .create-order {
+        grid-template-columns: 1fr;
+        grid-template-areas: "form" "description";
+    }
+}
+

@@ -15,17 +15,20 @@ department = Blueprint('department', __name__, url_prefix='/department')  # depa
 @department.route('/')
 def index():
     department = None
+    departmentType = None
     wastes = None
     user = g.user
     if user.department_id is not None:
         d = user.department
         department = d.departmentName
+        departmentType = enum_to_string(d.departmentType)
         wasteTypes = Waste.query.filter_by(wasteDepartment=d.departmentType).all()
-        wastes = []
+        wastes = {}
         for wasteType in wasteTypes:
             waste = enum_to_string(wasteType.wasteType)
-            wastes.append(waste)
-    return render_template('department/create_order.html', department=department, wastes=wastes)
+            wastes[wasteType.wasteType.name] = waste
+    return render_template('department/create_order.html', department=department, departmentType=departmentType,
+                           wastes=wastes)
 
 
 @department.route('/setdepartment', methods=['POST'])

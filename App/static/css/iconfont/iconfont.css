@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4488647 */
-  src: url('iconfont.woff2?t=1712061639385') format('woff2'),
-       url('iconfont.woff?t=1712061639385') format('woff'),
-       url('iconfont.ttf?t=1712061639385') format('truetype');
+  src: url('iconfont.woff2?t=1712134356526') format('woff2'),
+       url('iconfont.woff?t=1712134356526') format('woff'),
+       url('iconfont.ttf?t=1712134356526') format('truetype');
 }
 
 .iconfont {
@@ -13,15 +13,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-qidongyeya:before {
+.icon-HYDRAULIC_OIL:before {
   content: "\e6f9";
 }
 
-.icon-shiyanshihaocai:before {
+.icon-WASTE_EXPERIMENTAL_EQUIPMENT:before {
   content: "\e6fb";
 }
 
-.icon-runhua:before {
+.icon-LUBRICANT_WASTE:before {
   content: "\e6fc";
 }
 
@@ -41,7 +41,7 @@
   content: "\e700";
 }
 
-.icon-jinshujiagong:before {
+.icon-COMPOSITE_MATERIAL_CUTTING_WASTE:before {
   content: "\e701";
 }
 
@@ -81,27 +81,27 @@
   content: "\e606";
 }
 
-.icon-zhongjinshufeishui:before {
+.icon-HEAVY_METAL_WASTEWATER:before {
   content: "\e61f";
 }
 
-.icon-feiqi:before {
+.icon-EXHAUST_GAS:before {
   content: "\e63d";
 }
 
-.icon-youqi:before {
+.icon-WASTE_PAINT:before {
   content: "\e85a";
 }
 
-.icon-dust:before {
+.icon-DUST:before {
   content: "\e600";
 }
 
-.icon-qitalaji-yicixingcanju:before {
+.icon-HOUSEHOLD_WASTE:before {
   content: "\e631";
 }
 
-.icon-qitalaji-wuranzhizhang:before {
+.icon-WASTE_PAPER:before {
   content: "\e635";
 }
 
@@ -109,11 +109,11 @@
   content: "\e63e";
 }
 
-.icon-kehuishouwu-jinshulei:before {
+.icon-METAL_CHIPS:before {
   content: "\e63f";
 }
 
-.icon-kehuishouwu-suliaolei:before {
+.icon-PLASTIC:before {
   content: "\e640";
 }
 
@@ -121,15 +121,15 @@
   content: "\e625";
 }
 
-.icon-7:before {
+.icon-HAZARDOUS_CHEMICALS:before {
   content: "\e663";
 }
 
-.icon-ranliao:before {
+.icon-FUEL_RESIDUES:before {
   content: "\e67d";
 }
 
-.icon-xE93E:before {
+.icon-CUTTING_FLUID:before {
   content: "\e641";
 }
 
@@ -141,7 +141,7 @@
   content: "\e642";
 }
 
-.icon-meitan:before {
+.icon-MINERAL_RESIDUE:before {
   content: "\ee12";
 }
 
@@ -149,15 +149,15 @@
   content: "\e669";
 }
 
-.icon-ICON_cuihuaji:before {
+.icon-CATALYZER:before {
   content: "\e62b";
 }
 
-.icon-shiyanshi:before {
+.icon-CHEMICALS:before {
   content: "\e601";
 }
 
-.icon-reneng:before {
+.icon-WASTE_HEAT:before {
   content: "\e62d";
 }
 
@@ -249,7 +249,7 @@
   content: "\e665";
 }
 
-.icon-shengchan:before {
+.icon-DISCARDED_ELECTRONIC_COMPONENTS:before {
   content: "\e69f";
 }
 
@@ -333,7 +333,7 @@
   content: "\e6eb";
 }
 
-.icon-huaxueshiji:before {
+.icon-CHEMICAL_PROPELLANTS:before {
   content: "\e6ec";
 }
 

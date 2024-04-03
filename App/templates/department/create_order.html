@@ -1,7 +1,11 @@
 {% extends 'department/index.html' %}
 {% block extra_css %}
-    <link rel="stylesheet" href="../../static/css/department/create_order.css"> {% endblock %}
-{% block extra_js %} {% endblock %}
+    <link rel="stylesheet" href="../../static/css/department/create_order.css">
+    <link rel="stylesheet" href="../../static/css/utils/swiper-bundle.min.css"/>
+{% endblock %}
+{% block extra_js %}
+    <script src="../../static/js/utils/swiper-bundle.min.js"></script>
+{% endblock %}
 {% block title %}Create Order{% endblock %}
 
 {% block mainBody %}
@@ -53,11 +57,71 @@
     </dialog>
     <section class="dashboard">
         {% include "top.html" %}
-        <div class="container">
-            {% for waste in wastes %}
-                <h2>{{ waste }}</h2>
-            {% endfor %}
-        </div>
+        {% if department %}
+            <div class="content">
+                <div class="details">
+                    <h2>{{ _("Introduction") }}</h2>
+                    <p>{{ _("Hi, the ") }} {{ departmentType }}{{ _(" Manager, welcome.") }} <br>
+                        {% for key, value in wastes.items() %}
+                            <b>{{ value }}, </b>
+                        {% endfor %}
+                        {{ _("You can choose these types to handle. ") }}<br>
+                        {{ _("you need to select one of the waste types and set the required weight, attributes, and comments. ") }}
+                    </p>
+                </div>
+                <div class="create-order">
+                    <div class="order-form">
+                        <h2>{{ _("Create Order") }}</h2>
+                        <form class="pico" id="orderForm" method="post" action="/department/createorder">
+                            <label for="order-name">{{ _("Order name:") }}
+                                <input type="text" id="order-name" name="order-name" required>
+                            </label>
+                            <div class="order-choose">
+                                <div class="custom-select" id="custom-select">
+                                    <div class="selected-option">{{ _("Please choose: ") }}</div>
+                                    <div class="options-container">
+                                        {% for key, value in wastes.items() %}
+                                            <div class="option-item" data-value="{{ key }}">
+                                                <i class="iconfont icon-{{ key }}"></i>
+                                                <span>{{ value }}</span></div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <label class="number-input no-pico-label" for="order-weight">{{ _("Weight: ") }}
+                                    <input type="number" id="order-weight" name="order-weight" required>
+                                    <span>kg</span>
+                                </label>
+                            </div>
+
+                            <label for="order-comment">{{ _("Order comment:") }}
+                                <textarea rows="3" cols="50" id="order-comment" name="order-comment"></textarea>
+                            </label>
+                            <button type="button" id="createOrderBtn">{{ _("Create") }}</button>
+
+                        </form>
+                    </div>
+                    <div class="order-cards">
+                        <h2>{{ _("Description") }}</h2>
+                        <!-- Slider main container -->
+                        <div class="swiper">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                                <!-- Slides -->
+                                <div class="swiper-slide">Slide 1</div>
+                                <div class="swiper-slide">Slide 2</div>
+                                <div class="swiper-slide">Slide 3</div>
+                                <div class="swiper-slide">Slide 4</div>
+                            </div>
+                            <div class="swiper-button-next">
+                            </div>
+                            <div class="swiper-button-prev">
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
     </section>
 
@@ -66,6 +130,33 @@
         {% if not department %}
             departmentDialog.showModal(); // 如果用户没有部门，则展示对话框
         {% endif %}
+
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            spaceBetween: 30,
+            grabCursor: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                800: {
+                    slidesPerView: 1,
+                },
+                1000: {
+                    slidesPerView: 2,
+                },
+                1200: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+
 
         $(document).ready(function () {
             $("#createDepartmentBtn").click(function (e) {
@@ -94,6 +185,24 @@
                         }
                     }
                 });
+            });
+            $('.selected-option').click(function () {
+                $('.options-container').toggleClass('show-options');
+            });
+
+            // 当某个选项被点击
+            $('.option-item').click(function () {
+                let selectedText = $(this).text();
+                $('.selected-option').text(selectedText);
+                $('.options-container').removeClass('show-options');
+            });
+
+            // 点击除下拉框外的地方隐藏选项
+            $(document).click(function (e) {
+                let target = e.target;
+                if (!$(target).is('.selected-option') && !$(target).parents().is('.custom-select')) {
+                    $('.options-container').removeClass('show-options');
+                }
             });
         });
     </script>
