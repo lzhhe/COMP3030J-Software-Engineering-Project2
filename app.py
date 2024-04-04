@@ -3,6 +3,7 @@ from flask_babel import Babel, gettext as _
 from App import create_app
 from App.extents import db
 from App.models import User
+from App.views_utils import string_to_enum, enum_to_string
 
 app = create_app()
 
@@ -38,6 +39,9 @@ def my_before():
 def my_context():
     return {'user': g.user}
 
+
+app.jinja_env.filters['string_to_enum'] = string_to_enum
+app.jinja_env.filters['enum_to_string'] = enum_to_string
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

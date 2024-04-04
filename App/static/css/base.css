@@ -253,6 +253,17 @@ nav.close ~ .dashboard {
 
 }
 
+
+.title-top {
+    display: flex;
+    align-items: center;
+}
+
+h2 {
+    display: inline;
+    margin-left: 20px;
+}
+
 @media screen and (max-width: 1000px) {
     nav {
         width: 75px;

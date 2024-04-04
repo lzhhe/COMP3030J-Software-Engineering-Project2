@@ -33,3 +33,5 @@ def enum_to_string(enum):
 
 def string_to_enum(string):
     return string.replace(' ', '_').upper()
+
+

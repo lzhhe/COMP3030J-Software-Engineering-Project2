@@ -44,48 +44,15 @@ dialog::backdrop {
     margin-bottom: 10px;
     gap: 10px;
 }
-
-.order-choose .custom-select {
+.dropdown li a{
     display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 5px 10px;
-    border-bottom: 3px solid #2872AE;
-    border-radius: 2px;
-    position: relative;
+    flex-direction: row;
 }
-
-.order-choose .custom-select .selected-option {
-    margin-right: 10px;
-    cursor: pointer;
+.dropdown li a i{
+    display: inline;
 }
-
-.order-choose .custom-select .options-container {
-    font-size: 0.8em;
-    width: auto;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 5px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: var(--pico-background-color);
-    display: none;
-    z-index: 100;
-    transition: all 0.3s ease-in-out;
-}
-
-.order-choose .custom-select .options-container .option-item {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    width: 100%;
-    cursor: pointer;
-}
-
-.order-choose .custom-select .options-container .option-item:hover i,
-.order-choose .custom-select .options-container .option-item:hover span {
+.dropdown li:hover i,
+.dropdown li:hover span{
     color: var(--primary-color);
 }
 
@@ -142,9 +109,12 @@ dialog::backdrop {
     border-bottom: 2px solid var(--border-color);
 }
 
-.content .details h2 {
+.content .details .details-top {
     grid-area: d1;
+    display: flex;
+    align-items: center;
 }
+
 
 .content .details p {
     grid-area: d2;

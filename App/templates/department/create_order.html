@@ -12,60 +12,67 @@
 
 {% block mainBody %}
     <dialog id="createDepartment" class="pico">
-        <h4>{{ _("Please create a department") }}</h4>
-        <form method="dialog">
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="METALLURGY" required>
-                <i class="iconfont icon-caikuangyejin"></i>
-                <span>{{ _("Metallurgy") }}</span>
-            </label>
-            <label class="no-pico-label"><input type="radio" name="departmentType"
-                                                value="EQUIPMENT_MANUFACTURING">
-                <i class="iconfont icon-shengchan"></i>
-                <span>{{ _("Equipment Manufacturing") }}</span>
-            </label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="COMPOSITE_MATERIAL">
-                <i class="iconfont icon-duoyanghuacailiao"></i>
-                <span>{{ _("Composite Material") }}</span>
-            </label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="NEW_ENERGY">
-                <i class="iconfont icon-xinnengyuan"></i>
-                <span>{{ _("New Energy") }}</span>
-            </label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="AUTOMATION_SYSTEM">
-                <i class="iconfont icon-gongyezidonghua"></i>
-                <span>{{ _("Automation System") }}</span>
-            </label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="MAINTENANCE">
-                <i class="iconfont icon-shebeiweihuguanli"></i>
-                <span>{{ _("Equipment Maintenance") }}</span>
-            </label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="LABORATORY">
-                <i class="iconfont icon-shiyanshiyiqi"></i>
-                <span>{{ _("Laboratory") }}</span></label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="DATA_CENTER">
-                <i class="iconfont icon-yiqiyibiao"></i>
-                <span>{{ _("Data Center") }}</span></label>
-            <label class="no-pico-label"><input type="radio" name="departmentType" value="OFFICE">
-                <i class="iconfont icon-diannaobangong"></i>
-                <span>{{ _("Office") }}</span></label>
-            <label for="departmentName">{{ _("Department name:") }}
-                <input type="text" id="departmentName" name="departmentName" required>
-            </label>
-            <label for="departmentAddress">{{ _("Department address:") }}
-                <textarea rows="4" cols="50" id="departmentAddress" name="departmentAddress"></textarea>
-            </label>
-            <button type="button" id="createDepartmentBtn">{{ _("Create") }}</button>
-        </form>
+        <article>
+            <header>
+                <h4>{{ _("Please create a department") }}</h4>
+            </header>
+            <form method="dialog">
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="METALLURGY" required>
+                    <i class="iconfont icon-caikuangyejin"></i>
+                    <span>{{ _("Metallurgy") }}</span>
+                </label>
+                <label class="no-pico-label"><input type="radio" name="departmentType"
+                                                    value="EQUIPMENT_MANUFACTURING">
+                    <i class="iconfont icon-shengchan"></i>
+                    <span>{{ _("Equipment Manufacturing") }}</span>
+                </label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="COMPOSITE_MATERIAL">
+                    <i class="iconfont icon-duoyanghuacailiao"></i>
+                    <span>{{ _("Composite Material") }}</span>
+                </label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="NEW_ENERGY">
+                    <i class="iconfont icon-xinnengyuan"></i>
+                    <span>{{ _("New Energy") }}</span>
+                </label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="AUTOMATION_SYSTEM">
+                    <i class="iconfont icon-gongyezidonghua"></i>
+                    <span>{{ _("Automation System") }}</span>
+                </label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="MAINTENANCE">
+                    <i class="iconfont icon-shebeiweihuguanli"></i>
+                    <span>{{ _("Equipment Maintenance") }}</span>
+                </label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="LABORATORY">
+                    <i class="iconfont icon-shiyanshiyiqi"></i>
+                    <span>{{ _("Laboratory") }}</span></label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="DATA_CENTER">
+                    <i class="iconfont icon-yiqiyibiao"></i>
+                    <span>{{ _("Data Center") }}</span></label>
+                <label class="no-pico-label"><input type="radio" name="departmentType" value="OFFICE">
+                    <i class="iconfont icon-diannaobangong"></i>
+                    <span>{{ _("Office") }}</span></label>
+                <label for="departmentName">{{ _("Department name:") }}
+                    <input type="text" id="departmentName" name="departmentName" required>
+                </label>
+                <label for="departmentAddress">{{ _("Department address:") }}
+                    <textarea rows="4" cols="50" id="departmentAddress" name="departmentAddress"></textarea>
+                </label>
+                <button type="button" id="createDepartmentBtn">{{ _("Create") }}</button>
+            </form>
+        </article>
     </dialog>
     <section class="dashboard">
         {% include "top.html" %}
         {% if department %}
             <div class="content">
                 <div class="details">
-                    <h2>{{ _("Introduction") }}</h2>
-                    <p>{{ _("Hi, the ") }} {{ departmentType }}{{ _(" Manager, welcome.") }} <br>
-                        {% for key, value in wastes.items() %}
-                            <b>{{ value }}, </b>
+                    <div class="details-top">
+                        <img src="../../static/image/icon/intro1.svg" alt="home" class="icons icon-nav" title="Scene">
+                        <h2>{{ _("Introduction") }}</h2>
+                    </div>
+                    <p>{{ _("Hi, the ") }} {{ departmentType|enum_to_string }}{{ _(" Manager, welcome.") }} <br>
+                        {% for waste in wastes %}
+                            <b>{{ waste|enum_to_string }}, </b>
                         {% endfor %}
                         {{ _("You can choose these types to handle. ") }}<br>
                         {{ _("you need to select one of the waste types and set the required weight, attributes, and comments. ") }}
@@ -73,22 +80,27 @@
                 </div>
                 <div class="create-order">
                     <div class="order-form">
-                        <h2>{{ _("Create Order") }}</h2>
+                        <div class="title-top">
+                            <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
+                                 title="Scene">
+                            <h2>{{ _("Create Order") }}</h2>
+                        </div>
                         <form class="pico" id="orderForm" method="post" action="/department/createorder">
                             <label for="order-name">{{ _("Order name:") }}
                                 <input type="text" id="order-name" name="order-name" required>
                             </label>
                             <div class="order-choose">
-                                <div class="custom-select" id="custom-select">
-                                    <div class="selected-option">{{ _("Please choose: ") }}</div>
-                                    <div class="options-container" data-value="">
-                                        {% for key, value in wastes.items() %}
-                                            <div class="option-item" data-value="{{ key }}">
-                                                <i class="iconfont icon-{{ key }}"></i>
-                                                <span>{{ value }}</span></div>
+                                <details class="pico dropdown" data-value="">
+                                    <summary>{{ _("Please choose: ") }}</summary>
+                                    <ul>
+                                        {% for waste in wastes %}
+                                            <li data-value="{{ waste }}">
+                                                <a href="#">
+                                                    <i class="iconfont icon-{{ waste.name }}"></i>
+                                                    <span>{{ waste|enum_to_string }}</span></a></li>
                                         {% endfor %}
-                                    </div>
-                                </div>
+                                    </ul>
+                                </details>
                                 <label class="number-input no-pico-label" for="order-weight">{{ _("Weight: ") }}
                                     <input type="number" id="order-weight" name="order-weight" required>
                                     <span>kg</span>
@@ -109,16 +121,18 @@
                                     <span>SO2</span>
                                 </label>
                             </div>
-
                             <label for="order-comment">{{ _("Order comment:") }}
                                 <textarea rows="3" cols="50" id="order-comment" name="order-comment"></textarea>
                             </label>
-                            <button type="button" id="createOrderBtn">{{ _("Create") }}</button>
-
+                            <input type="button" id="createOrderBtn" class="outline" value="{{ _("Create") }}"></input>
                         </form>
                     </div>
                     <div class="order-cards">
-                        <h2>{{ _("Description") }}</h2>
+                        <div class="title-top">
+                            <img src="../../static/image/icon/description.svg" alt="home" class="icons icon-nav"
+                                 title="Scene">
+                            <h2>{{ _("Description") }}</h2>
+                        </div>
                         {% include "swiper.html" %}
                         <!-- Slider main container -->
                     </div>
@@ -168,7 +182,7 @@
                 const did = $('.user-department').data('did');
                 const orderName = $("#order-name").val();
                 const weight = $("#order-weight").val();
-                const type = $('.options-container').data('value');
+                const type = $('.dropdown').data('value');
                 const comment = $("#order-comment").val();
                 let attribution = '';
                 document.querySelectorAll('.order-attribute').forEach(function (item) {
@@ -202,17 +216,12 @@
                     }
                 });
             });
-            $('.selected-option').click(function () {
-                $('.options-container').toggleClass('show-options');
-            });
+            $('.dropdown li').click(function () {
+                // 获取点击项的data-value
+                const value = $(this).data('value');
 
-            // 当某个选项被点击
-            $('.option-item').click(function () {
-                let selectedText = $(this).text();
-                const option = $('.options-container');
-                option.data('value', $(this).data('value'));
-                $('.selected-option').text(selectedText);
-                option.removeClass('show-options');
+                // 更新到外层的<details>元素
+                $(this).closest('.dropdown').data('value', value);
             });
 
             // 点击除下拉框外的地方隐藏选项

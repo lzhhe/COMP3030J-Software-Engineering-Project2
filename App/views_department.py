@@ -22,13 +22,12 @@ def index():
     if user.department_id is not None:
         d = user.department
         department = d.departmentName
+        departmentType = d.departmentType
         departmentDID = d.DID
-        departmentType = enum_to_string(d.departmentType)
         wasteTypes = Waste.query.filter_by(wasteDepartment=d.departmentType).all()
-        wastes = {}
+        wastes = []
         for wasteType in wasteTypes:
-            waste = enum_to_string(wasteType.wasteType)
-            wastes[wasteType.wasteType.name] = waste
+            wastes.append(wasteType.wasteType)
     return render_template('department/create_order.html', department=department, departmentType=departmentType,
                            wastes=wastes, departmentDID=departmentDID)
 
@@ -64,7 +63,27 @@ def edit():
 
 @department.route('/history')
 def history():
-    return render_template('department/view_order.html')
+    user = g.user
+    department = user.department
+    orders = Order.query.filter_by(department_id=department.DID).all()
+    unconfirmed_orders = []
+    confirmed_orders = []
+    processing_orders = []
+    finished_orders = []
+    all_orders = []
+    for order in orders:
+        all_orders.append(order)
+        if order.orderStatus.name == 'UNCONFIRMED':
+            unconfirmed_orders.append(order)
+        elif order.orderStatus.name == 'CONFIRMED':
+            confirmed_orders.append(order)
+        elif order.orderStatus.name == 'PROCESSING':
+            processing_orders.append(order)
+        elif order.orderStatus.name == 'FINISHED':
+            finished_orders.append(order)
+    return render_template('department/view_order.html', unconfirmed_orders=unconfirmed_orders,
+                           confirmed_orders=confirmed_orders,
+                           processing_orders=processing_orders, finished_orders=finished_orders, all_orders=all_orders)
 
 
 @department.route('/dashboard')

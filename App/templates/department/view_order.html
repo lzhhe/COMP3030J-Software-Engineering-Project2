@@ -1,10 +1,116 @@
 {% extends 'department/index.html' %}
-{% block extra_css %} {% endblock %}
-{% block extra_js %} {% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/department/view_order.css">
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
 {% block title %}Create Order{% endblock %}
 
 {% block mainBody %}
     <section class="dashboard">
         {% include "top.html" %}
+        <div class="content">
+            <div class="content1">
+                <div class="title-top">
+                    <img src="../../static/image/icon/datasave.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Total statistics") }}</h2>
+                </div>
+                <div class="boxes">
+                    <div class="box box1">
+                        <img src="../../static/image/icon/unconfirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Unconfirmed") }}</b>
+                        <span class="box-number">{{ unconfirmed_orders|length }}</span>
+                    </div>
+                    <div class="box box2">
+                        <img src="../../static/image/icon/confirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Confirmed") }}</b>
+                        <span class="box-number">{{ confirmed_orders|length }}</span>
+                    </div>
+                    <div class="box box3">
+                        <img src="../../static/image/icon/diliver.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Processing") }}</b>
+                        <span class="box-number">{{ processing_orders|length }}</span>
+                    </div>
+                    <div class="box box4">
+                        <img src="../../static/image/icon/qianbao.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Finished") }}</b>
+                        <span class="box-number">{{ finished_orders|length }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content2">
+                <div class="title-top">
+                    <div class="title-top-left">
+                        <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                             title="Scene">
+                        <h2>{{ _("Tables") }}</h2>
+                    </div>
+                    <div class="title-top-right">
+                        <div>
+                            <img src="../../static/image/icon/s1.svg" alt="home"
+                                 class="icons icon-nav title-top-right-icon"
+                                 title="Scene">
+                            <span>{{ _("Unconfirmed") }}</span></div>
+                        <div>
+                            <img src="../../static/image/icon/s2.svg" alt="home"
+                                 class="icons icon-nav title-top-right-icon"
+                                 title="Scene">
+                            <span>{{ _("Confirmed") }}</span></div>
+                        <div>
+                            <img src="../../static/image/icon/s3.svg" alt="home"
+                                 class="icons icon-nav title-top-right-icon"
+                                 title="Scene">
+                            <span>{{ _("Processing") }}</span></div>
+                        <div>
+                            <img src="../../static/image/icon/s4.svg" alt="home"
+                                 class="icons icon-nav title-top-right-icon"
+                                 title="Scene">
+                            <span>{{ _("Finished") }}</span></div>
+                    </div>
+
+                </div>
+                <div class="tables">
+                    <div class="pico overflow-auto">
+                        <table class="pico striped">
+                            <thead>
+                            <th scope="col">{{ _("Name") }}</th>
+                            <th scope="col">{{ _("Date") }}</th>
+                            <th scope="col">{{ _("Type") }}</th>
+                            <th scope="col">{{ _("Weight") }}</th>
+                            <th scope="col">{{ _("Status") }}</th>
+                            </thead>
+                            <tbody>
+                            {% for order in all_orders %}
+                                <th scope="row"> {{ order.orderName }}</th>
+                                <td>{{ order.date }}</td>
+                                <td>{{ order.wasteType|enum_to_string }}</td>
+                                <td>{{ order.weight }}</td>
+                                {% if order.orderStatus.name == "UNCONFIRMED" %}
+                                    <td><img src="../../static/image/icon/s1.svg" alt="home"
+                                             class="icons icon-nav"></td>
+                                {% elif order.orderStatus == "CONFIRMED" %}
+                                    <td><img src="../../static/image/icon/s2.svg" alt="home"
+                                             class="icons icon-nav"></td>
+                                {% elif order.orderStatus == "PROCESSING" %}
+                                    <td><img src="../../static/image/icon/s3.svg" alt="home"
+                                             class="icons icon-nav"></td>
+                                {% elif order.orderStatus == "FINISHED" %}
+                                    <td><img src="../../static/image/icon/s4.svg" alt="home"
+                                             class="icons icon-nav "></td>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </section>
 {% endblock %}
