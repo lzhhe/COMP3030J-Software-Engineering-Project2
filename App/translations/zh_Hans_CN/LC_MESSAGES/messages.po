@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-27 21:59+0800\n"
+"POT-Creation-Date: 2024-04-04 15:59+0800\n"
 "PO-Revision-Date: 2024-03-27 14:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,192 +18,610 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: templates/login.html:27
+#: templates/login.html:26
 msgid "Login Page"
 msgstr "登录页"
 
-#: templates/login.html:32
+#: templates/login.html:31
 msgid "Choose your identity"
 msgstr "选择你的身份"
 
-#: templates/login.html:36
+#: templates/login.html:35
 msgid "Three types:"
 msgstr "三种类型："
 
-#: templates/login.html:38
+#: templates/login.html:37
 msgid "Choose…"
 msgstr "选择..."
 
-#: templates/login.html:40
+#: templates/login.html:39
 msgid "Department Manager"
 msgstr "部门人员"
 
-#: templates/login.html:40
+#: templates/login.html:39
 msgid "Development"
 msgstr "部门人员"
 
-#: templates/login.html:42
+#: templates/login.html:41
 #, fuzzy
 msgid "Government Manager"
 msgstr "政府人员"
 
-#: templates/login.html:42
+#: templates/login.html:41
 msgid "Government"
 msgstr "政府人员"
 
-#: templates/login.html:44
+#: templates/login.html:43
 msgid "Waste Manager"
 msgstr "资源经理"
 
-#: templates/login.html:44
+#: templates/login.html:43
 msgid "Waste"
 msgstr "资源经理"
 
-#: templates/login.html:46
+#: templates/login.html:45
 #, fuzzy
 msgid "Individual User"
 msgstr "独立个体"
 
-#: templates/login.html:46
+#: templates/login.html:45
 msgid "Individual user"
 msgstr "独立个体"
 
-#: templates/login.html:51
+#: templates/login.html:50
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/login.html:52
+#: templates/login.html:51
 msgid "Confirm"
 msgstr "确认"
 
-#: templates/login.html:56 templates/login.html:83 templates/login.html:110
+#: templates/login.html:55 templates/login.html:82 templates/login.html:109
 msgid "Show Password"
 msgstr "展示密码"
 
-#: templates/login.html:57
+#: templates/login.html:56
 msgid "Hide Password"
 msgstr "隐藏密码"
 
-#: templates/login.html:69
+#: templates/login.html:68
 msgid "Create Account"
 msgstr "创建一个新账户"
 
-#: templates/login.html:71
+#: templates/login.html:70
 msgid "by use your email for registering"
 msgstr "通过邮箱注册"
 
-#: templates/login.html:74 templates/login.html:98 templates/login.html:161
+#: templates/login.html:73 templates/login.html:97 templates/login.html:160
 msgid "Username"
 msgstr "用户名"
 
-#: templates/login.html:75 templates/login.html:165
+#: templates/login.html:74 templates/login.html:164
 msgid "Email"
 msgstr "邮箱"
 
-#: templates/login.html:79 templates/login.html:102
+#: templates/login.html:78 templates/login.html:101
 msgid "Password"
 msgstr "密码"
 
-#: templates/login.html:85
+#: templates/login.html:84
 msgid "Choose one identity?"
 msgstr "选择一个身份？"
 
-#: templates/login.html:87
+#: templates/login.html:86
 msgid "Register"
 msgstr "注册"
 
-#: templates/login.html:95
+#: templates/login.html:94
 msgid "Enter System"
 msgstr "进入系统"
 
-#: templates/login.html:97
+#: templates/login.html:96
 msgid "by use your username and password"
 msgstr "通过用户名和密码登录"
 
-#: templates/login.html:112
+#: templates/login.html:111
 msgid "Forget Your Password?"
 msgstr "忘记密码？"
 
-#: templates/login.html:114
+#: templates/login.html:113
 msgid "Login"
 msgstr "登录"
 
-#: templates/login.html:122
+#: templates/login.html:121
 msgid "Welcome Back!"
 msgstr "欢迎回来"
 
-#: templates/login.html:123
+#: templates/login.html:122
 msgid "Enter your personal details to use all site features"
 msgstr "输入个人信息以便使用全部功能"
 
-#: templates/login.html:124
+#: templates/login.html:123
 msgid "Switch to Login"
 msgstr "返回登录"
 
-#: templates/login.html:126
+#: templates/login.html:125
 msgid "Password must contain the following:"
 msgstr "密码必须包含以下字符："
 
-#: templates/login.html:127
+#: templates/login.html:126
 msgid "length from"
 msgstr "长度是"
 
-#: templates/login.html:129 templates/login.html:132 templates/login.html:135
-#: templates/login.html:137
+#: templates/login.html:128 templates/login.html:131 templates/login.html:134
+#: templates/login.html:136
 msgid "A"
 msgstr "一个"
 
-#: templates/login.html:129
+#: templates/login.html:128
 msgid "lowercase"
 msgstr "小写"
 
-#: templates/login.html:129 templates/login.html:132 templates/login.html:137
+#: templates/login.html:128 templates/login.html:131 templates/login.html:136
 msgid "letter"
 msgstr "字母"
 
-#: templates/login.html:132
+#: templates/login.html:131
 msgid "uppercase"
 msgstr "大写"
 
-#: templates/login.html:135
+#: templates/login.html:134
 msgid "number"
 msgstr "数字"
 
-#: templates/login.html:137
+#: templates/login.html:136
 msgid "special"
 msgstr "特殊"
 
-#: templates/login.html:144
+#: templates/login.html:143
 msgid "Hello Friend!"
 msgstr "朋友你好！"
 
-#: templates/login.html:145
+#: templates/login.html:144
 msgid "Register with your personal details to use all site features"
 msgstr "使用个人信息注册以便使用全部功能"
 
-#: templates/login.html:146
+#: templates/login.html:145
 msgid "Switch to Register"
 msgstr "前去注册"
 
-#: templates/login.html:162
+#: templates/login.html:161
 msgid "Enter Username"
 msgstr "输入用户名"
 
-#: templates/login.html:166
+#: templates/login.html:165
 msgid "Enter Email"
 msgstr "输入邮箱"
 
-#: templates/login.html:168
+#: templates/login.html:167
 msgid "New password"
 msgstr "输入新密码"
 
-#: templates/login.html:169
+#: templates/login.html:168
 msgid "Enter new password"
 msgstr "输入新密码"
 
-#: templates/login.html:172
+#: templates/login.html:171
 msgid "Retrieve Password"
 msgstr "重设密码"
+
+#: templates/swiper.html:5
+msgid "Heavy metal water"
+msgstr "重金属废水"
+
+#: templates/swiper.html:6
+msgid ""
+"Produced from metallurgical industry, electroplating factory, mine, etc.,"
+"\n"
+"                    containing lead, cadmium, mercury and other heavy "
+"metals. If this kind of\n"
+"                    wastewater is discharged directly without treatment, "
+"it will seriously pollute\n"
+"                    the water source and endanger the ecological "
+"environment and human health."
+msgstr "产自冶金工业、电镀厂、矿山等，含有铅、镉、汞等重金属。这类废水如果未经处理直接排放，会严重污染水源，危害生态环境与人类健康。"
+
+#: templates/swiper.html:11
+msgid "Exhaust gas"
+msgstr "废气"
+
+#: templates/swiper.html:12
+msgid ""
+"It mainly comes from the combustion of fuel in the industrial production "
+"process,\n"
+"                    including sulfur dioxide, nitrogen oxides and other "
+"harmful gases. The emission\n"
+"                    of waste gas not only leads to air pollution, but "
+"also may cause environmental\n"
+"                    problems such as acid rain and greenhouse effect."
+msgstr "主要来源于工业生产过程中燃料的燃烧，包含二氧化硫、氮氧化物等有害气体。废气的排放不仅导致空气污染，还可能引起酸雨、温室效应等环境问题。"
+
+#: templates/swiper.html:18
+msgid "Mineral residue"
+msgstr "矿物残渣"
+
+#: templates/swiper.html:19
+msgid ""
+"It is produced during mining and mineral processing, mainly including "
+"rock\n"
+"                    fragments and mineral processing by-products. These "
+"residues, if not properly\n"
+"                    disposed of, can take up large amounts of land and "
+"affect soil and water\n"
+"                    quality."
+msgstr "在采矿和矿物加工过程中产生，主要包括岩石碎片、矿物加工副产品等。这些残渣如果不妥善处理，会占用大量土地，影响土壤和水质。"
+
+#: templates/swiper.html:25
+msgid "Cutting fluid"
+msgstr "切削液"
+
+#: templates/swiper.html:26
+msgid ""
+"Used in metal working to reduce temperature and friction and extend tool "
+"life.\n"
+"                    Contains mineral oil, emulsifier and other "
+"ingredients, if untreated directly\n"
+"                    discharged, will pollute water and soil."
+msgstr "在金属加工中使用，以降低温度和摩擦，延长工具寿命。包含矿物油、乳化剂等成分，如果未经处理直接排放，会污染水体和土壤。"
+
+#: templates/swiper.html:31
+msgid "Metal chips"
+msgstr "金属屑"
+
+#: templates/swiper.html:32
+msgid ""
+"The debris and chips produced during metal processing may contain metals "
+"such as\n"
+"                    iron, copper, and aluminum. If the recycling is not "
+"proper, not only waste\n"
+"                    resources, but also may cause environmental pollution."
+msgstr "金属加工过程中产生的碎片和屑末，可能含有铁、铜、铝等金属。如果回收不当，不仅浪费资源，还可能造成环境污染。"
+
+#: templates/swiper.html:37
+msgid "Plastic waste"
+msgstr "塑料"
+
+#: templates/swiper.html:38
+msgid ""
+"Waste plastics produced in the manufacturing process of high-end "
+"mechanical\n"
+"                    equipment, including parts packaging, protective "
+"film, etc. Plastics decompose\n"
+"                    slowly, and improper disposal can lead to serious "
+"soil and water pollution."
+msgstr "高端机械设备制造过程中产生的废弃塑料，包括零件包装、保护膜等。塑料分解缓慢，不当处理会导致严重的土壤和水体污染。"
+
+#: templates/swiper.html:43
+msgid "Composite metal cutting waste"
+msgstr "复合材料切割废料"
+
+#: templates/swiper.html:44
+msgid ""
+"Waste produced when cutting composite materials such as carbon fiber and "
+"glass\n"
+"                    fiber. These wastes are difficult to degrade and can "
+"cause long-term pollution\n"
+"                    to the environment if not handled properly."
+msgstr "在切割碳纤维、玻璃纤维等复合材料时产生的废料。这些废料难以降解，如果处理不当，会对环境造成长期污染。"
+
+#: templates/swiper.html:49
+msgid "Waste paint fluid"
+msgstr "废漆"
+
+#: templates/swiper.html:50
+msgid ""
+"Including expired paint, residual paint mist in the spraying process. "
+"Contains\n"
+"                    organic solvents and heavy metals, causing pollution "
+"to water and soil, and is\n"
+"                    also harmful to human health."
+msgstr "包括过期漆料、喷涂过程中的残留漆雾等。含有有机溶剂和重金属，对水体和土壤造成污染，对人体健康也有害。"
+
+#: templates/swiper.html:55
+msgid "Dust"
+msgstr "粉尘"
+
+#: templates/swiper.html:56
+msgid ""
+"Fine particles produced during material processing, cutting, grinding, "
+"etc.\n"
+"                    Long-term exposure to dust is not only harmful to the"
+" environment, but also may\n"
+"                    cause harm to the human respiratory system."
+msgstr "在材料加工、切割、研磨等过程中产生的细小颗粒物。长期暴露于粉尘环境中，不仅对环境有害，还可能对人体呼吸系统造成伤害。"
+
+#: templates/swiper.html:61
+msgid "Chemicals things"
+msgstr "化学品"
+
+#: templates/swiper.html:62
+msgid ""
+"Waste chemicals produced in laboratories or chemical manufacturing "
+"processes,\n"
+"                    including raw materials, by-products, etc. that have "
+"not been completed in the\n"
+"                    reaction. If these chemicals are not handled "
+"properly, they may cause soil and\n"
+"                    water pollution, fire, explosion and other safety "
+"accidents"
+msgstr "实验室或化学品制造过程中产生的废弃化学物质，包括反应未完成的原料、副产品等。这些化学品如果处理不当，可能引起土壤、水体污染和火灾、爆炸等安全事故。"
+
+#: templates/swiper.html:68
+msgid "Catalyzer"
+msgstr "催化剂"
+
+#: templates/swiper.html:69
+msgid ""
+"A substance that accelerates the rate of a chemical reaction without "
+"being\n"
+"                    consumed. The catalyst after use may contain harmful "
+"substances and requires\n"
+"                    special treatment to prevent environmental pollution."
+msgstr "在化学反应中加速反应速率而不被消耗的物质。使用后的催化剂可能含有有害物质，需要特殊处理以防止环境污染。"
+
+#: templates/swiper.html:74
+msgid "Chemical propellants"
+msgstr "化学推进剂"
+
+#: templates/swiper.html:75
+msgid ""
+"Chemicals used in rockets and missiles to generate thrust. These "
+"substances are\n"
+"                    extremely corrosive and polluting to the environment "
+"and require rigorous\n"
+"                    disposal and recycling procedures."
+msgstr "用于火箭和导弹中的化学物质，用于产生推力。这些物质对环境有极强的腐蚀性和污染性，需要严格的处置和回收程序。"
+
+#: templates/swiper.html:80
+msgid "Fuel residues"
+msgstr "燃料残渣"
+
+#: templates/swiper.html:81
+msgid ""
+"Waste generated during the production and use of new energy, such as "
+"biomass\n"
+"                    energy and solar panel manufacturing. These residues,"
+" if not handled properly,\n"
+"                    will pollute the environment"
+msgstr "新能源生产和使用过程中，如生物质能、太阳能板制造等产生的废弃物。这些残渣如果处理不当，会对环境造成污染。"
+
+#: templates/swiper.html:86
+msgid "Discarded electronic components"
+msgstr "废弃电子元器件"
+
+#: templates/swiper.html:87
+msgid ""
+"Including discarded chips, circuit boards, displays and other electronic\n"
+"                    equipment components. It contains heavy metals and "
+"harmful chemicals and poses a\n"
+"                    serious threat to the environment."
+msgstr "包括废弃的芯片、电路板、显示器等电子设备部件。含有重金属和有害化学物质，对环境构成严重威胁。"
+
+#: templates/swiper.html:92
+msgid "Hydraulic oils"
+msgstr "液压油"
+
+#: templates/swiper.html:93
+msgid ""
+"Oils used to transmit power in machinery and equipment. If the hydraulic "
+"oil\n"
+"                    after use is discharged directly without treatment, "
+"it will seriously pollute\n"
+"                    water and soil."
+msgstr "用于机械和设备中传递动力的油。使用后的液压油如果未经处理直接排放，会严重污染水体和土壤。"
+
+#: templates/swiper.html:98
+msgid "Lubricant waste"
+msgstr "润滑油废料"
+
+#: templates/swiper.html:99
+msgid ""
+"Waste lubricating oil produced during equipment maintenance, including "
+"oil, gear\n"
+"                    oil, etc. These waste oils contain harmful substances"
+" and need to be\n"
+"                    professionally treated for reuse or disposal."
+msgstr "设备维护中产生的废旧润滑油，包括机油、齿轮油等。这些废油含有有害物质，需要经过专业处理再利用或处置。"
+
+#: templates/swiper.html:104
+msgid "Hazardous chemicals"
+msgstr "有害化学品"
+
+#: templates/swiper.html:105
+msgid ""
+"Hazardous chemicals used in laboratories, including corrosive, toxic, "
+"flammable\n"
+"                    and explosive hazardous chemicals. These chemicals "
+"need to be stored, used and\n"
+"                    disposed of in strict accordance with dangerous goods"
+" regulations."
+msgstr "实验室中使用的有害化学品，包括腐蚀性、毒性、易燃易爆等危险化学品。这些化学品需要严格按照危险品管理规定进行存储、使用和处置。"
+
+#: templates/swiper.html:110
+msgid "Waste experimental equipment"
+msgstr "废弃实验器材"
+
+#: templates/swiper.html:111
+msgid ""
+"Including damaged experimental instruments, experimental consumables that"
+" have\n"
+"                    been unable to be used. These wastes may contain "
+"harmful chemical residues and\n"
+"                    require special treatment to prevent contamination."
+msgstr "包括破损的实验仪器、已经无法使用的实验耗材等。这些废弃物可能含有有害化学品残留，需要特殊处理以防止污染。"
+
+#: templates/swiper.html:116
+#, fuzzy
+msgid "Waste paper"
+msgstr "废纸"
+
+#: templates/swiper.html:117
+msgid ""
+"Waste paper generated in offices, schools, etc., including documents, "
+"newspapers,\n"
+"                    magazines, etc. Waste paper is a recyclable resource,"
+" but if it is not handled\n"
+"                    properly, it will cause resource waste and "
+"environmental pollution."
+msgstr "办公室、学校等场所产生的废弃纸张，包括文件、报纸、杂志等。废纸是可回收资源，但如果处理不当，会造成资源浪费和环境污染。"
+
+#: templates/swiper.html:122
+msgid "Household waste"
+msgstr "生活垃圾"
+
+#: templates/swiper.html:123
+msgid ""
+"Waste from household daily life, including kitchen waste, plastic, paper,"
+" etc.\n"
+"                    Different types of household waste need to be sorted "
+"to reduce the impact on the\n"
+"                    environment."
+msgstr "来自家庭日常生活的废弃物，包括厨余垃圾、塑料、纸张等。不同类型的生活垃圾需要分类处理，以减少对环境的影响。"
+
+#: templates/swiper.html:128
+#, fuzzy
+msgid "Waste heat"
+msgstr "废热"
+
+#: templates/swiper.html:129
+msgid ""
+"Waste heat generated during the operation of data centers, factories, "
+"etc. If not\n"
+"                    recycled, this waste heat not only wastes energy, but"
+" also may cause local\n"
+"                    environmental temperatures to rise, affecting the "
+"ecological balance."
+msgstr "数据中心、工厂等在运行过程中产生的余热。如果未经回收利用，这些废热不仅浪费能源，还可能导致局部环境温度升高，影响生态平衡。"
+
+#: templates/switch.html:4
+msgid "Language_Switch"
+msgstr "语言切换"
+
+#: templates/switch.html:9
+msgid "Theme_Switch"
+msgstr "主题切换"
+
+#: templates/department/create_order.html:15
+msgid "Please create a department"
+msgstr "请创建一种部门"
+
+#: templates/department/create_order.html:19
+msgid "Metallurgy"
+msgstr "冶金类"
+
+#: templates/department/create_order.html:24
+msgid "Equipment Manufacturing"
+msgstr "高端机械制造类"
+
+#: templates/department/create_order.html:28
+msgid "Composite Material"
+msgstr "复合材料类"
+
+#: templates/department/create_order.html:32
+msgid "New Energy"
+msgstr "新能源类"
+
+#: templates/department/create_order.html:36
+msgid "Automation System"
+msgstr "自动化系统类"
+
+#: templates/department/create_order.html:40
+#, fuzzy
+msgid "Equipment Maintenance"
+msgstr "设备维护类"
+
+#: templates/department/create_order.html:44
+msgid "Laboratory"
+msgstr "实验类"
+
+#: templates/department/create_order.html:47
+msgid "Data Center"
+msgstr "数据中心类"
+
+#: templates/department/create_order.html:50
+msgid "Office"
+msgstr "办公类"
+
+#: templates/department/create_order.html:51
+#, fuzzy
+msgid "Department name:"
+msgstr "部门名称"
+
+#: templates/department/create_order.html:54
+#, fuzzy
+msgid "Department address:"
+msgstr "部门地址"
+
+#: templates/department/create_order.html:57
+#: templates/department/create_order.html:101
+#: templates/department/index.html:17
+#, fuzzy
+msgid "Create"
+msgstr "创建"
+
+#: templates/department/create_order.html:65
+msgid "Introduction"
+msgstr "引言"
+
+#: templates/department/create_order.html:66
+msgid "Hi, the "
+msgstr "你好，"
+
+#: templates/department/create_order.html:66
+msgid " Manager, welcome."
+msgstr "管理员，欢迎。"
+
+#: templates/department/create_order.html:70
+msgid "You can choose these types to handle. "
+msgstr "你可以去处理这些种类的废料。"
+
+#: templates/department/create_order.html:71
+msgid ""
+"you need to select one of the waste types and set the required weight, "
+"attributes, and comments. "
+msgstr "你需要选择一种废物类型，设置所需重量、属性和备注。"
+
+#: templates/department/create_order.html:76
+#, fuzzy
+msgid "Create Order"
+msgstr "创建工单"
+
+#: templates/department/create_order.html:78
+#, fuzzy
+msgid "Order name:"
+msgstr "工单名："
+
+#: templates/department/create_order.html:83
+msgid "Please choose: "
+msgstr "请选择："
+
+#: templates/department/create_order.html:92
+msgid "Weight: "
+msgstr "重量："
+
+#: templates/department/create_order.html:98
+msgid "Order comment:"
+msgstr "工单备注："
+
+#: templates/department/create_order.html:106
+msgid "Description"
+msgstr "废品描述"
+
+#: templates/department/index.html:21
+msgid "Edit"
+msgstr "编辑工单"
+
+#: templates/department/index.html:25
+msgid "History"
+msgstr "历史工单"
+
+#: templates/department/index.html:29
+msgid "Dashboard"
+msgstr "数据统计"
+
+#: templates/department/index.html:35
+msgid "Logout"
+msgstr "退出"
 
 #~ msgid "Login failed"
 #~ msgstr "登录失败"

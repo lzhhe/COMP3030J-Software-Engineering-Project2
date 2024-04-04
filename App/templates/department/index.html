@@ -14,25 +14,25 @@
             <ul class="nav-links">
                 <li class="underline"><a href="{{ url_for('department.index') }}">
                     <i class="iconfont icon-wenjiantianjia1"></i>
-                    <span class="link-name">Create</span>
+                    <span class="link-name">{{ _("Create") }}</span>
                 </a></li>
                 <li class="underline"><a href="{{ url_for('department.edit') }}">
                     <i class="iconfont icon-wenjianxiugai"></i>
-                    <span class="link-name">Edit</span>
+                    <span class="link-name">{{ _("Edit") }}</span>
                 </a></li>
                 <li class="underline"><a href="{{ url_for('department.history') }}">
                     <i class="iconfont icon-lishibiaodan"></i>
-                    <span class="link-name">History</span>
+                    <span class="link-name">{{ _("History") }}</span>
                 </a></li>
                 <li class="underline"><a href="{{ url_for('department.dashboard') }}">
                     <i class="iconfont icon-shuju1"></i>
-                    <span class="link-name">Dashboard</span>
+                    <span class="link-name">{{ _("Dashboard") }}</span>
                 </a></li>
             </ul>
             <ul class="logout-mod">
                 <li><a href="#" id="logoutButton">
                     <img src="../../static/image/icon/exit.svg" alt="exit" class="icons icon-nav">
-                    <span class="link-name">Logout</span>
+                    <span class="link-name">{{ _("Logout") }}</span>
                 </a></li>
             </ul>
             {% include 'switch.html' %}

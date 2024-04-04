@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-27 21:59+0800\n"
+"POT-Creation-Date: 2024-04-04 15:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,188 +17,598 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: templates/login.html:27
+#: templates/login.html:26
 msgid "Login Page"
 msgstr ""
 
-#: templates/login.html:32
+#: templates/login.html:31
 msgid "Choose your identity"
 msgstr ""
 
-#: templates/login.html:36
+#: templates/login.html:35
 msgid "Three types:"
 msgstr ""
 
-#: templates/login.html:38
+#: templates/login.html:37
 msgid "Choose…"
 msgstr ""
 
-#: templates/login.html:40
+#: templates/login.html:39
 msgid "Department Manager"
 msgstr ""
 
-#: templates/login.html:40
+#: templates/login.html:39
 msgid "Development"
 msgstr ""
 
-#: templates/login.html:42
+#: templates/login.html:41
 msgid "Government Manager"
 msgstr ""
 
-#: templates/login.html:42
+#: templates/login.html:41
 msgid "Government"
 msgstr ""
 
-#: templates/login.html:44
+#: templates/login.html:43
 msgid "Waste Manager"
 msgstr ""
 
-#: templates/login.html:44
+#: templates/login.html:43
 msgid "Waste"
 msgstr ""
 
-#: templates/login.html:46
+#: templates/login.html:45
 msgid "Individual User"
 msgstr ""
 
-#: templates/login.html:46
+#: templates/login.html:45
 msgid "Individual user"
 msgstr ""
 
-#: templates/login.html:51
+#: templates/login.html:50
 msgid "Cancel"
 msgstr ""
 
-#: templates/login.html:52
+#: templates/login.html:51
 msgid "Confirm"
 msgstr ""
 
-#: templates/login.html:56 templates/login.html:83 templates/login.html:110
+#: templates/login.html:55 templates/login.html:82 templates/login.html:109
 msgid "Show Password"
 msgstr ""
 
-#: templates/login.html:57
+#: templates/login.html:56
 msgid "Hide Password"
 msgstr ""
 
-#: templates/login.html:69
+#: templates/login.html:68
 msgid "Create Account"
 msgstr ""
 
-#: templates/login.html:71
+#: templates/login.html:70
 msgid "by use your email for registering"
 msgstr ""
 
-#: templates/login.html:74 templates/login.html:98 templates/login.html:161
+#: templates/login.html:73 templates/login.html:97 templates/login.html:160
 msgid "Username"
 msgstr ""
 
-#: templates/login.html:75 templates/login.html:165
+#: templates/login.html:74 templates/login.html:164
 msgid "Email"
 msgstr ""
 
-#: templates/login.html:79 templates/login.html:102
+#: templates/login.html:78 templates/login.html:101
 msgid "Password"
 msgstr ""
 
-#: templates/login.html:85
+#: templates/login.html:84
 msgid "Choose one identity?"
 msgstr ""
 
-#: templates/login.html:87
+#: templates/login.html:86
 msgid "Register"
 msgstr ""
 
-#: templates/login.html:95
+#: templates/login.html:94
 msgid "Enter System"
 msgstr ""
 
-#: templates/login.html:97
+#: templates/login.html:96
 msgid "by use your username and password"
 msgstr ""
 
-#: templates/login.html:112
+#: templates/login.html:111
 msgid "Forget Your Password?"
 msgstr ""
 
-#: templates/login.html:114
+#: templates/login.html:113
 msgid "Login"
 msgstr ""
 
-#: templates/login.html:122
+#: templates/login.html:121
 msgid "Welcome Back!"
 msgstr ""
 
-#: templates/login.html:123
+#: templates/login.html:122
 msgid "Enter your personal details to use all site features"
 msgstr ""
 
-#: templates/login.html:124
+#: templates/login.html:123
 msgid "Switch to Login"
 msgstr ""
 
-#: templates/login.html:126
+#: templates/login.html:125
 msgid "Password must contain the following:"
 msgstr ""
 
-#: templates/login.html:127
+#: templates/login.html:126
 msgid "length from"
 msgstr ""
 
-#: templates/login.html:129 templates/login.html:132 templates/login.html:135
-#: templates/login.html:137
+#: templates/login.html:128 templates/login.html:131 templates/login.html:134
+#: templates/login.html:136
 msgid "A"
 msgstr ""
 
-#: templates/login.html:129
+#: templates/login.html:128
 msgid "lowercase"
 msgstr ""
 
-#: templates/login.html:129 templates/login.html:132 templates/login.html:137
+#: templates/login.html:128 templates/login.html:131 templates/login.html:136
 msgid "letter"
 msgstr ""
 
-#: templates/login.html:132
+#: templates/login.html:131
 msgid "uppercase"
 msgstr ""
 
-#: templates/login.html:135
+#: templates/login.html:134
 msgid "number"
 msgstr ""
 
-#: templates/login.html:137
+#: templates/login.html:136
 msgid "special"
 msgstr ""
 
-#: templates/login.html:144
+#: templates/login.html:143
 msgid "Hello Friend!"
 msgstr ""
 
-#: templates/login.html:145
+#: templates/login.html:144
 msgid "Register with your personal details to use all site features"
 msgstr ""
 
-#: templates/login.html:146
+#: templates/login.html:145
 msgid "Switch to Register"
 msgstr ""
 
-#: templates/login.html:162
+#: templates/login.html:161
 msgid "Enter Username"
 msgstr ""
 
-#: templates/login.html:166
+#: templates/login.html:165
 msgid "Enter Email"
 msgstr ""
 
-#: templates/login.html:168
+#: templates/login.html:167
 msgid "New password"
 msgstr ""
 
-#: templates/login.html:169
+#: templates/login.html:168
 msgid "Enter new password"
 msgstr ""
 
-#: templates/login.html:172
+#: templates/login.html:171
 msgid "Retrieve Password"
+msgstr ""
+
+#: templates/swiper.html:5
+msgid "Heavy metal water"
+msgstr ""
+
+#: templates/swiper.html:6
+msgid ""
+"Produced from metallurgical industry, electroplating factory, mine, etc.,"
+"\n"
+"                    containing lead, cadmium, mercury and other heavy "
+"metals. If this kind of\n"
+"                    wastewater is discharged directly without treatment, "
+"it will seriously pollute\n"
+"                    the water source and endanger the ecological "
+"environment and human health."
+msgstr ""
+
+#: templates/swiper.html:11
+msgid "Exhaust gas"
+msgstr ""
+
+#: templates/swiper.html:12
+msgid ""
+"It mainly comes from the combustion of fuel in the industrial production "
+"process,\n"
+"                    including sulfur dioxide, nitrogen oxides and other "
+"harmful gases. The emission\n"
+"                    of waste gas not only leads to air pollution, but "
+"also may cause environmental\n"
+"                    problems such as acid rain and greenhouse effect."
+msgstr ""
+
+#: templates/swiper.html:18
+msgid "Mineral residue"
+msgstr ""
+
+#: templates/swiper.html:19
+msgid ""
+"It is produced during mining and mineral processing, mainly including "
+"rock\n"
+"                    fragments and mineral processing by-products. These "
+"residues, if not properly\n"
+"                    disposed of, can take up large amounts of land and "
+"affect soil and water\n"
+"                    quality."
+msgstr ""
+
+#: templates/swiper.html:25
+msgid "Cutting fluid"
+msgstr ""
+
+#: templates/swiper.html:26
+msgid ""
+"Used in metal working to reduce temperature and friction and extend tool "
+"life.\n"
+"                    Contains mineral oil, emulsifier and other "
+"ingredients, if untreated directly\n"
+"                    discharged, will pollute water and soil."
+msgstr ""
+
+#: templates/swiper.html:31
+msgid "Metal chips"
+msgstr ""
+
+#: templates/swiper.html:32
+msgid ""
+"The debris and chips produced during metal processing may contain metals "
+"such as\n"
+"                    iron, copper, and aluminum. If the recycling is not "
+"proper, not only waste\n"
+"                    resources, but also may cause environmental pollution."
+msgstr ""
+
+#: templates/swiper.html:37
+msgid "Plastic waste"
+msgstr ""
+
+#: templates/swiper.html:38
+msgid ""
+"Waste plastics produced in the manufacturing process of high-end "
+"mechanical\n"
+"                    equipment, including parts packaging, protective "
+"film, etc. Plastics decompose\n"
+"                    slowly, and improper disposal can lead to serious "
+"soil and water pollution."
+msgstr ""
+
+#: templates/swiper.html:43
+msgid "Composite metal cutting waste"
+msgstr ""
+
+#: templates/swiper.html:44
+msgid ""
+"Waste produced when cutting composite materials such as carbon fiber and "
+"glass\n"
+"                    fiber. These wastes are difficult to degrade and can "
+"cause long-term pollution\n"
+"                    to the environment if not handled properly."
+msgstr ""
+
+#: templates/swiper.html:49
+msgid "Waste paint fluid"
+msgstr ""
+
+#: templates/swiper.html:50
+msgid ""
+"Including expired paint, residual paint mist in the spraying process. "
+"Contains\n"
+"                    organic solvents and heavy metals, causing pollution "
+"to water and soil, and is\n"
+"                    also harmful to human health."
+msgstr ""
+
+#: templates/swiper.html:55
+msgid "Dust"
+msgstr ""
+
+#: templates/swiper.html:56
+msgid ""
+"Fine particles produced during material processing, cutting, grinding, "
+"etc.\n"
+"                    Long-term exposure to dust is not only harmful to the"
+" environment, but also may\n"
+"                    cause harm to the human respiratory system."
+msgstr ""
+
+#: templates/swiper.html:61
+msgid "Chemicals things"
+msgstr ""
+
+#: templates/swiper.html:62
+msgid ""
+"Waste chemicals produced in laboratories or chemical manufacturing "
+"processes,\n"
+"                    including raw materials, by-products, etc. that have "
+"not been completed in the\n"
+"                    reaction. If these chemicals are not handled "
+"properly, they may cause soil and\n"
+"                    water pollution, fire, explosion and other safety "
+"accidents"
+msgstr ""
+
+#: templates/swiper.html:68
+msgid "Catalyzer"
+msgstr ""
+
+#: templates/swiper.html:69
+msgid ""
+"A substance that accelerates the rate of a chemical reaction without "
+"being\n"
+"                    consumed. The catalyst after use may contain harmful "
+"substances and requires\n"
+"                    special treatment to prevent environmental pollution."
+msgstr ""
+
+#: templates/swiper.html:74
+msgid "Chemical propellants"
+msgstr ""
+
+#: templates/swiper.html:75
+msgid ""
+"Chemicals used in rockets and missiles to generate thrust. These "
+"substances are\n"
+"                    extremely corrosive and polluting to the environment "
+"and require rigorous\n"
+"                    disposal and recycling procedures."
+msgstr ""
+
+#: templates/swiper.html:80
+msgid "Fuel residues"
+msgstr ""
+
+#: templates/swiper.html:81
+msgid ""
+"Waste generated during the production and use of new energy, such as "
+"biomass\n"
+"                    energy and solar panel manufacturing. These residues,"
+" if not handled properly,\n"
+"                    will pollute the environment"
+msgstr ""
+
+#: templates/swiper.html:86
+msgid "Discarded electronic components"
+msgstr ""
+
+#: templates/swiper.html:87
+msgid ""
+"Including discarded chips, circuit boards, displays and other electronic\n"
+"                    equipment components. It contains heavy metals and "
+"harmful chemicals and poses a\n"
+"                    serious threat to the environment."
+msgstr ""
+
+#: templates/swiper.html:92
+msgid "Hydraulic oils"
+msgstr ""
+
+#: templates/swiper.html:93
+msgid ""
+"Oils used to transmit power in machinery and equipment. If the hydraulic "
+"oil\n"
+"                    after use is discharged directly without treatment, "
+"it will seriously pollute\n"
+"                    water and soil."
+msgstr ""
+
+#: templates/swiper.html:98
+msgid "Lubricant waste"
+msgstr ""
+
+#: templates/swiper.html:99
+msgid ""
+"Waste lubricating oil produced during equipment maintenance, including "
+"oil, gear\n"
+"                    oil, etc. These waste oils contain harmful substances"
+" and need to be\n"
+"                    professionally treated for reuse or disposal."
+msgstr ""
+
+#: templates/swiper.html:104
+msgid "Hazardous chemicals"
+msgstr ""
+
+#: templates/swiper.html:105
+msgid ""
+"Hazardous chemicals used in laboratories, including corrosive, toxic, "
+"flammable\n"
+"                    and explosive hazardous chemicals. These chemicals "
+"need to be stored, used and\n"
+"                    disposed of in strict accordance with dangerous goods"
+" regulations."
+msgstr ""
+
+#: templates/swiper.html:110
+msgid "Waste experimental equipment"
+msgstr ""
+
+#: templates/swiper.html:111
+msgid ""
+"Including damaged experimental instruments, experimental consumables that"
+" have\n"
+"                    been unable to be used. These wastes may contain "
+"harmful chemical residues and\n"
+"                    require special treatment to prevent contamination."
+msgstr ""
+
+#: templates/swiper.html:116
+msgid "Waste paper"
+msgstr ""
+
+#: templates/swiper.html:117
+msgid ""
+"Waste paper generated in offices, schools, etc., including documents, "
+"newspapers,\n"
+"                    magazines, etc. Waste paper is a recyclable resource,"
+" but if it is not handled\n"
+"                    properly, it will cause resource waste and "
+"environmental pollution."
+msgstr ""
+
+#: templates/swiper.html:122
+msgid "Household waste"
+msgstr ""
+
+#: templates/swiper.html:123
+msgid ""
+"Waste from household daily life, including kitchen waste, plastic, paper,"
+" etc.\n"
+"                    Different types of household waste need to be sorted "
+"to reduce the impact on the\n"
+"                    environment."
+msgstr ""
+
+#: templates/swiper.html:128
+msgid "Waste heat"
+msgstr ""
+
+#: templates/swiper.html:129
+msgid ""
+"Waste heat generated during the operation of data centers, factories, "
+"etc. If not\n"
+"                    recycled, this waste heat not only wastes energy, but"
+" also may cause local\n"
+"                    environmental temperatures to rise, affecting the "
+"ecological balance."
+msgstr ""
+
+#: templates/switch.html:4
+msgid "Language_Switch"
+msgstr ""
+
+#: templates/switch.html:9
+msgid "Theme_Switch"
+msgstr ""
+
+#: templates/department/create_order.html:15
+msgid "Please create a department"
+msgstr ""
+
+#: templates/department/create_order.html:19
+msgid "Metallurgy"
+msgstr ""
+
+#: templates/department/create_order.html:24
+msgid "Equipment Manufacturing"
+msgstr ""
+
+#: templates/department/create_order.html:28
+msgid "Composite Material"
+msgstr ""
+
+#: templates/department/create_order.html:32
+msgid "New Energy"
+msgstr ""
+
+#: templates/department/create_order.html:36
+msgid "Automation System"
+msgstr ""
+
+#: templates/department/create_order.html:40
+msgid "Equipment Maintenance"
+msgstr ""
+
+#: templates/department/create_order.html:44
+msgid "Laboratory"
+msgstr ""
+
+#: templates/department/create_order.html:47
+msgid "Data Center"
+msgstr ""
+
+#: templates/department/create_order.html:50
+msgid "Office"
+msgstr ""
+
+#: templates/department/create_order.html:51
+msgid "Department name:"
+msgstr ""
+
+#: templates/department/create_order.html:54
+msgid "Department address:"
+msgstr ""
+
+#: templates/department/create_order.html:57
+#: templates/department/create_order.html:101
+#: templates/department/index.html:17
+msgid "Create"
+msgstr ""
+
+#: templates/department/create_order.html:65
+msgid "Introduction"
+msgstr ""
+
+#: templates/department/create_order.html:66
+msgid "Hi, the "
+msgstr ""
+
+#: templates/department/create_order.html:66
+msgid " Manager, welcome."
+msgstr ""
+
+#: templates/department/create_order.html:70
+msgid "You can choose these types to handle. "
+msgstr ""
+
+#: templates/department/create_order.html:71
+msgid ""
+"you need to select one of the waste types and set the required weight, "
+"attributes, and comments. "
+msgstr ""
+
+#: templates/department/create_order.html:76
+msgid "Create Order"
+msgstr ""
+
+#: templates/department/create_order.html:78
+msgid "Order name:"
+msgstr ""
+
+#: templates/department/create_order.html:83
+msgid "Please choose: "
+msgstr ""
+
+#: templates/department/create_order.html:92
+msgid "Weight: "
+msgstr ""
+
+#: templates/department/create_order.html:98
+msgid "Order comment:"
+msgstr ""
+
+#: templates/department/create_order.html:106
+msgid "Description"
+msgstr ""
+
+#: templates/department/index.html:21
+msgid "Edit"
+msgstr ""
+
+#: templates/department/index.html:25
+msgid "History"
+msgstr ""
+
+#: templates/department/index.html:29
+msgid "Dashboard"
+msgstr ""
+
+#: templates/department/index.html:35
+msgid "Logout"
 msgstr ""
 

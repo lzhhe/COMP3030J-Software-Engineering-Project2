@@ -1,0 +1,68 @@
+/* 容器样式 */
+.swiper {
+    margin: 40px auto;
+    box-sizing: border-box;
+    width: 50vw;
+    height: 500px; /* 调整高度为自动以适应内部内容 */
+    border-radius: 10px;
+    transition: .3s all ease;
+    background: linear-gradient(90deg, #bebeb5 0%, #a4bbe1 100%);
+}
+
+/* 幻灯片样式 */
+.swiper-slide {
+    margin-top: 20px;
+    max-height: 90%; /* 调整高度为自动以适应内部内容 */
+    font-size: 18px;
+    background: var(--pico-background-color);
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    overflow: hidden;
+    text-overflow-ellipsis: ellipsis;
+}
+
+.swiper-slide:nth-child(n) {
+    background-color: var(--today-background-color);
+}
+
+.swiper-slide:nth-child(2n) {
+    background-color: var(--skin2);
+var(--today-background-color)
+
+}
+
+.swiper-slide:nth-child(3n) {
+    background-color: var(--land1);
+}
+
+.swiper-slide:nth-child(4n) {
+    background-color: var(--sky1);
+}
+
+
+.swiper-slide p {
+    text-align: left;
+    border-radius: 5px;
+    border: #0F9E5E dot-dash 1px;
+}
+
+
+/* 分页器样式 */
+.swiper-pagination {
+    position: absolute;
+    text-align: center;
+    transition: .3s opacity;
+    transform: translate3d(0, 0, 0);
+    z-index: 10;
+    bottom: 5px; /* 距离底部的位置 */
+    left: 0;
+    width: 100%;
+}
+
+.swiper-pagination-bullet-active {
+    background: #007bff; /* 活动小圆点的颜色 */
+}

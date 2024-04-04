@@ -1,10 +1,12 @@
 {% extends 'department/index.html' %}
 {% block extra_css %}
     <link rel="stylesheet" href="../../static/css/department/create_order.css">
+    <link rel="stylesheet" href="../../static/css/swiper.css">
     <link rel="stylesheet" href="../../static/css/utils/swiper-bundle.min.css"/>
 {% endblock %}
 {% block extra_js %}
     <script src="../../static/js/utils/swiper-bundle.min.js"></script>
+    <script src="../../static/js/swiper.js"></script>
 {% endblock %}
 {% block title %}Create Order{% endblock %}
 
@@ -102,22 +104,8 @@
                     </div>
                     <div class="order-cards">
                         <h2>{{ _("Description") }}</h2>
+                        {% include "swiper.html" %}
                         <!-- Slider main container -->
-                        <div class="swiper">
-                            <!-- Additional required wrapper -->
-                            <div class="swiper-wrapper">
-                                <!-- Slides -->
-                                <div class="swiper-slide">Slide 1</div>
-                                <div class="swiper-slide">Slide 2</div>
-                                <div class="swiper-slide">Slide 3</div>
-                                <div class="swiper-slide">Slide 4</div>
-                            </div>
-                            <div class="swiper-button-next">
-                            </div>
-                            <div class="swiper-button-prev">
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -130,33 +118,6 @@
         {% if not department %}
             departmentDialog.showModal(); // 如果用户没有部门，则展示对话框
         {% endif %}
-
-        const swiper = new Swiper('.swiper', {
-            loop: true,
-            spaceBetween: 30,
-            grabCursor: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-                dynamicBullets: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                800: {
-                    slidesPerView: 1,
-                },
-                1000: {
-                    slidesPerView: 2,
-                },
-                1200: {
-                    slidesPerView: 3,
-                },
-            },
-        });
-
 
         $(document).ready(function () {
             $("#createDepartmentBtn").click(function (e) {

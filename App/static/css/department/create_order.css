@@ -162,54 +162,6 @@ dialog::backdrop {
     position: relative;
 }
 
-/* 容器样式 */
-.swiper {
-    width: 50vw; /* 根据需求调整宽度 */
-    height: 400px; /* 根据需求调整高度 */
-    margin: 20px 10px;
-    border-radius: 10px; /* 轻微的圆角效果 */
-    overflow: hidden; /* 防止幻灯片超出容器边界 */
-    transition: .3s all ease;
-}
-
-/* 幻灯片样式 */
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff; /* 背景颜色 */
-    /* 居中显示幻灯片内容 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微的阴影效果 */
-    border-radius: 10px; /* 轻微的圆角效果 */
-    /* 为幻灯片添加内边距 */
-    padding: 20px;
-}
-
-.swiper-button-next {
-    right: 10px; /* 距离右侧边缘的位置 */
-}
-
-.swiper-button-prev {
-    left: 10px; /* 距离左侧边缘的位置 */
-}
-
-/* 分页器样式 */
-.swiper-pagination {
-    position: absolute;
-    text-align: center;
-    transition: .3s opacity;
-    transform: translate3d(0, 0, 0);
-    z-index: 10;
-    bottom: 5px; /* 距离底部的位置 */
-    left: 0;
-    width: 100%;
-}
-
-.swiper-pagination-bullet-active {
-    background: #007bff; /* 活动小圆点的颜色 */
-}
 
 @media screen and (max-width: 780px) {
     .content .create-order {
