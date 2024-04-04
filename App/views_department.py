@@ -15,12 +15,14 @@ department = Blueprint('department', __name__, url_prefix='/department')  # depa
 @department.route('/')
 def index():
     department = None
+    departmentDID = 0
     departmentType = None
     wastes = None
     user = g.user
     if user.department_id is not None:
         d = user.department
         department = d.departmentName
+        departmentDID = d.DID
         departmentType = enum_to_string(d.departmentType)
         wasteTypes = Waste.query.filter_by(wasteDepartment=d.departmentType).all()
         wastes = {}
@@ -28,7 +30,7 @@ def index():
             waste = enum_to_string(wasteType.wasteType)
             wastes[wasteType.wasteType.name] = waste
     return render_template('department/create_order.html', department=department, departmentType=departmentType,
-                           wastes=wastes)
+                           wastes=wastes, departmentDID=departmentDID)
 
 
 @department.route('/setdepartment', methods=['POST'])
@@ -79,23 +81,26 @@ def register():
 
     department_id = data.get('departmentID')
     order_name = data.get('orderName')
+    waste_type = data.get('wasteType')
     weight = data.get('weight')
     attribution = data.get('attribution')
     comment = data.get('comment', '')  # 如果没有提供，使用空字符串
     # order_status = data.get('orderStatus', 'UNCONFIRMED')
 
     # 验证数据是否完整
-    if not all([department_id, order_name, weight, attribution]):
-        return jsonify({"error": "Missing required data for the order"}), 400
+    if not all([department_id, order_name, weight, attribution, waste_type]):
+        return jsonify({"message": "Missing required data for the order"}), 200
 
     # 创建新的工单记录
     new_order = Order(
-        DID=department_id,
-        date=datetime.utcnow(),
+        department_id=department_id,
+        date=date.today(),
+        wasteType=waste_type,
         orderName=order_name,
         weight=weight,
         attribution=attribution,
-        comment=comment
+        comment=comment,
+        orderStatus='UNCONFIRMED'
     )
 
     # 添加到数据库并提交
@@ -103,7 +108,7 @@ def register():
     db.session.commit()
 
     # 返回成功消息
-    return jsonify({"message": "Order created successfully"}), 201
+    return jsonify({"message": "successful"}), 200
 
 
 @department.route('/getAllOrders', methods=['POST'])
@@ -134,7 +139,7 @@ def getAllOrders():
 
 
 @department.route('/getRecentOrders', methods=['POST'])
-def getRecentOrders(): # 需要一个天数作为参数，即多少天以前的，默认7天
+def getRecentOrders():  # 需要一个天数作为参数，即多少天以前的，默认7天
     data = request.get_json()
     days_ago = data.get('date', 7)  # 获取多少天以前的
     department_id = data.get('department_id')
@@ -160,4 +165,3 @@ def getRecentOrders(): # 需要一个天数作为参数，即多少天以前的�
         return jsonify(order_list)
     else:
         return jsonify({"error": "You have not summit any order"}), 200
-

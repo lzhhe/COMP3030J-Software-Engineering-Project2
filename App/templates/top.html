@@ -13,7 +13,7 @@
                 <p class="user-name">{{ user.username }}</p>
                 <p class="user-email">{{ user.email }}</p>
                 {% if department %}
-                    <p class="user-department">{{ department }}</p>
+                    <p class="user-department" data-did="{{ departmentDID }}">{{ department }}</p>
                 {% endif %}
             </div>
         </div>

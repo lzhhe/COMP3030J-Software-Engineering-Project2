@@ -105,6 +105,14 @@ dialog::backdrop {
     margin-right: 10px;
 }
 
+.order-attributes {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 .pico label.no-pico-label:hover i, .pico label.no-pico-label:hover span {
     color: var(--primary-color);

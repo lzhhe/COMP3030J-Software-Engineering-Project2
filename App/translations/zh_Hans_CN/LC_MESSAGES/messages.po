@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-04 15:59+0800\n"
+"POT-Creation-Date: 2024-04-04 20:44+0800\n"
 "PO-Revision-Date: 2024-03-27 14:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -34,9 +34,9 @@ msgstr "三种类型："
 msgid "Choose…"
 msgstr "选择..."
 
-#: templates/login.html:39
+#: templates/department/index.html:11 templates/login.html:39
 msgid "Department Manager"
-msgstr "部门人员"
+msgstr "部门管理"
 
 #: templates/login.html:39
 msgid "Development"
@@ -555,9 +555,8 @@ msgstr "部门地址"
 #: templates/department/create_order.html:57
 #: templates/department/create_order.html:101
 #: templates/department/index.html:17
-#, fuzzy
 msgid "Create"
-msgstr "创建"
+msgstr "创建工单"
 
 #: templates/department/create_order.html:65
 msgid "Introduction"
@@ -582,12 +581,10 @@ msgid ""
 msgstr "你需要选择一种废物类型，设置所需重量、属性和备注。"
 
 #: templates/department/create_order.html:76
-#, fuzzy
 msgid "Create Order"
 msgstr "创建工单"
 
 #: templates/department/create_order.html:78
-#, fuzzy
 msgid "Order name:"
 msgstr "工单名："
 

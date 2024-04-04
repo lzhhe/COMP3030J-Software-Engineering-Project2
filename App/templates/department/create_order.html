@@ -81,7 +81,7 @@
                             <div class="order-choose">
                                 <div class="custom-select" id="custom-select">
                                     <div class="selected-option">{{ _("Please choose: ") }}</div>
-                                    <div class="options-container">
+                                    <div class="options-container" data-value="">
                                         {% for key, value in wastes.items() %}
                                             <div class="option-item" data-value="{{ key }}">
                                                 <i class="iconfont icon-{{ key }}"></i>
@@ -92,6 +92,21 @@
                                 <label class="number-input no-pico-label" for="order-weight">{{ _("Weight: ") }}
                                     <input type="number" id="order-weight" name="order-weight" required>
                                     <span>kg</span>
+                                </label>
+                            </div>
+                            <div class="order-attributes">
+                                {{ _("Attributes:") }}
+                                <label class="number-input no-pico-label order-attribute" for="order-a1">
+                                    <input type="text" id="order-a1" name="order-a1" required data-attr="CO2">
+                                    <span>CO2</span>
+                                </label>
+                                <label class="number-input no-pico-label order-attribute" for="order-a2">
+                                    <input type="text" id="order-a2" name="order-a2" required data-attr="J">
+                                    <span>J</span>
+                                </label>
+                                <label class="number-input no-pico-label order-attribute" for="order-a3">
+                                    <input type="text" id="order-a3" name="order-a3" required data-attr="SO2">
+                                    <span>SO2</span>
                                 </label>
                             </div>
 
@@ -147,6 +162,46 @@
                     }
                 });
             });
+
+            $("#createOrderBtn").click(function (e) {
+                e.preventDefault();
+                const did = $('.user-department').data('did');
+                const orderName = $("#order-name").val();
+                const weight = $("#order-weight").val();
+                const type = $('.options-container').data('value');
+                const comment = $("#order-comment").val();
+                let attribution = '';
+                document.querySelectorAll('.order-attribute').forEach(function (item) {
+                    const attrName = $(item).find('input').data('attr');
+                    const attrValue = $(item).find('input').val();
+                    attribution += attrValue + attrName + ' ';
+                });
+                if (orderName === "" || weight === "" || type === "" || attribution === "") {
+                    alert("Please input all required fields except comments.");
+                }
+                const orderInfo = {
+                    departmentID: did,
+                    orderName: orderName,
+                    weight: weight,
+                    wasteType: type,
+                    attribution: attribution,
+                    comment: comment
+                };
+                $.ajax({
+                    url: "/department/register",
+                    type: "POST",
+                    data: JSON.stringify(orderInfo),
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (response) {
+                        if (response.message === "successful") {
+                            alert("Order created successfully.");
+                            window.location.href = "/department/";
+                        } else {
+                            alert(response.message);
+                        }
+                    }
+                });
+            });
             $('.selected-option').click(function () {
                 $('.options-container').toggleClass('show-options');
             });
@@ -154,8 +209,10 @@
             // 当某个选项被点击
             $('.option-item').click(function () {
                 let selectedText = $(this).text();
+                const option = $('.options-container');
+                option.data('value', $(this).data('value'));
                 $('.selected-option').text(selectedText);
-                $('.options-container').removeClass('show-options');
+                option.removeClass('show-options');
             });
 
             // 点击除下拉框外的地方隐藏选项
