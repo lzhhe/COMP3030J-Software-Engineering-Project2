@@ -42,6 +42,7 @@ def my_context():
 
 app.jinja_env.filters['string_to_enum'] = string_to_enum
 app.jinja_env.filters['enum_to_string'] = enum_to_string
+app.jinja_env.filters['reverse_order'] = lambda order: 'desc' if order == 'asc' else 'asc'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

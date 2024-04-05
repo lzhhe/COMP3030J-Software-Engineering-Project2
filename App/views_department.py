@@ -65,25 +65,32 @@ def edit():
 def history():
     user = g.user
     department = user.department
-    orders = Order.query.filter_by(department_id=department.DID).all()
-    unconfirmed_orders = []
-    confirmed_orders = []
-    processing_orders = []
-    finished_orders = []
-    all_orders = []
-    for order in orders:
-        all_orders.append(order)
-        if order.orderStatus.name == 'UNCONFIRMED':
-            unconfirmed_orders.append(order)
-        elif order.orderStatus.name == 'CONFIRMED':
-            confirmed_orders.append(order)
-        elif order.orderStatus.name == 'PROCESSING':
-            processing_orders.append(order)
-        elif order.orderStatus.name == 'FINISHED':
-            finished_orders.append(order)
-    return render_template('department/view_order.html', unconfirmed_orders=unconfirmed_orders,
-                           confirmed_orders=confirmed_orders,
-                           processing_orders=processing_orders, finished_orders=finished_orders, all_orders=all_orders)
+    page = request.args.get('page', default=1, type=int)
+    sort_by = request.args.get('sort', 'OID')
+    order = request.args.get('order', 'asc')
+    # 构建查询基础
+    query = Order.query.filter_by(department_id=department.DID)
+    unconfirmed_count = query.filter_by(orderStatus='UNCONFIRMED').count()
+    confirmed_count = query.filter_by(orderStatus='CONFIRM').count()
+    processing_count = query.filter_by(orderStatus='PROCESSING').count()
+    finished_count = query.filter_by(orderStatus='FINISHED').count()
+    # 应用排序
+    if sort_by == 'date':
+        query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
+    elif sort_by == 'type':
+        query = query.order_by(Order.wasteType.desc() if order == 'desc' else Order.wasteType)
+    elif sort_by == 'status':
+        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.orderStatus)
+    else:  # 默认按 OID 排序
+        query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
+
+    per_page = request.args.get('per_page', default=6, type=int)
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    orders = pagination.items
+    return render_template('department/view_order.html', unconfirmed_count=unconfirmed_count,
+                           confirmed_count=confirmed_count,
+                           processing_count=processing_count, finished_count=finished_count, all_orders=orders,
+                           sort_by=sort_by, order=order, pagination=pagination, current_page=page, per_page=per_page)
 
 
 @department.route('/dashboard')

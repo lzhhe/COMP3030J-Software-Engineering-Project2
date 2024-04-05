@@ -21,25 +21,25 @@
                         <img src="../../static/image/icon/unconfirm.svg" alt="home" class="icons icon-nav data-icon"
                              title="Scene">
                         <b class="box-text">{{ _("Unconfirmed") }}</b>
-                        <span class="box-number">{{ unconfirmed_orders|length }}</span>
+                        <span class="box-number">{{ unconfirmed_count }}</span>
                     </div>
                     <div class="box box2">
                         <img src="../../static/image/icon/confirm.svg" alt="home" class="icons icon-nav data-icon"
                              title="Scene">
                         <b class="box-text">{{ _("Confirmed") }}</b>
-                        <span class="box-number">{{ confirmed_orders|length }}</span>
+                        <span class="box-number">{{ confirmed_count }}</span>
                     </div>
                     <div class="box box3">
                         <img src="../../static/image/icon/diliver.svg" alt="home" class="icons icon-nav data-icon"
                              title="Scene">
                         <b class="box-text">{{ _("Processing") }}</b>
-                        <span class="box-number">{{ processing_orders|length }}</span>
+                        <span class="box-number">{{ processing_count }}</span>
                     </div>
                     <div class="box box4">
                         <img src="../../static/image/icon/qianbao.svg" alt="home" class="icons icon-nav data-icon"
                              title="Scene">
                         <b class="box-text">{{ _("Finished") }}</b>
-                        <span class="box-number">{{ finished_orders|length }}</span>
+                        <span class="box-number">{{ finished_count }}</span>
                     </div>
                 </div>
             </div>
@@ -78,39 +78,108 @@
                     <div class="pico overflow-auto">
                         <table class="pico striped">
                             <thead>
-                            <th scope="col">{{ _("Name") }}</th>
-                            <th scope="col">{{ _("Date") }}</th>
-                            <th scope="col">{{ _("Type") }}</th>
-                            <th scope="col">{{ _("Weight") }}</th>
-                            <th scope="col">{{ _("Status") }}</th>
+                            <tr>
+                                <th scope="col">{{ _("Name") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="date"
+                                    data-order="{{ order }}">
+                                    {{ _("Date") }}
+                                    {% if sort_by == 'date' %}
+                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="type"
+                                    data-order="{{ order }}">
+                                    {{ _("Type") }}
+                                    {% if sort_by == 'type' %}
+                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col">{{ _("Weight") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="status"
+                                    data-order="{{ order }}">
+                                    {{ _("Status") }}
+                                    {% if sort_by == 'status' %}
+                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for order in all_orders %}
-                                <th scope="row"> {{ order.orderName }}</th>
-                                <td>{{ order.date }}</td>
-                                <td>{{ order.wasteType|enum_to_string }}</td>
-                                <td>{{ order.weight }}</td>
-                                {% if order.orderStatus.name == "UNCONFIRMED" %}
-                                    <td><img src="../../static/image/icon/s1.svg" alt="home"
-                                             class="icons icon-nav"></td>
-                                {% elif order.orderStatus == "CONFIRMED" %}
-                                    <td><img src="../../static/image/icon/s2.svg" alt="home"
-                                             class="icons icon-nav"></td>
-                                {% elif order.orderStatus == "PROCESSING" %}
-                                    <td><img src="../../static/image/icon/s3.svg" alt="home"
-                                             class="icons icon-nav"></td>
-                                {% elif order.orderStatus == "FINISHED" %}
-                                    <td><img src="../../static/image/icon/s4.svg" alt="home"
-                                             class="icons icon-nav "></td>
-                                {% endif %}
+                                <tr>
+                                    <th scope="row"> {{ order.orderName }}</th>
+                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.wasteType|enum_to_string }}</td>
+                                    <td>{{ order.weight }}</td>
+                                    {% if order.orderStatus.name == "UNCONFIRMED" %}
+                                        <td><img src="../../static/image/icon/s1.svg" alt="home"
+                                                 class="icons icon-nav"></td>
+                                    {% elif order.orderStatus.name == "CONFIRM" %}
+                                        <td><img src="../../static/image/icon/s2.svg" alt="home"
+                                                 class="icons icon-nav"></td>
+                                    {% elif order.orderStatus.name == "PROCESSING" %}
+                                        <td><img src="../../static/image/icon/s3.svg" alt="home"
+                                                 class="icons icon-nav"></td>
+                                    {% elif order.orderStatus.name == "FINISHED" %}
+                                        <td><img src="../../static/image/icon/s4.svg" alt="home"
+                                                 class="icons icon-nav "></td>
+                                    {% endif %}
+                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-                    </div>
+                        <div class="pagination">
+                            {% if pagination.pages > 1 %}
+                                <a class="page-switch"
+                                   href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}">&laquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('department.history', page=pagination.prev_num, sort=sort_by, order=order) }}"
+                                   {% if not pagination.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
 
+                                <!-- Always display the first page -->
+                                <a href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
+                                   {% if 1 == pagination.page %}class="active"{% endif %}>1</a>
+                                {% if pagination.page > 4 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+
+                                {% for page_num in range(pagination.page - 2, pagination.page + 3) %}
+                                    {% if 1 < page_num < pagination.pages %}
+                                        <a href="{{ url_for('department.history', page=page_num, sort=sort_by, order=order) }}"
+                                           {% if page_num == pagination.page %}class="active"{% endif %}>{{ page_num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if pagination.page < pagination.pages - 3 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+
+                                <!-- Always display the last page -->
+                                <a href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}"
+                                   {% if pagination.pages == pagination.page %}class="active"{% endif %}>{{ pagination.pages }}</a>
+
+                                <a class="page-switch"
+                                   href="{{ url_for('department.history', page=pagination.next_num, sort=sort_by, order=order) }}"
+                                   {% if not pagination.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}">
+                                    &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </section>
+    <script>
+        $(document).ready(function () {
+            $(".sortable").click(function () {
+                let sortBy = $(this).data('sort');
+                let currentOrder = $(this).data('order') || 'asc'; // 默认为asc
+                let newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+                window.location.href = `/department/history?sort=${sortBy}&order=${newOrder}`;
+            });
+        });
+    </script>
 {% endblock %}
