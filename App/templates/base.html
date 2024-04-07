@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../static/css/utils/hover-min.css"/>
     <link rel="stylesheet" href="../static/css/iconfont/iconfont.css"/>
     <link rel="stylesheet" href="../static/css/pico.conditional.min.css"/>
+    <link rel="stylesheet" href="../static/css/utils/nprogress.css"/>
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <style>
         .underline {
@@ -37,6 +38,7 @@
     </script>
     <script src="../static/js/jquery-3.7.1.min.js"></script>
     <script src="../static/js/switch.js"></script>
+    <script src="../static/js/utils/nprogress.js"></script>
     {% block extra_js %}{% endblock %}
 </head>
 <body>
@@ -48,6 +50,12 @@
 {% block mainBody %}
 {% endblock %}
 <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        NProgress.start();
+    });
+    window.addEventListener('load', () => {
+        NProgress.done();
+    });
     $(document).ready(function () {
         // 添加点击事件监听器
         $('#logoutButton').click(function (event) {

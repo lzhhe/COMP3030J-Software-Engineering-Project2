@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-04 20:44+0800\n"
+"POT-Creation-Date: 2024-04-05 19:53+0800\n"
 "PO-Revision-Date: 2024-03-27 14:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -501,106 +501,110 @@ msgstr "语言切换"
 msgid "Theme_Switch"
 msgstr "主题切换"
 
-#: templates/department/create_order.html:15
+#: templates/department/create_order.html:17
 msgid "Please create a department"
 msgstr "请创建一种部门"
 
-#: templates/department/create_order.html:19
+#: templates/department/create_order.html:22
 msgid "Metallurgy"
 msgstr "冶金类"
 
-#: templates/department/create_order.html:24
+#: templates/department/create_order.html:27
 msgid "Equipment Manufacturing"
 msgstr "高端机械制造类"
 
-#: templates/department/create_order.html:28
+#: templates/department/create_order.html:31
 msgid "Composite Material"
 msgstr "复合材料类"
 
-#: templates/department/create_order.html:32
+#: templates/department/create_order.html:35
 msgid "New Energy"
 msgstr "新能源类"
 
-#: templates/department/create_order.html:36
+#: templates/department/create_order.html:39
 msgid "Automation System"
 msgstr "自动化系统类"
 
-#: templates/department/create_order.html:40
+#: templates/department/create_order.html:43
 #, fuzzy
 msgid "Equipment Maintenance"
 msgstr "设备维护类"
 
-#: templates/department/create_order.html:44
+#: templates/department/create_order.html:47
 msgid "Laboratory"
 msgstr "实验类"
 
-#: templates/department/create_order.html:47
+#: templates/department/create_order.html:50
 msgid "Data Center"
 msgstr "数据中心类"
 
-#: templates/department/create_order.html:50
+#: templates/department/create_order.html:53
 msgid "Office"
 msgstr "办公类"
 
-#: templates/department/create_order.html:51
+#: templates/department/create_order.html:54
 #, fuzzy
 msgid "Department name:"
 msgstr "部门名称"
 
-#: templates/department/create_order.html:54
+#: templates/department/create_order.html:57
 #, fuzzy
 msgid "Department address:"
 msgstr "部门地址"
 
-#: templates/department/create_order.html:57
-#: templates/department/create_order.html:101
+#: templates/department/create_order.html:60
+#: templates/department/create_order.html:127
 #: templates/department/index.html:17
 msgid "Create"
 msgstr "创建工单"
 
-#: templates/department/create_order.html:65
+#: templates/department/create_order.html:71
 msgid "Introduction"
 msgstr "引言"
 
-#: templates/department/create_order.html:66
+#: templates/department/create_order.html:73
 msgid "Hi, the "
 msgstr "你好，"
 
-#: templates/department/create_order.html:66
+#: templates/department/create_order.html:73
 msgid " Manager, welcome."
 msgstr "管理员，欢迎。"
 
-#: templates/department/create_order.html:70
+#: templates/department/create_order.html:77
 msgid "You can choose these types to handle. "
 msgstr "你可以去处理这些种类的废料。"
 
-#: templates/department/create_order.html:71
+#: templates/department/create_order.html:78
 msgid ""
 "you need to select one of the waste types and set the required weight, "
 "attributes, and comments. "
 msgstr "你需要选择一种废物类型，设置所需重量、属性和备注。"
 
-#: templates/department/create_order.html:76
+#: templates/department/create_order.html:86
 msgid "Create Order"
 msgstr "创建工单"
 
-#: templates/department/create_order.html:78
+#: templates/department/create_order.html:89
 msgid "Order name:"
 msgstr "工单名："
 
-#: templates/department/create_order.html:83
+#: templates/department/create_order.html:94
 msgid "Please choose: "
 msgstr "请选择："
 
-#: templates/department/create_order.html:92
+#: templates/department/create_order.html:104
 msgid "Weight: "
 msgstr "重量："
 
-#: templates/department/create_order.html:98
+#: templates/department/create_order.html:110
+msgid "Attributes:"
+msgstr "属性："
+
+#: templates/department/create_order.html:124
 msgid "Order comment:"
 msgstr "工单备注："
 
-#: templates/department/create_order.html:106
+#: templates/department/create_order.html:134
 msgid "Description"
 msgstr "废品描述"
 
@@ -619,6 +623,63 @@ msgstr "数据统计"
 #: templates/department/index.html:35
 msgid "Logout"
 msgstr "退出"
+
+#: templates/department/view_order.html:17
+msgid "Total statistics"
+msgstr "总数据统计"
+
+#: templates/department/view_order.html:23
+#: templates/department/view_order.html:58
+#, fuzzy
+msgid "Unconfirmed"
+msgstr "未确认"
+
+#: templates/department/view_order.html:29
+#: templates/department/view_order.html:63
+#, fuzzy
+msgid "Confirmed"
+msgstr "已确认"
+
+#: templates/department/view_order.html:35
+#: templates/department/view_order.html:68
+msgid "Processing"
+msgstr "处理中"
+
+#: templates/department/view_order.html:41
+#: templates/department/view_order.html:73
+msgid "Finished"
+msgstr "已完成"
+
+#: templates/department/view_order.html:51
+msgid "Tables"
+msgstr "工单列表"
+
+#: templates/department/view_order.html:82
+msgid "Serial num"
+msgstr "序号"
+
+#: templates/department/view_order.html:83
+#, fuzzy
+msgid "Name"
+msgstr "工单名"
+
+#: templates/department/view_order.html:86
+#, fuzzy
+msgid "Date"
+msgstr "日期"
+
+#: templates/department/view_order.html:93
+msgid "Type"
+msgstr "类型"
+
+#: templates/department/view_order.html:100
+#, fuzzy
+msgid "Weight"
+msgstr "重量"
+
+#: templates/department/view_order.html:107
+msgid "Status"
+msgstr "处理状态"
 
 #~ msgid "Login failed"
 #~ msgstr "登录失败"

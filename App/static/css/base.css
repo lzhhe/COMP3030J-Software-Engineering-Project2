@@ -34,6 +34,27 @@ a {
     text-decoration: none;
 }
 
+dialog {
+    position: fixed; /* 使用固定定位 */
+    top: 50%; /* 距离顶部50% */
+    left: 50%; /* 距离左边50% */
+    transform: translate(-50%, -50%);
+    /* 用于确保对话框准确居中 *
+        /* 移除边框 */
+    border: none;
+    border-radius: 10px; /* 圆角边框 */
+    padding: 20px; /* 内边距 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    width: 30vw; /* 宽度自适应内容 */
+    height: 85vh;
+}
+
+/* 对话框背景模糊 */
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+}
+
 /*侧边导航栏所有内容*/
 nav {
     position: fixed;
@@ -262,6 +283,46 @@ nav.close ~ .dashboard {
 h2 {
     display: inline;
     margin-left: 20px;
+}
+
+tbody {
+    counter-reset: nums var(--starting-number);
+}
+
+tbody tr th:first-child::before {
+    counter-increment: nums;
+    content: counter(nums);
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+}
+
+
+.pagination a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.pagination a.page-switch {
+    font-size: 2em;
+}
+
+.pagination a.page-switch:hover {
+    color: var(--todo1);
+}
+
+.pagination a.active {
+    color: var(--sky1);
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
 @media screen and (max-width: 1000px) {

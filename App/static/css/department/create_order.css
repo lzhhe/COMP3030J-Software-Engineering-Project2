@@ -1,23 +1,4 @@
-dialog {
-    position: fixed; /* 使用固定定位 */
-    top: 50%; /* 距离顶部50% */
-    left: 50%; /* 距离左边50% */
-    transform: translate(-50%, -50%);
-    /* 用于确保对话框准确居中 *
-        /* 移除边框 */
-    border: none;
-    border-radius: 10px; /* 圆角边框 */
-    padding: 20px; /* 内边距 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
-    width: 30%; /* 宽度自适应内容 */
-    height: 85vh;
-}
 
-/* 对话框背景模糊 */
-dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-}
 
 .pico label.no-pico-label {
     display: flex;

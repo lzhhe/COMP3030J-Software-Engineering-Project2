@@ -1,0 +1,57 @@
+.dashboard .content {
+    grid-area: content;
+    margin: 10px 0 30px 0;
+}
+
+.title-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+tbody tr td:nth-child(6) i {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 1.6em;
+}
+
+tbody tr td:nth-child(6) i:hover {
+    scale: 1.5;
+    transition: all 0.3s ease-in-out;
+}
+
+tbody tr td:nth-child(6) i.icon-chakan {
+    color: var(--todocreate);
+}
+
+tbody tr td:nth-child(6) i.icon-shanchu {
+    color: var(--tododelete);
+}
+
+.pico .form-edit label {
+    display: flex; /* 将label设置为flex容器 */
+    flex-direction: row; /* 默认行方向，确保内容在一行显示 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: space-between;
+    margin-bottom: 10px; /* 每个label之间增加一些间隔 */
+}
+
+.pico .form-edit label input,
+.form-edit label textarea {
+    width: 60%; /* 使输入框宽度填满可用空间 */
+    margin-left: 10px; /* 在输入框和标签文字之间添加一些空间 */
+}
+
+.pico .form-edit textarea {
+    width: 100%; /* 使文本域宽度填满可用空间 */
+}
+
+.pico footer button {
+    transition: all 0.3s ease-in-out;
+}
+
+.pico footer button:hover {
+    scale: 1.05;
+    transition: all 0.3s ease-in-out;
+}

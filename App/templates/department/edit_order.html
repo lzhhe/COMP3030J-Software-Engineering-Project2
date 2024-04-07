@@ -1,10 +1,226 @@
 {% extends 'department/index.html' %}
-{% block extra_css %} {% endblock %}
-{% block extra_js %} {% endblock %}
-{% block title %}Create Order{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/department/edit_order.css">
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+{% block title %}Edit Order{% endblock %}
 
 {% block mainBody %}
+    <dialog class="pico" id="edit-order-dialog">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label for="order-name">{{ _("Name:") }}
+                    <input type="text" id="order-name" name="order-name" aria-label="Read-only input"
+                           readonly></label>
+                <label for="order-date">{{ _("Date:") }}
+                    <input type="date" id="order-date" name="order-date" required></label>
+                <label for="order-weight">{{ _("Weight:") }}
+                    <input type="number" id="order-weight" name="order-weight" required></label>
+                <label for="order-attribution">{{ _("Attribution:") }}
+                    <input type="text" id="order-attribution" name="order-attribution" required></label>
+                <label for="order-comment">{{ _("Comment:") }}
+                    <textarea rows="3" cols="30" id="order-comment" name="order-comment"></textarea></label>
+                <input type="hidden" id="order-id" name="order-id">
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-edit" class="outline secondary"> {{ _("Cancel") }}</button>
+                <button id="confirm-edit" class="outline" style="margin-left: 10px;">{{ _("Confirm") }}</button>
+            </footer>
+        </article>
+    </dialog>
     <section class="dashboard">
         {% include "top.html" %}
+
+        <div class="content">
+            <div class="title-top">
+                <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("Tables") }}</h2>
+            </div>
+            <div class="tables">
+                <div class="pico overflow-auto">
+                    <table class="pico striped">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="underline sortable" data-sort="OID"
+                                data-order="{{ order }}">
+                                {{ _("OID") }}
+                                {% if sort_by == 'OID' %}
+                                    {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                {% endif %}
+                            </th>
+                            <th scope="col">{{ _("Name") }}</th>
+                            <th scope="col" class="underline sortable" data-sort="date"
+                                data-order="{{ order }}">
+                                {{ _("Date") }}
+                                {% if sort_by == 'date' %}
+                                    {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                {% endif %}
+                            </th>
+                            <th scope="col" class="underline sortable" data-sort="type"
+                                data-order="{{ order }}">
+                                {{ _("Type") }}
+                                {% if sort_by == 'type' %}
+                                    {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                {% endif %}
+                            </th>
+                            <th scope="col" class="underline sortable" data-sort="weight"
+                                data-order="{{ order }}">
+                                {{ _("Weight") }}
+                                {% if sort_by == 'weight' %}
+                                    {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                {% endif %}
+                            </th>
+                            <th scope="col">
+                                {{ _("Operation") }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in all_orders %}
+                            <tr>
+                                <td>{{ order.OID }}</td>
+                                <td> {{ order.orderName }}</td>
+                                <td>{{ order.date }}</td>
+                                <td>{{ order.wasteType|enum_to_string }}</td>
+                                <td>{{ order.weight }}</td>
+                                <td><i class="iconfont icon-chakan edit-order"
+                                       data-id="{{ order.OID }}"
+                                       data-comment="{{ order.comment }}"
+                                       data-attribution="{{ order.attribution }}"></i>
+                                    <i class="iconfont icon-shanchu delete-order"
+                                       data-id="{{ order.OID }}"></i></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        {% if pagination.pages > 1 %}
+                            <a class="page-switch"
+                               href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}">&laquo;</a>
+                            <a class="page-switch"
+                               href="{{ url_for('department.history', page=pagination.prev_num, sort=sort_by, order=order) }}"
+                               {% if not pagination.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
+                            <!-- Always display the first page -->
+                            <a href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
+                               {% if 1 == pagination.page %}class="active"{% endif %}>1</a>
+                            {% if pagination.page > 4 %}
+                                <span class="ellipsis">...</span>
+                            {% endif %}
+                            {% for page_num in range(pagination.page - 2, pagination.page + 3) %}
+                                {% if 1 < page_num < pagination.pages %}
+                                    <a href="{{ url_for('department.history', page=page_num, sort=sort_by, order=order) }}"
+                                       {% if page_num == pagination.page %}class="active"{% endif %}>{{ page_num }}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if pagination.page < pagination.pages - 3 %}
+                                <span class="ellipsis">...</span>
+                            {% endif %}
+                            <!-- Always display the last page -->
+                            <a href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}"
+                               {% if pagination.pages == pagination.page %}class="active"{% endif %}>{{ pagination.pages }}</a>
+                            <a class="page-switch"
+                               href="{{ url_for('department.history', page=pagination.next_num, sort=sort_by, order=order) }}"
+                               {% if not pagination.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
+                            <a class="page-switch"
+                               href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}">
+                                &raquo;</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+    <script>
+        $(document).ready(function () {
+            const dialog = document.querySelector('#edit-order-dialog');
+            $(".sortable").click(function () {
+                let sortBy = $(this).data('sort');
+                let currentOrder = $(this).data('order') || 'asc'; // 默认为asc
+                let newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+                window.location.href = `/department/edit?sort=${sortBy}&order=${newOrder}`;
+            });
+
+            $('.delete-order').click(function () {
+                let oid = $(this).data('id');
+                if (window.confirm("{{ _('Are you sure to delete this order?') }}")) {
+                    $.ajax({
+                        url: `/department/delete_order/${oid}`,
+                        type: 'DELETE',
+                        success: function (res) {
+                            if (res.message === 0) {
+                                alert("{{ _('Delete success') }}");
+                                window.location.reload();
+                            } else {
+                                alert("{{ _('Delete failed') }}");
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert("{{ _('Delete failed') }}");
+                        }
+                    });
+
+                }
+            });
+            $('.edit-order').click(function () {
+                const orderId = $(this).data('id');
+                const orderComment = $(this).data('comment');
+                const orderAttribute = $(this).data('attribution');
+                const orderRow = $(this).closest('tr'); // 找到包含被点击图标的行
+                const orderName = orderRow.find('td:nth-child(2)').text(); // 假设订单名称在第二列
+                const orderDate = orderRow.find('td:nth-child(3)').text(); // 假设订单日期在第三列
+                const orderWeight = orderRow.find('td:nth-child(5)').text(); // 假设订单重量在第五列
+                $('#order-id').val(orderId);
+                $('#order-name').val(orderName);
+                $('#order-date').val(orderDate);
+                $('#order-weight').val(orderWeight);
+                $('#order-attribution').val(orderAttribute);
+                $('#order-comment').val(orderComment);
+                dialog.showModal();
+            });
+            $('#cancel-edit').click(function () {
+                dialog.close();
+            });
+            $('#confirm-edit').click(function () {
+                const oid = $('#order-id').val();
+                const orderName = $('#order-name').val();
+                const orderDate = $('#order-date').val();
+                const orderWeight = $('#order-weight').val();
+                const orderAttribute = $('#order-attribution').val();
+                const orderComment = $('#order-comment').val();
+                if (orderDate === '' || orderWeight === '') {
+                    alert("{{ _('Please fill in all required fields') }}");
+                    return;
+                }
+                const editData = {
+                    orderName: orderName,
+                    orderDate: orderDate,
+                    orderWeight: orderWeight,
+                    orderAttribute: orderAttribute,
+                    orderComment: orderComment
+                }
+                $.ajax({
+                    url: `/department/edit_order/${oid}`,
+                    type: 'PUT',
+                    data: JSON.stringify(editData),
+                    contentType: 'application/json',
+                    success: function (res) {
+                        if (res.message === 0) {
+                            alert("{{ _('Edit success') }}");
+                            dialog.close();
+                            window.location.reload();
+                        } else {
+                            alert("{{ _('Edit failed') }}");
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        alert("{{ _('Edit failed') }}");
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

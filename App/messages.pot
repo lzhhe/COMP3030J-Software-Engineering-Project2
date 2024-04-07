@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-04 20:44+0800\n"
+"POT-Creation-Date: 2024-04-05 19:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -496,103 +496,107 @@ msgstr ""
 msgid "Theme_Switch"
 msgstr ""
 
-#: templates/department/create_order.html:15
+#: templates/department/create_order.html:17
 msgid "Please create a department"
 msgstr ""
 
-#: templates/department/create_order.html:19
+#: templates/department/create_order.html:22
 msgid "Metallurgy"
 msgstr ""
 
-#: templates/department/create_order.html:24
+#: templates/department/create_order.html:27
 msgid "Equipment Manufacturing"
 msgstr ""
 
-#: templates/department/create_order.html:28
+#: templates/department/create_order.html:31
 msgid "Composite Material"
 msgstr ""
 
-#: templates/department/create_order.html:32
+#: templates/department/create_order.html:35
 msgid "New Energy"
 msgstr ""
 
-#: templates/department/create_order.html:36
+#: templates/department/create_order.html:39
 msgid "Automation System"
 msgstr ""
 
-#: templates/department/create_order.html:40
+#: templates/department/create_order.html:43
 msgid "Equipment Maintenance"
 msgstr ""
 
-#: templates/department/create_order.html:44
+#: templates/department/create_order.html:47
 msgid "Laboratory"
 msgstr ""
 
-#: templates/department/create_order.html:47
+#: templates/department/create_order.html:50
 msgid "Data Center"
 msgstr ""
 
-#: templates/department/create_order.html:50
+#: templates/department/create_order.html:53
 msgid "Office"
 msgstr ""
 
-#: templates/department/create_order.html:51
+#: templates/department/create_order.html:54
 msgid "Department name:"
 msgstr ""
 
-#: templates/department/create_order.html:54
+#: templates/department/create_order.html:57
 msgid "Department address:"
 msgstr ""
 
-#: templates/department/create_order.html:57
-#: templates/department/create_order.html:101
+#: templates/department/create_order.html:60
+#: templates/department/create_order.html:127
 #: templates/department/index.html:17
 msgid "Create"
 msgstr ""
 
-#: templates/department/create_order.html:65
+#: templates/department/create_order.html:71
 msgid "Introduction"
 msgstr ""
 
-#: templates/department/create_order.html:66
+#: templates/department/create_order.html:73
 msgid "Hi, the "
 msgstr ""
 
-#: templates/department/create_order.html:66
+#: templates/department/create_order.html:73
 msgid " Manager, welcome."
 msgstr ""
 
-#: templates/department/create_order.html:70
+#: templates/department/create_order.html:77
 msgid "You can choose these types to handle. "
 msgstr ""
 
-#: templates/department/create_order.html:71
+#: templates/department/create_order.html:78
 msgid ""
 "you need to select one of the waste types and set the required weight, "
 "attributes, and comments. "
 msgstr ""
 
-#: templates/department/create_order.html:76
+#: templates/department/create_order.html:86
 msgid "Create Order"
 msgstr ""
 
-#: templates/department/create_order.html:78
+#: templates/department/create_order.html:89
 msgid "Order name:"
 msgstr ""
 
-#: templates/department/create_order.html:83
+#: templates/department/create_order.html:94
 msgid "Please choose: "
 msgstr ""
 
-#: templates/department/create_order.html:92
+#: templates/department/create_order.html:104
 msgid "Weight: "
 msgstr ""
 
-#: templates/department/create_order.html:98
+#: templates/department/create_order.html:110
+msgid "Attributes:"
+msgstr ""
+
+#: templates/department/create_order.html:124
 msgid "Order comment:"
 msgstr ""
 
-#: templates/department/create_order.html:106
+#: templates/department/create_order.html:134
 msgid "Description"
 msgstr ""
 
@@ -610,5 +614,57 @@ msgstr ""
 
 #: templates/department/index.html:35
 msgid "Logout"
+msgstr ""
+
+#: templates/department/view_order.html:17
+msgid "Total statistics"
+msgstr ""
+
+#: templates/department/view_order.html:23
+#: templates/department/view_order.html:58
+msgid "Unconfirmed"
+msgstr ""
+
+#: templates/department/view_order.html:29
+#: templates/department/view_order.html:63
+msgid "Confirmed"
+msgstr ""
+
+#: templates/department/view_order.html:35
+#: templates/department/view_order.html:68
+msgid "Processing"
+msgstr ""
+
+#: templates/department/view_order.html:41
+#: templates/department/view_order.html:73
+msgid "Finished"
+msgstr ""
+
+#: templates/department/view_order.html:51
+msgid "Tables"
+msgstr ""
+
+#: templates/department/view_order.html:82
+msgid "Serial num"
+msgstr ""
+
+#: templates/department/view_order.html:83
+msgid "Name"
+msgstr ""
+
+#: templates/department/view_order.html:86
+msgid "Date"
+msgstr ""
+
+#: templates/department/view_order.html:93
+msgid "Type"
+msgstr ""
+
+#: templates/department/view_order.html:100
+msgid "Weight"
+msgstr ""
+
+#: templates/department/view_order.html:107
+msgid "Status"
 msgstr ""
 

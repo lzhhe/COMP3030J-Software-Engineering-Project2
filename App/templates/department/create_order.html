@@ -23,7 +23,7 @@
                 </label>
                 <label class="no-pico-label"><input type="radio" name="departmentType"
                                                     value="EQUIPMENT_MANUFACTURING">
-                    <i class="iconfont icon-shengchan"></i>
+                    <i class="iconfont icon-shebeiweihuguanli"></i>
                     <span>{{ _("Equipment Manufacturing") }}</span>
                 </label>
                 <label class="no-pico-label"><input type="radio" name="departmentType" value="COMPOSITE_MATERIAL">
@@ -217,19 +217,10 @@
                 });
             });
             $('.dropdown li').click(function () {
-                // 获取点击项的data-value
-                const value = $(this).data('value');
-
-                // 更新到外层的<details>元素
-                $(this).closest('.dropdown').data('value', value);
-            });
-
-            // 点击除下拉框外的地方隐藏选项
-            $(document).click(function (e) {
-                let target = e.target;
-                if (!$(target).is('.selected-option') && !$(target).parents().is('.custom-select')) {
-                    $('.options-container').removeClass('show-options');
-                }
+                const spanText = $(this).find('span').text();
+                const details = $(this).closest('.dropdown');
+                details.find('summary').text(spanText);
+                details.data('value', spanText);
             });
         });
     </script>

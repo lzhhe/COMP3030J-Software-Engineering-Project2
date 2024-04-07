@@ -58,7 +58,55 @@ def setdepartment():
 
 @department.route('/edit')
 def edit():
-    return render_template('department/edit_order.html')
+    user = g.user
+    department = user.department
+    page = request.args.get('page', default=1, type=int)
+    sort_by = request.args.get('sort', 'OID')
+    order = request.args.get('order', 'asc')
+    # 构建查询基础
+    query = Order.query.filter_by(department_id=department.DID)
+    # 应用排序
+    if sort_by == 'date':
+        query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
+    elif sort_by == 'status':
+        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.orderStatus)
+    elif sort_by == 'weight':
+        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.weight)
+    else:  # 默认按 OID 排序
+        query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
+
+    per_page = request.args.get('per_page', default=8, type=int)
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    orders = pagination.items
+    return render_template('department/edit_order.html', all_orders=orders,
+                           sort_by=sort_by, order=order, pagination=pagination, current_page=page, per_page=per_page)
+
+
+@department.route('/delete_order/<OID>', methods=['DELETE'])
+def delete_order(OID):
+    order = Order.query.filter_by(OID=OID).first()
+    if order:
+        db.session.delete(order)
+        db.session.commit()
+        return jsonify({'message': 0}), 200
+    else:
+        return jsonify({'message': 'Order not found'}), 200
+
+
+@department.route('/edit_order/<OID>', methods=['PUT'])
+def edit_order(OID):
+    order = Order.query.filter_by(OID=OID).first()
+    if order:
+        data = request.json
+        order.orderName = data.get('orderName')
+        order.date = data.get('orderDate')
+        order.weight = data.get('orderWeight')
+        order.attribution = data.get('orderAttribute')
+        order.comment = data.get('orderComment')
+        db.session.commit()
+        return jsonify({'message': 0}), 200
+    else:
+        return jsonify({'message': 'Order not found'}), 200
 
 
 @department.route('/history')
@@ -81,6 +129,8 @@ def history():
         query = query.order_by(Order.wasteType.desc() if order == 'desc' else Order.wasteType)
     elif sort_by == 'status':
         query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.orderStatus)
+    elif sort_by == 'weight':
+        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.weight)
     else:  # 默认按 OID 排序
         query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
 
@@ -107,7 +157,7 @@ def register():
 
     department_id = data.get('departmentID')
     order_name = data.get('orderName')
-    waste_type = data.get('wasteType')
+    waste_type = string_to_enum(data.get('wasteType'))
     weight = data.get('weight')
     attribution = data.get('attribution')
     comment = data.get('comment', '')  # 如果没有提供，使用空字符串

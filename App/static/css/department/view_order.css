@@ -83,41 +83,10 @@
     font-size: 0.8em;
 }
 
-
 .content2 {
     grid-area: content2;
 }
 
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    height: 50px;
-    line-height: 50px;
-}
-
-
-.pagination a {
-    text-decoration: none;
-    color: var(--text-color);
-    margin-top: 10px;
-    margin-right: 20px;
-}
-
-.pagination a.page-switch {
-    font-size: 2em;
-}
-
-.pagination a.page-switch:hover {
-    color: var(--todo1);
-}
-
-.pagination a.active {
-    color: var(--sky1);
-    font-weight: bold;
-    font-size: 1.2em;
-}
 
 @media screen and (max-width: 780px) {
     .content .boxes {

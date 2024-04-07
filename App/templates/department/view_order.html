@@ -4,7 +4,7 @@
 {% endblock %}
 {% block extra_js %}
 {% endblock %}
-{% block title %}Create Order{% endblock %}
+{% block title %}View Order{% endblock %}
 
 {% block mainBody %}
     <section class="dashboard">
@@ -79,6 +79,7 @@
                         <table class="pico striped">
                             <thead>
                             <tr>
+                                <th scope="col">{{ _("Serial num") }}</th>
                                 <th scope="col">{{ _("Name") }}</th>
                                 <th scope="col" class="underline sortable" data-sort="date"
                                     data-order="{{ order }}">
@@ -94,7 +95,13 @@
                                         {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
                                     {% endif %}
                                 </th>
-                                <th scope="col">{{ _("Weight") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="weight"
+                                    data-order="{{ order }}">
+                                    {{ _("Weight") }}
+                                    {% if sort_by == 'weight' %}
+                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
                                 <th scope="col" class="underline sortable" data-sort="status"
                                     data-order="{{ order }}">
                                     {{ _("Status") }}
@@ -104,10 +111,11 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="--starting-number:{{ per_page * (current_page - 1) }};">
                             {% for order in all_orders %}
                                 <tr>
-                                    <th scope="row"> {{ order.orderName }}</th>
+                                    <th class="numbers" scope="row"></th>
+                                    <td> {{ order.orderName }}</td>
                                     <td>{{ order.date }}</td>
                                     <td>{{ order.wasteType|enum_to_string }}</td>
                                     <td>{{ order.weight }}</td>
