@@ -15,7 +15,7 @@ body {
     /*居中显示*/
     flex-direction: column;
     /*子元素垂直排放*/
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /*整个登录页面的最外层的div*/

@@ -2,7 +2,7 @@
 .swiper {
     margin: 40px auto;
     box-sizing: border-box;
-    width: 50vw;
+    width: 50dvw;
     height: 500px; /* 调整高度为自动以适应内部内容 */
     border-radius: 10px;
     transition: .3s all ease;
