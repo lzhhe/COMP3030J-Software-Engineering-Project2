@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
-from sqlalchemy import and_, or_, Date
+from sqlalchemy import and_, or_, Date, func
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
@@ -15,41 +15,11 @@ def index():
     return render_template('waste/index.html')
 
 
-@waste.route('/orderList', methods=['POST'])
-def orderList():
-    user = g.user
-    orders = Order.query.filter_by(UID=user.UID).all()
-
-    # Prepare the data for JSON conversion
-    order_list = []
-    for order in orders:
-        order_data = {
-            'OID': order.OID,
-            'date': order.date.isoformat(),  # Convert date to ISO format string
-            'orderName': order.orderName,
-            'wasteType': order.wasteType.name,  # Assuming you want the name of the Enum
-            'weight': order.weight,
-            'attribution': order.attribution,
-            'multiplier': order.multiplier,
-            'comment': order.comment,
-            'orderStatus': order.orderStatus.name  # Assuming you want the name of the Enum
-        }
-        # Add department data if present
-        if order.department:
-            order_data['department'] = {
-                'DID': order.department.DID,
-                'departmentName': order.department.departmentName
-            }
-        order_list.append(order_data)
-
-    # Return the list of orders in JSON format
-    return jsonify(order_list)
-
-
-@waste.route('/confirm', methods=['POST'])
-def confirm():
-    data = request.get_json()
-    OID = data.get('OID')
+# 工单处理相关
+@waste.route('/confirm/<OID>', methods=['POST'])
+def confirm(OID):
+    # data = request.get_json()
+    # OID = data.get('OID')
     if OID is None:
         return jsonify({"error": "Missing OID in request"}), 200
     order = Order.query.filter_by(OID=OID).first()
@@ -76,10 +46,10 @@ def confirm():
         return jsonify({"error": "Order not found"}), 200
 
 
-@waste.route('/process', methods=['POST'])
-def process():
-    data = request.get_json()
-    OID = data.get('OID')
+@waste.route('/process/<OID>', methods=['POST'])
+def process(OID):
+    # data = request.get_json()
+    # OID = data.get('OID')
     if OID is None:
         return jsonify({"error": "Missing OID in request"}), 200
     order = Order.query.filter_by(OID=OID).first()
@@ -109,10 +79,10 @@ def process():
         return jsonify({"error": "Order not found"}), 200
 
 
-@waste.route('/finish', methods=['POST'])
-def finish():
-    data = request.get_json()
-    OID = data.get('OID')
+@waste.route('/finish/<OID>', methods=['POST'])
+def finish(OID):
+    # data = request.get_json()
+    # OID = data.get('OID')
     if OID is None:
         return jsonify({"error": "Missing OID in request"}), 200
     order = Order.query.filter_by(OID=OID).first()
@@ -130,16 +100,17 @@ def finish():
         return jsonify({"error": "Order not found"}), 200
 
 
-@waste.route('/modifyMultiplier', methods=['POST'])
-def modifyMultiplier():
+@waste.route('/modifyMultiplier/<OID>', methods=['POST'])
+def modifyMultiplier(OID):
     data = request.get_json()
-    OID = data.get('OID')
+    # OID = data.get('OID')
     newMultiplier = data.get('multiplier')
     order = Order.query.filter_by(OID=OID).first()
     order.multiplier = newMultiplier
     db.session.commit()
 
 
+# 工单相关
 @waste.route('/getAllOrders', methods=['POST'])
 def getAllOrders():
     data = request.get_json()
@@ -168,7 +139,7 @@ def getAllOrders():
 
 
 @waste.route('/getRecentOrders', methods=['POST'])
-def getRecentOrders(): # 需要一个天数作为参数，即多少天以前的，默认7天
+def getRecentOrders():  # 需要一个天数作为参数，即多少天以前的，默认7天
     data = request.get_json()
     days_ago = data.get('date', 7)  # 获取多少天以前的
     department_id = data.get('department_id')
@@ -196,4 +167,84 @@ def getRecentOrders(): # 需要一个天数作为参数，即多少天以前的�
         return jsonify({"error": "You have not summit any order"}), 200
 
 
+@waste.route('/getOrdersStatus', methods=['POST'])  # 获取工单状态统计
+def getOrdersStatus():
+    data = request.get_json()
+    department_id = data.get('department_id')
 
+    order_counts = db.session.query(
+        Order.orderStatus,
+        func.count(Order.OID).label('count')
+    ).filter_by(department_id=department_id
+                ).group_by(Order.orderStatus).all()
+
+    if order_counts:
+        result = [
+            {
+                "orderStatus": status.name,
+                "count": count
+            }
+            for status, count in order_counts
+        ]
+        return jsonify(result)
+    else:
+        return jsonify({"error": "No orders found for this department"}), 200
+
+
+@waste.route('/getOrdersTypes', methods=['POST'])  # 获取工单状态统计
+def getOrdersTypes():
+    data = request.get_json()
+    department_id = data.get('department_id')
+
+    order_counts = db.session.query(
+        Order.wasteType,
+        func.count(Order.OID).label('count')
+    ).filter_by(department_id=department_id
+                ).group_by(Order.wasteType).all()
+
+    if order_counts:
+        result = [
+            {
+                "wasteType": wasteType.name,
+                "count": count
+            }
+            for wasteType, count in order_counts
+        ]
+        return jsonify(result)
+    else:
+        return jsonify({"error": "No orders found for this department"}), 200
+
+
+# 处理相关
+@waste.route('/getStorage', methods=['POST'])  # 获取库存状态
+def getStorage():
+    storages = WasteStorage.query.all()
+
+    result = [
+        {
+            "wasteType": storage.wasteType.name,
+            "maxCapacity": storage.maxCapacity,
+            "currentCapacity": storage.currentCapacity,
+            "occupancyRate": storage.currentCapacity / storage.maxCapacity  # 使用占比，可以做一个切换
+        }
+        for storage in storages
+    ]
+
+    return jsonify(result)
+
+
+@waste.route('/getProcess', methods=['POST'])  # 获取处理舱存状态
+def getProcess():
+    Processes = WasteStorage.query.all()
+
+    result = [
+        {
+            "wasteType": Process.wasteType.name,
+            "maxCapacity": Process.maxCapacity,
+            "currentCapacity": Process.currentCapacity,
+            "occupancyRate": Process.currentCapacity / Processes.maxCapacity
+        }
+        for Process in Processes
+    ]
+
+    return jsonify(result)
