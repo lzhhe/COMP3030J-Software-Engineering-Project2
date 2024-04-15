@@ -53,12 +53,12 @@ class WasteType(Enum):
     HAZARDOUS_CHEMICALS = auto()  # 有害化学品
     WASTE_EXPERIMENTAL_EQUIPMENT = auto()  # 废弃实验器材
 
+    # 数据中心类废物
+    WASTE_HEAT = auto()  # 废热
+
     # 行政类废物
     WASTE_PAPER = auto()  # 废纸
     HOUSEHOLD_WASTE = auto()  # 生活垃圾
-
-    # 数据中心类废物
-    WASTE_HEAT = auto()  # 废热
 
 
 @unique
