@@ -71,7 +71,7 @@ class WasteSource(Enum):
 @unique
 class OrderStatus(Enum):
     UNCONFIRMED = auto()  # 未确认
-    CONFIRM = auto()  # 确认
+    CONFIRMED = auto()  # 确认
     # STORAGE = auto()  # 已经储存
     PROCESSING = auto()  # 处理中
     FINISHED = auto()
