@@ -1,0 +1,480 @@
+{% extends 'waste/index.html' %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/department/edit_order.css">
+    <link rel="stylesheet" href="../../static/css/department/view_order.css">
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+{% block title %}Approval Order{% endblock %}
+
+{% block mainBody %}
+    <dialog class="pico" id="view-order-dialog">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label for="order-name">{{ _("Name:") }}
+                    <input type="text" id="order-name" name="order-name" aria-label="Read-only input"
+                           readonly></label>
+                <label for="order-date">{{ _("Date:") }}
+                    <input type="date" id="order-date" name="order-date" aria-label="Read-only input"
+                           readonly></label>
+                <label for="order-weight">{{ _("Weight:") }}
+                    <input type="number" id="order-weight" name="order-weight" aria-label="Read-only input"
+                           readonly></label>
+                <label for="order-attribution">{{ _("Attribution:") }}
+                    <input type="text" id="order-attribution" name="order-attribution" aria-label="Read-only input"
+                           readonly></label>
+                <label for="order-comment">{{ _("Comment:") }}
+                    <textarea rows="3" cols="30" id="order-comment" name="order-comment" aria-label="Read-only input"
+                              readonly></textarea></label>
+                <input type="hidden" id="order-id" name="order-id">
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-edit" class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+    <section class="dashboard">
+        {% include "top.html" %}
+
+        <div class="content">
+            <div class="content1">
+                <div class="title-top">
+                    <img src="../../static/image/icon/datasave.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Total statistics") }}</h2>
+                </div>
+                <div class="boxes">
+                    <div class="box box1 selected-box" id="unconfirmed-box">
+                        <img src="../../static/image/icon/unconfirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Unconfirmed") }}</b>
+                        <span class="box-number">{{ unconfirmed_count }}</span>
+                    </div>
+                    <div class="box box2" id="confirmed-box">
+                        <img src="../../static/image/icon/confirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Confirmed") }}</b>
+                        <span class="box-number">{{ confirmed_count }}</span>
+                    </div>
+                    <div class="box box3" id="processing-box">
+                        <img src="../../static/image/icon/diliver.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Processing") }}</b>
+                        <span class="box-number">{{ processing_count }}</span>
+                    </div>
+                    <div class="box box4" id="finished-box">
+                        <img src="../../static/image/icon/qianbao.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Finished") }}</b>
+                        <span class="box-number">{{ finished_count }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content2">
+                <div class="title-top">
+                    <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Tables") }}</h2>
+                </div>
+                <div class="tables" id="table1">
+                    <div class="pico overflow-auto">
+                        <table class="pico striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ _("Serial num") }}</th>
+                                <th scope="col">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="d-type"
+                                    data-order="{{ order1 }}">
+                                    {{ _("Dept-Type") }}
+                                    {% if sort1 == 'd-type' %}
+                                        {% if order1 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="w-type"
+                                    data-order="{{ order1 }}">
+                                    {{ _("Waste-Type") }}
+                                    {% if sort1 == 'w-type' %}
+                                        {% if order1 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="date"
+                                    data-order="{{ order1 }}">
+                                    {{ _("Date") }}
+                                    {% if sort1 == 'date' %}
+                                        {% if order1 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody style="--starting-number:{{ per_page1 * (page1 - 1) }};">
+                            {% for order in orders1 %}
+                                <tr>
+                                    <th class="numbers" scope="row"></th>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            {% if pagination1.pages > 1 %}
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page1=1, sort1=sort1, order1=order1) }}">&laquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page1=pagination1.prev_num, sort1=sort1, order1=order1) }}"
+                                   {% if not pagination1.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
+                                <!-- Always display the first page -->
+                                <a href="{{ url_for('waste.index', page1=1, sort1=sort1, order1=order1) }}"
+                                   {% if 1 == pagination1.page %}class="active"{% endif %}>1</a>
+                                {% if pagination1.page > 4 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                {% for page_num in range(pagination1.page - 2, pagination1.page + 3) %}
+                                    {% if 1 < page_num < pagination1.pages %}
+                                        <a href="{{ url_for('waste.index', page1=page_num, sort1=sort1, order1=order1) }}"
+                                           {% if page_num == pagination1.page %}class="active"{% endif %}>{{ page_num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if pagination1.page < pagination1.pages - 3 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                <!-- Always display the last page -->
+                                <a href="{{ url_for('waste.index', page1=pagination1.pages, sort1=sort1, order1=order1) }}"
+                                   {% if pagination1.pages == pagination1.page %}class="active"{% endif %}>{{ pagination1.pages }}</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page1=pagination1.next_num, sort1=sort1, order1=order1) }}"
+                                   {% if not pagination1.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page1=pagination1.pages, sort1=sort1, order1=order1) }}">
+                                    &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tables" id="table2" style="display: none">
+                    <div class="pico overflow-auto">
+                        <table class="pico striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ _("Serial num") }}</th>
+                                <th scope="col">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="d-type"
+                                    data-order="{{ order2 }}">
+                                    {{ _("Dept-Type") }}
+                                    {% if sort2 == 'd-type' %}
+                                        {% if order2 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="w-type"
+                                    data-order="{{ order2 }}">
+                                    {{ _("Waste-Type") }}
+                                    {% if sort2 == 'w-type' %}
+                                        {% if order2 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="date"
+                                    data-order="{{ order2 }}">
+                                    {{ _("Date") }}
+                                    {% if sort2 == 'date' %}
+                                        {% if order2 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody style="--starting-number:{{ per_page2 * (page2 - 1) }};">
+                            {% for order in orders2 %}
+                                <tr>
+                                    <th class="numbers" scope="row"></th>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            {% if pagination2.pages > 1 %}
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page2=1, sort2=sort2, order2=order2) }}">&laquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page2=pagination2.prev_num, sort2=sort2, order2=order2) }}"
+                                   {% if not pagination2.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
+                                <!-- Always display the first page -->
+                                <a href="{{ url_for('waste.index', page2=1, sort2=sort2, order2=order2) }}"
+                                   {% if 1 == pagination2.page %}class="active"{% endif %}>1</a>
+                                {% if pagination2.page > 4 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                {% for page_num in range(pagination2.page - 2, pagination2.page + 3) %}
+                                    {% if 1 < page_num < pagination2.pages %}
+                                        <a href="{{ url_for('waste.index', page2=page_num, sort2=sort2, order2=order2) }}"
+                                           {% if page_num == pagination2.page %}class="active"{% endif %}>{{ page_num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if pagination2.page < pagination2.pages - 3 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                <!-- Always display the last page -->
+                                <a href="{{ url_for('waste.index', page2=pagination2.pages, sort2=sort2, order2=order2) }}"
+                                   {% if pagination2.pages == pagination2.page %}class="active"{% endif %}>{{ pagination2.pages }}</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page2=pagination2.next_num, sort2=sort2, order2=order2) }}"
+                                   {% if not pagination2.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page2=pagination2.pages, sort2=sort2, order2=order2) }}">
+                                    &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tables" id="table3" style="display: none">
+                    <div class="pico overflow-auto">
+                        <table class="pico striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ _("Serial num") }}</th>
+                                <th scope="col">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="d-type"
+                                    data-order="{{ order3 }}">
+                                    {{ _("Dept-Type") }}
+                                    {% if sort3 == 'd-type' %}
+                                        {% if order3 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="w-type"
+                                    data-order="{{ order3 }}">
+                                    {{ _("Waste-Type") }}
+                                    {% if sort3 == 'w-type' %}
+                                        {% if order3 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="date"
+                                    data-order="{{ order3 }}">
+                                    {{ _("Date") }}
+                                    {% if sort3 == 'date' %}
+                                        {% if order3 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody style="--starting-number:{{ per_page3 * (page3 - 1) }};">
+                            {% for order in orders3 %}
+                                <tr>
+                                    <th class="numbers" scope="row"></th>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            {% if pagination3.pages > 1 %}
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page3=1, sort3=sort3, order3=order3) }}">&laquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page=pagination3.prev_num, sort=sort3, order3=order3) }}"
+                                   {% if not pagination3.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
+                                <!-- Always display the first page -->
+                                <a href="{{ url_for('waste.index', page=1, sort3=sort3, order3=order3) }}"
+                                   {% if 1 == pagination3.page %}class="active"{% endif %}>1</a>
+                                {% if pagination3.page > 4 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                {% for page_num in range(pagination3.page - 2, pagination3.page + 3) %}
+                                    {% if 1 < page_num < pagination3.pages %}
+                                        <a href="{{ url_for('waste.index', page3=page_num, sort3=sort3, order3=order3) }}"
+                                           {% if page_num == pagination3.page %}class="active"{% endif %}>{{ page_num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if pagination3.page < pagination3.pages - 3 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                <!-- Always display the last page -->
+                                <a href="{{ url_for('waste.index', page3=pagination3.pages, sort3=sort3, order3=order3) }}"
+                                   {% if pagination3.pages == pagination3.page %}class="active"{% endif %}>{{ pagination3.pages }}</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page3=pagination3.next_num, sort3=sort3, order3=order3) }}"
+                                   {% if not pagination3.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page3=pagination3.pages, sort3=sort3, order3=order3) }}">
+                                    &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tables" id="table4" style="display: none">
+                    <div class="pico overflow-auto">
+                        <table class="pico striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ _("Serial num") }}</th>
+                                <th scope="col">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable" data-sort="d-type"
+                                    data-order="{{ order4 }}">
+                                    {{ _("Dept-Type") }}
+                                    {% if sort4 == 'd-type' %}
+                                        {% if order4 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="w-type"
+                                    data-order="{{ order4 }}">
+                                    {{ _("Waste-Type") }}
+                                    {% if sort4 == 'w-type' %}
+                                        {% if order4 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col" class="underline sortable" data-sort="date"
+                                    data-order="{{ order4 }}">
+                                    {{ _("Date") }}
+                                    {% if sort4 == 'date' %}
+                                        {% if order4 == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                                    {% endif %}
+                                </th>
+                                <th scope="col">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody style="--starting-number:{{ per_page4 * (page4 - 1) }};">
+                            {% for order in orders4 %}
+                                <tr>
+                                    <th class="numbers" scope="row"></th>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            {% if pagination4.pages > 1 %}
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page4=1, sort4=sort4, order4=order4) }}">&laquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page4=pagination4.prev_num, sort4=sort4, order4=order4) }}"
+                                   {% if not pagination4.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
+                                <!-- Always display the first page -->
+                                <a href="{{ url_for('waste.index', page4=1, sort4=sort4, order4=order4) }}"
+                                   {% if 1 == pagination4.page %}class="active"{% endif %}>1</a>
+                                {% if pagination4.page > 4 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                {% for page_num in range(pagination4.page - 2, pagination4.page + 3) %}
+                                    {% if 1 < page_num < pagination4.pages %}
+                                        <a href="{{ url_for('waste.index', page4=page_num, sort4=sort4, order4=order4) }}"
+                                           {% if page_num == pagination4.page %}class="active"{% endif %}>{{ page_num }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if pagination4.page < pagination4.pages - 3 %}
+                                    <span class="ellipsis">...</span>
+                                {% endif %}
+                                <!-- Always display the last page -->
+                                <a href="{{ url_for('waste.index', page4=pagination4.pages, sort4=sort4, order4=order4) }}"
+                                   {% if pagination4.pages == pagination4.page %}class="active"{% endif %}>{{ pagination4.pages }}</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page4=pagination4.next_num, sort4=sort4, order4=order4) }}"
+                                   {% if not pagination4.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
+                                <a class="page-switch"
+                                   href="{{ url_for('waste.index', page4=pagination4.pages, sort4=sort4, order4=order4) }}">
+                                    &raquo;</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            const dialog = document.querySelector('#view-order-dialog');
+            // 当任何一个 box 被点击时
+            $(".box").click(function () {
+                // 获取被点击的 box 的 ID，并转换为对应的 table ID
+                const boxId = $(this).attr('id'); // e.g., 'unconfirmed-box'
+                $(".box").removeClass('selected-box');
+                $('#' + boxId).addClass('selected-box');
+                let tableId = "#table"; // Converts to '#table1', '#table2', etc.
+                if (boxId === 'unconfirmed-box'){
+                    tableId += "1";
+                } else if (boxId === 'confirmed-box'){
+                    tableId += "2";
+                } else if (boxId === 'processing-box'){
+                    tableId += "3";
+                } else {
+                    tableId += "4";
+                }
+                // 隐藏所有表格
+                $(".tables").hide();
+                // 显示对应的表格
+                $(tableId).show();
+            });
+            $(".sortable").click(function () {
+                let sortBy = $(this).data('sort');
+                let currentOrder = $(this).data('order') || 'asc'; // 默认为asc
+                let newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+                window.location.href = `/waste?sort=${sortBy}&order=${newOrder}`;
+            });
+            $('.view-order').click(function () {
+                const orderId = $(this).data('id');
+                const orderComment = $(this).data('comment');
+                const orderAttribute = $(this).data('attribution');
+                const orderRow = $(this).closest('tr'); // 找到包含被点击图标的行
+                const orderName = orderRow.find('td:nth-child(2)').text(); // 假设订单名称在第二列
+                const orderDate = orderRow.find('td:nth-child(3)').text(); // 假设订单日期在第三列
+                const orderWeight = orderRow.find('td:nth-child(5)').text(); // 假设订单重量在第五列
+                $('#order-id').val(orderId);
+                $('#order-name').val(orderName);
+                $('#order-date').val(orderDate);
+                $('#order-weight').val(orderWeight);
+                $('#order-attribution').val(orderAttribute);
+                $('#order-comment').val(orderComment);
+                dialog.showModal();
+            });
+            $('#cancel-edit').click(function () {
+                dialog.close();
+            });
+        });
+    </script>
+{% endblock %}

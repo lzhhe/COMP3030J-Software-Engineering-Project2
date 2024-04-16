@@ -64,7 +64,7 @@ def edit():
     sort_by = request.args.get('sort', 'OID')
     order = request.args.get('order', 'asc')
     # 构建查询基础
-    query = Order.query.filter_by(department_id=department.DID)
+    query = Order.query.filter_by(department_id=department.DID, orderStatus='UNCONFIRMED')
     # 应用排序
     if sort_by == 'date':
         query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
