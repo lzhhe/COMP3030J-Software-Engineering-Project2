@@ -29,6 +29,10 @@ tbody tr td:nth-child(6) i.icon-shanchu {
     color: var(--tododelete);
 }
 
+tbody tr td:nth-child(6) i.icon-gouxuan {
+    color: var(--doing1);
+}
+
 .pico .form-edit label {
     display: flex; /* 将label设置为flex容器 */
     flex-direction: row; /* 默认行方向，确保内容在一行显示 */

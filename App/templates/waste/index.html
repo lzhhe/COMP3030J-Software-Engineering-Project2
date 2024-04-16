@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Individual{% endblock %}
+{% block title %}Waste{% endblock %}
 {% block extra_css %}{% endblock %}
 {% block extra_js %}{% endblock %}
 {% block navbar %}
@@ -12,10 +12,10 @@
         </div>
         <div class="menu-items">
             <ul class="nav-links">
-                <li class="underline"><a href="#">
+                <li class="underline"><a href="{{ url_for('waste.index') }}">
                     <img src="../../static/image/icon/home.svg" alt="home" class="icons icon-nav" title="Home"
                          data-placement="right">
-                    <span class="link-name">Home</span>
+                    <span class="link-name">Approval</span>
                 </a></li>
                 <li class="underline"><a href="#">
                     <img src="../../static/image/icon/analyze.svg" alt="home" class="icons icon-nav" title="Analyze">

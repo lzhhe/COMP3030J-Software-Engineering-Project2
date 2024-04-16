@@ -12,7 +12,44 @@ waste = Blueprint('waste', __name__, url_prefix='/waste')  # waste is name of bl
 
 @waste.route('/')
 def index():
-    return render_template('waste/index.html')
+    # 状态统计
+    status_counts = {
+        'unconfirmed_count': Order.query.filter_by(orderStatus='UNCONFIRMED').count(),
+        'confirmed_count': Order.query.filter_by(orderStatus='CONFIRM').count(),
+        'processing_count': Order.query.filter_by(orderStatus='PROCESSING').count(),
+        'finished_count': Order.query.filter_by(orderStatus='FINISHED').count()
+    }
+
+    # 为每个表格定义默认的分页和排序参数
+    params = {}
+    for i in range(1, 5):
+        params[f'page{i}'] = request.args.get(f'page{i}', default=1, type=int)
+        params[f'sort{i}'] = request.args.get(f'sort{i}', default='OID')
+        params[f'order{i}'] = request.args.get(f'order{i}', default='asc')
+        params[f'per_page{i}'] = request.args.get(f'per_page{i}', default=8, type=int)
+
+    queries = {}
+    for i, status in enumerate(['UNCONFIRMED', 'CONFIRM', 'PROCESSING', 'FINISHED'], start=1):
+        query = Order.query.filter_by(orderStatus=status)
+        sort_by = params[f'sort{i}']
+        order = params[f'order{i}']
+        print(query.first().department.departmentName)
+
+        if sort_by == 'date':
+            query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
+        elif sort_by == 'd-type':
+            query = query.order_by(
+                Order.department.departmentType.desc() if order == 'desc' else Order.department.departmentType)
+        elif sort_by == 'w-type':
+            query = query.order_by(Order.wasteType.desc() if order == 'desc' else Order.wasteType)
+        else:
+            query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
+
+        queries[f'pagination{i}'] = query.paginate(page=params[f'page{i}'], per_page=params[f'per_page{i}'],
+                                                   error_out=False)
+        queries[f'orders{i}'] = queries[f'pagination{i}'].items
+
+    return render_template('waste/approval_order.html', **params, **queries, **status_counts)
 
 
 # 工单处理相关
