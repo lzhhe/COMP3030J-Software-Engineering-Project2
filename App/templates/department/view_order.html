@@ -136,16 +136,20 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="pagination">
+                        <div class="pagination" id="pagination-container">
                             {% if pagination.pages > 1 %}
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}">&laquo;</a>
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=pagination.prev_num, sort=sort_by, order=order) }}"
+                                <a class="page-switch page-a" data-page="1"
+                                   data-url="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
+                                   href="#">&laquo;</a>
+                                <a class="page-switch page-a" data-page="{{ pagination.prev_num }}"
+                                   data-url="{{ url_for('department.history', page=pagination.prev_num, sort=sort_by, order=order) }}"
+                                   href="#"
                                    {% if not pagination.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
 
                                 <!-- Always display the first page -->
-                                <a href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
+                                <a class="page-a" data-page="1"
+                                   data-url="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
+                                   href="#"
                                    {% if 1 == pagination.page %}class="active"{% endif %}>1</a>
                                 {% if pagination.page > 4 %}
                                     <span class="ellipsis">...</span>
@@ -153,7 +157,9 @@
 
                                 {% for page_num in range(pagination.page - 2, pagination.page + 3) %}
                                     {% if 1 < page_num < pagination.pages %}
-                                        <a href="{{ url_for('department.history', page=page_num, sort=sort_by, order=order) }}"
+                                        <a class="page-a" data-page="{{ page_num }}"
+                                           data-url="{{ url_for('department.history', page=pagination.page_num, sort=sort_by, order=order) }}"
+                                           href="#"
                                            {% if page_num == pagination.page %}class="active"{% endif %}>{{ page_num }}</a>
                                     {% endif %}
                                 {% endfor %}
@@ -163,14 +169,18 @@
                                 {% endif %}
 
                                 <!-- Always display the last page -->
-                                <a href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}"
+                                <a class="page-a" data-page="{{ pagination.pages }}"
+                                   data-url="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}"
+                                   href="#"
                                    {% if pagination.pages == pagination.page %}class="active"{% endif %}>{{ pagination.pages }}</a>
 
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=pagination.next_num, sort=sort_by, order=order) }}"
+                                <a class="page-switch page-a"
+                                   data-url="{{ url_for('department.history', page=pagination.next_num, sort=sort_by, order=order) }}"
+                                   href="#"
                                    {% if not pagination.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}">
+                                <a class="page-switch page-a" data-page="{{ pagination.pages }}"
+                                   data-url="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}"
+                                   href="#">
                                     &raquo;</a>
                             {% endif %}
                         </div>
@@ -188,6 +198,32 @@
                 let newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
                 window.location.href = `/department/history?sort=${sortBy}&order=${newOrder}`;
             });
+
+            // 使用 jQuery 来处理分页链接的点击事件
+            $(document).on('click', '.page-a', function (e) {
+                e.preventDefault();  // 阻止链接的默认行为
+
+                const page = $(this).attr('data-page');  // 假设每个分页链接都有一个 data-page 属性
+                const sort = $('#current-sort').val();  // 当前排序字段
+                const order = $('#current-order').val();  // 当前排序方向
+
+                // 使用 AJAX 请求新的分页数据
+                $.ajax({
+                    url: '/department/edit',  // Flask路由
+                    type: 'GET',
+                    data: {
+                        page: page,
+                        sort: sort,
+                        order: order
+                    },
+                    success: function (data) {
+                        // 更新页面上的表格内容
+                        // 假设后端返回的是完整的表格 HTML
+                        $('#table-container').html(data);
+                    }
+                });
+            });
+
         });
     </script>
 {% endblock %}
