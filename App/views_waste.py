@@ -36,7 +36,7 @@ def confirm(OID):
 
         if currentCapacity + weight <= maxCapacity:
             # 能力之内才能储存
-            order.orderStatus = OrderStatus.CONFIRMED
+            order.orderStatus = OrderStatus.CONFIRM
             db.session.commit()
             return jsonify({"message": "Order confirmed successfully"}), 200
         else:
@@ -54,7 +54,7 @@ def process(OID):
         return jsonify({"error": "Missing OID in request"}), 200
     order = Order.query.filter_by(OID=OID).first()
     if order:
-        if order.orderStatus != OrderStatus.CONFIRMED:
+        if order.orderStatus != OrderStatus.CONFIRM:
             return jsonify({"message": f"This order ({order.OID})has not confirmed yet "})
 
         else:
