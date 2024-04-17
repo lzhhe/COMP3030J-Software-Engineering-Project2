@@ -189,7 +189,7 @@
                                     <td> {{ order.orderName }}</td>
                                     <td>{{ order.wasteType | enum_to_string }}</td>
                                     <td>{{ order.weight }}</td>
-                                    <td>{{ order.multiplier }}</td>
+                                    <td contenteditable="true" class="multiplier">{{ order.multiplier }}</td>
                                     <td><i class="iconfont icon-chakan view-confirmed"
                                            data-id="{{ order.OID }}"
                                            data-comment="{{ order.comment }}"
@@ -544,6 +544,44 @@
             $('#cancel-confirmed').click(function () {
                 dialog2.close();
             });
+
+            $('#view-table2').on('blur', 'td.multiplier', function () {
+                // 当单元格失去焦点时触发
+                const $this = $(this);
+                let newValue = $this.text().trim();
+
+                // 检查值是否为正整数或小数
+                if (newValue && !isNaN(newValue) && +newValue > 0) {
+                    let row = table2.row($this.closest('tr'));
+                    let data = row.data();
+                    data[4] = newValue;  // 假设multiplier是在第五列（索引为4）
+                    const OID = $this.closest('tr').find('.view-confirmed').data('id');
+                    $.ajax({
+                        url: `modifyMultiplier/${OID}`, // 您的Flask路由
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({multiplier: newValue}),
+                        success: function (res) {
+                            alert('Multiplier updated successfully.');
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            // 出错时的处理逻辑
+                            console.error('Error updating multiplier: ' + errorThrown);
+                            $this.text($this.data('originalValue')); // 如果更新失败，重置为原来的值
+                        }
+                    });
+                    row.data(data).draw(false);  // 更新表格并重绘当前页
+                } else {
+                    // 如果输入无效，重置单元格内容为原始值
+                    $this.text($this.data('originalValue'));
+                    alert('Please enter a valid positive number.');
+                }
+            }).on('focus', 'td.multiplier', function () {
+                // 当单元格获得焦点时触发，保存当前值以便重置
+                const $this = $(this);
+                $this.data('originalValue', $this.text());
+            });
+
         });
     </script>
 {% endblock %}

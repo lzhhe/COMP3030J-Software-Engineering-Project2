@@ -144,7 +144,7 @@ class Order(db.Model):  # 工单
     wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
     weight = db.Column(db.Integer, nullable=False)  # 废弃物重量
     attribution = db.Column(db.Text, nullable=False)  # 属性
-    multiplier = db.Column(db.Integer, nullable=False, default=1)
+    multiplier = db.Column(db.Double, nullable=False, default=1.0)
     comment = db.Column(db.Text, nullable=True)  # 备注
     orderStatus = Column(SQLEnum(OrderStatus), nullable=False)  # 处理状态
     department_id = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=True)

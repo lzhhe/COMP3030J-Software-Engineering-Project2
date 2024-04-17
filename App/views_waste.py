@@ -50,7 +50,8 @@ def confirm(OID):
             db.session.commit()
             return jsonify({"message": "Order confirmed successfully"}), 200
         else:
-            return jsonify({"message": f"The Storage of is {enum_to_string(wasteType)} overload if add this order"}), 200
+            return jsonify(
+                {"message": f"The Storage of is {enum_to_string(wasteType)} overload if add this order"}), 200
 
     else:
         return jsonify({"err": "Order not found"}), 200
@@ -80,7 +81,9 @@ def process(OID):
 
             if currentCapacity + weight * multiplier <= maxCapacity:  # 增加处理能力占用倍率
                 order.orderStatus = OrderStatus.PROCESSING
-                processCapacity.currentCapacity = processCapacity.currentCapacity + weight
+                processCapacity.currentCapacity = processCapacity.currentCapacity + weight * multiplier
+                wasteStorage = WasteStorage.query.filter_by(wasteType=wasteType).first()
+                wasteStorage.currentCapacity = wasteStorage.currentCapacity - weight
                 db.session.commit()
                 return jsonify({"message": "Order will be in process"}), 200
             else:
@@ -111,14 +114,17 @@ def finish(OID):
         return jsonify({"error": "Order not found"}), 200
 
 
-@waste.route('/modifyMultiplier/<OID>', methods=['POST'])
+@waste.route('/modifyMultiplier/<OID>', methods=['PUT'])
 def modifyMultiplier(OID):
-    data = request.get_json()
+    data = request.json
+    print(OID)
     # OID = data.get('OID')
     newMultiplier = data.get('multiplier')
+    print(newMultiplier)
     order = Order.query.filter_by(OID=OID).first()
     order.multiplier = newMultiplier
     db.session.commit()
+    return jsonify(), 200
 
 
 # 工单相关
