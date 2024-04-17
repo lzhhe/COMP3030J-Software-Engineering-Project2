@@ -22,6 +22,7 @@
                 <label for="order-comment">{{ _("Comment:") }}
                     <textarea rows="3" cols="30" id="order-comment" name="order-comment"></textarea></label>
                 <input type="hidden" id="order-id" name="order-id">
+                <input type="hidden" id="order-type" name="order-type">
             </form>
             <footer style="display: flex; justify-content: flex-end;">
                 <button id="cancel-edit" class="outline secondary"> {{ _("Cancel") }}</button>
@@ -40,9 +41,10 @@
             </div>
             <div class="tables">
                 <div>
-                    <table class="table row-border stripe order-column compact" id="edit-order-table" style="width: 100%;">
+                    <table class="table row-border stripe order-column compact" id="edit-order-table"
+                           style="width: 100%;">
                         <thead>
-                        <tr >
+                        <tr>
                             <th scope="col" class="underline">
                                 {{ _("OID") }}
                             </th>
@@ -85,38 +87,28 @@
     </section>
     <script>
         $(document).ready(function () {
+            let edit_row;
             const dialog = document.querySelector('#edit-order-dialog');
-            $('#edit-order-table').DataTable({
-                paging: true, // Enable pagination
-                searching: true, // Enable search bar
-                ordering: true, // Enable sorting
-                info: true, // Show information about the table
-                lengthMenu: [6, 12, 24], // Set the page length options
+            const editOrderTable = $('#edit-order-table').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                lengthMenu: [6, 12, 24],
                 pageLength: 6,
-                responsive: true, // Enable responsive layout
+                responsive: true,
                 autoWidth: true,
                 columnDefs: [
-                    {
-                        targets: [0, 1, 2, 3, 4],
-                        className: 'dt-head-center'
-                    },
-                    {
-                        targets: [1, 2, 3],
-                        className: 'dt-body-left'
-                    },
-                    {
-                        targets: [0, 4],
-                        className: 'dt-body-center'
-                    },
-                    {
-                        targets: 'no-sort',
-                        orderable: false
-                    }
+                    {targets: [0, 1, 2, 3, 4], className: 'dt-head-center'},
+                    {targets: [1, 2, 3], className: 'dt-body-left'},
+                    {targets: [0, 4], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false}
                 ],
             });
 
-            $('.delete-order').click(function () {
+            $(document).on('click', '.delete-order', function () {
                 let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
                 if (window.confirm("{{ _('Are you sure to delete this order?') }}")) {
                     $.ajax({
                         url: `/department/delete_order/${oid}`,
@@ -124,7 +116,7 @@
                         success: function (res) {
                             if (res.message === 0) {
                                 alert("{{ _('Delete success') }}");
-                                window.location.reload();
+                                editOrderTable.row($(self).closest('tr')).remove().draw();
                             } else {
                                 alert("{{ _('Delete failed') }}");
                             }
@@ -134,18 +126,21 @@
                             alert("{{ _('Delete failed') }}");
                         }
                     });
-
                 }
             });
-            $('.edit-order').click(function () {
+
+            $(document).on('click', '.edit-order', function () {
+                edit_row = $(this).closest('tr');
+                const orderRow = $(this).closest('tr'); // Find the row containing the clicked icon
                 const orderId = $(this).data('id');
                 const orderComment = $(this).data('comment');
                 const orderAttribute = $(this).data('attribution');
-                const orderRow = $(this).closest('tr'); // 找到包含被点击图标的行
-                const orderName = orderRow.find('td:nth-child(2)').text(); // 假设订单名称在第二列
-                const orderDate = orderRow.find('td:nth-child(3)').text(); // 假设订单日期在第三列
-                const orderWeight = orderRow.find('td:nth-child(5)').text(); // 假设订单重量在第五列
+                const orderName = orderRow.find('td:nth-child(2)').text();
+                const orderDate = orderRow.find('td:nth-child(3)').text();
+                const orderType = orderRow.find('td:nth-child(4)').text();
+                const orderWeight = orderRow.find('td:nth-child(5)').text();
                 $('#order-id').val(orderId);
+                $('#order-type').val(orderType);
                 $('#order-name').val(orderName);
                 $('#order-date').val(orderDate);
                 $('#order-weight').val(orderWeight);
@@ -153,11 +148,14 @@
                 $('#order-comment').val(orderComment);
                 dialog.showModal();
             });
+
             $('#cancel-edit').click(function () {
                 dialog.close();
             });
+
             $('#confirm-edit').click(function () {
                 const oid = $('#order-id').val();
+                const orderType = $('#order-type').val();
                 const orderName = $('#order-name').val();
                 const orderDate = $('#order-date').val();
                 const orderWeight = $('#order-weight').val();
@@ -183,7 +181,17 @@
                         if (res.message === 0) {
                             alert("{{ _('Edit success') }}");
                             dialog.close();
-                            window.location.reload();
+                            const row = editOrderTable.row(edit_row);
+                            row.data([
+                                oid,
+                                orderName,
+                                orderDate,
+                                orderType,
+                                orderWeight,
+                                '<i class="iconfont icon-chakan edit-order" data-id="' + oid + '" data-comment="' + orderComment
+                                + '" data-attribution="' + orderAttribute + '"></i> ' +
+                                '<i class="iconfont icon-shanchu delete-order" data-id="' + oid + '"></i>'
+                            ]).draw();
                         } else {
                             alert("{{ _('Edit failed') }}");
                         }
@@ -196,4 +204,5 @@
             });
         });
     </script>
+
 {% endblock %}

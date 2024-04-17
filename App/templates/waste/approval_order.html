@@ -8,28 +8,37 @@
 {% block title %}Approval Order{% endblock %}
 
 {% block mainBody %}
-    <dialog class="pico" id="view-order-dialog">
+    <dialog class="pico" id="view-unconfirmed-dialog">
         <article>
             <form method="dialog" class="form-edit">
-                <label for="order-name">{{ _("Name:") }}
-                    <input type="text" id="order-name" name="order-name" aria-label="Read-only input"
-                           readonly></label>
-                <label for="order-date">{{ _("Date:") }}
-                    <input type="date" id="order-date" name="order-date" aria-label="Read-only input"
-                           readonly></label>
-                <label for="order-weight">{{ _("Weight:") }}
-                    <input type="number" id="order-weight" name="order-weight" aria-label="Read-only input"
-                           readonly></label>
-                <label for="order-attribution">{{ _("Attribution:") }}
-                    <input type="text" id="order-attribution" name="order-attribution" aria-label="Read-only input"
-                           readonly></label>
-                <label for="order-comment">{{ _("Comment:") }}
-                    <textarea rows="3" cols="30" id="order-comment" name="order-comment" aria-label="Read-only input"
+                <label>{{ _("Name:") }}
+                    <input type="text" id="unconfirmed-name" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Dept-Name:") }}
+                    <input type="text" id="unconfirmed-deptname" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Dept-Type:") }}
+                    <input type="text" id="unconfirmed-depttype" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Waste-Type:") }}
+                    <input type="text" id="unconfirmed-wastetype" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Date:") }}
+                    <input type="date" id="unconfirmed-date" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Weight:") }}
+                    <input type="number" id="unconfirmed-weight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Attribution:") }}
+                    <input type="text" id="unconfirmed-attribution" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Comment:") }}
+                    <textarea rows="3" cols="30" id="unconfirmed-comment" aria-label="Read-only input"
                               readonly></textarea></label>
-                <input type="hidden" id="order-id" name="order-id">
+                <input type="hidden" id="unconfirmed-id">
             </form>
             <footer style="display: flex; justify-content: flex-end;">
-                <button id="cancel-edit" class="outline secondary"> {{ _("Cancel") }}</button>
+                <button id="cancel-unconfirmed" class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+    <dialog class="pico" id="view-processing-dialog">
+        <article>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button class="outline secondary"> {{ _("Cancel") }}</button>
             </footer>
         </article>
     </dialog>
@@ -93,7 +102,7 @@
                                 <th scope="col" class="underline sortable">
                                     {{ _("Date") }}
                                 </th>
-                                <th scope="col"  class="no-sort">
+                                <th scope="col" class="no-sort">
                                     {{ _("Operation") }}
                                 </th>
                             </tr>
@@ -106,10 +115,11 @@
                                     <td>{{ order.department.departmentType | enum_to_string }}</td>
                                     <td>{{ order.wasteType | enum_to_string }}</td>
                                     <td>{{ order.date }}</td>
-                                    <td><i class="iconfont icon-chakan view-order"
-                                           data-id="{{ order.OID }}"
+                                    <td><i class="iconfont icon-chakan view-unconfirmed"
                                            data-comment="{{ order.comment }}"
-                                           data-attribution="{{ order.attribution }}"></i>
+                                           data-attribution="{{ order.attribution }}"
+                                           data-weight="{{ order.weight }}"
+                                           data-name="{{ order.orderName }}"></i>
                                         <i class="iconfont icon-gouxuan confirm-order"
                                            data-id="{{ order.OID }}"></i></td>
                                 </tr>
@@ -136,7 +146,7 @@
                                 <th scope="col" class="underline sortable">
                                     {{ _("Date") }}
                                 </th>
-                                <th scope="col"  class="no-sort">
+                                <th scope="col" class="no-sort">
                                     {{ _("Operation") }}
                                 </th>
                             </tr>
@@ -179,7 +189,7 @@
                                 <th scope="col" class="underline sortable">
                                     {{ _("Date") }}
                                 </th>
-                                <th scope="col"  class="no-sort">
+                                <th scope="col" class="no-sort">
                                     {{ _("Operation") }}
                                 </th>
                             </tr>
@@ -222,7 +232,7 @@
                                 <th scope="col" class="underline sortable">
                                     {{ _("Date") }}
                                 </th>
-                                <th scope="col"  class="no-sort">
+                                <th scope="col" class="no-sort">
                                     {{ _("Operation") }}
                                 </th>
                             </tr>
@@ -252,7 +262,8 @@
     </section>
     <script>
         $(document).ready(function () {
-            const dialog = document.querySelector('#view-order-dialog');
+            const dialog1 = document.querySelector('#view-unconfirmed-dialog');
+            const dialog2 = document.querySelector('#view-processing-dialog');
             // 当任何一个 box 被点击时
             $(".box").click(function () {
                 // 获取被点击的 box 的 ID，并转换为对应的 table ID
@@ -274,7 +285,7 @@
                 // 显示对应的表格
                 $(tableId).show();
             });
-            $('#view-table1, #view-table2, #view-table3, #view-table4').DataTable({
+            const table1 = $('#view-table1').DataTable({
                 paging: true, // Enable pagination
                 searching: true, // Enable search bar
                 ordering: true, // Enable sorting
@@ -284,48 +295,127 @@
                 responsive: true, // Enable responsive layout
                 autoWidth: true,
                 columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
                     {
-                        targets: [0, 1, 2, 3, 4, 5],
-                        className: 'dt-head-center'
-                    },
-                    {
-                        targets: [1, 2, 3, 4],
-                        className: 'dt-body-left'
-                    },
-                    {
-                        targets: [0, 5],
-                        className: 'dt-body-center'
-                    },
-                    {
-                        targets: 'no-sort',
-                        orderable: false
-                    },
-                    {
-                        targets: 0,
-                        "render": function (data, type, row, meta) {
+                        targets: 0, "render": function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     }
                 ],
-            });
-            $('.view-order').click(function () {
-                const orderId = $(this).data('id');
+            })
+
+            const table2 = $('#view-table2').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+
+            const table3 = $('#view-table3').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+
+            const table4 = $('#view-table4').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+            $(document).on('click', '.view-unconfirmed', function () {
+                const orderName = $(this).data('name');
                 const orderComment = $(this).data('comment');
                 const orderAttribute = $(this).data('attribution');
-                const orderRow = $(this).closest('tr'); // 找到包含被点击图标的行
-                const orderName = orderRow.find('td:nth-child(2)').text(); // 假设订单名称在第二列
-                const orderDate = orderRow.find('td:nth-child(3)').text(); // 假设订单日期在第三列
-                const orderWeight = orderRow.find('td:nth-child(5)').text(); // 假设订单重量在第五列
-                $('#order-id').val(orderId);
-                $('#order-name').val(orderName);
-                $('#order-date').val(orderDate);
-                $('#order-weight').val(orderWeight);
-                $('#order-attribution').val(orderAttribute);
-                $('#order-comment').val(orderComment);
-                dialog.showModal();
+                const orderWeight = $(this).data('weight');
+                const orderRow = $(this).closest('tr');
+                const orderDName = orderRow.find('td:nth-child(2)').text();
+                const orderDType = orderRow.find('td:nth-child(3)').text();
+                const orderWType = orderRow.find('td:nth-child(4)').text();
+                const orderDate = orderRow.find('td:nth-child(5)').text();
+                $('#unconfirmed-name').val(orderName);
+                $('#unconfirmed-deptname').val(orderDName);
+                $('#unconfirmed-depttype').val(orderDType);
+                $('#unconfirmed-wastetype').val(orderWType);
+                $('#unconfirmed-date').val(orderDate);
+                $('#unconfirmed-weight').val(orderWeight);
+                $('#unconfirmed-attribution').val(orderAttribute);
+                $('#unconfirmed-comment').val(orderComment);
+                dialog1.showModal();
             });
-            $('#cancel-edit').click(function () {
-                dialog.close();
+            $(document).on('click', '.confirm-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                if (window.confirm("{{ _('Are you sure to delete this order?') }}")) {
+                    $.ajax({
+                        url: `/department/delete_order/${oid}`,
+                        type: 'DELETE',
+                        success: function (res) {
+                            if (res.message === 0) {
+                                alert("{{ _('Delete success') }}");
+                                table1.row($(self).closest('tr')).remove().draw();
+                            } else {
+                                alert("{{ _('Delete failed') }}");
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert("{{ _('Delete failed') }}");
+                        }
+                    });
+                }
+            });
+            $('#cancel-unconfirmed').click(function () {
+                dialog1.close();
             });
         });
     </script>

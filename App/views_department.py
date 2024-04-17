@@ -79,6 +79,8 @@ def delete_order(OID):
 
 @department.route('/edit_order/<OID>', methods=['PUT'])
 def edit_order(OID):
+    user = g.user
+    department = user.department
     order = Order.query.filter_by(OID=OID).first()
     if order:
         data = request.json
