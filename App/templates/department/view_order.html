@@ -75,46 +75,31 @@
 
                 </div>
                 <div class="tables">
-                    <div class="pico overflow-auto">
-                        <table class="pico striped">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-order-table"
+                               style="width: 100%;">
                             <thead>
                             <tr>
-                                <th scope="col">{{ _("Serial num") }}</th>
-                                <th scope="col">{{ _("Name") }}</th>
-                                <th scope="col" class="underline sortable" data-sort="date"
-                                    data-order="{{ order }}">
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Name") }}</th>
+                                <th scope="col" class="underline sortable">
                                     {{ _("Date") }}
-                                    {% if sort_by == 'date' %}
-                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
-                                    {% endif %}
                                 </th>
-                                <th scope="col" class="underline sortable" data-sort="type"
-                                    data-order="{{ order }}">
+                                <th scope="col" class="underline sortable">
                                     {{ _("Type") }}
-                                    {% if sort_by == 'type' %}
-                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
-                                    {% endif %}
                                 </th>
-                                <th scope="col" class="underline sortable" data-sort="weight"
-                                    data-order="{{ order }}">
+                                <th scope="col" class="underline sortable">
                                     {{ _("Weight") }}
-                                    {% if sort_by == 'weight' %}
-                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
-                                    {% endif %}
                                 </th>
-                                <th scope="col" class="underline sortable" data-sort="status"
-                                    data-order="{{ order }}">
+                                <th scope="col" class="underline sortable">
                                     {{ _("Status") }}
-                                    {% if sort_by == 'status' %}
-                                        {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
-                                    {% endif %}
                                 </th>
                             </tr>
                             </thead>
-                            <tbody style="--starting-number:{{ per_page * (current_page - 1) }};">
+                            <tbody>
                             {% for order in all_orders %}
                                 <tr>
-                                    <th class="numbers" scope="row"></th>
+                                    <td></td>
                                     <td> {{ order.orderName }}</td>
                                     <td>{{ order.date }}</td>
                                     <td>{{ order.wasteType|enum_to_string }}</td>
@@ -136,47 +121,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="pagination">
-                            {% if pagination.pages > 1 %}
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
-                                >&laquo;</a>
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=pagination.prev_num, sort=sort_by, order=order) }}"
-                                   {% if not pagination.has_prev %}class="disabled"{% endif %}>&lsaquo;</a>
-
-                                <!-- Always display the first page -->
-                                <a href="{{ url_for('department.history', page=1, sort=sort_by, order=order) }}"
-                                   {% if 1 == pagination.page %}class="active"{% endif %}>1</a>
-                                {% if pagination.page > 4 %}
-                                    <span class="ellipsis">...</span>
-                                {% endif %}
-
-                                {% for page_num in range(pagination.page - 2, pagination.page + 3) %}
-                                    {% if 1 < page_num < pagination.pages %}
-                                        <a
-                                           href="{{ url_for('department.history', page=page_num, sort=sort_by, order=order) }}"
-                                           {% if page_num == pagination.page %}class="active"{% endif %}>{{ page_num }}</a>
-                                    {% endif %}
-                                {% endfor %}
-
-                                {% if pagination.page < pagination.pages - 3 %}
-                                    <span class="ellipsis">...</span>
-                                {% endif %}
-
-                                <!-- Always display the last page -->
-                                <a
-                                   href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}"
-                                   {% if pagination.pages == pagination.page %}class="active"{% endif %}>{{ pagination.pages }}</a>
-
-                                <a class="page-switch"
-                                   href="{{ url_for('department.history', page=pagination.next_num, sort=sort_by, order=order) }}"
-                                   {% if not pagination.has_next %}class="disabled"{% endif %}>&rsaquo;</a>
-                                <a class="page-switch" data-page="{{ pagination.pages }}"
-                                   href="{{ url_for('department.history', page=pagination.pages, sort=sort_by, order=order) }}">
-                                    &raquo;</a>
-                            {% endif %}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -185,11 +129,39 @@
     </section>
     <script>
         $(document).ready(function () {
-            $(".sortable").click(function () {
-                let sortBy = $(this).data('sort');
-                let currentOrder = $(this).data('order') || 'asc'; // 默认为asc
-                let newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
-                window.location.href = `/department/history?sort=${sortBy}&order=${newOrder}`;
+            $('#view-order-table').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {
+                        targets: [0, 1, 2, 3, 4, 5],
+                        className: 'dt-head-center'
+                    },
+                    {
+                        targets: [1, 2, 3, 4],
+                        className: 'dt-body-left'
+                    },
+                    {
+                        targets: [0, 5],
+                        className: 'dt-body-center'
+                    },
+                    {
+                        targets: 'no-sort',
+                        orderable: false
+                    },
+                    {
+                        targets: 0,
+                        "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
             });
 
         });

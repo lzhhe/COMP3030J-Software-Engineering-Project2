@@ -16,6 +16,10 @@ tbody tr td:nth-child(6) i {
     font-size: 1.6em;
 }
 
+#edit-order-table thead tr th {
+    font-weight: bold;
+}
+
 tbody tr td:nth-child(6) i:hover {
     scale: 1.5;
     transition: all 0.3s ease-in-out;
