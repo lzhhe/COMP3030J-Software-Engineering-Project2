@@ -562,11 +562,12 @@
                             if (res.message === 'Order confirmed successfully') {
                                 alert("{{ _('Confirm success') }}");
                                 table1.row($(self).closest('tr')).remove().draw(false);
-                                table2.row.add([
+                                const newR = table2.row.add([
                                     '', orderName, orderWType, orderWeight, orderMultiplier,
                                     `<i class="iconfont icon-chakan view-confirmed" data-id="${oid}" data-comment="${orderComment}" data-attribution="${orderAttribute}" data-depttype="${orderDType}" data-deptname="${orderDName}" data-date="${orderDate}"></i>
                                     <i class="iconfont icon-gouxuan processing-order" data-id="${oid}"></i>`
-                                ]).draw(false);
+                                ]).draw(false).node();
+                                $(newR).find('td:eq(4)').addClass('multiplier').attr('contenteditable', 'true');  // 给新行添加可编辑的multiplier列
                                 $('#unconfirmed-box .box-number').text(table1.rows().count());  // Update unconfirmed count
                                 $('#confirmed-box .box-number').text(table2.rows().count());    // Update confirmed count
                             } else {
