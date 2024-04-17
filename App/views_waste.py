@@ -6,6 +6,7 @@ from sqlalchemy import and_, or_, Date, func
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
+from .views_utils import *
 
 waste = Blueprint('waste', __name__, url_prefix='/waste')  # waste is name of blueprint
 
@@ -19,15 +20,6 @@ def index():
         'processing_count': Order.query.filter_by(orderStatus='PROCESSING').count(),
         'finished_count': Order.query.filter_by(orderStatus='FINISHED').count()
     }
-
-    # 为每个表格定义默认的分页和排序参数
-    params = {}
-    for i in range(1, 5):
-        params[f'page{i}'] = request.args.get(f'page{i}', default=1, type=int)
-        params[f'sort{i}'] = request.args.get(f'sort{i}', default='OID')
-        params[f'order{i}'] = request.args.get(f'order{i}', default='asc')
-        params[f'per_page{i}'] = request.args.get(f'per_page{i}', default=8, type=int)
-
     queries = {}
     for i, status in enumerate(['UNCONFIRMED', 'CONFIRM', 'PROCESSING', 'FINISHED'], start=1):
         query = Order.query.filter_by(orderStatus=status)
@@ -37,7 +29,7 @@ def index():
 
 
 # 工单处理相关
-@waste.route('/confirm/<OID>', methods=['POST'])
+@waste.route('/confirm/<OID>', methods=['PUT'])
 def confirm(OID):
     # data = request.get_json()
     # OID = data.get('OID')
@@ -46,15 +38,11 @@ def confirm(OID):
     order = Order.query.filter_by(OID=OID).first()
     if order:
         # 检查储存库占用
-
         wasteType = order.wasteType
         weight = order.weight
-
         wasteStorage = WasteStorage.query.filter_by(wasteType=wasteType).first()
-
         maxCapacity = wasteStorage.maxCapacity
         currentCapacity = wasteStorage.currentCapacity
-
         if currentCapacity + weight <= maxCapacity:
             # 能力之内才能储存
             order.orderStatus = OrderStatus.CONFIRM
@@ -62,10 +50,10 @@ def confirm(OID):
             db.session.commit()
             return jsonify({"message": "Order confirmed successfully"}), 200
         else:
-            return jsonify({"message": f"The Storage of is {wasteType} overload if add this order"}), 200
+            return jsonify({"message": f"The Storage of is {enum_to_string(wasteType)} overload if add this order"}), 200
 
     else:
-        return jsonify({"error": "Order not found"}), 200
+        return jsonify({"err": "Order not found"}), 200
 
 
 @waste.route('/process/<OID>', methods=['POST'])

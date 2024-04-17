@@ -104,6 +104,13 @@
                     {targets: [0, 4], className: 'dt-body-center'},
                     {targets: 'no-sort', orderable: false}
                 ],
+                drawCallback: function (settings) {
+                    let api = this.api();
+                    let start = api.page.info().start; // 获取当前页的起始序号
+                    api.column(0, {page: 'current'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = start + i + 1; // 更新当前页的每个序号
+                    });
+                },
             });
 
             $(document).on('click', '.delete-order', function () {
@@ -116,7 +123,7 @@
                         success: function (res) {
                             if (res.message === 0) {
                                 alert("{{ _('Delete success') }}");
-                                editOrderTable.row($(self).closest('tr')).remove().draw();
+                                editOrderTable.row($(self).closest('tr')).remove().draw(false);
                             } else {
                                 alert("{{ _('Delete failed') }}");
                             }
@@ -191,7 +198,7 @@
                                 '<i class="iconfont icon-chakan edit-order" data-id="' + oid + '" data-comment="' + orderComment
                                 + '" data-attribution="' + orderAttribute + '"></i> ' +
                                 '<i class="iconfont icon-shanchu delete-order" data-id="' + oid + '"></i>'
-                            ]).draw();
+                            ]).draw(false);
                         } else {
                             alert("{{ _('Edit failed') }}");
                         }
