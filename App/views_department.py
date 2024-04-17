@@ -60,26 +60,10 @@ def setdepartment():
 def edit():
     user = g.user
     department = user.department
-    page = request.args.get('page', default=1, type=int)
-    sort_by = request.args.get('sort', 'OID')
-    order = request.args.get('order', 'asc')
     # 构建查询基础
-    query = Order.query.filter_by(department_id=department.DID)
-    # 应用排序
-    if sort_by == 'date':
-        query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
-    elif sort_by == 'status':
-        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.orderStatus)
-    elif sort_by == 'weight':
-        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.weight)
-    else:  # 默认按 OID 排序
-        query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
-
-    per_page = request.args.get('per_page', default=8, type=int)
-    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
-    orders = pagination.items
-    return render_template('department/edit_order.html', all_orders=orders,
-                           sort_by=sort_by, order=order, pagination=pagination, current_page=page, per_page=per_page)
+    query = Order.query.filter_by(department_id=department.DID, orderStatus='UNCONFIRMED')
+    orders = query.all()
+    return render_template('department/edit_order.html', all_orders=orders)
 
 
 @department.route('/delete_order/<OID>', methods=['DELETE'])
@@ -95,6 +79,8 @@ def delete_order(OID):
 
 @department.route('/edit_order/<OID>', methods=['PUT'])
 def edit_order(OID):
+    user = g.user
+    department = user.department
     order = Order.query.filter_by(OID=OID).first()
     if order:
         data = request.json
@@ -113,34 +99,16 @@ def edit_order(OID):
 def history():
     user = g.user
     department = user.department
-    page = request.args.get('page', default=1, type=int)
-    sort_by = request.args.get('sort', 'OID')
-    order = request.args.get('order', 'asc')
     # 构建查询基础
     query = Order.query.filter_by(department_id=department.DID)
+    orders = query.all()
     unconfirmed_count = query.filter_by(orderStatus='UNCONFIRMED').count()
     confirmed_count = query.filter_by(orderStatus='CONFIRM').count()
     processing_count = query.filter_by(orderStatus='PROCESSING').count()
     finished_count = query.filter_by(orderStatus='FINISHED').count()
-    # 应用排序
-    if sort_by == 'date':
-        query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
-    elif sort_by == 'type':
-        query = query.order_by(Order.wasteType.desc() if order == 'desc' else Order.wasteType)
-    elif sort_by == 'status':
-        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.orderStatus)
-    elif sort_by == 'weight':
-        query = query.order_by(Order.orderStatus.desc() if order == 'desc' else Order.weight)
-    else:  # 默认按 OID 排序
-        query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
-
-    per_page = request.args.get('per_page', default=6, type=int)
-    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
-    orders = pagination.items
     return render_template('department/view_order.html', unconfirmed_count=unconfirmed_count,
                            confirmed_count=confirmed_count,
-                           processing_count=processing_count, finished_count=finished_count, all_orders=orders,
-                           sort_by=sort_by, order=order, pagination=pagination, current_page=page, per_page=per_page)
+                           processing_count=processing_count, finished_count=finished_count, all_orders=orders)
 
 
 @department.route('/dashboard')

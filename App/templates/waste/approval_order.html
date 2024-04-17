@@ -1,0 +1,422 @@
+{% extends 'waste/index.html' %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/department/edit_order.css">
+    <link rel="stylesheet" href="../../static/css/department/view_order.css">
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+{% block title %}Approval Order{% endblock %}
+
+{% block mainBody %}
+    <dialog class="pico" id="view-unconfirmed-dialog">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label>{{ _("Name:") }}
+                    <input type="text" id="unconfirmed-name" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Dept-Name:") }}
+                    <input type="text" id="unconfirmed-deptname" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Dept-Type:") }}
+                    <input type="text" id="unconfirmed-depttype" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Waste-Type:") }}
+                    <input type="text" id="unconfirmed-wastetype" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Date:") }}
+                    <input type="date" id="unconfirmed-date" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Weight:") }}
+                    <input type="number" id="unconfirmed-weight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Attribution:") }}
+                    <input type="text" id="unconfirmed-attribution" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Comment:") }}
+                    <textarea rows="3" cols="30" id="unconfirmed-comment" aria-label="Read-only input"
+                              readonly></textarea></label>
+                <input type="hidden" id="unconfirmed-id">
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-unconfirmed" class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+    <dialog class="pico" id="view-processing-dialog">
+        <article>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+    <section class="dashboard">
+        {% include "top.html" %}
+
+        <div class="content">
+            <div class="content1">
+                <div class="title-top">
+                    <img src="../../static/image/icon/datasave.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Total statistics") }}</h2>
+                </div>
+                <div class="boxes">
+                    <div class="box box1 selected-box" id="unconfirmed-box">
+                        <img src="../../static/image/icon/unconfirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Unconfirmed") }}</b>
+                        <span class="box-number">{{ unconfirmed_count }}</span>
+                    </div>
+                    <div class="box box2" id="confirmed-box">
+                        <img src="../../static/image/icon/confirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Confirmed") }}</b>
+                        <span class="box-number">{{ confirmed_count }}</span>
+                    </div>
+                    <div class="box box3" id="processing-box">
+                        <img src="../../static/image/icon/diliver.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Processing") }}</b>
+                        <span class="box-number">{{ processing_count }}</span>
+                    </div>
+                    <div class="box box4" id="finished-box">
+                        <img src="../../static/image/icon/qianbao.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Finished") }}</b>
+                        <span class="box-number">{{ finished_count }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content2">
+                <div class="title-top">
+                    <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Tables") }}</h2>
+                </div>
+                <div class="tables" id="table1">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table1"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Dept-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Date") }}
+                                </th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders1 %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-unconfirmed"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"
+                                           data-weight="{{ order.weight }}"
+                                           data-name="{{ order.orderName }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tables" id="table2" style="display: none">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table2"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Dept-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Date") }}
+                                </th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders2 %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tables" id="table3" style="display: none">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table3"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Dept-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Date") }}
+                                </th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders3 %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tables" id="table4" style="display: none">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table4"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Dept-Name") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Dept-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Date") }}
+                                </th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders4 %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.department.departmentName }}</td>
+                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td><i class="iconfont icon-chakan view-order"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            const dialog1 = document.querySelector('#view-unconfirmed-dialog');
+            const dialog2 = document.querySelector('#view-processing-dialog');
+            // 当任何一个 box 被点击时
+            $(".box").click(function () {
+                // 获取被点击的 box 的 ID，并转换为对应的 table ID
+                const boxId = $(this).attr('id'); // e.g., 'unconfirmed-box'
+                $(".box").removeClass('selected-box');
+                $('#' + boxId).addClass('selected-box');
+                let tableId = "#table"; // Converts to '#table1', '#table2', etc.
+                if (boxId === 'unconfirmed-box') {
+                    tableId += "1";
+                } else if (boxId === 'confirmed-box') {
+                    tableId += "2";
+                } else if (boxId === 'processing-box') {
+                    tableId += "3";
+                } else {
+                    tableId += "4";
+                }
+                // 隐藏所有表格
+                $(".tables").hide();
+                // 显示对应的表格
+                $(tableId).show();
+            });
+            const table1 = $('#view-table1').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+
+            const table2 = $('#view-table2').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+
+            const table3 = $('#view-table3').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+
+            const table4 = $('#view-table4').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0, "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+            })
+            $(document).on('click', '.view-unconfirmed', function () {
+                const orderName = $(this).data('name');
+                const orderComment = $(this).data('comment');
+                const orderAttribute = $(this).data('attribution');
+                const orderWeight = $(this).data('weight');
+                const orderRow = $(this).closest('tr');
+                const orderDName = orderRow.find('td:nth-child(2)').text();
+                const orderDType = orderRow.find('td:nth-child(3)').text();
+                const orderWType = orderRow.find('td:nth-child(4)').text();
+                const orderDate = orderRow.find('td:nth-child(5)').text();
+                $('#unconfirmed-name').val(orderName);
+                $('#unconfirmed-deptname').val(orderDName);
+                $('#unconfirmed-depttype').val(orderDType);
+                $('#unconfirmed-wastetype').val(orderWType);
+                $('#unconfirmed-date').val(orderDate);
+                $('#unconfirmed-weight').val(orderWeight);
+                $('#unconfirmed-attribution').val(orderAttribute);
+                $('#unconfirmed-comment').val(orderComment);
+                dialog1.showModal();
+            });
+            $(document).on('click', '.confirm-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                if (window.confirm("{{ _('Are you sure to delete this order?') }}")) {
+                    $.ajax({
+                        url: `/department/delete_order/${oid}`,
+                        type: 'DELETE',
+                        success: function (res) {
+                            if (res.message === 0) {
+                                alert("{{ _('Delete success') }}");
+                                table1.row($(self).closest('tr')).remove().draw();
+                            } else {
+                                alert("{{ _('Delete failed') }}");
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert("{{ _('Delete failed') }}");
+                        }
+                    });
+                }
+            });
+            $('#cancel-unconfirmed').click(function () {
+                dialog1.close();
+            });
+        });
+    </script>
+{% endblock %}
