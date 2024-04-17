@@ -70,10 +70,8 @@ def process(OID):
 
         else:
             multiplier = order.multiplier
-
             wasteType = order.wasteType
             weight = order.weight
-
             processCapacity = ProcessCapacity.query.filter_by(wasteType=wasteType).first()
 
             maxCapacity = processCapacity.maxCapacity
