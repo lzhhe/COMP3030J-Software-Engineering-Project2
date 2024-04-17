@@ -31,25 +31,9 @@ def index():
     queries = {}
     for i, status in enumerate(['UNCONFIRMED', 'CONFIRM', 'PROCESSING', 'FINISHED'], start=1):
         query = Order.query.filter_by(orderStatus=status)
-        sort_by = params[f'sort{i}']
-        order = params[f'order{i}']
-        print(query.first().department.departmentName)
+        queries[f'orders{i}'] = query.all()
 
-        if sort_by == 'date':
-            query = query.order_by(Order.date.desc() if order == 'desc' else Order.date)
-        elif sort_by == 'd-type':
-            query = query.order_by(
-                Order.department.departmentType.desc() if order == 'desc' else Order.department.departmentType)
-        elif sort_by == 'w-type':
-            query = query.order_by(Order.wasteType.desc() if order == 'desc' else Order.wasteType)
-        else:
-            query = query.order_by(Order.OID.desc() if order == 'desc' else Order.OID)
-
-        queries[f'pagination{i}'] = query.paginate(page=params[f'page{i}'], per_page=params[f'per_page{i}'],
-                                                   error_out=False)
-        queries[f'orders{i}'] = queries[f'pagination{i}'].items
-
-    return render_template('waste/approval_order.html', **params, **queries, **status_counts)
+    return render_template('waste/approval_order.html', **queries, **status_counts)
 
 
 # 工单处理相关
