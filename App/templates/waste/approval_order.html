@@ -2,6 +2,21 @@
 {% block extra_css %}
     <link rel="stylesheet" href="../../static/css/department/edit_order.css">
     <link rel="stylesheet" href="../../static/css/department/view_order.css">
+    <style>
+        .progress-container {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+    </style>
 {% endblock %}
 {% block extra_js %}
 {% endblock %}
@@ -68,8 +83,22 @@
     </dialog>
     <dialog class="pico" id="view-processing-dialog">
         <article>
+            <form method="dialog" class="form-edit">
+                <label>{{ _("Start-Date:") }}
+                    <input type="date" id="processing-sdate" aria-label="Read-only input" readonly></label>
+                <label>{{ _("End-Date:") }}
+                    <input type="date" id="processing-edate" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Whole-Weight:") }}
+                    <input type="number" id="processing-wweight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Less-Weight:") }}
+                    <input type="number" id="processing-lweight" aria-label="Read-only input" readonly></label>
+                <input type="hidden" id="processing-id">
+            </form>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
             <footer style="display: flex; justify-content: flex-end;">
-                <button class="outline secondary"> {{ _("Cancel") }}</button>
+                <button id="cancel-processing" class="outline secondary"> {{ _("Cancel") }}</button>
             </footer>
         </article>
     </dialog>
@@ -214,15 +243,15 @@
                             <thead>
                             <tr>
                                 <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
-                                <th scope="col" class="no-sort">{{ _("Dept-Name") }}</th>
-                                <th scope="col" class="underline sortable">
-                                    {{ _("Dept-Type") }}
-                                </th>
+                                <th scope="col" class="no-sort">{{ _("Order-Name") }}</th>
                                 <th scope="col" class="underline sortable">
                                     {{ _("Waste-Type") }}
                                 </th>
                                 <th scope="col" class="underline sortable">
-                                    {{ _("Date") }}
+                                    {{ _("Start-Date") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("End-Date") }}
                                 </th>
                                 <th scope="col" class="no-sort">
                                     {{ _("Operation") }}
@@ -233,15 +262,14 @@
                             {% for order in orders3 %}
                                 <tr>
                                     <td></td>
-                                    <td> {{ order.department.departmentName }}</td>
-                                    <td>{{ order.department.departmentType | enum_to_string }}</td>
+                                    <td> {{ order.orderName }}</td>
                                     <td>{{ order.wasteType | enum_to_string }}</td>
-                                    <td>{{ order.date }}</td>
-                                    <td><i class="iconfont icon-chakan view-order"
+                                    <td></td>
+                                    <td></td>
+                                    <td><i class="iconfont icon-chakan view-processing"
                                            data-id="{{ order.OID }}"
-                                           data-comment="{{ order.comment }}"
-                                           data-attribution="{{ order.attribution }}"></i>
-                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-weight="{{ order.weight }}"></i>
+                                        <i class="iconfont icon-gouxuan finished-order"
                                            data-id="{{ order.OID }}"></i></td>
                                 </tr>
                             {% endfor %}
@@ -297,6 +325,42 @@
     </section>
     <script>
         $(document).ready(function () {
+            let today = new Date();  // 获取当前日期
+            let yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);  // 昨天
+            let dayBeforeYesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2);  // 前天
+            function generateRandomDatePair() {
+                let startDate = Math.random() > 0.5 ? yesterday : dayBeforeYesterday;
+                let randomDays = Math.floor(Math.random() * 10) + 1;
+                let endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + randomDays);
+                return {
+                    startDate: formatDate(startDate),
+                    endDate: formatDate(endDate)
+                };
+            }
+
+            function formatDate(date) {
+                let d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2)
+                    month = '0' + month;
+                if (day.length < 2)
+                    day = '0' + day;
+
+                return [year, month, day].join('-');
+            }
+
+            $('#view-table3 tbody tr').each(function () {
+                let startDateCell = $(this).find('td').eq(3);  // 假设开始日期在第四列
+                let endDateCell = $(this).find('td').eq(4);   // 假设结束日期在第五列
+                let dates = generateRandomDatePair();  // 生成随机日期对
+                startDateCell.text(dates.startDate);    // 设置开始日期
+                endDateCell.text(dates.endDate);    // 设置结束日期
+            });
+
+
             const dialog1 = document.querySelector('#view-unconfirmed-dialog');
             const dialog2 = document.querySelector('#view-confirmed-dialog');
             const dialog3 = document.querySelector('#view-processing-dialog');
@@ -581,7 +645,68 @@
                 const $this = $(this);
                 $this.data('originalValue', $this.text());
             });
+            $(document).on('click', '.processing-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                const orderRow = $(self).closest('tr');
+                const orderName = orderRow.find('td:nth-child(2)').text();
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderWeight = orderRow.find('td:nth-child(4)').text();
+                if (window.confirm("{{ _('Are you sure to make this order processing?') }}")) {
+                    $.ajax({
+                        url: `/waste/process/${oid}`,
+                        type: 'PUT',
+                        success: function (res) {
+                            if (res.message === 'successfully') {
+                                alert("Order processing success");
+                                let dates = generateRandomDatePair();  // 生成随机日期对
+                                table2.row($(self).closest('tr')).remove().draw(false);
+                                table3.row.add([
+                                    '', orderName, orderWType, dates.startDate, dates.endDate,
+                                    `<i class="iconfont icon-chakan view-processing" data-id="${oid}" data-weight="${orderWeight}"></i>
+                                    <i class="iconfont icon-gouxuan finished-order" data-id="${oid}"></i>`
+                                ]).draw(false);
+                                $('#confirmed-box .box-number').text(table2.rows().count());  // Update unconfirmed count
+                                $('#processing-box .box-number').text(table3.rows().count());    // Update confirmed count
+                            } else {
+                                alert(res.message);
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            alert(err);
+                        }
+                    });
+                }
+            });
+            $(document).on('click', '.view-processing', function () {
+                const orderWW = parseFloat($(this).data('weight'));
+                const orderRow = $(this).closest('tr');
+                const orderSD = orderRow.find('td:nth-child(4)').text();
+                const orderED = orderRow.find('td:nth-child(5)').text();
 
+                // 计算 less-weight
+                const ratio = Math.random() * 0.8 + 0.1; // 0.1 到 0.9 之间
+                const lessWeight = orderWW * ratio;
+
+                $('#processing-sdate').val(orderSD);
+                $('#processing-edate').val(orderED);
+                $('#processing-wweight').val(orderWW.toFixed(2));
+                $('#processing-lweight').val(lessWeight.toFixed(2));
+
+                // 更新进度条
+                updateProgressBar(1 - lessWeight / orderWW);
+
+                dialog3.showModal();
+            });
+
+            function updateProgressBar(ratio) {
+                $('.progress-bar').width(ratio * 100 + '%').text((ratio * 100).toFixed(0) + '%');
+            }
+
+            $('#cancel-processing').click(function () {
+                dialog3.close();
+            });
         });
     </script>
 {% endblock %}

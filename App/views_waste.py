@@ -57,7 +57,7 @@ def confirm(OID):
         return jsonify({"err": "Order not found"}), 200
 
 
-@waste.route('/process/<OID>', methods=['POST'])
+@waste.route('/process/<OID>', methods=['PUT'])
 def process(OID):
     # data = request.get_json()
     # OID = data.get('OID')
@@ -83,7 +83,7 @@ def process(OID):
                 wasteStorage = WasteStorage.query.filter_by(wasteType=wasteType).first()
                 wasteStorage.currentCapacity = wasteStorage.currentCapacity - weight
                 db.session.commit()
-                return jsonify({"message": "Order will be in process"}), 200
+                return jsonify({"message": "successfully"}), 200
             else:
                 return jsonify({
                     "message": f"The capacity of this type ({wasteType}) is overload if add this order into process"}), 200
