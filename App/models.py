@@ -117,8 +117,8 @@ class WasteStorage(db.Model):  # 储存能力
     __tablename__ = 'wasteStorage'
     WSID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
-    maxCapacity = db.Column(db.Integer, nullable=False)  # 最大存储量
-    currentCapacity = db.Column(db.Integer, default=0, nullable=False)  # 当前存储量，默认为0
+    maxCapacity = db.Column(db.Float, nullable=False)  # 最大存储量
+    currentCapacity = db.Column(db.Float, default=0, nullable=False)  # 当前存储量，默认为0
 
     def __repr__(self):
         return f'<WasteStorage {self.wasteType} max:{self.maxCapacity} current:{self.currentCapacity}>'
@@ -128,8 +128,8 @@ class ProcessCapacity(db.Model):  # 处理能力
     __tablename__ = 'processCapacity'
     PCID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
-    maxCapacity = db.Column(db.Integer, nullable=False)  # 最大同时处理量
-    currentCapacity = db.Column(db.Integer, default=0, nullable=False)  # 当前处理量，默认为0
+    maxCapacity = db.Column(db.Float, nullable=False)  # 最大同时处理量
+    currentCapacity = db.Column(db.Float, default=0, nullable=False)  # 当前处理量，默认为0
 
     def __repr__(self):
         return f'<ProcessCapacity {self.wasteType} max:{self.maxCapacity} current:{self.currentCapacity}>'
@@ -144,7 +144,7 @@ class Order(db.Model):  # 工单
     wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
     weight = db.Column(db.Integer, nullable=False)  # 废弃物重量
     attribution = db.Column(db.Text, nullable=False)  # 属性
-    multiplier = db.Column(db.Double, nullable=False, default=1.0)
+    multiplier = db.Column(db.Float, nullable=False, default=1.0)
     comment = db.Column(db.Text, nullable=True)  # 备注
     orderStatus = Column(SQLEnum(OrderStatus), nullable=False)  # 处理状态
     department_id = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=True)
