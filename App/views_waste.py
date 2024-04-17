@@ -58,6 +58,7 @@ def confirm(OID):
         if currentCapacity + weight <= maxCapacity:
             # 能力之内才能储存
             order.orderStatus = OrderStatus.CONFIRM
+            wasteStorage.currentCapacity = wasteStorage.currentCapacity + weight
             db.session.commit()
             return jsonify({"message": "Order confirmed successfully"}), 200
         else:
@@ -91,6 +92,7 @@ def process(OID):
 
             if currentCapacity + weight * multiplier <= maxCapacity:  # 增加处理能力占用倍率
                 order.orderStatus = OrderStatus.PROCESSING
+                processCapacity.currentCapacity = processCapacity.currentCapacity + weight
                 db.session.commit()
                 return jsonify({"message": "Order will be in process"}), 200
             else:
