@@ -11,8 +11,16 @@ from .views_utils import *
 waste = Blueprint('waste', __name__, url_prefix='/waste')  # waste is name of blueprint
 
 
-@waste.route('/')
+@waste.route('/dashboard')
 def index():
+    process_capacity = ProcessCapacity.query.all()
+    waste_storage = WasteStorage.query.all()
+    print(waste_storage)
+    return render_template('waste/capacity_dashboard.html', process_capacity=process_capacity, waste_storage=waste_storage)
+
+
+@waste.route('/approval')
+def approval():
     # 状态统计
     status_counts = {
         'unconfirmed_count': Order.query.filter_by(orderStatus='UNCONFIRMED').count(),
