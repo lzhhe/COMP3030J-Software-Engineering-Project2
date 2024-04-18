@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-05 19:53+0800\n"
+"POT-Creation-Date: 2024-04-18 21:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,11 +65,14 @@ msgstr ""
 msgid "Individual user"
 msgstr ""
 
-#: templates/login.html:50
+#: templates/department/edit_order.html:28 templates/login.html:50
+#: templates/waste/approval_order.html:74
+#: templates/waste/approval_order.html:104
+#: templates/waste/approval_order.html:128
 msgid "Cancel"
 msgstr ""
 
-#: templates/login.html:51
+#: templates/department/edit_order.html:29 templates/login.html:51
 msgid "Confirm"
 msgstr ""
 
@@ -600,6 +603,103 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+#: templates/department/edit_order.html:13
+#: templates/waste/approval_order.html:53
+#: templates/waste/approval_order.html:82
+msgid "Name:"
+msgstr ""
+
+#: templates/department/edit_order.html:16
+#: templates/waste/approval_order.html:61
+#: templates/waste/approval_order.html:90
+msgid "Date:"
+msgstr ""
+
+#: templates/department/edit_order.html:18
+#: templates/waste/approval_order.html:63
+#: templates/waste/approval_order.html:92
+msgid "Weight:"
+msgstr ""
+
+#: templates/department/edit_order.html:20
+#: templates/waste/approval_order.html:65
+#: templates/waste/approval_order.html:96
+msgid "Attribution:"
+msgstr ""
+
+#: templates/department/edit_order.html:22
+#: templates/waste/approval_order.html:67
+#: templates/waste/approval_order.html:98
+msgid "Comment:"
+msgstr ""
+
+#: templates/department/edit_order.html:40
+#: templates/department/view_order.html:51
+#: templates/waste/approval_order.html:174
+msgid "Tables"
+msgstr ""
+
+#: templates/department/edit_order.html:49
+msgid "OID"
+msgstr ""
+
+#: templates/department/edit_order.html:51
+#: templates/department/view_order.html:84
+msgid "Name"
+msgstr ""
+
+#: templates/department/edit_order.html:53
+#: templates/department/view_order.html:86
+#: templates/waste/approval_order.html:189
+#: templates/waste/approval_order.html:324
+msgid "Date"
+msgstr ""
+
+#: templates/department/edit_order.html:56
+#: templates/department/view_order.html:89
+msgid "Type"
+msgstr ""
+
+#: templates/department/edit_order.html:59
+#: templates/department/view_order.html:92
+#: templates/waste/approval_order.html:232
+msgid "Weight"
+msgstr ""
+
+#: templates/department/edit_order.html:62
+#: templates/waste/approval_order.html:192
+#: templates/waste/approval_order.html:238
+#: templates/waste/approval_order.html:285
+#: templates/waste/approval_order.html:327
+msgid "Operation"
+msgstr ""
+
+#: templates/department/edit_order.html:119
+msgid "Are you sure to delete this order?"
+msgstr ""
+
+#: templates/department/edit_order.html:125
+msgid "Delete success"
+msgstr ""
+
+#: templates/department/edit_order.html:128
+#: templates/department/edit_order.html:133
+msgid "Delete failed"
+msgstr ""
+
+#: templates/department/edit_order.html:172
+msgid "Please fill in all required fields"
+msgstr ""
+
+#: templates/department/edit_order.html:189
+msgid "Edit success"
+msgstr ""
+
+#: templates/department/edit_order.html:203
+#: templates/department/edit_order.html:208
+msgid "Edit failed"
+msgstr ""
+
 #: templates/department/index.html:21
 msgid "Edit"
 msgstr ""
@@ -612,59 +712,177 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: templates/department/index.html:35
+#: templates/department/index.html:35 templates/waste/index.html:32
 msgid "Logout"
 msgstr ""
 
 #: templates/department/view_order.html:17
+#: templates/waste/approval_order.html:140
 msgid "Total statistics"
 msgstr ""
 
 #: templates/department/view_order.html:23
 #: templates/department/view_order.html:58
+#: templates/waste/approval_order.html:146
 msgid "Unconfirmed"
 msgstr ""
 
 #: templates/department/view_order.html:29
 #: templates/department/view_order.html:63
+#: templates/waste/approval_order.html:152
 msgid "Confirmed"
 msgstr ""
 
 #: templates/department/view_order.html:35
 #: templates/department/view_order.html:68
+#: templates/waste/approval_order.html:158
 msgid "Processing"
 msgstr ""
 
 #: templates/department/view_order.html:41
 #: templates/department/view_order.html:73
+#: templates/waste/approval_order.html:164
 msgid "Finished"
 msgstr ""
 
-#: templates/department/view_order.html:51
-msgid "Tables"
-msgstr ""
-
-#: templates/department/view_order.html:82
+#: templates/department/view_order.html:83
+#: templates/waste/approval_order.html:182
+#: templates/waste/approval_order.html:226
+#: templates/waste/approval_order.html:273
+#: templates/waste/approval_order.html:315
 msgid "Serial num"
 msgstr ""
 
-#: templates/department/view_order.html:83
-msgid "Name"
-msgstr ""
-
-#: templates/department/view_order.html:86
-msgid "Date"
-msgstr ""
-
-#: templates/department/view_order.html:93
-msgid "Type"
-msgstr ""
-
-#: templates/department/view_order.html:100
-msgid "Weight"
-msgstr ""
-
-#: templates/department/view_order.html:107
+#: templates/department/view_order.html:95
 msgid "Status"
+msgstr ""
+
+#: templates/waste/approval_order.html:55
+#: templates/waste/approval_order.html:84
+msgid "Dept-Name:"
+msgstr ""
+
+#: templates/waste/approval_order.html:57
+#: templates/waste/approval_order.html:86
+msgid "Dept-Type:"
+msgstr ""
+
+#: templates/waste/approval_order.html:59
+#: templates/waste/approval_order.html:88
+msgid "Waste-Type:"
+msgstr ""
+
+#: templates/waste/approval_order.html:94
+msgid "Multiplier:"
+msgstr ""
+
+#: templates/waste/approval_order.html:111
+msgid "Start-Date:"
+msgstr ""
+
+#: templates/waste/approval_order.html:113
+msgid "End-Date:"
+msgstr ""
+
+#: templates/waste/approval_order.html:115
+msgid "Whole-Weight:"
+msgstr ""
+
+#: templates/waste/approval_order.html:117
+msgid "Less-Weight:"
+msgstr ""
+
+#: templates/waste/approval_order.html:119
+msgid "Accomplish-Rate:"
+msgstr ""
+
+#: templates/waste/approval_order.html:183
+#: templates/waste/approval_order.html:227
+#: templates/waste/approval_order.html:274
+msgid "Order-Name"
+msgstr ""
+
+#: templates/waste/approval_order.html:184
+#: templates/waste/approval_order.html:316
+msgid "Dept-Name"
+msgstr ""
+
+#: templates/waste/approval_order.html:186
+#: templates/waste/approval_order.html:229
+#: templates/waste/approval_order.html:276
+#: templates/waste/approval_order.html:321
+msgid "Waste-Type"
+msgstr ""
+
+#: templates/waste/approval_order.html:235
+msgid "Multiple"
+msgstr ""
+
+#: templates/waste/approval_order.html:279
+msgid "Start-Date"
+msgstr ""
+
+#: templates/waste/approval_order.html:282
+msgid "End-Date"
+msgstr ""
+
+#: templates/waste/approval_order.html:318
+msgid "Dept-Type"
+msgstr ""
+
+#: templates/waste/approval_order.html:599
+msgid "Are you sure to confirm this order?"
+msgstr ""
+
+#: templates/waste/approval_order.html:605
+msgid "Confirm success"
+msgstr ""
+
+#: templates/waste/approval_order.html:698
+msgid "Are you sure to make this order processing?"
+msgstr ""
+
+#: templates/waste/capacity_dashboard.html:45
+msgid "Waste Storage"
+msgstr ""
+
+#: templates/waste/capacity_dashboard.html:47
+msgid "Processing Capacity"
+msgstr ""
+
+#: templates/waste/capacity_dashboard.html:55
+msgid "Capacity Dashboard"
+msgstr ""
+
+#: templates/waste/index.html:18
+msgid "Capacity"
+msgstr ""
+
+#: templates/waste/index.html:22
+msgid "Approval"
+msgstr ""
+
+#: templates/waste/index.html:26
+msgid "Ratio"
+msgstr ""
+
+#: templates/waste/ratio_order.html:81
+msgid "Statue Ratio"
+msgstr ""
+
+#: templates/waste/ratio_order.html:85
+msgid "Waste Weight Ratio"
+msgstr ""
+
+#: templates/waste/ratio_order.html:91
+msgid "Department Order Ratio"
+msgstr ""
+
+#: templates/waste/ratio_order.html:95
+msgid "Department Waste Weight Ratio"
+msgstr ""
+
+#: templates/waste/ratio_order.html:105
+msgid "Ratio Dashboard"
 msgstr ""
 

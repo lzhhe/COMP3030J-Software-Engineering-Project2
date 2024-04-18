@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-05 19:53+0800\n"
+"POT-Creation-Date: 2024-04-18 21:29+0800\n"
 "PO-Revision-Date: 2024-03-27 14:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -68,11 +68,14 @@ msgstr "独立个体"
 msgid "Individual user"
 msgstr "独立个体"
 
-#: templates/login.html:50
+#: templates/department/edit_order.html:28 templates/login.html:50
+#: templates/waste/approval_order.html:74
+#: templates/waste/approval_order.html:104
+#: templates/waste/approval_order.html:128
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/login.html:51
+#: templates/department/edit_order.html:29 templates/login.html:51
 msgid "Confirm"
 msgstr "确认"
 
@@ -608,6 +611,112 @@ msgstr "工单备注："
 msgid "Description"
 msgstr "废品描述"
 
+#: templates/department/edit_order.html:13
+#: templates/waste/approval_order.html:53
+#: templates/waste/approval_order.html:82
+#, fuzzy
+msgid "Name:"
+msgstr "工单名"
+
+#: templates/department/edit_order.html:16
+#: templates/waste/approval_order.html:61
+#: templates/waste/approval_order.html:90
+#, fuzzy
+msgid "Date:"
+msgstr "日期"
+
+#: templates/department/edit_order.html:18
+#: templates/waste/approval_order.html:63
+#: templates/waste/approval_order.html:92
+#, fuzzy
+msgid "Weight:"
+msgstr "重量："
+
+#: templates/department/edit_order.html:20
+#: templates/waste/approval_order.html:65
+#: templates/waste/approval_order.html:96
+#, fuzzy
+msgid "Attribution:"
+msgstr "属性："
+
+#: templates/department/edit_order.html:22
+#: templates/waste/approval_order.html:67
+#: templates/waste/approval_order.html:98
+#, fuzzy
+msgid "Comment:"
+msgstr "工单备注："
+
+#: templates/department/edit_order.html:40
+#: templates/department/view_order.html:51
+#: templates/waste/approval_order.html:174
+msgid "Tables"
+msgstr "工单列表"
+
+#: templates/department/edit_order.html:49
+msgid "OID"
+msgstr "工单编号"
+
+#: templates/department/edit_order.html:51
+#: templates/department/view_order.html:84
+#, fuzzy
+msgid "Name"
+msgstr "工单名"
+
+#: templates/department/edit_order.html:53
+#: templates/department/view_order.html:86
+#: templates/waste/approval_order.html:189
+#: templates/waste/approval_order.html:324
+#, fuzzy
+msgid "Date"
+msgstr "日期"
+
+#: templates/department/edit_order.html:56
+#: templates/department/view_order.html:89
+msgid "Type"
+msgstr "类型"
+
+#: templates/department/edit_order.html:59
+#: templates/department/view_order.html:92
+#: templates/waste/approval_order.html:232
+#, fuzzy
+msgid "Weight"
+msgstr "重量"
+
+#: templates/department/edit_order.html:62
+#: templates/waste/approval_order.html:192
+#: templates/waste/approval_order.html:238
+#: templates/waste/approval_order.html:285
+#: templates/waste/approval_order.html:327
+#, fuzzy
+msgid "Operation"
+msgstr "操作"
+
+#: templates/department/edit_order.html:119
+msgid "Are you sure to delete this order?"
+msgstr "你确定删除这个工单吗？"
+
+#: templates/department/edit_order.html:125
+msgid "Delete success"
+msgstr "删除成功"
+
+#: templates/department/edit_order.html:128
+#: templates/department/edit_order.html:133
+msgid "Delete failed"
+msgstr "删除失败"
+
+#: templates/department/edit_order.html:172
+msgid "Please fill in all required fields"
+msgstr "请填写所有必填项"
+
+#: templates/department/edit_order.html:189
+msgid "Edit success"
+msgstr "修改成功"
+
+#: templates/department/edit_order.html:203
+#: templates/department/edit_order.html:208
+msgid "Edit failed"
+msgstr "修改失败"
+
 #: templates/department/index.html:21
 msgid "Edit"
 msgstr "编辑工单"
@@ -620,66 +729,198 @@ msgstr "历史工单"
 msgid "Dashboard"
 msgstr "数据统计"
 
-#: templates/department/index.html:35
+#: templates/department/index.html:35 templates/waste/index.html:32
 msgid "Logout"
 msgstr "退出"
 
 #: templates/department/view_order.html:17
+#: templates/waste/approval_order.html:140
 msgid "Total statistics"
 msgstr "总数据统计"
 
 #: templates/department/view_order.html:23
 #: templates/department/view_order.html:58
+#: templates/waste/approval_order.html:146
 #, fuzzy
 msgid "Unconfirmed"
 msgstr "未确认"
 
 #: templates/department/view_order.html:29
 #: templates/department/view_order.html:63
+#: templates/waste/approval_order.html:152
 #, fuzzy
 msgid "Confirmed"
 msgstr "已确认"
 
 #: templates/department/view_order.html:35
 #: templates/department/view_order.html:68
+#: templates/waste/approval_order.html:158
 msgid "Processing"
 msgstr "处理中"
 
 #: templates/department/view_order.html:41
 #: templates/department/view_order.html:73
+#: templates/waste/approval_order.html:164
 msgid "Finished"
 msgstr "已完成"
 
-#: templates/department/view_order.html:51
-msgid "Tables"
-msgstr "工单列表"
-
-#: templates/department/view_order.html:82
+#: templates/department/view_order.html:83
+#: templates/waste/approval_order.html:182
+#: templates/waste/approval_order.html:226
+#: templates/waste/approval_order.html:273
+#: templates/waste/approval_order.html:315
 msgid "Serial num"
 msgstr "序号"
 
-#: templates/department/view_order.html:83
-#, fuzzy
-msgid "Name"
-msgstr "工单名"
-
-#: templates/department/view_order.html:86
-#, fuzzy
-msgid "Date"
-msgstr "日期"
-
-#: templates/department/view_order.html:93
-msgid "Type"
-msgstr "类型"
-
-#: templates/department/view_order.html:100
-#, fuzzy
-msgid "Weight"
-msgstr "重量"
-
-#: templates/department/view_order.html:107
+#: templates/department/view_order.html:95
 msgid "Status"
 msgstr "处理状态"
+
+#: templates/waste/approval_order.html:55
+#: templates/waste/approval_order.html:84
+#, fuzzy
+msgid "Dept-Name:"
+msgstr "部门名称"
+
+#: templates/waste/approval_order.html:57
+#: templates/waste/approval_order.html:86
+msgid "Dept-Type:"
+msgstr "部门类型"
+
+#: templates/waste/approval_order.html:59
+#: templates/waste/approval_order.html:88
+#, fuzzy
+msgid "Waste-Type:"
+msgstr "废物类型"
+
+#: templates/waste/approval_order.html:94
+msgid "Multiplier:"
+msgstr "倍率"
+
+#: templates/waste/approval_order.html:111
+msgid "Start-Date:"
+msgstr "开始时间"
+
+#: templates/waste/approval_order.html:113
+#, fuzzy
+msgid "End-Date:"
+msgstr "结束时间"
+
+#: templates/waste/approval_order.html:115
+#, fuzzy
+msgid "Whole-Weight:"
+msgstr "总重量："
+
+#: templates/waste/approval_order.html:117
+#, fuzzy
+msgid "Less-Weight:"
+msgstr "剩余重量："
+
+#: templates/waste/approval_order.html:119
+msgid "Accomplish-Rate:"
+msgstr "完成率："
+
+#: templates/waste/approval_order.html:183
+#: templates/waste/approval_order.html:227
+#: templates/waste/approval_order.html:274
+#, fuzzy
+msgid "Order-Name"
+msgstr "工单名："
+
+#: templates/waste/approval_order.html:184
+#: templates/waste/approval_order.html:316
+#, fuzzy
+msgid "Dept-Name"
+msgstr "部门名称"
+
+#: templates/waste/approval_order.html:186
+#: templates/waste/approval_order.html:229
+#: templates/waste/approval_order.html:276
+#: templates/waste/approval_order.html:321
+#, fuzzy
+msgid "Waste-Type"
+msgstr "废物类型"
+
+#: templates/waste/approval_order.html:235
+msgid "Multiple"
+msgstr "倍率"
+
+#: templates/waste/approval_order.html:279
+msgid "Start-Date"
+msgstr "开始时间"
+
+#: templates/waste/approval_order.html:282
+#, fuzzy
+msgid "End-Date"
+msgstr "结束日期"
+
+#: templates/waste/approval_order.html:318
+#, fuzzy
+msgid "Dept-Type"
+msgstr "部门类型"
+
+#: templates/waste/approval_order.html:599
+msgid "Are you sure to confirm this order?"
+msgstr "你确定确认这个工单吗？"
+
+#: templates/waste/approval_order.html:605
+#, fuzzy
+msgid "Confirm success"
+msgstr "已确认"
+
+#: templates/waste/approval_order.html:698
+msgid "Are you sure to make this order processing?"
+msgstr "你确定处理这个工单吗"
+
+#: templates/waste/capacity_dashboard.html:45
+#, fuzzy
+msgid "Waste Storage"
+msgstr "废物储存库"
+
+#: templates/waste/capacity_dashboard.html:47
+#, fuzzy
+msgid "Processing Capacity"
+msgstr "处理仓"
+
+#: templates/waste/capacity_dashboard.html:55
+#, fuzzy
+msgid "Capacity Dashboard"
+msgstr "容量统计仪表盘"
+
+#: templates/waste/index.html:18
+msgid "Capacity"
+msgstr "容量仪表盘"
+
+#: templates/waste/index.html:22
+msgid "Approval"
+msgstr "审批工单"
+
+#: templates/waste/index.html:26
+msgid "Ratio"
+msgstr "比率仪表盘"
+
+#: templates/waste/ratio_order.html:81
+msgid "Statue Ratio"
+msgstr "状态比率"
+
+#: templates/waste/ratio_order.html:85
+#, fuzzy
+msgid "Waste Weight Ratio"
+msgstr "废物重量比率"
+
+#: templates/waste/ratio_order.html:91
+#, fuzzy
+msgid "Department Order Ratio"
+msgstr "部门工单比率"
+
+#: templates/waste/ratio_order.html:95
+msgid "Department Waste Weight Ratio"
+msgstr "部门废物重量比率"
+
+#: templates/waste/ratio_order.html:105
+#, fuzzy
+msgid "Ratio Dashboard"
+msgstr "比率仪表盘"
 
 #~ msgid "Login failed"
 #~ msgstr "登录失败"
