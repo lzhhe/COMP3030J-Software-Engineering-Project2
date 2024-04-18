@@ -3,19 +3,43 @@
     <link rel="stylesheet" href="../../static/css/department/edit_order.css">
     <link rel="stylesheet" href="../../static/css/department/view_order.css">
     <style>
-        .progress-container {
-            width: 100%;
-            background-color: #ddd;
+        #processing-wweight {
+            color: var(--skin4);
+            border: 2px solid var(--skin2);
         }
 
-        .progress-bar {
-            width: 0;
-            height: 20px;
-            background-color: #4CAF50;
-            text-align: center;
-            line-height: 20px;
-            color: white;
+        #processing-lweight {
+            color: var(--doing1);
+            border: 2px solid var(--doing2);
         }
+
+        #processing-accomplish {
+            color: var(--sky1);
+            border: 2px solid var(--sky3);
+        }
+
+        .progress-box {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--skin3), var(--done1), var(--todo1));; /* 背景色透明，通过JS设置渐变 */
+            border-radius: 5px;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: var(--progress-bar-background);
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            left: 0;
+            transition: left 1s ease-in-out; /* 平滑过渡动画 */
+        }
+
     </style>
 {% endblock %}
 {% block extra_js %}
@@ -92,10 +116,13 @@
                     <input type="number" id="processing-wweight" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Less-Weight:") }}
                     <input type="number" id="processing-lweight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Accomplish-Rate:") }}
+                    <input type="text" id="processing-accomplish" aria-label="Read-only input" readonly></label>
                 <input type="hidden" id="processing-id">
+
             </form>
-            <div class="progress-container">
-                <div class="progress-bar"></div>
+            <div class="progress-box">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
             <footer style="display: flex; justify-content: flex-end;">
                 <button id="cancel-processing" class="outline secondary"> {{ _("Cancel") }}</button>
@@ -325,6 +352,7 @@
     </section>
     <script>
         $(document).ready(function () {
+            const progressBar = $('#progress-bar');
             let today = new Date();  // 获取当前日期
             let yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);  // 昨天
             let dayBeforeYesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2);  // 前天
@@ -702,10 +730,15 @@
             });
 
             function updateProgressBar(ratio) {
-                $('.progress-bar').width(ratio * 100 + '%').text((ratio * 100).toFixed(0) + '%');
+                $('#processing-accomplish').val((ratio * 100).toFixed(2) + '%');
+                const percentage = ratio * 100;
+                requestAnimationFrame(function update() {
+                    progressBar.css('left', percentage + '%');
+                });
             }
 
             $('#cancel-processing').click(function () {
+                progressBar.css('left', '0');
                 dialog3.close();
             });
         });

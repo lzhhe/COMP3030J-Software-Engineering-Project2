@@ -162,6 +162,8 @@
     --context-menu-background1: rgba(255, 255, 255, 0.45);
     --context-menu-background2: rgba(255, 255, 255, 0.85);
 
+    --progress-bar-background: #DFE3EB;
+
 }
 
 :root[data-theme="dark"] {
@@ -317,4 +319,7 @@
 
     --context-menu-background1: rgba(10, 20, 28, 0.2);
     --context-menu-background2: rgba(10, 20, 28, 0.7);
+
+    --progress-bar-background: #202632;
+
 }
