@@ -122,14 +122,29 @@ def dashboard():
     today = datetime.now()
     seven_days_ago = today - timedelta(days=7)
     days_7_orders = {(seven_days_ago + timedelta(days=i)).strftime('%Y-%m-%d'): 0 for i in range(7)}
-    waste_types = {enum_to_string()}
 
     for order in orders:
         order_date = order.date_created.strftime('%Y-%m-%d')  # 格式化日期以匹配字典的键
         if order_date in days_7_orders:
             days_7_orders[order_date] += 1
+    wasteDict = {}
+    for type in types:
+        wasteDict[type] = [0, 0, 0, 0]
+    for order in orders:
+        wasteType = order.wasteType
+        orderStatus = order.orderStatus
+        if orderStatus == OrderStatus.UNCONFIRMED:
+            wasteDict[wasteType][0] = wasteDict[wasteType][0] + 1
+        elif orderStatus == OrderStatus.CONFIRM:
+            wasteDict[wasteType][1] = wasteDict[wasteType][1] + 1
+        elif orderStatus == OrderStatus.PROCESSING:
+            wasteDict[wasteType][2] = wasteDict[wasteType][2] + 1
+        elif orderStatus == OrderStatus.FINISHED:
+            wasteDict[wasteType][3] = wasteDict[wasteType][3] + 1
 
-    return render_template('department/dashboard.html', orders=orders, days_7_orders=days_7_orders)
+    print(wasteDict)
+
+    return render_template('department/dashboard.html', orders=orders, days_7_orders=days_7_orders, wasteDict=wasteDict)
 
 
 @department.route('/register', methods=['POST'])
