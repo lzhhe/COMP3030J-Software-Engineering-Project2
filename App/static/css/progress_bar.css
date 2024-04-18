@@ -1,8 +1,10 @@
 .progress-bar {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 0;
-    margin: 20px 10px;
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
     list-style: none;
     counter-reset: order;
 }
@@ -12,8 +14,8 @@
     flex: auto;
     display: flex;
     align-items: center;
-    color: var(--todo1);
 }
+
 
 .progress-bar > li:last-child {
     flex: none;
@@ -27,13 +29,14 @@
     border-radius: 50%;
     border: 1px solid;
     flex-shrink: 0;
+    margin-right: 0.5em;
 }
 
 .progress-bar > li:not(:last-child)::after {
     content: "";
     flex: 1;
     margin: 0 1em;
-    border-bottom: 1px solid;
+    border-bottom: 3px solid;
     opacity: 0.8;
 }
 
@@ -43,7 +46,11 @@
     border-color: var(--todo1);
 }
 
-.progress-bar > li.active::after, .progress-bar > li.active ~ li {
-    color: var(--t-color);
+.progress-bar > li.active {
+    color: var(--todo1);
+}
+
+.progress-bar > li.active::after{
+    color: var(--todo1);
 }
 
