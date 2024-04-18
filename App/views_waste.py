@@ -11,12 +11,12 @@ from .views_utils import *
 waste = Blueprint('waste', __name__, url_prefix='/waste')  # waste is name of blueprint
 
 
-@waste.route('/dashboard')
+@waste.route('/capacity')
 def index():
     process_capacity = ProcessCapacity.query.all()
     waste_storage = WasteStorage.query.all()
-    print(waste_storage)
-    return render_template('waste/capacity_dashboard.html', process_capacity=process_capacity, waste_storage=waste_storage)
+    return render_template('waste/capacity_dashboard.html', process_capacity=process_capacity,
+                           waste_storage=waste_storage)
 
 
 @waste.route('/approval')
@@ -34,6 +34,33 @@ def approval():
         queries[f'orders{i}'] = query.all()
 
     return render_template('waste/approval_order.html', **queries, **status_counts)
+
+
+@waste.route('/ratio')
+def ratio():
+    # 所有的订单
+    allOrders = Order.query.all()
+    unconfirmed_orders = Order.query.filter_by(orderStatus='UNCONFIRMED').all()
+    confirmed_orders = Order.query.filter_by(orderStatus='CONFIRM').all()
+    processing_orders = Order.query.filter_by(orderStatus='PROCESSING').all()
+    finished_orders = Order.query.filter_by(orderStatus='FINISHED').all()
+    nums = {
+        'unconfirmed': len(unconfirmed_orders),
+        'confirmed': len(confirmed_orders),
+        'processing': len(processing_orders),
+        'finished': len(finished_orders)
+    }
+    waste_weights = {enum_to_string(waste_type): 0 for waste_type in list(WasteType)}
+    dept_orders = {enum_to_string(dept_type): 0 for dept_type in list(DepartmentType)}
+    dept_weights = {enum_to_string(dept_type): 0 for dept_type in list(DepartmentType)}
+    for order in allOrders:
+        if enum_to_string(order.wasteType) in waste_weights:
+            waste_weights[enum_to_string(order.wasteType)] += order.weight
+        if enum_to_string(order.department.departmentType) in dept_orders:
+            dept_orders[enum_to_string(order.department.departmentType)] += 1
+            dept_weights[enum_to_string(order.department.departmentType)] += order.weight
+    return render_template('waste/ratio_order.html', nums=nums, waste_weights=waste_weights,
+                           dept_weights=dept_weights, dept_orders=dept_orders)
 
 
 # 工单处理相关
