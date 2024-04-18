@@ -113,7 +113,23 @@ def history():
 
 @department.route('/dashboard')
 def dashboard():
-    return render_template('department/dashboard.html')
+    user = g.user
+    department = user.department
+    did = department.DID
+    query = Order.query.filter_by(department_id=did)
+    types = Waste.query.filter_by(wasteDepartment=department.departmentType).all()
+    orders = query.all()
+    today = datetime.now()
+    seven_days_ago = today - timedelta(days=7)
+    days_7_orders = {(seven_days_ago + timedelta(days=i)).strftime('%Y-%m-%d'): 0 for i in range(7)}
+    waste_types = {enum_to_string()}
+
+    for order in orders:
+        order_date = order.date_created.strftime('%Y-%m-%d')  # 格式化日期以匹配字典的键
+        if order_date in days_7_orders:
+            days_7_orders[order_date] += 1
+
+    return render_template('department/dashboard.html', orders=orders, days_7_orders=days_7_orders)
 
 
 @department.route('/register', methods=['POST'])
