@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4488647 */
-  src: url('iconfont.woff2?t=1713247568192') format('woff2'),
-       url('iconfont.woff?t=1713247568192') format('woff'),
-       url('iconfont.ttf?t=1713247568192') format('truetype');
+  src: url('iconfont.woff2?t=1713511552282') format('woff2'),
+       url('iconfont.woff?t=1713511552282') format('woff'),
+       url('iconfont.ttf?t=1713511552282') format('truetype');
 }
 
 .iconfont {
@@ -69,7 +69,7 @@
   content: "\e6fd";
 }
 
-.icon-shiyanshiyiqi:before {
+.icon-LABORATORY:before {
   content: "\e6fe";
 }
 
@@ -77,7 +77,7 @@
   content: "\e6ff";
 }
 
-.icon-yiqiyibiao:before {
+.icon-MAINTENANCE:before {
   content: "\e700";
 }
 
@@ -89,23 +89,23 @@
   content: "\e605";
 }
 
-.icon-shebeiweihuguanli:before {
+.icon-EQUIPMENT_MANUFACTURING:before {
   content: "\e628";
 }
 
-.icon-duoyanghuacailiao:before {
+.icon-COMPOSITE_MATERIAL:before {
   content: "\e60b";
 }
 
-.icon-shujuzhongxin:before {
+.icon-DATA_CENTER:before {
   content: "\e612";
 }
 
-.icon-caikuangyejin:before {
+.icon-METALLURGY:before {
   content: "\e609";
 }
 
-.icon-xinnengyuan:before {
+.icon-NEW_ENERGY:before {
   content: "\e60c";
 }
 
@@ -113,7 +113,7 @@
   content: "\e6fa";
 }
 
-.icon-gongyezidonghua:before {
+.icon-AUTOMATION_SYSTEM:before {
   content: "\e64d";
 }
 
@@ -337,7 +337,7 @@
   content: "\e6e2";
 }
 
-.icon-diannaobangong:before {
+.icon-OFFICE:before {
   content: "\e6e3";
 }
 

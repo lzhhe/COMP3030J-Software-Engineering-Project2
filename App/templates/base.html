@@ -30,6 +30,20 @@
         .icon-dark {
             filter: invert(1) hue-rotate(180deg);
         }
+
+        details.dropdown li a {
+            display: flex;
+            flex-direction: row;
+        }
+
+        details.dropdown li a i {
+            display: inline;
+        }
+
+        details.dropdown li:hover i,
+        details.dropdown li:hover span {
+            color: var(--primary-color);
+        }
     </style>
     {% block extra_css %}{% endblock %}
     <title>{% block title %}Base{% endblock %}</title>

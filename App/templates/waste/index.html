@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Waste{% endblock %}
 {% block extra_css %}{% endblock %}
 {% block extra_js %}{% endblock %}
+{% block title %}Waste{% endblock %}
 {% block navbar %}
     <nav>
         <div class="logo-name">
@@ -35,4 +35,84 @@
             {% include 'switch.html' %}
         </div>
     </nav>
+
+    <dialog class="pico" id="createdept" style="height: 400px;">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label for="dept-name">{{ _("Dept-Name:") }}
+                    <input type="text" id="dept-name" name="dept-name" required></label>
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-dept" class="outline secondary"> {{ _("Cancel") }}</button>
+                <button id="confirm-dept" class="outline" style="margin-left: 10px;">{{ _("Confirm") }}</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <dialog class="pico" id="createwaste" style="overflow-x: hidden;">
+        <article>
+            <form method="dialog" class="form-edit">
+                <details class="pico dropdown" data-value="">
+                    <summary>{{ _("Please choose dept: ") }}</summary>
+                    <ul>
+                        {% for dept in all_departments %}
+                            <li data-value="{{ dept }}">
+                                <a href="#">
+                                    <i class="iconfont icon-{{ dept.name }}"></i>
+                                    <span>{{ dept|enum_to_string }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                <label for="waste-name">{{ _("Waste-Type:") }}
+                    <input type="text" id="waste-name" name="waste-name" required></label>
+                <label for="waste-storage">{{ _("Waste Storage:") }}
+                    <input type="number" id="waste-storage" name="waste-storage" required></label>
+                <label for="waste-process">{{ _("Process Capacity:") }}
+                    <input type="number" id="waste-process" name="waste-process" required></label>
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-waste" class="outline secondary"> {{ _("Cancel") }}</button>
+                <button id="confirm-waste" class="outline" style="margin-left: 10px;">{{ _("Confirm") }}</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <script>
+        $(document).ready(function () {
+            const dialogDept = document.querySelector('#createdept');
+            const dialogWaste = document.querySelector('#createwaste');
+            const cancelDept = document.querySelector('#cancel-dept');
+            const confirmDept = document.querySelector('#confirm-dept');
+            const cancelWaste = document.querySelector('#cancel-waste');
+            const confirmWaste = document.querySelector('#confirm-waste');
+
+            const createDeptButton = document.querySelector('#create-dept');
+            const createWasteButton = document.querySelector('#create-waste');
+
+            createDeptButton.addEventListener('click', () => {
+                dialogDept.showModal();
+                console.log('create dept');
+            });
+
+            createWasteButton.addEventListener('click', () => {
+                dialogWaste.showModal();
+            });
+
+            cancelDept.addEventListener('click', () => {
+                dialogDept.close();
+            });
+
+            cancelWaste.addEventListener('click', () => {
+                dialogWaste.close();
+            });
+            $('.dropdown li').click(function () {
+                const spanText = $(this).find('span').text();
+                const details = $(this).closest('.dropdown');
+                details.find('summary').text(spanText);
+                details.data('value', spanText);
+            });
+
+        });
+    </script>
 {% endblock %}
+

@@ -7,15 +7,23 @@
         </label>
     </div>
     {% if user %}
-        <b>Welcome</b>
+        {% set status = user.status|enum_to_string %}
+        {% if status == 'Waste Manager' %}
+            <div class="pico" role="group">
+                <button class="secondary" id="create-dept">Dept+</button>
+                <button class="secondary" id="create-waste">Waste+</button>
+            </div>
+        {% endif %}
         <div class="user-box">
             <div class="user-info">
                 <p class="user-name">{{ user.username }}</p>
                 <p class="user-email">{{ user.email }}</p>
-                {% if department %}
+                {% if status == 'Department Manager' %}
                     <p class="user-department" data-did="{{ departmentDID }}">{{ department }}</p>
                 {% endif %}
             </div>
         </div>
+
+
     {% endif %}
 </div>

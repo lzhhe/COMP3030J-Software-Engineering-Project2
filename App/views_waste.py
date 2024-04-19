@@ -15,8 +15,11 @@ waste = Blueprint('waste', __name__, url_prefix='/waste')  # waste is name of bl
 def index():
     process_capacity = ProcessCapacity.query.all()
     waste_storage = WasteStorage.query.all()
+    all_departments = []
+    for d in list(DepartmentType):
+        all_departments.append(d)
     return render_template('waste/capacity_dashboard.html', process_capacity=process_capacity,
-                           waste_storage=waste_storage)
+                           waste_storage=waste_storage, all_departments=all_departments)
 
 
 @waste.route('/approval')
@@ -32,8 +35,11 @@ def approval():
     for i, status in enumerate(['UNCONFIRMED', 'CONFIRM', 'PROCESSING', 'FINISHED'], start=1):
         query = Order.query.filter_by(orderStatus=status)
         queries[f'orders{i}'] = query.all()
+    all_departments = []
+    for d in list(DepartmentType):
+        all_departments.append(d)
 
-    return render_template('waste/approval_order.html', **queries, **status_counts)
+    return render_template('waste/approval_order.html', **queries, **status_counts, all_departments=all_departments)
 
 
 @waste.route('/ratio')
@@ -59,8 +65,12 @@ def ratio():
         if enum_to_string(order.department.departmentType) in dept_orders:
             dept_orders[enum_to_string(order.department.departmentType)] += 1
             dept_weights[enum_to_string(order.department.departmentType)] += order.weight
+    all_departments = []
+    for d in list(DepartmentType):
+        all_departments.append(d)
+
     return render_template('waste/ratio_order.html', nums=nums, waste_weights=waste_weights,
-                           dept_weights=dept_weights, dept_orders=dept_orders)
+                           dept_weights=dept_weights, dept_orders=dept_orders, all_departments=all_departments)
 
 
 # 工单处理相关
