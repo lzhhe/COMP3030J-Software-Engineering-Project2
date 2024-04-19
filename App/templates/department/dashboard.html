@@ -1,10 +1,181 @@
 {% extends 'department/index.html' %}
-{% block extra_css %} {% endblock %}
-{% block extra_js %} {% endblock %}
-{% block title %}Create Order{% endblock %}
+{% block extra_css %}
+    <style>
+        .dashboard .content {
+            grid-area: content;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .ratio-container {
+            display: flex;
+            justify-content: space-around; /* 调整为 space-around 更好地分布空间 */
+            flex-wrap: wrap; /* 允许容器内的元素换行 */
+        }
+
+        .chart-container {
+            flex: 1 1 300px; /* 修改这里的 300px 为你希望的最大宽度 */
+            margin: 10px; /* 保持外边距，避免图表相互挤压 */
+            max-width: 100%; /* 确保在小屏幕上能自适应 */
+            display: flex; /* 添加 flex 布局 */
+            flex-direction: column; /* 子元素垂直排列 */
+            align-items: center; /* 水平居中对齐子元素 */
+            justify-content: center; /* 垂直居中对齐子元素 */
+        }
+
+        canvas {
+            width: 60% !important; /* 使 canvas 元素填满容器 */
+            height: auto !important; /* 高度自适应 */
+        }
+
+        .chart-container h2 .pico select {
+            display: inline;
+            width: 100px;
+        }
+
+
+    </style>
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript">
+        let order_nums = [
+            {% for key, value in days_7_orders.items() %}
+                {
+                    "status": "{{ key }}",
+                    "count": {{ value }}
+                },
+            {% endfor %}
+        ];
+
+    </script>
+    <script src="../../static/js/utils/chart.js"></script>
+{% endblock %}
+{% block title %}Ratio Dashboard{% endblock %}
 
 {% block mainBody %}
+
     <section class="dashboard">
+        <div class="chart-container">
+            <div class="chart-title">
+                <h2>
+                    <form class="pico"><label><span id="chartTitleText">{{ _("7 days order") }}</span>
+                        <select id="daysSelect">
+                            <option value="7">7</option>
+                            <option value="3">3</option>
+                            <option value="14">14</option>
+                        </select></label></form>
+                </h2>
+            </div>
+            <canvas id="chart1"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-title"><h2>{{ _("types clarify") }}</h2></div>
+            <canvas id="chart2"></canvas>
+        </div>
+
         {% include "top.html" %}
+        <div class="content">
+            <div class="title-top">
+                <img src="../../static/image/dataicon/zhexian.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("Dashboard") }}</h2>
+            </div>
+            <div></div>
+        </div>
     </section>
+    <script>
+        $(document).ready(function () {
+            function updateChartData(numDays) {
+                const url = `dashboard/${numDays}`; // Flask路由对应的URL
+                $.ajax({
+                    url: url,
+                    method: 'PUT',
+                    success: function (newData) {
+                        $('.chart-title h2 label span').text(`${numDays} {{ _('days order') }}`);
+                        // 直接修改order_nums数组的内容
+                        order_nums.length = 0; // 清空数组
+                        for (let [key, value] of Object.entries(newData)) {
+                            order_nums.push({status: key, count: value}); // 添加新数据
+                        }
+                        // 更新图表数据
+                        chart1.data.labels = order_nums.map(item => item.status);
+                        chart1.data.datasets.forEach((dataset) => {
+                            dataset.data = order_nums.map(item => item.count);
+                        });
+                        // 刷新图表
+                        chart1.update();
+                    },
+                    error: function (error) {
+                        console.error("Error fetching data: ", error);
+                    }
+                });
+            }
+
+            const rootStyle = getComputedStyle(document.documentElement);
+
+            let color1 = rootStyle.getPropertyValue('--sky1').trim();
+            let color2 = rootStyle.getPropertyValue('--land3').trim();
+            let color3 = rootStyle.getPropertyValue('--skin2').trim();
+            let color4 = rootStyle.getPropertyValue('--land1').trim();
+
+            let c1 = rootStyle.getPropertyValue('--dept1').trim();
+            let c2 = rootStyle.getPropertyValue('--dept2').trim();
+            let c3 = rootStyle.getPropertyValue('--dept3').trim();
+            let c4 = rootStyle.getPropertyValue('--dept4').trim();
+            let c5 = rootStyle.getPropertyValue('--dept5').trim();
+            let c6 = rootStyle.getPropertyValue('--dept6').trim();
+            let c7 = rootStyle.getPropertyValue('--dept7').trim();
+            let c8 = rootStyle.getPropertyValue('--dept8').trim();
+            let c9 = rootStyle.getPropertyValue('--dept9').trim();
+            let c10 = rootStyle.getPropertyValue('--dept10').trim();
+            let c11 = rootStyle.getPropertyValue('--dept11').trim();
+            let c12 = rootStyle.getPropertyValue('--dept12').trim();
+
+            let ctx1 = document.getElementById('chart1').getContext('2d');
+            let ctx2 = document.getElementById('chart2').getContext('2d');
+// 准备图表数据
+            let orderData = {
+                labels: order_nums.map(item => item.status), // 使用日期作为标签
+                datasets: [{
+                    label: "{{ _('Order Count') }}",
+                    data: order_nums.map(item => item.count), // 使用订单数量作为数据点
+                    fill: false,
+                    borderColor: color1,
+                    tension: 0.1 // 使线条稍微平滑一点
+                }]
+            };
+            // 创建图表
+            let chart1 = new Chart(ctx1, {
+                type: 'line',
+                data: orderData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true, // Y轴从0开始,
+                            ticks: {
+                                stepSize: 1 // 设置步长为1
+                            }
+                        }
+                    },
+                    responsive: true, // 使图表响应式
+                    plugins: {
+                        legend: {
+                            position: 'top', // 图例位置
+                        }
+                    },
+                    animation: {
+                        duration: 1000, // 禁用动画效果
+                        easing: 'easeOutQuart' // 动画效果
+                    }
+                }
+            });
+            $('#daysSelect').on('change', function () {
+                let numDays = $(this).val();
+                updateChartData(numDays);
+            });
+        });
+    </script>
 {% endblock %}

@@ -10,6 +10,18 @@
             margin-top: 20px;
         }
 
+        .canchange:hover {
+            cursor: pointer;
+        }
+
+        .cannotchange {
+            color: var(--black-light-color);
+        }
+
+        .cannotchange:hover {
+            cursor: not-allowed;
+        }
+
         .ratio-container {
             display: flex;
             justify-content: space-around; /* 调整为 space-around 更好地分布空间 */
@@ -78,24 +90,27 @@
     <section class="dashboard">
         <div class="ratio-container">
             <div class="chart-container">
-                <div class="chart-title"><h2>{{ _("Statue Ratio") }}</h2></div>
-                <canvas id="chart1"></canvas>
+                <div class="chart-title canchange underline" id="change3"><h2>{{ _("Department Order Ratio") }}</h2>
+                </div>
+                <canvas id="chart3"></canvas>
             </div>
             <div class="chart-container">
-                <div class="chart-title"><h2>{{ _("Waste Weight Ratio") }}</h2></div>
-                <canvas id="chart2"></canvas>
+                <div class="chart-title canchange underline" id="change4">
+                    <h2>{{ _("Department Waste Weight Ratio") }}</h2></div>
+                <canvas id="chart4"></canvas>
             </div>
         </div>
         <div class="ratio-container">
             <div class="chart-container">
-                <div class="chart-title"><h2>{{ _("Department Order Ratio") }}</h2></div>
-                <canvas id="chart3"></canvas>
+                <div class="chart-title canchange underline" id="change1"><h2>{{ _("Statue Ratio") }}</h2></div>
+                <canvas id="chart1"></canvas>
             </div>
             <div class="chart-container">
-                <div class="chart-title"><h2>{{ _("Department Waste Weight Ratio") }}</h2></div>
-                <canvas id="chart4"></canvas>
+                <div class="chart-title cannotchange"><h2>{{ _("Waste Weight Ratio") }}</h2></div>
+                <canvas id="chart2"></canvas>
             </div>
         </div>
+
 
         {% include "top.html" %}
         <div class="content">
@@ -108,6 +123,15 @@
     </section>
     <script>
         $(document).ready(function () {
+            function toggleChartType(chart, currentType, data, pieOptions, barOptions) {
+                let newType = currentType === 'pie' ? 'bar' : 'pie';
+                let newOptions = currentType === 'pie' ? barOptions : pieOptions;
+                chart.config.type = newType;
+                chart.options = newOptions;
+                chart.update();
+            }
+
+
             const rootStyle = getComputedStyle(document.documentElement);
 
             let color1 = rootStyle.getPropertyValue('--sky1').trim();
@@ -133,56 +157,112 @@
             let ctx3 = document.getElementById('chart3').getContext('2d');
             let ctx4 = document.getElementById('chart4').getContext('2d');
 
+            let pieOptions = {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                let data = tooltipItem.dataset.data;
+                                let total = data.reduce((acc, value) => acc + value, 0);
+                                let label = data[tooltipItem.dataIndex];
+                                return ((label / total) * 100).toFixed(2) + '%';
+                            }
+                        }
+                    },
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
+            }
+
+            let barOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                responsive: true,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
+            }
+
+            let data1 = {
+                datasets: [{
+                    data: order_nums.map(item => item.count),
+                    backgroundColor: [color1, color2, color3, color4],
+                }],
+                labels: order_nums.map(item => item.status)
+            }
+
             let chart1 = new Chart(ctx1, {
                 type: 'pie',
-                data: {
-                    datasets: [{
-                        data: order_nums.map(item => item.count),
-                        backgroundColor: [color1, color2, color3, color4],
-                    }],
-                    labels: order_nums.map(item => item.status)
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    }
-                }
+                data: data1,
+                options: pieOptions
             });
+
+            let data2 = {
+                datasets: [{
+                    data: waste_weights.map(item => item.weight),
+                    backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
+                }],
+                labels: waste_weights.map(item => item.type)
+            }
 
             let chart2 = new Chart(ctx2, {
                 type: 'pie',
-                data: {
-                    datasets: [{
-                        data: waste_weights.map(item => item.weight),
-                        backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
-                    }],
-                    labels: waste_weights.map(item => item.type)
-                }
+                data: data2,
+                options: pieOptions
             });
 
+            let data3 = {
+                datasets: [{
+                    data: dept_orders.map(item => item.num),
+                    backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
+                }],
+                labels: dept_orders.map(item => item.type)
+            }
             let chart3 = new Chart(ctx3, {
                 type: 'pie',
-                data: {
-                    datasets: [{
-                        data: dept_orders.map(item => item.num),
-                        backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
-                    }],
-                    labels: dept_orders.map(item => item.type)
-                }
+                data: data3,
+                options: pieOptions
             });
+
+            let data4 = {
+                datasets: [{
+                    data: dept_weights.map(item => item.weight),
+                    backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
+                }],
+                labels: dept_weights.map(item => item.type)
+            }
 
             let chart4 = new Chart(ctx4, {
                 type: 'pie',
-                data: {
-                    datasets: [{
-                        data: dept_weights.map(item => item.weight),
-                        backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
-                    }],
-                    labels: dept_weights.map(item => item.type)
-                }
+                data: data4,
+                options: pieOptions
+            });
+
+            document.getElementById('change1').addEventListener('click', function () {
+                toggleChartType(chart1, chart1.config.type, data1, pieOptions, barOptions);
+            });
+
+            document.getElementById('change3').addEventListener('click', function () {
+                toggleChartType(chart3, chart3.config.type, data3, pieOptions, barOptions);
+            });
+
+            document.getElementById('change4').addEventListener('click', function () {
+                toggleChartType(chart4, chart4.config.type, data4, pieOptions, barOptions);
             });
         });
     </script>

@@ -120,31 +120,35 @@ def dashboard():
     types = Waste.query.filter_by(wasteDepartment=department.departmentType).all()
     orders = query.all()
     today = datetime.now()
-    seven_days_ago = today - timedelta(days=7)
+    seven_days_ago = today - timedelta(days=6)
     days_7_orders = {(seven_days_ago + timedelta(days=i)).strftime('%Y-%m-%d'): 0 for i in range(7)}
 
     for order in orders:
-        order_date = order.date_created.strftime('%Y-%m-%d')  # 格式化日期以匹配字典的键
+        order_date = order.date.strftime('%Y-%m-%d')  # 格式化日期以匹配字典的键
         if order_date in days_7_orders:
             days_7_orders[order_date] += 1
-    wasteDict = {}
-    for type in types:
-        wasteDict[type] = [0, 0, 0, 0]
+
+    return render_template('department/dashboard.html', orders=orders, days_7_orders=days_7_orders)
+
+
+@department.route('/dashboard/<days>', methods=['PUT'])
+def dashboard_days(days):
+    user = g.user
+    department = user.department
+    did = department.DID
+    query = Order.query.filter_by(department_id=did)
+    types = Waste.query.filter_by(wasteDepartment=department.departmentType).all()
+    orders = query.all()
+    today = datetime.now()
+    days = int(days)
+    days_ago = today - timedelta(days=days - 1)
+    days_orders = {(days_ago + timedelta(days=i)).strftime('%Y-%m-%d'): 0 for i in range(days)}
+
     for order in orders:
-        wasteType = order.wasteType
-        orderStatus = order.orderStatus
-        if orderStatus == OrderStatus.UNCONFIRMED:
-            wasteDict[wasteType][0] = wasteDict[wasteType][0] + 1
-        elif orderStatus == OrderStatus.CONFIRM:
-            wasteDict[wasteType][1] = wasteDict[wasteType][1] + 1
-        elif orderStatus == OrderStatus.PROCESSING:
-            wasteDict[wasteType][2] = wasteDict[wasteType][2] + 1
-        elif orderStatus == OrderStatus.FINISHED:
-            wasteDict[wasteType][3] = wasteDict[wasteType][3] + 1
-
-    print(wasteDict)
-
-    return render_template('department/dashboard.html', orders=orders, days_7_orders=days_7_orders, wasteDict=wasteDict)
+        order_date = order.date.strftime('%Y-%m-%d')  # 格式化日期以匹配字典的键
+        if order_date in days_orders:
+            days_orders[order_date] += 1
+    return jsonify(days_orders)
 
 
 @department.route('/register', methods=['POST'])
