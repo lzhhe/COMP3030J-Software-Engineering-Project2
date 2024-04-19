@@ -117,18 +117,37 @@ def dashboard():
     department = user.department
     did = department.DID
     query = Order.query.filter_by(department_id=did)
-    types = Waste.query.filter_by(wasteDepartment=department.departmentType).all()
+    waste_types_for_dept = Waste.query.filter_by(wasteDepartment=department.departmentType).all()
     orders = query.all()
     today = datetime.now()
     seven_days_ago = today - timedelta(days=6)
     days_7_orders = {(seven_days_ago + timedelta(days=i)).strftime('%Y-%m-%d'): 0 for i in range(7)}
+    # Query to find waste types associated with the department type
 
+    relevant_waste_types = {enum_to_string(waste.wasteType) for waste in waste_types_for_dept}
+    wasteDict = {waste_type: [0, 0, 0, 0, 0] for waste_type in relevant_waste_types}
     for order in orders:
-        order_date = order.date.strftime('%Y-%m-%d')  # 格式化日期以匹配字典的键
+        order_date = order.date.strftime('%Y-%m-%d')
         if order_date in days_7_orders:
             days_7_orders[order_date] += 1
 
-    return render_template('department/dashboard.html', orders=orders, days_7_orders=days_7_orders)
+        wasteType = enum_to_string(order.wasteType)
+        orderStatus = order.orderStatus
+        # Ensure the wasteType is relevant for this department before updating counts
+        if wasteType in wasteDict:
+            if orderStatus == OrderStatus.UNCONFIRMED:
+                wasteDict[wasteType][0] += 1
+            elif orderStatus == OrderStatus.CONFIRM:
+                wasteDict[wasteType][1] += 1
+            elif orderStatus == OrderStatus.PROCESSING:
+                wasteDict[wasteType][2] += 1
+            elif orderStatus == OrderStatus.FINISHED:
+                wasteDict[wasteType][3] += 1
+            wasteDict[wasteType][4] += 1
+
+    print(wasteDict)
+
+    return render_template('department/dashboard.html', wasteDict=wasteDict, days_7_orders=days_7_orders)
 
 
 @department.route('/dashboard/<days>', methods=['PUT'])

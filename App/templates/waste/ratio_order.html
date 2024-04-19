@@ -23,6 +23,9 @@
         }
 
         .ratio-container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
             display: flex;
             justify-content: space-around; /* 调整为 space-around 更好地分布空间 */
             flex-wrap: wrap; /* 允许容器内的元素换行 */
@@ -39,7 +42,7 @@
         }
 
         canvas {
-            width: 60% !important; /* 使 canvas 元素填满容器 */
+            width: 100% !important; /* 使 canvas 元素填满容器 */
             height: auto !important; /* 高度自适应 */
         }
     </style>
@@ -102,7 +105,7 @@
         </div>
         <div class="ratio-container">
             <div class="chart-container">
-                <div class="chart-title canchange underline" id="change1"><h2>{{ _("Statue Ratio") }}</h2></div>
+                <div class="chart-title canchange underline" id="change1"><h2>{{ _("Status Ratio") }}</h2></div>
                 <canvas id="chart1"></canvas>
             </div>
             <div class="chart-container">

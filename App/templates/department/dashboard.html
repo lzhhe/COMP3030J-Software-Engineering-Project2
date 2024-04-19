@@ -17,8 +17,11 @@
         }
 
         .chart-container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 60%;
             flex: 1 1 300px; /* 修改这里的 300px 为你希望的最大宽度 */
-            margin: 10px; /* 保持外边距，避免图表相互挤压 */
+            margin-bottom: 10px; /* 保持外边距，避免图表相互挤压 */
             max-width: 100%; /* 确保在小屏幕上能自适应 */
             display: flex; /* 添加 flex 布局 */
             flex-direction: column; /* 子元素垂直排列 */
@@ -27,7 +30,7 @@
         }
 
         canvas {
-            width: 60% !important; /* 使 canvas 元素填满容器 */
+            width: 100% !important; /* 使 canvas 元素填满容器 */
             height: auto !important; /* 高度自适应 */
         }
 
@@ -46,6 +49,19 @@
                 {
                     "status": "{{ key }}",
                     "count": {{ value }}
+                },
+            {% endfor %}
+        ];
+
+        let order_status_nums = [
+            {% for key, value in wasteDict.items() %}
+                {
+                    "type": "{{ key }}",
+                    "unconfirmed": {{ value[0]}},
+                    "confirmed": {{ value[1]}},
+                    "processing": {{ value[2]}},
+                    "finished": {{ value[3]}},
+                    "whole": {{ value[4]}},
                 },
             {% endfor %}
         ];
@@ -172,10 +188,94 @@
                     }
                 }
             });
+
+
+            let data2 = {
+                labels: order_status_nums.map(item => item.type),
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: "{{ _('Unconfirmed') }}",
+                        data: order_status_nums.map(item => item.unconfirmed),
+                        backgroundColor: c1,
+                        borderColor: c1,
+                        borderWidth: 1,
+                    }, {
+                        type: 'bar',
+                        label: "{{ _('Confirmed') }}",
+                        data: order_status_nums.map(item => item.confirmed),
+                        backgroundColor: c2,
+                        borderColor: c2,
+                        borderWidth: 1,
+                    }, {
+                        type: 'bar',
+                        label: "{{ _('Processing') }}",
+                        data: order_status_nums.map(item => item.processing),
+                        backgroundColor: c3,
+                        borderColor: c3,
+                        borderWidth: 1,
+                    }, {
+                        type: 'bar',
+                        label: "{{ _('Finished') }}",
+                        data: order_status_nums.map(item => item.finished),
+                        backgroundColor: c4,
+                        borderColor: c4,
+                        borderWidth: 1,
+                    }, {
+                        type: 'line',
+                        label: "{{ _('Whole') }}",
+                        data: order_status_nums.map(item => item.whole),
+                        fill: false,
+                        borderColor: color1,
+                        tension: 0.1, // 使线条稍微平滑一点
+                        yAxisID: 'y-axis-2'
+                    }
+                ]
+            };
+            const options = {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // 设置步长为1
+                        }
+                    },
+                    'y-axis-2': {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        beginAtZero: true,
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        ticks: {
+                            stepSize: 1 // 设置步长为1
+                        }
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
+            };
+
+            const chart2 = new Chart(ctx2, {
+                data: data2,
+                options: options
+            });
+
             $('#daysSelect').on('change', function () {
                 let numDays = $(this).val();
                 updateChartData(numDays);
             });
+
+
         });
     </script>
 {% endblock %}
