@@ -61,11 +61,16 @@
 {% include 'context_menu.html' %}
 
 {% block navbar %}
+
 {% endblock %}
 
 {% block mainBody %}
+
 {% endblock %}
+{% include 'aichat.html' %}
+
 <script>
+
     window.addEventListener('DOMContentLoaded', () => {
         NProgress.start();
     });
@@ -73,6 +78,9 @@
         NProgress.done();
     });
     $(document).ready(function () {
+        const ai_chat_messages = document.getElementById('ai-chat-messages');
+        const ai_chat_scroll = document.getElementById('ai-chat-scroll-btn');
+
         // 添加点击事件监听器
         $('#logoutButton').click(function (event) {
             // 阻止默认的链接点击行为
@@ -127,6 +135,74 @@
             MenuList.style.height = '0';
             MenuList.classList.remove('is-active');
         });
+
+        document.getElementById('ai-chat-open-btn').onclick = function () {
+            document.getElementById('ai-chat-container').style.display = 'flex';
+        };
+
+        document.getElementById('ai-chat-close-btn').onclick = function () {
+            document.getElementById('ai-chat-container').style.display = 'none';
+        };
+
+        ai_chat_scroll.onclick = function () {
+            ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
+        };
+
+        document.getElementById('ai-chat-send-btn').onclick = function () {
+            sendMessage();
+        };
+        // 新增部分：回车发送消息
+        document.getElementById('ai-chat-user-input').addEventListener('keydown', function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // 防止表单默认提交
+                sendMessage();  // 发送消息
+            }
+        });
+
+        ai_chat_messages.addEventListener('scroll', function () {
+            let isBottom = ai_chat_messages.scrollHeight - ai_chat_messages.scrollTop === ai_chat_messages.clientHeight;
+            if (isBottom) {
+                ai_chat_scroll.style.display = 'none';
+            } else {
+                ai_chat_scroll.style.display = 'block';
+            }
+        })
+
+        function sendMessage() {
+            let input = document.getElementById('ai-chat-user-input');
+            if (input.value.trim() !== "") {
+                createMessageBubble(input.value, 'user-message');
+                input.value = "";
+
+                // 模拟AI回复
+                setTimeout(() => {
+                    createMessageBubble("这是AI的回复", 'ai-message');
+                }, 1000);
+            } else {
+                alert("消息不能为空！");
+            }
+        }
+
+        function createMessageBubble(text, className) {
+            let messageContainer = document.createElement('div');
+            messageContainer.classList.add('message-container');
+            let messageDiv = document.createElement('div');
+            let icon = document.createElement('i');
+            messageDiv.classList.add('message-bubble', className);
+            messageDiv.textContent = text;
+            if (className === 'user-message') {
+                icon.classList.add('iconfont', 'icon-wode', 'iconheader');
+                messageContainer.appendChild(messageDiv)
+                messageContainer.appendChild(icon)
+            } else {
+                icon.classList.add('iconfont', 'icon-jiqiren', 'iconheader');
+                messageContainer.classList.add('ai');
+                messageContainer.appendChild(icon)
+                messageContainer.appendChild(messageDiv)
+            }
+            ai_chat_messages.appendChild(messageContainer);
+            ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
+        }
     });
 </script>
 </body>

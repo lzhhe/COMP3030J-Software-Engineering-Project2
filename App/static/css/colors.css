@@ -7,6 +7,7 @@
 }
 
 :root[data-theme="light"] {
+    --color-whole: #f2f2f2;
     --primary-color: #0e4bf1;
     --panel-color: #f2f2f2;
     --t-color: #000;
@@ -183,6 +184,7 @@
 }
 
 :root[data-theme="dark"] {
+    --color-whole: #1C212C;
     --primary-color: #3a3b3c;
     --panel-color: #242526;
     --t-color: #ccc;
