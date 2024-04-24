@@ -57,6 +57,7 @@
     <script src="../static/js/switch.js"></script>
     <script src="../static/js/utils/nprogress.js"></script>
     <script src="../static/js/utils/datatables.min.js"></script>
+    <script src="../static/js/utils/marked.min.js"></script>
     {% block extra_js %}{% endblock %}
 </head>
 <body>
@@ -81,11 +82,16 @@
     });
     $(document).ready(function () {
         const decoder = new TextDecoder();
-        let ai_result = ''
         const ai_chat_messages = document.getElementById('ai-chat-messages');
         const ai_chat_scroll = document.getElementById('ai-chat-scroll-btn');
         const ai_chat_container = document.getElementById('ai-chat-container');
 
+        const m = new marked.Renderer();
+        marked.use({
+            renderer: m,
+            gfm: true,
+            breaks: false,
+        });
         // 添加点击事件监听器
         $('#logoutButton').click(function (event) {
             // 阻止默认的链接点击行为
@@ -155,17 +161,20 @@
         };
 
         ai_chat_scroll.onclick = function () {
+            ai_chat_scroll.style.display = 'none';
             ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
         };
 
         document.getElementById('ai-chat-send-btn').onclick = function () {
             sendMessage();
+            console.log(marked.parse('I am using __markdown__.'));
         };
         // 新增部分：回车发送消息
         document.getElementById('ai-chat-user-input').addEventListener('keydown', function (event) {
             if (event.key === "Enter") {
                 event.preventDefault();  // 防止表单默认提交
                 sendMessage();  // 发送消息
+                ai_chat_scroll.style.display = 'none';
             }
         });
 
@@ -181,10 +190,10 @@
         function sendMessage() {
             let input = document.getElementById('ai-chat-user-input');
             if (input.value.trim() !== "") {
-                createMessageBubble(input.value, 'user-message');
+                let userBubble = createMessageBubble('user-message');
+                userBubble.textContent = input.value;
                 getAIResponse(input.value);
                 input.value = "";
-                ai_result = '';
             } else {
                 Swal.fire({
                     title: "the message can not be empty",
@@ -198,13 +207,26 @@
         }
 
 
-        function createMessageBubble(text, className) {
+        function createMessageBubble(className) {
             let messageContainer = document.createElement('div');
             messageContainer.classList.add('message-container');
             let messageDiv = document.createElement('div');
             let icon = document.createElement('i');
             messageDiv.classList.add('message-bubble', className);
-            messageDiv.textContent = text;
+            messageDiv.setAttribute('tabindex', '0');  // 设置 tabindex 属性
+            messageDiv.addEventListener('click', function () {
+                this.focus();  // 获取焦点
+            });
+            messageDiv.addEventListener('keydown', function (event) {
+                if ((event.ctrlKey || event.metaKey) && event.key === 'a') {
+                    event.preventDefault(); // 阻止默认的全选行为
+                    let selection = window.getSelection(); // 获取当前的选择
+                    let range = document.createRange(); // 创建一个范围
+                    range.selectNodeContents(this); // 设置范围包括此元素的内容
+                    selection.removeAllRanges(); // 清除当前的选择
+                    selection.addRange(range); // 添加新的范围
+                }
+            });
             if (className === 'user-message') {
                 icon.classList.add('iconfont', 'icon-wode', 'iconheader');
                 messageContainer.appendChild(messageDiv)
@@ -217,6 +239,7 @@
             }
             ai_chat_messages.appendChild(messageContainer);
             ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
+            return messageDiv;
         }
 
         async function getAIResponse(content) {
@@ -228,15 +251,18 @@
                 body: JSON.stringify({message: content}),
             });
             const reader = response.body.getReader();
-            while (1) {
+            let aiBubble = createMessageBubble('ai-message');
+            let totalText = ''; // 用于累积读取的文本
+            while (true) {
                 const {done, value} = await reader.read();
-                const txt = decoder.decode(value);
+                totalText += decoder.decode(value);
+                aiBubble.innerHTML = marked.parse(totalText);
                 if (done) {
                     break;
                 }
-                createMessageBubble(txt, 'ai-message')
             }
         }
+
     });
 </script>
 </body>

@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from functools import wraps
 from zhipuai import ZhipuAI
@@ -103,6 +104,15 @@ As a user, you can see the company's optimization of the environment. Let's work
 """
 
 
+def generate_stream(ai_response):
+    try:
+        for chunk in ai_response:
+            # Simulating a delay for each message chunk
+            yield f"{chunk.choices[0].delta.content}"
+    except GeneratorExit:
+        print("Client disconnected")
+
+
 @utils.route('/api/ai-assistant', methods=['GET', 'POST'])
 def ai_assistant():
     if request.method == 'GET':
@@ -110,8 +120,6 @@ def ai_assistant():
     else:
         data = request.get_json()
         user_message = data.get('message')
-        print(user_message)
-
         # 使用智谱AI的API进行消息处理
         ai_response = my_client.chat.completions.create(
             model="glm-4",
@@ -121,12 +129,7 @@ def ai_assistant():
             ],
             stream=True,
         )
-        result = ''
-        for chunk in ai_response:
-            print(chunk.choices[0].delta.content)
-            result += chunk.choices[0].delta.content
-        print(result)
-        return result
+        return Response(generate_stream(ai_response), content_type='text/event-stream')
 
 
 @utils.route('/switch_theme', methods=['POST'])

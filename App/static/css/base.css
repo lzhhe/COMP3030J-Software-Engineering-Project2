@@ -289,7 +289,7 @@ h2 {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 500px;
+    width: 600px;
     height: 0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -364,7 +364,7 @@ h2 {
 .tooltip {
     position: absolute;
     opacity: 0;
-    visibility: 0;
+    visibility: hidden;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -584,6 +584,13 @@ h2 {
 }
 
 .message-bubble {
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    cursor: text; /* 显示文本光标 */
+    white-space: pre-wrap; /* 保留空白符和自动换行 */
+    overflow-wrap: break-word; /* 长单词或 URL 自动换行 */
     max-width: 70%;
     margin-bottom: 10px;
     padding: 10px;
@@ -592,13 +599,18 @@ h2 {
     font-size: 18px;
 }
 
+.message-bubble:focus {
+    border: none;
+    outline: none;
+}
+
 .user-message {
     background-color: var(--done1);
     margin-right: 10px;
 }
 
 .ai-message {
-    background-color: var(--panel-color);
+    background-color: var(--ai-message-bg);
     margin-left: 10px;
 }
 
