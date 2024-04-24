@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     <script src="../static/js/jquery-3.7.1.min.js"></script>
     <script src="../static/js/switch.js"></script>
+    <script src="../static/js/utils/sweetalert2.js"></script>
     <script>
         const loginUrl = "{{ url_for('login.log') }}";
         const registerUrl = "{{ url_for('login.register') }}";
@@ -353,8 +354,6 @@
             registerButton.disabled = true;
         }
     });
-
-
     // 假设有一个按钮用于打开对话框
 
     $(document).ready(function () {
@@ -400,8 +399,14 @@
                             window.location.href = individualUrl;  // 登录成功后的重定向
                         }
                     } else {
-                        console.error(response.message);  // 显示错误消息
-                        alert(response.message);  // 显示错误消息
+                        Swal.fire({
+                            text: response.message,
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
                     }
                 },
                 error: function (xhr, status, error) {
@@ -446,8 +451,14 @@
                             window.location.href = individualUrl;  // 登录成功后的重定向
                         }
                     } else {
-                        console.error(response.message);  // 显示错误消息
-                        alert(response.message);  // 显示错误消息
+                        Swal.fire({
+                            text: response.message,
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
                     }
                 },
                 error: function (xhr, status, error) {
@@ -489,7 +500,14 @@
                             window.location.href = individualUrl;  // 登录成功后的重定向
                         }
                     } else {
-                        alert(response.message);  // 显示错误消息
+                        Swal.fire({
+                            text: response.message,
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
                     }
                 },
                 error: function (xhr, status, error) {

@@ -50,8 +50,10 @@
     <script>
         const themeUrl = "{{ url_for('utils.switchTheme') }}";
         const langUrl = "{{ url_for('utils.switchLanguage') }}";
+        const aiUrl = "{{ url_for('utils.ai_assistant') }}";
     </script>
     <script src="../static/js/jquery-3.7.1.min.js"></script>
+    <script src="../static/js/utils/sweetalert2.js"></script>
     <script src="../static/js/switch.js"></script>
     <script src="../static/js/utils/nprogress.js"></script>
     <script src="../static/js/utils/datatables.min.js"></script>
@@ -78,8 +80,11 @@
         NProgress.done();
     });
     $(document).ready(function () {
+        const decoder = new TextDecoder();
+        let ai_result = ''
         const ai_chat_messages = document.getElementById('ai-chat-messages');
         const ai_chat_scroll = document.getElementById('ai-chat-scroll-btn');
+        const ai_chat_container = document.getElementById('ai-chat-container');
 
         // 添加点击事件监听器
         $('#logoutButton').click(function (event) {
@@ -137,11 +142,16 @@
         });
 
         document.getElementById('ai-chat-open-btn').onclick = function () {
-            document.getElementById('ai-chat-container').style.display = 'flex';
+            ai_chat_container.style.opacity = '1';
+            ai_chat_container.style.visibility = 'visible';
+            ai_chat_container.style.height = '800px';
         };
 
         document.getElementById('ai-chat-close-btn').onclick = function () {
-            document.getElementById('ai-chat-container').style.display = 'none';
+            ai_chat_container.style.opacity = '0';
+            ai_chat_container.style.visibility = 'hidden';
+            ai_chat_container.style.height = '0';
+            ai_chat_scroll.style.display = 'none'
         };
 
         ai_chat_scroll.onclick = function () {
@@ -172,16 +182,21 @@
             let input = document.getElementById('ai-chat-user-input');
             if (input.value.trim() !== "") {
                 createMessageBubble(input.value, 'user-message');
+                getAIResponse(input.value);
                 input.value = "";
-
-                // 模拟AI回复
-                setTimeout(() => {
-                    createMessageBubble("这是AI的回复", 'ai-message');
-                }, 1000);
+                ai_result = '';
             } else {
-                alert("消息不能为空！");
+                Swal.fire({
+                    title: "the message can not be empty",
+                    icon: "info",
+                    closeOnClickOutside: true,
+                    closeOnEsc: true,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
             }
         }
+
 
         function createMessageBubble(text, className) {
             let messageContainer = document.createElement('div');
@@ -202,6 +217,25 @@
             }
             ai_chat_messages.appendChild(messageContainer);
             ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
+        }
+
+        async function getAIResponse(content) {
+            const response = await fetch(aiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({message: content}),
+            });
+            const reader = response.body.getReader();
+            while (1) {
+                const {done, value} = await reader.read();
+                const txt = decoder.decode(value);
+                if (done) {
+                    break;
+                }
+                createMessageBubble(txt, 'ai-message')
+            }
         }
     });
 </script>

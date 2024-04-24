@@ -116,24 +116,68 @@
             $(document).on('click', '.delete-order', function () {
                 let oid = $(this).data('id');
                 let self = this; // Save the reference to the button
-                if (window.confirm("{{ _('Are you sure to delete this order?') }}")) {
-                    $.ajax({
-                        url: `/department/delete_order/${oid}`,
-                        type: 'DELETE',
-                        success: function (res) {
-                            if (res.message === 0) {
-                                alert("{{ _('Delete success') }}");
-                                editOrderTable.row($(self).closest('tr')).remove().draw(false);
-                            } else {
-                                alert("{{ _('Delete failed') }}");
+
+                Swal.fire({
+                    title: "{{ _('Are you sure to delete this order?') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Yes!') }}",
+                    cancelButtonText: "{{ _('No') }}",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        // 用户点击了确认按钮
+                        $.ajax({
+                            url: `/department/delete_order/${oid}`,
+                            type: 'DELETE',
+                            success: function (res) {
+                                if (res.message === 0) {
+                                    Swal.fire({
+                                        title: "{{ _('Delete successful') }}",
+                                        icon: "success",
+                                        toast: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                    });
+                                    editOrderTable.row($(self).closest('tr')).remove().draw(false);
+                                } else {
+                                    Swal.fire({
+                                        title: "{{ _('Delete failed') }}",
+                                        icon: "error",
+                                        toast: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    title: "{{ _('Delete failed') }}",
+                                    icon: "error",
+                                    toast: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                });
                             }
-                        },
-                        error: function (err) {
-                            console.log(err);
-                            alert("{{ _('Delete failed') }}");
-                        }
-                    });
-                }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Deletion cancelled') }}",
+                            text: "{{ _('Your order is safe') }}",
+                            icon: "info"
+                        });
+                    }
+                });
             });
 
             $(document).on('click', '.edit-order', function () {
@@ -169,7 +213,15 @@
                 const orderAttribute = $('#order-attribution').val();
                 const orderComment = $('#order-comment').val();
                 if (orderDate === '' || orderWeight === '') {
-                    alert("{{ _('Please fill in all required fields') }}");
+                    Swal.fire({
+                        text: "{{ _('Please fill in all required fields') }}",
+                        icon: "question",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        position: 'top-end',
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
                     return;
                 }
                 const editData = {
@@ -186,7 +238,15 @@
                     contentType: 'application/json',
                     success: function (res) {
                         if (res.message === 0) {
-                            alert("{{ _('Edit success') }}");
+                            Swal.fire({
+                                text: "{{ _('Edit success') }}",
+                                icon: "success",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
                             dialog.close();
                             const row = editOrderTable.row(edit_row);
                             row.data([
@@ -200,12 +260,27 @@
                                 '<i class="iconfont icon-shanchu delete-order" data-id="' + oid + '"></i>'
                             ]).draw(false);
                         } else {
-                            alert("{{ _('Edit failed') }}");
+                            Swal.fire({
+                                text: "{{ _('Edit failed') }}",
+                                icon: "error",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
                         }
                     },
                     error: function (err) {
-                        console.log(err);
-                        alert("{{ _('Edit failed') }}");
+                        Swal.fire({
+                            text: "{{ _('Edit failed') }}",
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                        });
                     }
                 });
             });

@@ -290,13 +290,16 @@ h2 {
     bottom: 20px;
     right: 20px;
     width: 500px;
-    height: 800px;
+    height: 0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: none;
+    display: flex;
     flex-direction: column;
     background: linear-gradient(to top right, #ffffff, #e6e9f0);
     z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease, height .4s ease, visibility .5s ease;
 }
 
 #ai-chat-scroll-btn {
@@ -575,7 +578,7 @@ h2 {
     width: 100%;
 }
 
-.message-container.ai{
+.message-container.ai {
     justify-content: flex-start; /* AI 消息向左对齐 */
     align-self: start;
 }

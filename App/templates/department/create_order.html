@@ -155,7 +155,14 @@
                 const departmentName = $("#departmentName").val();
                 const departmentAddress = $("#departmentAddress").val();
                 if (departmentType === undefined || departmentName === "") {
-                    alert("Please select a department type and enter a department name.");
+                    Swal.fire({
+                        text: "Please select a department type and enter a department name.",
+                        icon: "info",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
                 }
                 const departmentInfo = {
                     departmentType: departmentType,
@@ -169,9 +176,26 @@
                     contentType: "application/json;charset=UTF-8",
                     success: function (response) {
                         if (response.message === "successful") {
+                            Swal.fire({
+                                toast: true,
+                                text: "create successful",
+                                icon: "success",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
                             window.location.href = "/department/";
                         } else {
-                            alert(response.message);
+                            Swal.fire({
+                                text: response.message,
+                                icon: "error",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
                         }
                     }
                 });
@@ -191,7 +215,14 @@
                     attribution += attrValue + attrName + ' ';
                 });
                 if (orderName === "" || weight === "" || type === "" || attribution === "") {
-                    alert("Please input all required fields except comments.");
+                    Swal.fire({
+                        text: "Please input all required fields except comments.",
+                        icon: "question",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
                 }
                 const orderInfo = {
                     departmentID: did,
@@ -208,10 +239,26 @@
                     contentType: "application/json;charset=UTF-8",
                     success: function (response) {
                         if (response.message === "successful") {
-                            alert("Order created successfully.");
+                            Swal.fire({
+                                toast: true,
+                                text: "create successful",
+                                icon: "success",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
                             window.location.href = "/department/";
                         } else {
-                            alert(response.message);
+                            Swal.fire({
+                                text: response.message,
+                                icon: "error",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
                         }
                     }
                 });
