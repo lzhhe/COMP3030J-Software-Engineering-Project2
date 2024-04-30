@@ -43,9 +43,25 @@
 
     <section class="dashboard">
         <div class="chart-title"><h2>{{ _("Waste Storage") }}</h2></div>
-        <canvas id="chart1" height="100px"></canvas>
+        <canvas id="chart1" height="100px" style="box-shadow: 0.4px 0px 1.9px rgba(0, 0, 0, 0.06),
+            0.9px 0px 4.3px rgba(0, 0, 0, 0.045),
+            1.5px 0px 7.7px rgba(0, 0, 0, 0.038),
+            2.5px 0px 12.8px rgba(0, 0, 0, 0.032),
+            4.1px 0px 21.2px rgba(0, 0, 0, 0.028),
+            7.6px 0px 37px rgba(0, 0, 0, 0.022),
+            20px 0px 80px rgba(0, 0, 0, 0.015);
+            padding: 10px;
+            border-radius: 10px;"></canvas>
         <div class="chart-title"><h2>{{ _("Processing Capacity") }}</h2></div>
-        <canvas id="chart2" width="400px"></canvas>
+        <canvas id="chart2" width="400px" style="box-shadow: 0.4px 0px 1.9px rgba(0, 0, 0, 0.06),
+            0.9px 0px 4.3px rgba(0, 0, 0, 0.045),
+            1.5px 0px 7.7px rgba(0, 0, 0, 0.038),
+            2.5px 0px 12.8px rgba(0, 0, 0, 0.032),
+            4.1px 0px 21.2px rgba(0, 0, 0, 0.028),
+            7.6px 0px 37px rgba(0, 0, 0, 0.022),
+            20px 0px 80px rgba(0, 0, 0, 0.015);
+            padding: 10px;
+            border-radius: 10px;"></canvas>
 
         {% include "top.html" %}
         <div class="content">

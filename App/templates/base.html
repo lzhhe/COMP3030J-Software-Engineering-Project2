@@ -104,6 +104,9 @@ Please use me to help you go green.
 
         $('.copy-input').click(function () {
             user_input.value = $(this).text();
+            $(this).blur();
+            $(this).parents().blur();
+            user_input.focus();
         });
 
         const m = new marked.Renderer();
@@ -116,20 +119,42 @@ Please use me to help you go green.
         $('#logoutButton').click(function (event) {
             // 阻止默认的链接点击行为
             event.preventDefault();
-            // 弹出确认对话框
-            const confirmLogout = confirm("are you sure to logout？");
-            // 如果用户点击了确定按钮
-            if (confirmLogout) {
-                window.location.href = "{{ url_for('login.logout') }}";
-            }
+            // 使用 Swal 弹出确认对话框
+            Swal.fire({
+                position: 'top',
+                title: 'Are you sure to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true,
+                timer: 4000,
+                timerProgressBar: true,
+            }).then((result) => {
+                // 如果用户点击了确定按钮
+                if (result.isConfirmed) {
+                    window.location.href = "{{ url_for('login.logout') }}";
+                }
+            });
         });
         $(document).keydown(function (event) {
             if (event.which === 27) {
-                const confirmLogout = confirm("are you sure to logout？");
-                // 如果用户点击了确定按钮
-                if (confirmLogout) {
-                    window.location.href = "{{ url_for('login.logout') }}";
-                }
+                Swal.fire({
+                    position: 'top',
+                    title: 'Are you sure to logout?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    reverseButtons: true,
+                    timer: 4000,
+                    timerProgressBar: true,
+                }).then((result) => {
+                    // 如果用户点击了确定按钮
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ url_for('login.logout') }}";
+                    }
+                });
             }
         });
         // 你现有的点击事件逻辑
@@ -190,7 +215,7 @@ Please use me to help you go green.
             console.log(marked.parse('I am using __markdown__.'));
         };
         // 新增部分：回车发送消息
-        document.getElementById('ai-chat-user-input').addEventListener('keydown', function (event) {
+        user_input.addEventListener('keydown', function (event) {
             if (event.key === "Enter") {
                 event.preventDefault();  // 防止表单默认提交
                 sendMessage();  // 发送消息

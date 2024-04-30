@@ -379,7 +379,7 @@
             };
             // 使用 jQuery 发送 AJAX POST 请求
             $.ajax({
-                url: loginUrl,  // Flask 路由的 URL
+                url: '/login',  // Flask 路由的 URL
                 type: 'POST',
                 contentType: 'application/json',  // 发送数据的格式
                 data: JSON.stringify(loginData),  // 将 JavaScript 对象转换为字符串
