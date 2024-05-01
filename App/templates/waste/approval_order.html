@@ -567,7 +567,7 @@
                     });
                 },
             })
-            $(document).on('click', '.view-unconfirmed', function () {
+            $('#view-table1').on('click', '.view-unconfirmed', function () {
                 const orderName = $(this).data('name');
                 const orderComment = $(this).data('comment');
                 const orderAttribute = $(this).data('attribution');
@@ -590,7 +590,7 @@
                 dialog1.showModal();
             });
 
-            $(document).on('click', '.confirm-order', function () {
+            $('#view-table1').on('click', '.confirm-order', function () {
                 let oid = $(this).data('id');
                 let self = this; // Save the reference to the button
                 const orderRow = $(self).closest('tr');
@@ -673,146 +673,134 @@
                         });
                     }
                 });
-                $('#cancel-unconfirmed').click(function () {
-                    dialog1.close();
-                });
-                $(document).on('click', '.view-confirmed', function () {
-                    const orderDName = $(this).data('deptname');
-                    const orderDate = $(this).data('date');
-                    const orderComment = $(this).data('comment');
-                    const orderDType = $(this).data('depttype');
-                    const orderAttribute = $(this).data('attribution');
-                    const orderRow = $(this).closest('tr');
-                    const orderName = orderRow.find('td:nth-child(2)').text();
-                    const orderWType = orderRow.find('td:nth-child(3)').text();
-                    const orderWeight = orderRow.find('td:nth-child(4)').text();
-                    const orderMultiplier = orderRow.find('td:nth-child(5)').text();
-                    $('#confirmed-name').val(orderName);
-                    $('#confirmed-deptname').val(orderDName);
-                    $('#confirmed-depttype').val(orderDType);
-                    $('#confirmed-wastetype').val(orderWType);
-                    $('#confirmed-date').val(orderDate);
-                    $('#confirmed-weight').val(orderWeight);
-                    $('#confirmed-attribution').val(orderAttribute);
-                    $('#confirmed-comment').val(orderComment);
-                    $('#confirmed-multiplier').val(orderMultiplier);
-                    dialog2.showModal();
-                });
-                $('#cancel-confirmed').click(function () {
-                    dialog2.close();
-                });
+            });
+            $('#cancel-unconfirmed').click(function () {
+                dialog1.close();
+            });
+            $('#view-table2').on('click', '.view-confirmed', function () {
+                const orderDName = $(this).data('deptname');
+                const orderDate = $(this).data('date');
+                const orderComment = $(this).data('comment');
+                const orderDType = $(this).data('depttype');
+                const orderAttribute = $(this).data('attribution');
+                const orderRow = $(this).closest('tr');
+                const orderName = orderRow.find('td:nth-child(2)').text();
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderWeight = orderRow.find('td:nth-child(4)').text();
+                const orderMultiplier = orderRow.find('td:nth-child(5)').text();
+                $('#confirmed-name').val(orderName);
+                $('#confirmed-deptname').val(orderDName);
+                $('#confirmed-depttype').val(orderDType);
+                $('#confirmed-wastetype').val(orderWType);
+                $('#confirmed-date').val(orderDate);
+                $('#confirmed-weight').val(orderWeight);
+                $('#confirmed-attribution').val(orderAttribute);
+                $('#confirmed-comment').val(orderComment);
+                $('#confirmed-multiplier').val(orderMultiplier);
+                dialog2.showModal();
+            });
+            $('#cancel-confirmed').click(function () {
+                dialog2.close();
+            });
 
-                $('#view-table2').on('blur', 'td.multiplier', function () {
-                    // 当单元格失去焦点时触发
-                    const $this = $(this);
-                    let newValue = $this.text().trim();
+            $('#view-table2').on('blur', 'td.multiplier', function () {
+                // 当单元格失去焦点时触发
+                const $this = $(this);
+                let newValue = $this.text().trim();
 
-                    // 检查值是否为正整数或小数
-                    if (newValue && !isNaN(newValue) && +newValue > 0) {
-                        let row = table2.row($this.closest('tr'));
-                        let data = row.data();
-                        data[4] = newValue;  // 假设multiplier是在第五列（索引为4）
-                        const OID = $this.closest('tr').find('.view-confirmed').data('id');
-                        $.ajax({
-                            url: `modifyMultiplier/${OID}`, // 您的Flask路由
-                            type: 'PUT',
-                            contentType: 'application/json',
-                            data: JSON.stringify({multiplier: newValue}),
-                            success: function (res) {
-                                Swal.fire({
-                                    toast: true,
-                                    text: 'Multiplier updated successfully.',
-                                    icon: "success",
-                                    closeOnClickOutside: true,
-                                    closeOnEsc: true,
-                                    position: 'top-end',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                });
-                            },
-                            error: function (xhr, textStatus, errorThrown) {
-                                $this.text($this.data('originalValue')); // 如果更新失败，重置为原来的值
-                            }
-                        });
-                        row.data(data).draw(false);  // 更新表格并重绘当前页
-                    } else {
-                        // 如果输入无效，重置单元格内容为原始值
-                        $this.text($this.data('originalValue'));
-                        Swal.fire({
-                            toast: true,
-                            text: 'Please enter a valid positive number.',
-                            icon: "info",
-                            closeOnClickOutside: true,
-                            closeOnEsc: true,
-                            position: 'top-end',
-                            timer: 2000,
-                            timerProgressBar: true,
-                        });
-                    }
-                }).on('focus', 'td.multiplier', function () {
-                    // 当单元格获得焦点时触发，保存当前值以便重置
-                    const $this = $(this);
-                    $this.data('originalValue', $this.text());
-                });
-                $(document).on('click', '.processing-order', function () {
-                    let oid = $(this).data('id');
-                    let self = this; // Save the reference to the button
-                    const orderRow = $(self).closest('tr');
-                    const orderName = orderRow.find('td:nth-child(2)').text();
-                    const orderWType = orderRow.find('td:nth-child(3)').text();
-                    const orderWeight = orderRow.find('td:nth-child(4)').text();
+                // 检查值是否为正整数或小数
+                if (newValue && !isNaN(newValue) && +newValue > 0) {
+                    let row = table2.row($this.closest('tr'));
+                    let data = row.data();
+                    data[4] = newValue;  // 假设multiplier是在第五列（索引为4）
+                    const OID = $this.closest('tr').find('.view-confirmed').data('id');
+                    $.ajax({
+                        url: `modifyMultiplier/${OID}`, // 您的Flask路由
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({multiplier: newValue}),
+                        success: function (res) {
+                            Swal.fire({
+                                toast: true,
+                                text: 'Multiplier updated successfully.',
+                                icon: "success",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true,
+                            });
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            $this.text($this.data('originalValue')); // 如果更新失败，重置为原来的值
+                        }
+                    });
+                    row.data(data).draw(false);  // 更新表格并重绘当前页
+                } else {
+                    // 如果输入无效，重置单元格内容为原始值
+                    $this.text($this.data('originalValue'));
                     Swal.fire({
-                        text: "{{ _('Are you sure to make this order processing?') }}",
-                        icon: "question",
-                        showCancelButton: true,
-                        confirmButtonText: "{{ _('Confirm') }}",
-                        cancelButtonText: "{{ _('Cancel') }}",
+                        toast: true,
+                        text: 'Please enter a valid positive number.',
+                        icon: "info",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
-                        reverseButtons: true,
-                    }).then((result) => {
-                        if (result.value) {
-                            $.ajax({
-                                url: `/waste/process/${oid}`,
-                                type: 'PUT',
-                                success: function (res) {
-                                    if (res.message === 'successfully') {
-                                        Swal.fire({
-                                            toast: true,
-                                            text: 'Order processing success',
-                                            icon: "success",
-                                            closeOnClickOutside: true,
-                                            closeOnEsc: true,
-                                            position: 'top-end',
-                                            timer: 2000,
-                                            timerProgressBar: true,
-                                        });
-                                        let dates = generateRandomDatePair();  // 生成随机日期对
-                                        table2.row($(self).closest('tr')).remove().draw(false);
-                                        table3.row.add([
-                                            '', orderName, orderWType, dates.startDate, dates.endDate,
-                                            `<i class="iconfont icon-chakan view-processing" data-id="${oid}" data-weight="${orderWeight}"></i>
-                                    <i class="iconfont icon-gouxuan finished-order" data-id="${oid}"></i>`
-                                        ]).draw(false);
-                                        $('#confirmed-box .box-number').text(table2.rows().count());  // Update unconfirmed count
-                                        $('#processing-box .box-number').text(table3.rows().count());    // Update confirmed count
-                                    } else {
-                                        Swal.fire({
-                                            toast: true,
-                                            text: res.message,
-                                            icon: "error",
-                                            closeOnClickOutside: true,
-                                            closeOnEsc: true,
-                                            position: 'top-end',
-                                            timer: 2000,
-                                            timerProgressBar: true,
-                                        });
-                                    }
-                                },
-                                error: function (err) {
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true,
+                    });
+                }
+            }).on('focus', 'td.multiplier', function () {
+                // 当单元格获得焦点时触发，保存当前值以便重置
+                const $this = $(this);
+                $this.data('originalValue', $this.text());
+            });
+            $('#view-table2').on('click', '.processing-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                const orderRow = $(self).closest('tr');
+                const orderName = orderRow.find('td:nth-child(2)').text();
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderWeight = orderRow.find('td:nth-child(4)').text();
+                Swal.fire({
+                    text: "{{ _('Are you sure to make this order processing?') }}",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Confirm') }}",
+                    cancelButtonText: "{{ _('Cancel') }}",
+                    closeOnClickOutside: true,
+                    closeOnEsc: true,
+                    reverseButtons: true,
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `/waste/process/${oid}`,
+                            type: 'PUT',
+                            success: function (res) {
+                                if (res.message === 'successfully') {
                                     Swal.fire({
                                         toast: true,
-                                        text: err,
+                                        text: 'Order processing success',
+                                        icon: "success",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                    });
+                                    let dates = generateRandomDatePair();  // 生成随机日期对
+                                    table2.row($(self).closest('tr')).remove().draw(false);
+                                    table3.row.add([
+                                        '', orderName, orderWType, dates.startDate, dates.endDate,
+                                        `<i class="iconfont icon-chakan view-processing" data-id="${oid}" data-weight="${orderWeight}"></i>
+                                    <i class="iconfont icon-gouxuan finished-order" data-id="${oid}"></i>`
+                                    ]).draw(false);
+                                    $('#confirmed-box .box-number').text(table2.rows().count());  // Update unconfirmed count
+                                    $('#processing-box .box-number').text(table3.rows().count());    // Update confirmed count
+                                } else {
+                                    Swal.fire({
+                                        toast: true,
+                                        text: res.message,
                                         icon: "error",
                                         closeOnClickOutside: true,
                                         closeOnEsc: true,
@@ -821,50 +809,62 @@
                                         timerProgressBar: true,
                                     });
                                 }
-                            });
-                        } else if (result.dismiss === Swal.DismissReason.cancel) {
-                            // 用户点击了取消按钮或关闭了对话框
-                            Swal.fire({
-                                title: "{{ _('Processing cancelled') }}",
-                                text: "{{ _('order is safe') }}",
-                                icon: "info"
-                            });
-                        }
-                    });
-                    $(document).on('click', '.view-processing', function () {
-                        const orderWW = parseFloat($(this).data('weight'));
-                        const orderRow = $(this).closest('tr');
-                        const orderSD = orderRow.find('td:nth-child(4)').text();
-                        const orderED = orderRow.find('td:nth-child(5)').text();
-
-                        // 计算 less-weight
-                        const ratio = Math.random() * 0.8 + 0.1; // 0.1 到 0.9 之间
-                        const lessWeight = orderWW * ratio;
-
-                        $('#processing-sdate').val(orderSD);
-                        $('#processing-edate').val(orderED);
-                        $('#processing-wweight').val(orderWW.toFixed(2));
-                        $('#processing-lweight').val(lessWeight.toFixed(2));
-
-                        // 更新进度条
-                        updateProgressBar(1 - lessWeight / orderWW);
-
-                        dialog3.showModal();
-                    });
-
-                    function updateProgressBar(ratio) {
-                        $('#processing-accomplish').val((ratio * 100).toFixed(2) + '%');
-                        const percentage = ratio * 100;
-                        requestAnimationFrame(function update() {
-                            progressBar.css('left', percentage + '%');
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    toast: true,
+                                    text: err,
+                                    icon: "error",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Processing cancelled') }}",
+                            text: "{{ _('order is safe') }}",
+                            icon: "info"
                         });
                     }
-
-                    $('#cancel-processing').click(function () {
-                        progressBar.css('left', '0');
-                        dialog3.close();
-                    });
                 });
+            });
+            $('#view-table3').on('click', '.view-processing', function () {
+                const orderWW = parseFloat($(this).data('weight'));
+                const orderRow = $(this).closest('tr');
+                const orderSD = orderRow.find('td:nth-child(4)').text();
+                const orderED = orderRow.find('td:nth-child(5)').text();
+
+                // 计算 less-weight
+                const ratio = Math.random() * 0.8 + 0.1; // 0.1 到 0.9 之间
+                const lessWeight = orderWW * ratio;
+
+                $('#processing-sdate').val(orderSD);
+                $('#processing-edate').val(orderED);
+                $('#processing-wweight').val(orderWW.toFixed(2));
+                $('#processing-lweight').val(lessWeight.toFixed(2));
+
+                // 更新进度条
+                updateProgressBar(1 - lessWeight / orderWW);
+
+                dialog3.showModal();
+            });
+
+            function updateProgressBar(ratio) {
+                $('#processing-accomplish').val((ratio * 100).toFixed(2) + '%');
+                const percentage = ratio * 100;
+                requestAnimationFrame(function update() {
+                    progressBar.css('left', percentage + '%');
+                });
+            }
+
+            $('#cancel-processing').click(function () {
+                progressBar.css('left', '0');
+                dialog3.close();
             });
         });
     </script>

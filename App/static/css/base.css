@@ -313,7 +313,7 @@ h2 {
     position: fixed;
     bottom: 150px;
     right: 40px;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     cursor: pointer;

@@ -134,7 +134,6 @@
                 const rect = this.getBoundingClientRect();
                 const linkTop = rect.top + window.scrollY;
                 sessionStorage.setItem('loaderTop', `${linkTop}`); // 存储点击位置到sessionStorage
-                console.log("111 " + linkTop);
                 loaderContainer.style.top = `${linkTop}px`; // 设置加载器的位置
                 loaderContainer.offsetTop; // 触发重绘
                 loaderContainer.style.top = 0;
@@ -149,7 +148,6 @@
         window.addEventListener("load", () => {
             const loaderContainer = document.querySelector('.loader-container');
             const loaderTop = sessionStorage.getItem('loaderTop') || 0; // 从sessionStorage获取位置
-            console.log("222 " + loaderTop);
 
             loaderContainer.style.transition = 'none'; // 移除过渡效果以设置初始位置
             loaderContainer.style.top = '0px'; // 初始top设置为0
