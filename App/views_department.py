@@ -12,7 +12,7 @@ from .views_utils import enum_to_string, string_to_enum
 department = Blueprint('department', __name__, url_prefix='/department')  # department is name of blueprint
 
 
-@department.route('/')
+@department.route('/create')
 def index():
     department = None
     departmentDID = 0

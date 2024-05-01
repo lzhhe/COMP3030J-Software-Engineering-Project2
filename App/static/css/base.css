@@ -129,6 +129,11 @@ nav li {
     list-style: none;
 }
 
+.current-page {
+    background:  linear-gradient(to right, var(--sky4), var(--skin1)) no-repeat center bottom !important;
+    background-size: 95% 3px !important;
+}
+
 nav a {
     display: flex;
     align-items: center;
@@ -621,6 +626,135 @@ h2 {
     line-height: 30px; /* 使图标垂直居中 */
     font-size: 24px !important; /* 可以根据图标的实际大小进行调整 */
     margin: 0;
+}
+
+
+.loader-container {
+    position: fixed;
+    width: 100dvw;
+    height: 100dvh;
+    left: 0;
+    z-index: 10000;
+    background-color: var(--loader1);
+    transition: all 1.2s ease; /* 添加all属性以便在变化时平滑过渡 */
+    will-change: width, height, top, left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.6s ease;
+}
+
+.loader_cube {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    transition: 0.6s ease;
+}
+
+.loader_cube--glowing {
+    z-index: 10002;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.loader_cube--color {
+    z-index: 10001;
+    filter: blur(2px);
+    background: linear-gradient(135deg, #1afbf0, #da00ff);
+    animation: loadtwo 1s ease infinite;
+}
+
+@keyframes loadtwo {
+    0% {
+        transform: rotate(0deg);
+        stroke-dashoffset: 160;
+    }
+    100% {
+        transform: rotate(360deg);
+        stroke-dashoffset: -160;
+    }
+}
+
+.loader2 {
+    width: 70.4px;
+    height: 70.4px;
+    --clr: rgb(247, 197, 159);
+    --clr-alpha: rgb(247, 197, 159, .1);
+    animation: spinner 1.6s infinite ease;
+    transform-style: preserve-3d;
+}
+
+.loader2 > div {
+    background-color: var(--clr-alpha);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border: 3.5px solid var(--clr);
+}
+
+.loader2 div:nth-of-type(1) {
+    transform: translateZ(-35.2px) rotateY(180deg);
+}
+
+.loader2 div:nth-of-type(2) {
+    transform: rotateY(-270deg) translateX(50%);
+    transform-origin: top right;
+}
+
+.loader2 div:nth-of-type(3) {
+    transform: rotateY(270deg) translateX(-50%);
+    transform-origin: center left;
+}
+
+.loader2 div:nth-of-type(4) {
+    transform: rotateX(90deg) translateY(-50%);
+    transform-origin: top center;
+}
+
+.loader2 div:nth-of-type(5) {
+    transform: rotateX(-90deg) translateY(50%);
+    transform-origin: bottom center;
+}
+
+.loader2 div:nth-of-type(6) {
+    transform: translateZ(35.2px);
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+    }
+
+    50% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+    }
+
+    100% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+    }
+}
+
+.loader-container-out {
+    transition: height 1.2s ease, width 1.2s ease, opacity 1.6s ease-in-out;
+    width: 150px; /* 开始时宽度为0 */
+    height: 50px;
+    opacity: 0; /* 开始时完全不可见 */
+    overflow: hidden; /* 防止内容超出宽度 */
+}
+
+.loader-container-out .loader, .loader-container-out .loader2, .loader-container-out .loader3 {
+    opacity: 0;
 }
 
 @media screen and (max-width: 1000px) {

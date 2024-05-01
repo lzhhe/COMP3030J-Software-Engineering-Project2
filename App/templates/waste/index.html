@@ -12,19 +12,23 @@
         </div>
         <div class="menu-items">
             <ul class="nav-links">
-                <li class="underline"><a href="{{ url_for('waste.index') }}">
-                    <img src="../../static/image/icon/home.svg" alt="home" class="icons icon-nav" title="Home"
-                         data-placement="right">
-                    <span class="link-name">{{ _("Capacity") }}</span>
-                </a></li>
-                <li class="underline"><a href="{{ url_for('waste.approval') }}">
-                    <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav" title="Analyze">
-                    <span class="link-name">{{ _("Approval") }}</span>
-                </a></li>
-                <li class="underline"><a href="{{ url_for('waste.ratio') }}">
-                    <img src="../../static/image/icon/bbb.svg" alt="home" class="icons icon-nav" title="Analyze">
-                    <span class="link-name">{{ _("Ratio") }}</span>
-                </a></li>
+                <li class="{{ 'current-page' if request.path == url_for('waste.index') else 'underline' }}">
+                    <a href="{{ url_for('waste.index') }}">
+                        <img src="../../static/image/icon/home.svg" alt="home" class="icons icon-nav" title="Home"
+                             data-placement="right">
+                        <span class="link-name">{{ _("Capacity") }}</span>
+                    </a></li>
+                <li class="{{ 'current-page' if request.path == url_for('waste.approval') else 'underline' }}">
+                    <a href="{{ url_for('waste.approval') }}">
+                        <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                             title="Analyze">
+                        <span class="link-name">{{ _("Approval") }}</span>
+                    </a></li>
+                <li class="{{ 'current-page' if request.path == url_for('waste.ratio') else 'underline' }}">
+                    <a href="{{ url_for('waste.ratio') }}">
+                        <img src="../../static/image/icon/bbb.svg" alt="home" class="icons icon-nav" title="Analyze">
+                        <span class="link-name">{{ _("Ratio") }}</span>
+                    </a></li>
             </ul>
             <ul class="logout-mod">
                 <li><a href="#" id="logoutButton">
@@ -35,7 +39,16 @@
             {% include 'switch.html' %}
         </div>
     </nav>
-
+    <div class="loader-container">
+        <div class="loader2">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <dialog class="pico" id="createdept" style="height: 400px;">
         <article>
             <form method="dialog" class="form-edit">
@@ -112,6 +125,38 @@
                 details.data('value', spanText);
             });
 
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            const loaderContainer = document.querySelector('.loader-container');
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); // 阻止默认的链接跳转行为
+                const rect = this.getBoundingClientRect();
+                const linkTop = rect.top + window.scrollY;
+                sessionStorage.setItem('loaderTop', `${linkTop}`); // 存储点击位置到sessionStorage
+                console.log("111 " + linkTop);
+                loaderContainer.style.top = `${linkTop}px`; // 设置加载器的位置
+                loaderContainer.offsetTop; // 触发重绘
+                loaderContainer.style.top = 0;
+                loaderContainer.classList.remove('loader-container-out'); // 显示加载器
+
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('href'); // 跳转页面
+                }, 1500); // 动画持续时间
+            });
+        });
+
+        window.addEventListener("load", () => {
+            const loaderContainer = document.querySelector('.loader-container');
+            const loaderTop = sessionStorage.getItem('loaderTop') || 0; // 从sessionStorage获取位置
+            console.log("222 " + loaderTop);
+
+            loaderContainer.style.transition = 'none'; // 移除过渡效果以设置初始位置
+            loaderContainer.style.top = '0px'; // 初始top设置为0
+            loaderContainer.offsetWidth; // 触发重绘
+            loaderContainer.style.transition = 'all 1.2s ease'; // 重新添加过渡效果
+            loaderContainer.style.top = `${loaderTop}px`; // 设置加载器的目标位置
+            loaderContainer.classList.add('loader-container-out'); // 隐藏加载器
         });
     </script>
 {% endblock %}

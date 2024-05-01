@@ -133,6 +133,7 @@ Please use me to help you go green.
             }).then((result) => {
                 // 如果用户点击了确定按钮
                 if (result.isConfirmed) {
+                    sessionStorage.clear();
                     window.location.href = "{{ url_for('login.logout') }}";
                 }
             });

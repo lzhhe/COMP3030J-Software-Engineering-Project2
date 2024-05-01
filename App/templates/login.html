@@ -354,7 +354,6 @@
             registerButton.disabled = true;
         }
     });
-    // 假设有一个按钮用于打开对话框
 
     $(document).ready(function () {
         $('#signInSubmitField').click(function (event) {
@@ -367,6 +366,23 @@
                 submitLoginForm(); // 执行提交动作
             }
         });
+
+        function handleLoginSuccess(target) {
+            switch (target) {
+                case 'DEPARTMENT_MANAGER':
+                    window.location.href = departmentUrl;
+                    break;
+                case 'GOVERNMENT_MANAGER':
+                    window.location.href = governmentUrl;
+                    break;
+                case 'WASTE_MANAGER':
+                    window.location.href = wasteUrl;
+                    break;
+                default:
+                    window.location.href = individualUrl;
+                    break;
+            }
+        }
 
         function submitLoginForm() {
             const username = $('#signInUsernameField').val();
@@ -389,15 +405,7 @@
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'Login successful') {
                         const target = response.status;
-                        if (target === 'DEPARTMENT_MANAGER') {
-                            window.location.href = departmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'GOVERNMENT_MANAGER') {
-                            window.location.href = governmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'WASTE_MANAGER') {
-                            window.location.href = wasteUrl;  // 登录成功后的重定向
-                        } else {
-                            window.location.href = individualUrl;  // 登录成功后的重定向
-                        }
+                        handleLoginSuccess(target);
                     } else {
                         Swal.fire({
                             text: response.message,
@@ -441,15 +449,7 @@
                     // 根据响应处理逻辑，例如重定向或显示消息
                     if (response.message === 'successful') {
                         const target = response.status;
-                        if (target === 'DEPARTMENT_MANAGER') {
-                            window.location.href = departmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'GOVERNMENT_MANAGER') {
-                            window.location.href = governmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'WASTE_MANAGER') {
-                            window.location.href = wasteUrl;  // 登录成功后的重定向
-                        } else {
-                            window.location.href = individualUrl;  // 登录成功后的重定向
-                        }
+                        handleLoginSuccess(target);
                     } else {
                         Swal.fire({
                             text: response.message,
@@ -490,15 +490,7 @@
                     console.log(response);
                     if (response.message === 'successful') {
                         const target = response.status;
-                        if (target === 'DEPARTMENT_MANAGER') {
-                            window.location.href = departmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'GOVERNMENT_MANAGER') {
-                            window.location.href = governmentUrl;  // 登录成功后的重定向
-                        } else if (target === 'WASTE_MANAGER') {
-                            window.location.href = wasteUrl;  // 登录成功后的重定向
-                        } else {
-                            window.location.href = individualUrl;  // 登录成功后的重定向
-                        }
+                        handleLoginSuccess(target);
                     } else {
                         Swal.fire({
                             text: response.message,
