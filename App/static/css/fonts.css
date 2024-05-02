@@ -27,3 +27,8 @@
     font-family: LibreBaskerville;
     src: url('./font/LibreBaskerville-Regular.ttf');
 }
+
+@font-face {
+    font-family: ReeyRegular;
+    src: url('./font/ReeyRegular.ttf');
+}

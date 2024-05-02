@@ -10,21 +10,7 @@ from .models import *
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
 
 
-@individual.route('/')
+@individual.route('/index')
 def index():
-    return render_template('individual/dashboard.html')
+    return render_template('base2.html')
 
-
-@individual.route('/dashboard')
-def dashboard():
-    return render_template('individual/dashboard.html')
-
-
-@individual.route('/todo')
-def todo():
-    return render_template('individual/todo.html')
-
-
-@individual.route('/draw')
-def draw():
-    return render_template('individual/draw.html')
