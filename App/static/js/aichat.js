@@ -37,18 +37,18 @@ Please use me to help you go green.
     document.getElementById('ai-chat-open-btn').onclick = function () {
         ai_chat_container.style.opacity = '1';
         ai_chat_container.style.visibility = 'visible';
-        ai_chat_container.style.height = '800px';
+        ai_chat_container.style.height = '80dvh';
     };
 
     document.getElementById('ai-chat-close-btn').onclick = function () {
         ai_chat_container.style.opacity = '0';
         ai_chat_container.style.visibility = 'hidden';
         ai_chat_container.style.height = '0';
-        ai_chat_scroll.style.display = 'none'
+        ai_chat_scroll.style.visibility = 'hidden';
     };
 
     ai_chat_scroll.onclick = function () {
-        ai_chat_scroll.style.display = 'none';
+        ai_chat_scroll.style.visibility = 'hidden';
         ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
     };
 
@@ -61,16 +61,16 @@ Please use me to help you go green.
         if (event.key === "Enter") {
             event.preventDefault();  // 防止表单默认提交
             sendMessage();  // 发送消息
-            ai_chat_scroll.style.display = 'none';
+            ai_chat_scroll.style.visibility = 'hidden';
         }
     });
 
     ai_chat_messages.addEventListener('scroll', function () {
         let isBottom = ai_chat_messages.scrollHeight - ai_chat_messages.scrollTop === ai_chat_messages.clientHeight;
         if (isBottom) {
-            ai_chat_scroll.style.display = 'none';
+            ai_chat_scroll.style.visibility = 'hidden';
         } else {
-            ai_chat_scroll.style.display = 'flex';
+            ai_chat_scroll.style.visibility = 'visible';
         }
     })
 
@@ -148,5 +148,4 @@ Please use me to help you go green.
             }
         }
     }
-
 });

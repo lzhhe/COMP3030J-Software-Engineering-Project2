@@ -1,0 +1,12 @@
+{% extends 'base2.html' %}
+{% block title %}
+    individual
+{% endblock %}
+{% block extra_thing %}
+    <script>
+        $('.header__logo').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/individual/index';
+        });
+    </script>
+{% endblock %}

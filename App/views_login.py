@@ -14,6 +14,11 @@ login = Blueprint('login', __name__)  # department is name of blueprint
 
 @login.route('/')
 def main():
+    return render_template('base2.html')
+
+
+@login.route('/lpage')
+def lpage():
     return render_template('login.html')
 
 

@@ -1,6 +1,6 @@
 #languageSwitch {
-    position: absolute; /* 使用 fixed 而不是 absolute 以固定位置于视口 */
-    left: -4px; /* 距离屏幕左边的距离 */
+    position: fixed; /* 使用 fixed 而不是 absolute 以固定位置于视口 */
+    left: 4px; /* 距离屏幕左边的距离 */
     bottom: 90px; /* 距离屏幕底部的距离 */
     display: inline-block;
     width: 2.5em;
@@ -8,8 +8,8 @@
 }
 
 #themeSwitch {
-    position: absolute; /* 使用 fixed 而不是 absolute 以固定位置于视口 */
-    left: -4px; /* 距离屏幕左边的距离 */
+    position: fixed; /* 使用 fixed 而不是 absolute 以固定位置于视口 */
+    left: 4px; /* 距离屏幕左边的距离 */
     bottom: 55px; /* 距离屏幕底部的距离 */
     display: inline-block;
     width: 2.5em;
@@ -61,7 +61,7 @@
     height: 1em;
     width: 1em;
     left: 15%;
-    bottom: 30%;
+    bottom: 20%;
     transition: transform 0.5s, box-shadow 0.5s;
     animation: fadeIn 0.6s;
 }
@@ -109,15 +109,4 @@
     100% {
         opacity: 1;
     }
-}
-
-.switch-text {
-    position: absolute;
-    top: 50%;
-    transform: translate(50%, -50%);
-    font-size: 0.75em;
-    width: 150px;
-    color: var(--black-light-color);
-    cursor: pointer;
-    transition: var(--tran-05);
 }

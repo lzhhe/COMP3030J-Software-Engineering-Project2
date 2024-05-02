@@ -1,11 +1,13 @@
 <!DOCTYPE html>
+{% set hasUser = True if user else False %}
 <html lang="{{ session.get('language', 'en') }}" data-theme="{{ session.get('theme', 'light') }}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../static/css/fonts.css"/>
     <link rel="stylesheet" href="../static/css/base2.css">
     <link rel="stylesheet" href="../static/css/colors.css">
-    <link rel="stylesheet" href="../static/css/switch.css"/>
+    <link rel="stylesheet" href="../static/css/switch2.css"/>
+    <link rel="stylesheet" href="../static/css/aicss.css"/>
     <link rel="stylesheet" href="../static/css/progress_bar.css"/>
     <link rel="stylesheet" href="../static/css/utils/hover-min.css"/>
     <link rel="stylesheet" href="../static/css/iconfont/iconfont.css"/>
@@ -14,7 +16,7 @@
     <link rel="stylesheet" href="../static/css/utils/datatables.css">
     <link rel="shortcut icon" href="../static/image/icon/skyline.png">
     {% block extra_css %}{% endblock %}
-    <title>{% block title %}Base2{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <script>
         const themeUrl = "{{ url_for('utils.switchTheme') }}";
         const langUrl = "{{ url_for('utils.switchLanguage') }}";
@@ -29,39 +31,15 @@
     <script src="../static/js/utils/scrollreveal.min.js"></script>
     <script src="../static/js/utils/slick.min.js"></script>
     <script src="../static/js/utils/gsap.js"></script>
+    <script src="../static/js/utils/sweetalert2.js"></script>
+    <script src="../static/js/aichat.js"></script>
     {% block extra_js %}{% endblock %}
 </head>
-<body>
+<body data-hasuser="{% if user %}true{% else %}false{% endif %}">
+{% include 'switch2.html' %}
+{% include 'aichat.html' %}
 <section class="wrapper">
-    <header class="header">
-        <div class="container">
-            <div class="header__inner">
-                <nav class="menu">
-                    <ul class="menu__list">
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">Home</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">About Us</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">Service</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">Contact</a>
-                        </li>
-                    </ul>
-                </nav>
-                <a href="base2.html" class="header__logo">
-                    <img src="../static/image/icon/skyline.png" alt="logo" class="logo__img">
-                </a>
-                <div class="header__burger">
-                    <span></span>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    {% include 'header.html' %}
     <main class="main">
         <section class="home">
             <div class="container">
@@ -71,82 +49,108 @@
                     <div class="home__descr">Let's recycle and protect the environment</div>
                     <p class="home__text">We are committed to recycling waste, reducing carbon emissions and making the
                         planet a better place</p>
-                    <div class="home__button">
-                        <a href="#" class="home__link">Learn more</a>
-                    </div>
                 </div>
             </div>
         </section>
     </main>
 </section>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
-<h1>ajsdksajdkaskdasjdk</h1>
 
+<section class="web-info">
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+    <h1>ajsdksajdkaskdasjdk</h1>
+</section>
+
+{% block extra_thing %}{% endblock %}
 <script>
     $(document).ready(function () {
+        let hasUser = $('body').data('hasuser');
+
+        $('.need-user').click(function (event) {
+            if (!hasUser) {
+                event.preventDefault();
+                Swal.fire({
+                    position: 'top',
+                    title: 'Please login to use functions!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    reverseButtons: true,
+                    timer: 4000,
+                    timerProgressBar: true,
+                }).then((result) => {
+                    // 如果用户点击了确定按钮
+                    if (result.isConfirmed) {
+                        sessionStorage.clear();
+                        window.location.href = "{{ url_for('login.lpage') }}";
+                    }
+                });
+            }
+        });
+
         $('.header__burger').click(function (event) {
             $('.header__burger, .menu').toggleClass('active');
             $('body').toggleClass('lock');
@@ -157,6 +161,51 @@
             $('.header__burger, .menu').removeClass('active');
             $('body').removeClass('lock');
         });
+
+        // 添加点击事件监听器
+        $('#logoutButton').click(function (event) {
+            // 阻止默认的链接点击行为
+            event.preventDefault();
+            // 使用 Swal 弹出确认对话框
+            Swal.fire({
+                position: 'top',
+                title: 'Are you sure to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true,
+                timer: 4000,
+                timerProgressBar: true,
+            }).then((result) => {
+                // 如果用户点击了确定按钮
+                if (result.isConfirmed) {
+                    sessionStorage.clear();
+                    window.location.href = "{{ url_for('login.logout') }}";
+                }
+            });
+        });
+        $(document).keydown(function (event) {
+            if (event.which === 27) {
+                Swal.fire({
+                    position: 'top',
+                    title: 'Are you sure to logout?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    reverseButtons: true,
+                    timer: 4000,
+                    timerProgressBar: true,
+                }).then((result) => {
+                    // 如果用户点击了确定按钮
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ url_for('login.logout') }}";
+                    }
+                });
+            }
+        });
+
 
     });
     const sr = ScrollReveal({
@@ -171,6 +220,7 @@
     sr.reveal(`.home__descr`, {origin: 'right'})
     sr.reveal(`.home__text`, {origin: 'top'})
     sr.reveal(`.home__button`, {origin: 'bottom'})
+
 </script>
 </body>
 </html>

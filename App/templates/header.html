@@ -1,0 +1,44 @@
+<header class="header">
+    <div class="container">
+        <div class="header__inner">
+            <nav class="menu">
+                <ul class="menu__list">
+                    <li class="menu__item">
+                        <a href="#" class="menu__link need-user">Home</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#" class="menu__link need-user">About Us</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#" class="menu__link need-user">Service</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#" class="menu__link need-user">Contact</a>
+                    </li>
+                    <li class="menu__item">
+                        {% if hasUser %}
+                            <div class="information">
+                                <div class="user-info">
+                                    <span>{{ user.username }}</span>
+                                    <span>{{ user.status | enum_to_string }}</span>
+                                </div>
+                                <a href="#" id="logoutButton">
+                                    <img src="../static/image/icon/exit.svg" alt="exit" style="width: 1.5em">
+                                </a>
+                            </div>
+                        {% else %}
+                            <a href="/lpage" class="menu__link"
+                               style="font-weight: 600; padding: 10px;border-radius: 10px; border: 2px solid var(--border-color)">LOGIN</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+            <a href="/" class="header__logo">
+                <img src="../static/image/icon/skyline.png" alt="logo" class="logo__img">
+            </a>
+            <div class="header__burger">
+                <span></span>
+            </div>
+        </div>
+    </div>
+</header>
