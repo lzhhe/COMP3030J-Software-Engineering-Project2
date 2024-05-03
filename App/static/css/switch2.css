@@ -5,6 +5,7 @@
     display: inline-block;
     width: 2.5em;
     height: 1.5em;
+    z-index: 100;
 }
 
 #themeSwitch {
@@ -14,6 +15,7 @@
     display: inline-block;
     width: 2.5em;
     height: 1.5em;
+    z-index: 100;
 }
 
 /* Hide default HTML checkbox */

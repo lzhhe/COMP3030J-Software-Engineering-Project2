@@ -29,6 +29,7 @@ html, body {
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    background: var(--panel-color)
 }
 
 input, button, textarea {
@@ -305,6 +306,96 @@ body {
     line-height: 30px;
     margin-bottom: 40px;
 }
+
+/* ================================ */
+
+.flow-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.flow-info p, .flow-info img {
+    pointer-events: none;
+    user-select: none;
+}
+
+.flow-info-div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    user-select: none;
+    padding-bottom: 10dvh;
+}
+
+.scrollbox {
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    overflow: hidden;
+}
+
+.scrollbox_container {
+    justify-content: start;
+    height: 100dvh;
+    flex-shrink: 0;
+}
+
+.scrollbox_container_card {
+    position: relative;
+    width: 60dvw;
+    height: 70dvh;
+    background-color: #f7f7f7;
+    border-radius: 5rem;
+    margin-left: 2rem;
+    flex-shrink: 0;
+    overflow: hidden;
+    align-items: center;
+}
+
+.scrollbox_container_card p {
+    font-family: sans-serif;
+    font-size: 6rem;
+    color: #171717;
+    font-weight: 900;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.scc_city {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    opacity: 0.7;
+}
+
+.scc_truck {
+    position: absolute;
+    bottom: 0;
+    height: 6rem;
+}
+
+.scc_city1,
+.scc_truck1 {
+    left: 0;
+}
+
+.scc_city2,
+.scc_truck2 {
+    left: calc(-100% + -2rem);
+}
+
+.scc_city3,
+.scc_truck3 {
+    left: calc(-200% + -4rem);
+}
+
+.fixed-text {
+    transform: translateY(20px);
+}
+
+/* ================================ */
 
 @media (max-width: 925px) {
     body.lock {
