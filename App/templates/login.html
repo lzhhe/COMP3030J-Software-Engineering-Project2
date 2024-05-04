@@ -356,6 +356,17 @@
     });
 
     $(document).ready(function () {
+        let isDark = $('html').attr('data-theme') === 'dark';
+        let swalcolor = '';
+        const themeButton = $('#themeSwitch input');
+        themeButton.change(function () {
+            if (isDark) {
+                swalcolor = '#F0F9FF';
+            } else {
+                swalcolor = '#353738';
+            }
+            isDark = !isDark
+        });
         $('#signInSubmitField').click(function (event) {
             submitLoginForm();
         });
@@ -414,6 +425,7 @@
                             closeOnEsc: true,
                             timer: 3000,
                             timerProgressBar: true,
+                            background: swalcolor,
                         });
                     }
                 },
@@ -458,6 +470,7 @@
                             closeOnEsc: true,
                             timer: 3000,
                             timerProgressBar: true,
+                            background: swalcolor,
                         });
                     }
                 },
@@ -499,6 +512,7 @@
                             closeOnEsc: true,
                             timer: 3000,
                             timerProgressBar: true,
+                            background: swalcolor,
                         });
                     }
                 },

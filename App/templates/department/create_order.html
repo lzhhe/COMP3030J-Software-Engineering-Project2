@@ -149,6 +149,17 @@
         {% endif %}
 
         $(document).ready(function () {
+            let isDark = $('html').attr('data-theme') === 'dark';
+            let swalcolor = '';
+            const themeButton = $('#themeSwitch input');
+            themeButton.change(function () {
+                if (isDark) {
+                    swalcolor = '#F0F9FF';
+                } else {
+                    swalcolor = '#353738';
+                }
+                isDark = !isDark
+            });
             $("#createDepartmentBtn").click(function (e) {
                 e.preventDefault();
                 const departmentType = $("input[name='departmentType']:checked").val();
@@ -162,6 +173,7 @@
                         closeOnEsc: true,
                         timer: 3000,
                         timerProgressBar: true,
+                        background: swalcolor,
                     });
                 }
                 const departmentInfo = {
@@ -185,6 +197,7 @@
                                 position: 'top-end',
                                 timer: 2000,
                                 timerProgressBar: true,
+                                background: swalcolor
                             });
                             window.location.href = "/department/";
                         } else {
@@ -195,6 +208,7 @@
                                 closeOnEsc: true,
                                 timer: 3000,
                                 timerProgressBar: true,
+                                background: swalcolor,
                             });
                         }
                     }
@@ -222,6 +236,7 @@
                         closeOnEsc: true,
                         timer: 3000,
                         timerProgressBar: true,
+                        background: swalcolor,
                     });
                 }
                 const orderInfo = {
@@ -248,6 +263,7 @@
                                 position: 'top-end',
                                 timer: 2000,
                                 timerProgressBar: true,
+                                background: swalcolor,
                             });
                             window.location.href = "/department/";
                         } else {
@@ -258,6 +274,7 @@
                                 closeOnEsc: true,
                                 timer: 3000,
                                 timerProgressBar: true,
+                                background: swalcolor,
                             });
                         }
                     }

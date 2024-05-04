@@ -89,6 +89,17 @@
     </section>
     <script>
         $(document).ready(function () {
+            let isDark = $('html').attr('data-theme') === 'dark';
+            let swalcolor = '';
+            const themeButton = $('#themeSwitch input');
+            themeButton.change(function () {
+                if (isDark) {
+                    swalcolor = '#F0F9FF';
+                } else {
+                    swalcolor = '#353738';
+                }
+                isDark = !isDark
+            });
             let edit_row;
             const dialog = document.querySelector('#edit-order-dialog');
             const editOrderTable = $('#edit-order-table').DataTable({
@@ -125,6 +136,7 @@
                     showCancelButton: true,
                     confirmButtonText: "{{ _('Yes!') }}",
                     cancelButtonText: "{{ _('No') }}",
+                    background: swalcolor,
                     reverseButtons: true
                 }).then((result) => {
                     if (result.value) {
@@ -143,6 +155,7 @@
                                         timerProgressBar: true,
                                         closeOnClickOutside: true,
                                         closeOnEsc: true,
+                                        background: swalcolor,
                                     });
                                     editOrderTable.row($(self).closest('tr')).remove().draw(false);
                                 } else {
@@ -155,6 +168,7 @@
                                         timerProgressBar: true,
                                         closeOnClickOutside: true,
                                         closeOnEsc: true,
+                                        background: swalcolor,
                                     });
                                 }
                             },
@@ -168,6 +182,7 @@
                                     timerProgressBar: true,
                                     closeOnClickOutside: true,
                                     closeOnEsc: true,
+                                    background: swalcolor,
                                 });
                             }
                         });
@@ -176,7 +191,8 @@
                         Swal.fire({
                             title: "{{ _('Deletion cancelled') }}",
                             text: "{{ _('Your order is safe') }}",
-                            icon: "info"
+                            icon: "info",
+                            background: swalcolor,
                         });
                     }
                 });
@@ -223,6 +239,7 @@
                         position: 'top-end',
                         timer: 3000,
                         timerProgressBar: true,
+                        background: swalcolor,
                     });
                     return;
                 }
@@ -248,6 +265,7 @@
                                 position: 'top-end',
                                 timer: 2000,
                                 timerProgressBar: true,
+                                background: swalcolor,
                             });
                             dialog.close();
                             const row = editOrderTable.row(edit_row);
@@ -270,6 +288,7 @@
                                 position: 'top-end',
                                 timer: 2000,
                                 timerProgressBar: true,
+                                background: swalcolor,
                             });
                         }
                     },
@@ -282,6 +301,7 @@
                             position: 'top-end',
                             timer: 2000,
                             timerProgressBar: true,
+                            background: swalcolor,
                         });
                     }
                 });

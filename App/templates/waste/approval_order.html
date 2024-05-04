@@ -361,6 +361,17 @@
     </section>
     <script>
         $(document).ready(function () {
+            let isDark = $('html').attr('data-theme') === 'dark';
+            let swalcolor = '';
+            const themeButton = $('#themeSwitch input');
+            themeButton.change(function () {
+                if (isDark) {
+                    swalcolor = '#F0F9FF';
+                } else {
+                    swalcolor = '#353738';
+                }
+                isDark = !isDark
+            });
             const progressBar = $('#progress-bar');
             let today = new Date();  // 获取当前日期
             let yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);  // 昨天
@@ -613,6 +624,7 @@
                     closeOnClickOutside: true,
                     closeOnEsc: true,
                     reverseButtons: true,
+                    background: swalcolor,
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
@@ -628,7 +640,7 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,
+                                        timerProgressBar: true,background: swalcolor,
                                     });
                                     table1.row($(self).closest('tr')).remove().draw(false);
                                     const newR = table2.row.add([
@@ -648,7 +660,7 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,
+                                        timerProgressBar: true,background: swalcolor,
                                     });
                                 }
                             },
@@ -660,7 +672,7 @@
                                     closeOnEsc: true,
                                     position: 'top-end',
                                     timer: 2000,
-                                    timerProgressBar: true,
+                                    timerProgressBar: true,background: swalcolor,
                                 });
                             }
                         });
@@ -668,7 +680,7 @@
                         // 用户点击了取消按钮或关闭了对话框
                         Swal.fire({
                             title: "{{ _('Confirmation cancelled') }}",
-                            text: "{{ _('order is safe') }}",
+                            text: "{{ _('order is safe') }}",background: swalcolor,
                             icon: "info"
                         });
                     }
@@ -728,7 +740,7 @@
                                 closeOnEsc: true,
                                 position: 'top-end',
                                 timer: 2000,
-                                timerProgressBar: true,
+                                timerProgressBar: true,background: swalcolor,
                             });
                         },
                         error: function (xhr, textStatus, errorThrown) {
@@ -747,7 +759,7 @@
                         closeOnEsc: true,
                         position: 'top-end',
                         timer: 2000,
-                        timerProgressBar: true,
+                        timerProgressBar: true,background: swalcolor,
                     });
                 }
             }).on('focus', 'td.multiplier', function () {
@@ -770,7 +782,7 @@
                     cancelButtonText: "{{ _('Cancel') }}",
                     closeOnClickOutside: true,
                     closeOnEsc: true,
-                    reverseButtons: true,
+                    reverseButtons: true,background: swalcolor,
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
@@ -786,7 +798,7 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,
+                                        timerProgressBar: true,background: swalcolor,
                                     });
                                     let dates = generateRandomDatePair();  // 生成随机日期对
                                     table2.row($(self).closest('tr')).remove().draw(false);
@@ -806,7 +818,7 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,
+                                        timerProgressBar: true,background: swalcolor,
                                     });
                                 }
                             },
@@ -819,7 +831,7 @@
                                     closeOnEsc: true,
                                     position: 'top-end',
                                     timer: 2000,
-                                    timerProgressBar: true,
+                                    timerProgressBar: true,background: swalcolor,
                                 });
                             }
                         });
@@ -827,7 +839,7 @@
                         // 用户点击了取消按钮或关闭了对话框
                         Swal.fire({
                             title: "{{ _('Processing cancelled') }}",
-                            text: "{{ _('order is safe') }}",
+                            text: "{{ _('order is safe') }}",background: swalcolor,
                             icon: "info"
                         });
                     }

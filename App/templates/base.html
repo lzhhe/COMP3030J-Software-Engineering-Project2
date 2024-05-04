@@ -80,6 +80,17 @@
         NProgress.done();
     });
     $(document).ready(function () {
+        let isDark = $('html').attr('data-theme') === 'dark';
+        let swalcolor = '';
+        const themeButton = $('#themeSwitch input');
+        themeButton.change(function () {
+            if (isDark) {
+                swalcolor = '#F0F9FF';
+            } else {
+                swalcolor = '#353738';
+            }
+            isDark = !isDark
+        });
         // 添加点击事件监听器
         $('#logoutButton').click(function (event) {
             // 阻止默认的链接点击行为
@@ -95,6 +106,7 @@
                 reverseButtons: true,
                 timer: 4000,
                 timerProgressBar: true,
+                background: swalcolor,
             }).then((result) => {
                 // 如果用户点击了确定按钮
                 if (result.isConfirmed) {
@@ -115,6 +127,7 @@
                     reverseButtons: true,
                     timer: 4000,
                     timerProgressBar: true,
+                    background: swalcolor,
                 }).then((result) => {
                     // 如果用户点击了确定按钮
                     if (result.isConfirmed) {
