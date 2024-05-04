@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    let open = false;
     const decoder = new TextDecoder();
     const ai_chat_messages = document.getElementById('ai-chat-messages');
     const ai_chat_scroll = document.getElementById('ai-chat-scroll-btn');
@@ -38,6 +39,7 @@ Please use me to help you go green.
         ai_chat_container.style.opacity = '1';
         ai_chat_container.style.visibility = 'visible';
         ai_chat_container.style.height = '80dvh';
+        open = true;
     };
 
     document.getElementById('ai-chat-close-btn').onclick = function () {
@@ -45,11 +47,12 @@ Please use me to help you go green.
         ai_chat_container.style.visibility = 'hidden';
         ai_chat_container.style.height = '0';
         ai_chat_scroll.style.visibility = 'hidden';
+        open = false;
     };
 
     ai_chat_scroll.onclick = function () {
-        ai_chat_scroll.style.visibility = 'hidden';
         ai_chat_messages.scrollTop = ai_chat_messages.scrollHeight;
+        ai_chat_scroll.style.visibility = 'hidden';
     };
 
     document.getElementById('ai-chat-send-btn').onclick = function () {
@@ -61,18 +64,21 @@ Please use me to help you go green.
         if (event.key === "Enter") {
             event.preventDefault();  // 防止表单默认提交
             sendMessage();  // 发送消息
-            ai_chat_scroll.style.visibility = 'hidden';
         }
     });
 
     ai_chat_messages.addEventListener('scroll', function () {
-        let isBottom = ai_chat_messages.scrollHeight - ai_chat_messages.scrollTop === ai_chat_messages.clientHeight;
-        if (isBottom) {
-            ai_chat_scroll.style.visibility = 'hidden';
-        } else {
-            ai_chat_scroll.style.visibility = 'visible';
+        if (open) {
+            checkScrollVisibility();
         }
     })
+
+    // 定义检查滚动条可见性的函数
+    function checkScrollVisibility() {
+        let isBottom = ai_chat_messages.scrollHeight - ai_chat_messages.scrollTop === ai_chat_messages.clientHeight;
+        ai_chat_scroll.style.visibility = isBottom ? 'hidden' : 'visible';
+    }
+
 
     function sendMessage() {
         if (user_input.value.trim() !== "") {

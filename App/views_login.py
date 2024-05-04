@@ -106,7 +106,7 @@ def forget():
 @login.route('/logout', methods=['GET'])
 def logout():
     session.pop('UID', None)
-    return render_template('login.html')
+    return redirect(url_for('login.main'))
 
 
 # # 提供用户状态

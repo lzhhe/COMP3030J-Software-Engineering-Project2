@@ -1,15 +1,45 @@
 :root {
+    font-size: 2vmin;
     --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
     --tran-02: all 0.2s ease;
     --nav-width: 250px;
     --context-menu-offset: -30px;
+
+    --ff-oswald: 'Oswald', sans-serif;
+    --ff-rubik: 'Rubik', sans-serif;
+
+    --fs-1: 6rem;
+    --fs-2: 5rem;
+    --fs-3: 4rem;
+    --fs-4: 3rem;
+    --fs-5: 2.2rem;
+    --fs-6: 2rem;
+    --fs-7: 1.8rem;
+    --fs-8: 1.5rem;
+    --fs-9: 1.4rem;
+    --fs-10: 1.2rem;
+
+    --fw-500: 500;
+    --fw-600: 600;
+    --fw-700: 700;
+    --fw-800: 800;
+    --section-padding: 50px;
+
+    --shadow-1: 2px 0 50px hsla(0, 0%, 0%, 0.2);
+    --shadow-2: 0px 40px 60px hsla(202, 75%, 47%, 0.7);
+    --shadow-3: 0px 0px 60px hsla(202, 75%, 47%, 0.5);
+
+    --transition: 0.25s ease;
+    --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
+    --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
 }
 
 :root[data-theme="light"] {
     --color-whole: #f2f2f2;
     --primary-color: #0e4bf1;
     --panel-color: #f2f2f2;
+    --panel2-color: #F0F9FF;
     --ai-message-bg: #eeeeee;
     --t-color: #000;
     --black-light-color: #707070;
@@ -184,12 +214,29 @@
 
     --progress-bar-background: #DFE3EB;
 
+    --green-blue-crayola: hsl(201, 91%, 57%);
+    --prussian-blue: hsl(202, 72%, 15%);
+    --eerie-black: hsl(210, 11%, 15%);
+    --dark-orange: hsl(32, 100%, 50%);
+    --alice-blue: hsl(203, 100%, 97%);
+    --light-gray: hsl(0, 0%, 80%);
+    --indigo-dye: hsl(202, 64%, 26%);
+    --cultured-1: hsl(0, 0%, 94%);
+    --cultured-2: hsl(0, 0%, 95%);
+    --cultured-3: hsl(0, 0%, 95%);
+    --plutinum: hsl(0, 0%, 91%);
+    --black_60: hsla(0, 0%, 0%, 0.6);
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);
+    --onyx: hsl(0, 0%, 24%);
+
 }
 
 :root[data-theme="dark"] {
     --color-whole: #1C212C;
     --primary-color: #3a3b3c;
     --panel-color: #242526;
+    --panel2-color: #353738;
     --ai-message-bg: #343536;
     --t-color: #ccc;
     --black-light-color: #ccc;
@@ -361,4 +408,25 @@
 
     --progress-bar-background: #202632;
 
+
+    --green-blue-crayola: hsl(201, 75%, 28%);
+    --prussian-blue: hsl(204, 65%, 15%);
+    --eerie-black: hsl(224, 16%, 33%);
+    --dark-orange: hsl(32, 98%, 20%);
+    --alice-blue: hsl(210, 7%, 63%);
+    --light-gray: hsl(0, 0%, 54%);
+    --indigo-dye: hsl(200, 64%, 17%);
+    --cultured-1: hsl(0, 4%, 66%);
+    --cultured-2: hsl(0, 4%, 55%);
+    --cultured-3: hsl(0, 4%, 49%);
+    --plutinum: hsl(0, 2%, 27%);
+    --black_60: hsla(0, 0%, 77%, 0.6);
+    --white: hsl(0, 0%, 17%);
+    --black: hsl(0, 0%, 97%);
+    --onyx: hsl(0, 2%, 80%);
+
+}
+
+:root[data-theme="dark"] img{
+    filter: brightness(70%) contrast(80%);
 }

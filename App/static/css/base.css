@@ -308,7 +308,7 @@ h2 {
     left: 0;
     z-index: 10000;
     background-color: var(--loader1);
-    transition: all 1.2s ease; /* 添加all属性以便在变化时平滑过渡 */
+    transition: all 1s ease; /* 添加all属性以便在变化时平滑过渡 */
     will-change: width, height, top, left;
     display: flex;
     flex-direction: row;
@@ -418,7 +418,7 @@ h2 {
 }
 
 .loader-container-out {
-    transition: height 1.2s ease, width 1.2s ease, opacity 1.6s ease-in-out;
+    transition: height 1s ease, width 1s ease, opacity 1.6s ease-in-out;
     width: 150px; /* 开始时宽度为0 */
     height: 50px;
     opacity: 0; /* 开始时完全不可见 */
@@ -458,4 +458,3 @@ h2 {
         width: calc(100vw - 250px);
     }
 }
-

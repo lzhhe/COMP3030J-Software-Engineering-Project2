@@ -1,11 +1,11 @@
 #ai-chat-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 30dvw;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 30rem;
     height: 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     background: linear-gradient(to top right, #ffffff, #e6e9f0);
@@ -16,45 +16,43 @@
 }
 
 #ai-chat-scroll-btn {
-    width: 30px;
-    height: 30px;
+    width: 2rem;
+    height: 2rem;
     position: fixed;
-    bottom: 80px;
-    right: 40px;
+    bottom: 5.5rem;
+    right: 2.5rem;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     z-index: 1000;
-    border-radius: 8px;
-    background-color: var(--panel-color);
+    border-radius: 0.5rem;
+    background-color: var(--panel2-color);
     color: var(--text-color);
 }
 
 #ai-chat-scroll-btn:hover {
-    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0.12rem 0.12rem 0.12rem 0 rgba(0, 0, 0, 0.5);
 }
 
 #ai-chat-header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0.6rem;
     background-color: #0078d7;
-    height: 35px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    height: 2.2rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
 }
 
 #ai-chat-header span {
-    font-size: 16px;
     font-weight: 500;
     margin-left: 42%;
     margin-right: auto;
 }
 
 #ai-chat-header i {
-    font-size: 16px;
     font-weight: 500;
-    margin-right: 10px;
+    margin-right: 0.67rem;
     cursor: pointer;
 }
 
@@ -66,78 +64,78 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 10px;
+    padding: 0.6rem;
     overflow-y: auto;
     background: var(--panel-color);
-    border-top: 2px solid var(--border-color);
-    border-bottom: 2px solid var(--border-color);
+    border-top: 0.12rem solid var(--border-color);
+    border-bottom: 0.12rem solid var(--border-color);
 }
 
 #ai-chat-input {
     display: flex;
     position: relative; /* 添加相对定位 */
-    padding: 10px;
+    padding: 0.6rem;
     background-color: var(--color-whole);
 }
 
 #ai-chat-input textarea {
-    height: 50px;
-    width: calc(100% - 50px); /* 减去按钮的宽度 */
-    padding: 8px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px 0 0 4px;
-    font-size: 16px;
+    height: 3.2rem;
+    width: calc(100% - 3.2rem); /* 减去按钮的宽度 */
+    padding: 0.5rem;
+    border: 0.06rem solid var(--border-color);
+    border-radius: 0.25rem 0 0 0.25rem;
     resize: none; /* 禁止调整大小 */
     overflow-y: auto; /* 允许垂直滚动 */
 }
 
 #ai-chat-input textarea:focus, #ai-chat-send-btn:focus {
-    border: 1px solid var(--border-color);
+    border: 0.06rem solid var(--border-color);
     outline: none;
 }
 
 #ai-chat-send-btn {
     position: absolute; /* 使用绝对定位 */
-    right: 10px; /* 与容器右侧的距离 */
-    height: 50px;
-    width: 50px; /* 明确设置宽度 */
+    right: 0.7rem; /* 与容器右侧的距离 */
+    height: 3.2rem;
+    width: 3.2rem; /* 明确设置宽度 */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-top-right-radius: 4px; /* 右上角圆角 */
-    border-bottom-right-radius: 4px; /* 右下角圆角 */
-    border: 1px solid var(--border-color);
+    border-top-right-radius: 0.25rem; /* 右上角圆角 */
+    border-bottom-right-radius: 0.25rem; /* 右下角圆角 */
+    border: 0.06rem solid var(--border-color);
 }
 
 #ai-chat-send-btn img {
-    height: 30px;
+    height: 1.8rem;
     z-index: 10;
 }
 
 
 #ai-chat-open-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 1.25rem;
+    right: 1.25rem;
     display: flex;
     align-items: center;
     font-family: inherit;
     cursor: pointer;
     font-weight: 500;
-    font-size: 17px;
     padding: 0.8em 1.3em 0.8em 0.9em;
     color: white;
     background: #ad5389;
     background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
     border: none;
     letter-spacing: 0.05em;
-    border-radius: 16px;
+    border-radius: 1rem;
     z-index: 100;
+    height: 3rem;
+    width: 5rem;
 }
 
 #ai-chat-open-btn svg {
-    margin-right: 3px;
+    margin-right: 0.2rem;
     transform: rotate(30deg);
     transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -147,16 +145,16 @@
 }
 
 #ai-chat-open-btn:hover svg {
-    transform: translateX(5px) rotate(90deg);
+    transform: translateX(0.33rem) rotate(90deg);
 }
 
 #ai-chat-open-btn:hover span {
-    transform: translateX(7px);
+    transform: translateX(0.5rem);
 }
 
 .message-container {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 0.67rem;
     justify-content: flex-end; /* 用户消息向右对齐 */
     align-self: end;
     width: 100%;
@@ -176,11 +174,10 @@
     white-space: pre-wrap; /* 保留空白符和自动换行 */
     overflow-wrap: break-word; /* 长单词或 URL 自动换行 */
     max-width: 70%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 6px;
+    margin-bottom: 0.67rem;
+    padding: 0.67rem;
+    border-radius: 0.4rem;
     line-height: 1.2;
-    font-size: 14px;
 }
 
 .message-bubble:focus {
@@ -190,10 +187,10 @@
 
 .user-message {
     background-color: var(--done1);
-    margin-right: 10px;
+    margin-right: 0.67rem;
 }
 
 .ai-message {
     background-color: var(--ai-message-bg);
-    margin-left: 10px;
+    margin-left: 0.67rem;
 }
