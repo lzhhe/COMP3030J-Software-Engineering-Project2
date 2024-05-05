@@ -256,7 +256,7 @@ body {
 .main {
     min-height: 100%;
     flex: 1 1 auto;
-    margin-top: 6rem;
+    margin-top: 12rem;
 }
 
 .intro-section {
@@ -288,7 +288,7 @@ body {
 }
 
 .home {
-    padding-top: 6.67rem;
+    padding-top: 7rem;
 }
 
 /* ===================================== */
@@ -476,15 +476,6 @@ body {
 
 :root[data-theme="dark"] .about-banner {
     box-shadow: var(--shadow-3);
-}
-
-.about-us .abs-img-2 {
-    display: none;
-    position: absolute;
-    width: 26.67rem;
-    bottom: 0;
-    left: 3.33rem;
-    z-index: 0;
 }
 
 .about-us .abs-img-1 {
@@ -675,6 +666,10 @@ body {
     grid-template-columns: repeat(3, 1fr);
 }
 
+.feature-list2 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
 .feature-card {
     position: relative;
     padding: 2rem;
@@ -682,6 +677,7 @@ body {
     border: 0.07rem solid var(--alice-blue);
     transition: var(--transition);
     border-radius: 0.8rem;
+    margin-top: 1rem;
 }
 
 .feature-card:is(:hover, :focus-within) {

@@ -85,8 +85,7 @@
              class="img-cover">
         <img src="../static/image/jobs.png" width="260" height="170" loading="lazy" alt=""
              class="abs-img abs-img-1">
-        <img src="../static/image/about-shape-2.png" width="500" height="500" loading="lazy" alt=""
-             class="abs-img abs-img-2">
+
     </figure>
 </section>
 
@@ -290,60 +289,126 @@
         </div>
     </div>
 </section>
-<section class="section2" id="feature">
-    <div class="feature-intro">
-        <p class="section-subtitle">management</p>
-        <h2 class="h2 section-title">Switch to pages to deal with waste</h2>
-        <p class="section-text">You can view or manage your order and check how much you are contributing to the
-            environment</p>
+{% if user %}
+    {% set status = user.status|enum_to_string %}
+    {% if status == 'Individual User' %}
+        <div></div>
+    {% else %}
+        <div></div>
+    {% endif %}
+{% else %}
+    <section class="section2" id="feature">
+        <div class="feature-intro">
+            <p class="section-subtitle">management</p>
+            <h2 class="h2 section-title">Switch to pages to deal with waste</h2>
+            <p class="section-text">You can view or manage your order and check how much you are contributing to the
+                environment</p>
+        </div>
+        <ul class="feature-list grid-list">
+            <li>
+                <div class="feature-card" style="--card-number: '01'">
+                    <div class="card-icon">
+                        <img src="../static/image/alink/pic1.svg" alt="">
+                    </div>
+                    <h3 class="h3 card-title">Creat order</h3>
+                    <p class="card-text">
+                        Our aim is to optimize and improve your supply chain so that we can give you the best service
+                    </p>
+                    <a href="#" class="need-user" aria-label="Read more">
+                        <img src="../static/image/jump.svg" alt="">
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="feature-card" style="--card-number: '02'">
+                    <div class="card-icon">
+                        <img src="../static/image/alink/pic2.svg" alt="">
+                    </div>
+                    <h3 class="h3 card-title">View contr.</h3>
+                    <p class="card-text">
+                        We provide multiple drop off and pickup locations so you don't have to worry. And you should not
+                        face
+                        any kind...
+                    </p>
+                    <a href="#" class="need-user" aria-label="Read more">
+                        <img src="../static/image/jump.svg" alt="">
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="feature-card" style="--card-number: '03'">
+                    <div class="card-icon">
+                        <img src="../static/image/alink/pic3.svg" alt="">
+                    </div>
+                    <h3 class="h3 card-title">Tracking made easy</h3>
+                    <p class="card-text">
+                        A tracking number for the entire process. so that you can find the exact position. this process
+                        will
+                        help you
+                    </p>
+                    <a href="#" class="need-user" aria-label="Read more">
+                        <img src="../static/image/jump.svg" alt="">
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="feature-card" style="--card-number: '04'">
+                    <div class="card-icon">
+                        <img src="../static/image/alink/pic4.svg" alt="">
+                    </div>
+                    <h3 class="h3 card-title">Creat order</h3>
+                    <p class="card-text">
+                        Our aim is to optimize and improve your supply chain so that we can give you the best service
+                    </p>
+                    <a href="#" class="need-user" aria-label="Read more">
+                        <img src="../static/image/jump.svg" alt="">
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="feature-card" style="--card-number: '05'">
+                    <div class="card-icon">
+                        <img src="../static/image/alink/pic5.svg" alt="">
+                    </div>
+                    <h3 class="h3 card-title">View contr.</h3>
+                    <p class="card-text">
+                        We provide multiple drop off and pickup locations so you don't have to worry. And you should not
+                        face
+                        any kind...
+                    </p>
+                    <a href="#" class="need-user" aria-label="Read more">
+                        <img src="../static/image/jump.svg" alt="">
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="feature-card" style="--card-number: '06'">
+                    <div class="card-icon">
+                        <img src="../static/image/alink/pic6.svg" alt="">
+                    </div>
+                    <h3 class="h3 card-title">Tracking made easy</h3>
+                    <p class="card-text">
+                        A tracking number for the entire process. so that you can find the exact position. this process
+                        will
+                        help you
+                    </p>
+                    <a href="#" class="need-user" aria-label="Read more">
+                        <img src="../static/image/jump.svg" alt="">
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </section>
+{% endif %}
+
+<section class="waste-hazard section2" style="background: var(--panel-color)">
+    <div class="intro-section">
+        <p class="section-subtitle">hazard</p>
+        <h2 class="h2 section-title" style="font-size: 6vh">Commended For Waste</h2>
+        <p class="section-text" style="font-size: 2vh">akkajsdkajskjdaksjdkajdkasjkdasjdklajskldjakljd
+            asjdkajdkjaskdjaksdjkajdklasjlkdjaklsjdlasd</p>
     </div>
-    <ul class="feature-list grid-list">
-        <li>
-            <div class="feature-card" style="--card-number: '01'">
-                <div class="card-icon">
-                    <img src="./assets/images/feature-icon-1.png" width="72" height="91" alt="">
-                </div>
-                <h3 class="h3 card-title">Solutions and specialized</h3>
-                <p class="card-text">
-                    Our aim is to optimize and improve your supply chain so that we can give you the best service
-                </p>
-                <a href="#" class="card-btn" aria-label="Read more">
-                    <ion-icon name="arrow-forward"></ion-icon>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="feature-card" style="--card-number: '02'">
-                <div class="card-icon">
-                    <img src="./assets/images/feature-icon-2.png" width="94" height="94" alt="">
-                </div>
-                <h3 class="h3 card-title">Multiple warehouses</h3>
-                <p class="card-text">
-                    We provide multiple drop off and pickup locations so you don't have to worry. And you should not
-                    face
-                    any kind...
-                </p>
-                <a href="#" class="card-btn" aria-label="Read more">
-                    <ion-icon name="arrow-forward"></ion-icon>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="feature-card" style="--card-number: '03'">
-                <div class="card-icon">
-                    <img src="./assets/images/feature-icon-3.png" width="93" height="93" alt="">
-                </div>
-                <h3 class="h3 card-title">Tracking made easy</h3>
-                <p class="card-text">
-                    A tracking number for the entire process. so that you can find the exact position. this process will
-                    help you
-                </p>
-                <a href="#" class="card-btn" aria-label="Read more">
-                    <ion-icon name="arrow-forward"></ion-icon>
-                </a>
-            </div>
-        </li>
-    </ul>
 </section>
 {% include 'footer.html' %}
 <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
