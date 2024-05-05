@@ -66,10 +66,17 @@ img {
     vertical-align: top;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h5, h6 {
     font-size: inherit;
     font-weight: 400;
 }
+
+h4 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--dark-orange);
+}
+
 
 .h1,
 .h2,
@@ -265,6 +272,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 20rem;
+}
+
+
+.swal-custom1 {
+    color: var(--dark-orange); /* 红色文字 */
+}
+
+.swal-custom2 {
+    color: var(--panel2-color);
 }
 
 /* ===================================== */
@@ -662,6 +678,7 @@ body {
     margin-top: 6rem;
     margin-bottom: 4rem;
 }
+
 .feature-list {
     grid-template-columns: repeat(3, 1fr);
 }
@@ -732,6 +749,149 @@ body {
 
 
 /* ================================ */
+
+.p-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0.8rem;
+}
+
+.p-container div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.photos {
+    position: absolute;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.photos_line {
+    height: 20rem;
+    margin-bottom: 2rem;
+    flex-shrink: 0;
+}
+
+.photos_line_photo {
+    display: flex;
+    height: 100%;
+    width: 16rem;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-right: 2rem;
+    border-radius: 0.8rem;
+}
+
+.photos_line_photo:hover {
+    box-shadow: 0 0 0.35rem rgba(0, 0, 0, 0.022),
+    0 0 1rem rgba(0, 0, 0, 0.03),
+    0 0 5.3rem rgba(0, 0, 0, 0.06);
+}
+
+.photos_line_photo p {
+    display: none;
+}
+
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(1) {
+    background-image: url('../image/wpic/w1.jpg');
+}
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(2) {
+    background-image: url('../image/wpic/w2.jpg');
+}
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(3) {
+    background-image: url('../image/wpic/w3.jpg');
+}
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(4) {
+    background-image: url('../image/wpic/w4.jpg');
+}
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(5) {
+    background-image: url('../image/wpic/w5.jpg');
+}
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(6) {
+    background-image: url('../image/wpic/w6.jpg');
+}
+
+.photos_line:nth-child(1) .photos_line_photo:nth-child(7) {
+    background-image: url('../image/wpic/w7.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(1) {
+    background-image: url('../image/wpic/w8.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(2) {
+    background-image: url('../image/wpic/w9.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(3) {
+    background-image: url('../image/wpic/w10.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(4) {
+    background-image: url('../image/wpic/w11.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(5) {
+    background-image: url('../image/wpic/w12.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(6) {
+    background-image: url('../image/wpic/w13.jpg');
+}
+
+.photos_line:nth-child(2) .photos_line_photo:nth-child(7) {
+    background-image: url('../image/wpic/w14.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(1) {
+    background-image: url('../image/wpic/w15.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(2) {
+    background-image: url('../image/wpic/w16.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(3) {
+    background-image: url('../image/wpic/w17.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(4) {
+    background-image: url('../image/wpic/w18.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(5) {
+    background-image: url('../image/wpic/w19.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(6) {
+    background-image: url('../image/wpic/w20.jpg');
+}
+
+.photos_line:nth-child(3) .photos_line_photo:nth-child(7) {
+    background-image: url('../image/wpic/w21.jpg');
+}
+
+
+/* ================================ */
+
 
 .footer {
     background-color: var(--plutinum);
