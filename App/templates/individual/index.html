@@ -1,8 +1,9 @@
-{% extends 'base2.html' %}
+{% extends 'individual/base.html' %}
 {% block title %}
     individual
 {% endblock %}
-{% block extra_thing %}
+{% block content %}
+    {% include 'content.html' %}
     <script>
         $('.header__logo').click(function (e) {
             e.preventDefault();
