@@ -40,6 +40,7 @@
 {% include 'content.html' %}
 {% include 'footer.html' %}
 <script>
+    let remInPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
     $(document).ready(function () {
         let isDark = $('html').attr('data-theme') === 'dark';
         let swalcolor = '';
@@ -175,11 +176,11 @@
             Swal.fire({
                 title: title,
                 text: content,
-                icon: 'info',
-                background: `url(${cleanBackgroundImage})`,
+                imageUrl: cleanBackgroundImage,
+                background: swalcolor,
                 customClass: {
                     title: 'swal-custom1',
-                    popup: 'swal-custom2',
+                    image: 'swal-image',
                 }
             });
         });
@@ -247,6 +248,7 @@
     scrollbox.resize();
     window.addEventListener("resize", debounce(() => {
         scrollbox.resize();
+        remInPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
     }, 250)); // Execute at most once every 250ms
     window.addEventListener("scroll", () => {
         requestAnimationFrame(() => {
