@@ -3,7 +3,9 @@
     individual
 {% endblock %}
 {% block content %}
+    {% include 'header2.html' %}
     {% include 'content.html' %}
+    {% include 'footer2.html' %}
     <script>
         $('.header__logo').click(function (e) {
             e.preventDefault();

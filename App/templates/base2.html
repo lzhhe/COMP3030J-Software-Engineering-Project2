@@ -36,7 +36,9 @@
     {% block extra_js %}{% endblock %}
 </head>
 <body data-hasuser="{% if user %}true{% else %}false{% endif %}" id="top">
+{% include 'header.html' %}
 {% include 'content.html' %}
+{% include 'footer.html' %}
 <script>
     $(document).ready(function () {
         let isDark = $('html').attr('data-theme') === 'dark';

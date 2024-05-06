@@ -1117,6 +1117,10 @@ body {
     .home__social {
         text-align: center;
     }
+
+    .service-list, .feature-list, .feature-list2, .footer-top {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 525px) {
@@ -1130,5 +1134,9 @@ body {
 
     .home__text {
         font-size: calc(1rem + (20 - 14) * ((100rem - 21rem) / (500 - 320)));;
+    }
+
+    .service-list, .feature-list, .feature-list2, .footer-top {
+        grid-template-columns: repeat(1, 1fr);
     }
 }

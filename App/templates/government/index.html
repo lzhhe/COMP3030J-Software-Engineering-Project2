@@ -3,7 +3,9 @@
     government
 {% endblock %}
 {% block content %}
+    {% include 'header1.html' %}
     {% include 'content.html' %}
+    {% include 'footer1.html' %}
     <script>
         $('.header__logo').click(function (e) {
             e.preventDefault();
