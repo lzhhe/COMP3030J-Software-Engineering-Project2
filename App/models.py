@@ -114,7 +114,7 @@ class Waste(db.Model):  # 产生的废物映射部门种类
 
 
 class WasteStorage(db.Model):  # 储存能力
-    __tablename__ = 'wasteStorage'
+    __tablename__ = 'wastestorage'
     WSID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
     maxCapacity = db.Column(db.Float, nullable=False)  # 最大存储量
@@ -125,7 +125,7 @@ class WasteStorage(db.Model):  # 储存能力
 
 
 class ProcessCapacity(db.Model):  # 处理能力
-    __tablename__ = 'processCapacity'
+    __tablename__ = 'processcapacity'
     PCID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     wasteType = db.Column(SQLEnum(WasteType), nullable=False)  # 废弃物类型
     maxCapacity = db.Column(db.Float, nullable=False)  # 最大同时处理量
@@ -157,7 +157,7 @@ class Order(db.Model):  # 工单
 
 
 class UserTemplate(db.Model): # 用户模板
-    __tablename__ = 'userTemplate'
+    __tablename__ = 'usertemplate'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 每个模板的唯一标识符
     UID = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)
     wasteName = db.Column(db.String(256), nullable=False)  # 模板的名称
