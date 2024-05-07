@@ -1,0 +1,287 @@
+{% extends 'individual/base.html' %}
+{% block extra_css %}
+    <style>
+
+        .header .container {
+            border-bottom: 0.12rem solid var(--border-color);
+
+        }
+
+        .individual-create {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            padding: 7.5rem 3rem 4rem;
+            gap: 0.8rem;
+            background: var(--panel2-color);
+        }
+
+        .individual-create-module {
+            display: flex;
+            flex-direction: column;
+            border-radius: 0.6rem;
+            background: var(--panel-color);
+            box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+            5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+            43px 35px 80px rgba(0, 0, 0, 0.07);
+        }
+
+        .title-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-bottom: 0.12rem solid var(--border-color);
+        }
+
+        .icons {
+            width: 2rem;
+            margin-right: 1.5rem;
+        }
+
+        .form-container {
+            padding: 1rem 2rem;
+        }
+
+        .pico label.no-pico-label {
+            display: flex;
+            align-items: center;
+        }
+
+        .pico input[type="number"] {
+            width: 12rem;
+            margin-left: 1rem;
+        }
+
+        .order-attributes {
+            display: flex;
+            flex-direction: row;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .order-choose {
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+        }
+
+        .dropdown {
+            width: 25rem;
+        }
+
+        .dropdown li a {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .dropdown li a i {
+            display: inline;
+            margin-left: 1rem;
+            margin-right: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .dropdown li:hover i,
+        .dropdown li:hover span {
+            color: var(--primary-color);
+        }
+
+        .pico .no-pico-label input[type="text"] {
+            width: 10rem;
+            margin-left: 1rem;
+        }
+
+        .pico label.no-pico-label i {
+            font-size: 1.5em;
+        }
+
+        .pico label.no-pico-label span {
+            margin-left: 0.5rem;
+        }
+
+        .pico label.no-pico-label:hover i, .pico label.no-pico-label:hover span {
+            color: var(--primary-color);
+        }
+
+        #location-map {
+            width: 40rem;
+            height: 30rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+{% endblock %}
+{% block extra_js %}
+    <script src="../../static/js/utils/loader.js"></script>
+{% endblock %}
+{% block title %}
+    indi-create
+{% endblock %}
+{% block content %}
+    {% include 'switch2.html' %}
+    {% include 'aichat.html' %}
+    {% include 'header2.html' %}
+    <section class="individual-create">
+        <div class="individual-create-module">
+            <div class="title-top">
+                <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("Create Order") }}</h2>
+            </div>
+            <div class="form-container">
+                <form class="pico" id="orderForm" method="post" action="/department/createorder">
+                    <label for="order-name">{{ _("Order name:") }}
+                        <input type="text" id="order-name" name="order-name" required>
+                    </label>
+                    <div class="order-choose">
+                        <details class="pico dropdown" data-value="">
+                            <summary>{{ _("Please choose one waste type: ") }}</summary>
+                            <ul>
+                                {% for waste in wastes %}
+                                    <li data-value="{{ waste }}">
+                                        <a href="#">
+                                            <i class="iconfont icon-{{ waste.name }}"></i>
+                                            <span>{{ waste|enum_to_string }}</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                        <label class="number-input no-pico-label" for="order-weight">{{ _("Weight: ") }}
+                            <input type="number" id="order-weight" name="order-weight" required>
+                            <span>kg</span>
+                        </label>
+                    </div>
+                    {{ _("Attributes:") }}
+                    <div class="order-attributes">
+                        <label class="number-input no-pico-label order-attribute" for="order-a1">
+                            <input type="text" id="order-a1" name="order-a1" required data-attr="CO2">
+                            <span>CO2</span>
+                        </label>
+                        <label class="number-input no-pico-label order-attribute" for="order-a2">
+                            <input type="text" id="order-a2" name="order-a2" required data-attr="J">
+                            <span>J</span>
+                        </label>
+                        <label class="number-input no-pico-label order-attribute" for="order-a3">
+                            <input type="text" id="order-a3" name="order-a3" required data-attr="SO2">
+                            <span>SO2</span>
+                        </label>
+                        <label class="number-input no-pico-label order-attribute" for="order-a4">
+                            <input type="text" id="order-a4" name="order-a4" required data-attr="SO4">
+                            <span>SO4</span>
+                        </label>
+                        <label class="number-input no-pico-label order-attribute" for="order-a5">
+                            <input type="text" id="order-a5" name="order-a5" required data-attr="SO4">
+                            <span>SO4</span>
+                        </label>
+                        <label class="number-input no-pico-label order-attribute" for="order-a6">
+                            <input type="text" id="order-a6" name="order-a6" required data-attr="SO4">
+                            <span>SO4</span>
+                        </label>
+                    </div>
+                    <label for="order-comment">{{ _("Your address:") }}
+                        <textarea rows="2" cols="50" id="order-comment" name="order-comment"></textarea>
+                    </label>
+                    <div id="location-map" style="margin-left: auto; margin-right: auto"></div>
+                    <input type="button" id="createOrderBtn" class="outline" value="{{ _("Create") }}"></input>
+                </form>
+            </div>
+        </div>
+        <div class="individual-create-module">
+            <div class="title-top">
+                <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("Create Order") }}</h2>
+            </div>
+        </div>
+    </section>
+    <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
+        <i class="iconfont icon-top"></i>
+    </a>
+    {% include 'footer2.html' %}
+    <script>
+        $('.header__logo').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/individual/index';
+        });
+
+        // 设置安全密钥和应用key
+        const a11 = "{{ a1 }}";
+        const a22 = "{{ a2 }}";
+        window._AMapSecurityConfig = {
+            securityJsCode: a11,
+        };
+        AMapLoader.load({
+            key: a22, // 请替换成您的高德地图开发者应用key
+            version: "2.0", // 高德地图API的版本号
+            plugins: ['AMap.Geolocation', 'AMap.Geocoder', 'AMap.Marker', 'AMap.InfoWindow'],
+        }).then((AMap) => {
+            initMap(AMap);
+        }).catch((e) => {
+            console.log(e);
+        })
+
+        function initMap(AMap) {
+            let map = new AMap.Map('location-map', {
+                zoom: 150,
+                resizeEnable: true,
+            });
+
+            AMap.plugin('AMap.Geolocation', function () {
+                let geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+                    timeout: 10000,           // 超过10秒后停止定位，默认：5s
+                    buttonPosition: 'RB',      // 定位按钮的停靠位置
+                    buttonOffset: new AMap.Pixel(10, 20), // 定位按钮距离对应角落的距离
+                    zoomToAccuracy: true,     // 定位成功后是否自动调整地图视野到定位点
+                });
+                map.addControl(geolocation);
+                geolocation.getCurrentPosition(function (status, result) {
+                    if (status === 'complete') {
+                        onComplete(result);
+                    } else {
+                        onError(result);
+                    }
+                });
+            });
+
+            // 解析定位结果
+            function onComplete(data) {
+                let lnglat = [data.position.getLng(), data.position.getLat()];
+                let marker = new AMap.Marker({
+                    position: lnglat,
+                    map: map
+                });
+                map.setCenter(lnglat);
+                let geocoder = new AMap.Geocoder({
+                    radius: 1000,
+                    extensions: "all"
+                });
+                geocoder.getAddress(lnglat, function (status, result) {
+                    if (status === 'complete' && result.regeocode) {
+                        let address = result.regeocode.formattedAddress;
+                        document.getElementById('order-comment').value = address; // 将地址信息写入表单
+                        let infoWindow = new AMap.InfoWindow({
+                            content: address,
+                            offset: new AMap.Pixel(0, -28)
+                        });
+                        infoWindow.open(map, lnglat);
+                    } else {
+                        console.log('地理编码失败');
+                    }
+                });
+            }
+
+            // 解析定位错误信息
+            function onError(data) {
+                console.log('定位失败', data.message);
+            }
+        }
+
+        window.addEventListener('beforeunload', function (event) {
+            console.log('页面关闭，清理不需要的缓存');
+            // localStorage.removeItem('cachedLocation');
+        });
+
+
+    </script>
+{% endblock %}

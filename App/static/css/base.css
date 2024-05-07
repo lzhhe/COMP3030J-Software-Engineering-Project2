@@ -114,7 +114,7 @@ nav .logo-text {
 
 /*控制图标的大小的，em表示相对于父元素的字体大小*/
 .icon-nav {
-    width: 1.5em;
+    width: 2em;
 }
 
 nav .menu-items {

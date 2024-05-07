@@ -14,3 +14,16 @@ individual = Blueprint('individual', __name__, url_prefix='/individual')  # indi
 def index():
     return render_template('individual/index.html')
 
+
+@individual.route('/create')
+def create():
+    api_key = "392c5833885dafa9515b33b18592414e"
+    api_security = "2e288d9ae8003f33cc1b58b5fd941663"
+    wastes = None
+    user = g.user
+    if user is not None:
+        wasteTypes = Waste.query.all()
+        wastes = []
+        for w in wasteTypes:
+            wastes.append(w.wasteType)
+    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key)

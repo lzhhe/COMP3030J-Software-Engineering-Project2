@@ -67,10 +67,14 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-    justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
+.pico .no-pico-label input[type="text"] {
+    width: 6rem;
+    margin-left: 1rem;
+}
 
 .pico label.no-pico-label:hover i, .pico label.no-pico-label:hover span {
     color: var(--primary-color);
