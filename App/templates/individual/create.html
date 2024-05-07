@@ -237,32 +237,40 @@
                     updateMapLocation(loc, true); // 初始定位
                 });
 
-                // 更新地图位置
                 function updateMapLocation(location, initial = false) {
-                    currentZoom = map.getZoom(); // 获取当前缩放级别
+                    currentZoom = map.getZoom(); // 否则保持当前缩放级别
                     map.entities.clear();
-                    map.setView({center: location, zoom: currentZoom});
+                    map.setView({location: location, zoom: currentZoom});
                     let pushpin = new Microsoft.Maps.Pushpin(location);
                     map.entities.push(pushpin);
-                    // 逆地理编码获取地址
+                    // 逆地理编码获取地址，并确保搜索结果为当前视图中心
                     searchManager.reverseGeocode({
                         location: location,
                         callback: function (result) {
-                            if (result.name) document.getElementById('order-comment').value = result.name;
+                            if (result.name) {
+                                document.getElementById('order-comment').value = result.name;
+                                if (!initial) {
+                                    // 确保搜索框中的结果更新为当前位置
+                                    map.setView({center: location, zoom: currentZoom});
+                                }
+                            }
                         }
                     });
                 }
 
-                // 点击地图获取新位置
+// 点击地图获取新位置时，不重新设定视图中心
                 Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
                     if (e.location) {
-                        updateMapLocation(e.location);
+                        updateMapLocation(e.location, true);
                     }
                 });
+
+// “定位到我”按钮逻辑，确保返回初始位置时视图中心和缩放级别一致
                 $('#LocateMeButton').click(function (e) {
                     e.preventDefault();
-                    updateMapLocation(initialLocation, false);
+                    updateMapLocation(initialLocation, true);
                 });
+
 
             });
         }
