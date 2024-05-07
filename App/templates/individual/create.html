@@ -105,15 +105,20 @@
             color: var(--primary-color);
         }
 
+        #location-container {
+            width: 90%;
+        }
+
         #location-map {
             width: 40rem;
             height: 30rem;
             margin-bottom: 2rem;
+            border-radius: 0.5rem;
         }
     </style>
 {% endblock %}
 {% block extra_js %}
-    <script src="../../static/js/utils/loader.js"></script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{ a3 }}' async defer></script>
 {% endblock %}
 {% block title %}
     indi-create
@@ -178,9 +183,11 @@
                             <span>SO4</span>
                         </label>
                     </div>
-                    <label for="order-comment">{{ _("Your address:") }}
-                        <textarea rows="2" cols="50" id="order-comment" name="order-comment"></textarea>
-                    </label>
+                    <div id="location-container">
+                        <label for="order-comment">{{ _("Your address:") }}
+                            <input type="text" id="order-comment" name="order-comment">
+                        </label>
+                    </div>
                     <div id="location-map" style="margin-left: auto; margin-right: auto"></div>
                     <input type="button" id="createOrderBtn" class="outline" value="{{ _("Create") }}"></input>
                 </form>
@@ -199,89 +206,77 @@
     </a>
     {% include 'footer2.html' %}
     <script>
+
+        function loadMapScenario() {
+            let initialLocation;
+            let map = new Microsoft.Maps.Map(document.getElementById('location-map'), {
+                credentials: '{{ a3 }}',
+                zoom: 20,
+                showMapTypeSelector: false, // Hide map type selector
+                disableZooming: false,       // Disable zooming
+                showZoomButtons: false      // Hide zoom buttons
+            });
+            let loc; // 用于存储当前或选择的位置
+            let currentZoom = 20; // 存储当前缩放级别
+            // 加载AutoSuggest和Search模块
+            Microsoft.Maps.loadModule(['Microsoft.Maps.AutoSuggest', 'Microsoft.Maps.Search'], function () {
+                let manager = new Microsoft.Maps.AutosuggestManager({map: map});
+                manager.attachAutosuggest('#order-comment', '#location-container', selectedSuggestion);
+                let searchManager = new Microsoft.Maps.Search.SearchManager(map);
+
+                // 定义选中建议后的行为
+                function selectedSuggestion(suggestionResult) {
+                    loc = suggestionResult.location;
+                    updateMapLocation(loc);
+                }
+
+                // 获取当前位置并更新地图
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    initialLocation = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                    loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                    updateMapLocation(loc, true); // 初始定位
+                });
+
+                // 更新地图位置
+                function updateMapLocation(location, initial = false) {
+                    currentZoom = map.getZoom(); // 获取当前缩放级别
+                    map.entities.clear();
+                    map.setView({center: location, zoom: currentZoom});
+                    let pushpin = new Microsoft.Maps.Pushpin(location);
+                    map.entities.push(pushpin);
+                    // 逆地理编码获取地址
+                    searchManager.reverseGeocode({
+                        location: location,
+                        callback: function (result) {
+                            if (result.name) document.getElementById('order-comment').value = result.name;
+                        }
+                    });
+                }
+
+                // 点击地图获取新位置
+                Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
+                    if (e.location) {
+                        updateMapLocation(e.location);
+                    }
+                });
+                $('#LocateMeButton').click(function (e) {
+                    e.preventDefault();
+                    updateMapLocation(initialLocation, false);
+                });
+
+            });
+        }
+
+        window.onload = loadMapScenario;
         $('.header__logo').click(function (e) {
             e.preventDefault();
             window.location.href = '/individual/index';
         });
 
-        // 设置安全密钥和应用key
-        const a11 = "{{ a1 }}";
-        const a22 = "{{ a2 }}";
-        window._AMapSecurityConfig = {
-            securityJsCode: a11,
-        };
-        AMapLoader.load({
-            key: a22, // 请替换成您的高德地图开发者应用key
-            version: "2.0", // 高德地图API的版本号
-            plugins: ['AMap.Geolocation', 'AMap.Geocoder', 'AMap.Marker', 'AMap.InfoWindow'],
-        }).then((AMap) => {
-            initMap(AMap);
-        }).catch((e) => {
-            console.log(e);
-        })
-
-        function initMap(AMap) {
-            let map = new AMap.Map('location-map', {
-                zoom: 150,
-                resizeEnable: true,
-            });
-
-            AMap.plugin('AMap.Geolocation', function () {
-                let geolocation = new AMap.Geolocation({
-                    enableHighAccuracy: true, // 是否使用高精度定位，默认:true
-                    timeout: 10000,           // 超过10秒后停止定位，默认：5s
-                    buttonPosition: 'RB',      // 定位按钮的停靠位置
-                    buttonOffset: new AMap.Pixel(10, 20), // 定位按钮距离对应角落的距离
-                    zoomToAccuracy: true,     // 定位成功后是否自动调整地图视野到定位点
-                });
-                map.addControl(geolocation);
-                geolocation.getCurrentPosition(function (status, result) {
-                    if (status === 'complete') {
-                        onComplete(result);
-                    } else {
-                        onError(result);
-                    }
-                });
-            });
-
-            // 解析定位结果
-            function onComplete(data) {
-                let lnglat = [data.position.getLng(), data.position.getLat()];
-                let marker = new AMap.Marker({
-                    position: lnglat,
-                    map: map
-                });
-                map.setCenter(lnglat);
-                let geocoder = new AMap.Geocoder({
-                    radius: 1000,
-                    extensions: "all"
-                });
-                geocoder.getAddress(lnglat, function (status, result) {
-                    if (status === 'complete' && result.regeocode) {
-                        let address = result.regeocode.formattedAddress;
-                        document.getElementById('order-comment').value = address; // 将地址信息写入表单
-                        let infoWindow = new AMap.InfoWindow({
-                            content: address,
-                            offset: new AMap.Pixel(0, -28)
-                        });
-                        infoWindow.open(map, lnglat);
-                    } else {
-                        console.log('地理编码失败');
-                    }
-                });
-            }
-
-            // 解析定位错误信息
-            function onError(data) {
-                console.log('定位失败', data.message);
-            }
-        }
-
         window.addEventListener('beforeunload', function (event) {
             console.log('页面关闭，清理不需要的缓存');
-            // localStorage.removeItem('cachedLocation');
         });
-
-
     </script>
+
+
 {% endblock %}

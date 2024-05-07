@@ -64,6 +64,7 @@ def getTemplate():
 def create():
     api_key = "392c5833885dafa9515b33b18592414e"
     api_security = "2e288d9ae8003f33cc1b58b5fd941663"
+    bing_api= "Alq9HEx7RGafIXHgY_oQiWYC9zxJWP-TTp5KZuGetS1YmaojcXw9FSa8cv_jeIKE"
     wastes = None
     user = g.user
     if user is not None:
@@ -71,4 +72,4 @@ def create():
         wastes = []
         for w in wasteTypes:
             wastes.append(w.wasteType)
-    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key)
+    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key, a3=bing_api)
