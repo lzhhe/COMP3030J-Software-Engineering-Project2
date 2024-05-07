@@ -164,7 +164,7 @@ class UserTemplate(db.Model): # 用户模板
     wasteType = Column(SQLEnum(WasteType), nullable=False)
     attribution = db.Column(db.Text, nullable=False)
     # UID和name做联合key，确保用户对每个名字的模板是唯一的
-    __table_args__ = (UniqueConstraint('UID', 'name', name='uid_name_unique'),)
+    __table_args__ = (UniqueConstraint('UID', 'wasteName', name='uid_name_unique'),)
     user = db.relationship('User', backref=db.backref('templates', lazy=True))
 
     def __repr__(self):
