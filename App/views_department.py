@@ -174,9 +174,10 @@ def dashboard_days(days):
 def register():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request"}), 400
+    user = g.user
 
     data = request.get_json()
-
+    uid = user.UID
     department_id = data.get('departmentID')
     order_name = data.get('orderName')
     waste_type = string_to_enum(data.get('wasteType'))
@@ -191,6 +192,7 @@ def register():
 
     # 创建新的工单记录
     new_order = Order(
+        UID=uid,
         department_id=department_id,
         date=date.today(),
         wasteType=waste_type,

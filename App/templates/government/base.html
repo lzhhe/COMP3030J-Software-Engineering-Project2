@@ -38,6 +38,7 @@
 <body data-hasuser="{% if user %}true{% else %}false{% endif %}" id="top">
 {% block content %}{% endblock %}
 <script>
+    let remInPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
     $(document).ready(function () {
         let isDark = $('html').attr('data-theme') === 'dark';
         let swalcolor = '';
@@ -162,6 +163,26 @@
             }
         });
 
+
+        $('.photos_line_photo').click(function (event) {
+            event.preventDefault();
+            let card = $(this);
+            let title = card.find('h4').text();
+            let content = card.find('p').text();
+            let backgroundImage = $(this).css('background-image'); // 获取点击的元素的背景图片
+            let cleanBackgroundImage = backgroundImage.replace(/(url\("|"\))/g, '');
+            Swal.fire({
+                title: title,
+                text: content,
+                imageUrl: cleanBackgroundImage,
+                background: swalcolor,
+                customClass: {
+                    title: 'swal-custom1',
+                    image: 'swal-image',
+                }
+            });
+        });
+
     });
     const sr = ScrollReveal({
         origin: 'top',
@@ -225,6 +246,7 @@
     scrollbox.resize();
     window.addEventListener("resize", debounce(() => {
         scrollbox.resize();
+        remInPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
     }, 250)); // Execute at most once every 250ms
     window.addEventListener("scroll", () => {
         requestAnimationFrame(() => {
