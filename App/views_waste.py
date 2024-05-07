@@ -150,6 +150,7 @@ def finish(OID):
         else:
 
             order.orderStatus = OrderStatus.FINISHED
+            order.finishDate = datetime.utcnow  # 记录完成时间
             db.session.commit()
             return jsonify({"message": f"This order status ({order.OID}) has been changed to finish "})
 
