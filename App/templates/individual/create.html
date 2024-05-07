@@ -209,15 +209,15 @@
 
         function loadMapScenario() {
             let initialLocation;
+            let currentZoom = 14; // 存储当前缩放级别
             let map = new Microsoft.Maps.Map(document.getElementById('location-map'), {
                 credentials: '{{ a3 }}',
-                zoom: 20,
+                zoom: currentZoom,
                 showMapTypeSelector: false, // Hide map type selector
                 disableZooming: false,       // Disable zooming
                 showZoomButtons: false      // Hide zoom buttons
             });
             let loc; // 用于存储当前或选择的位置
-            let currentZoom = 20; // 存储当前缩放级别
             // 加载AutoSuggest和Search模块
             Microsoft.Maps.loadModule(['Microsoft.Maps.AutoSuggest', 'Microsoft.Maps.Search'], function () {
                 let manager = new Microsoft.Maps.AutosuggestManager({map: map});
@@ -227,20 +227,19 @@
                 // 定义选中建议后的行为
                 function selectedSuggestion(suggestionResult) {
                     loc = suggestionResult.location;
-                    updateMapLocation(loc);
+                    updateMapLocation(loc, map.getZoom());
                 }
 
                 // 获取当前位置并更新地图
                 navigator.geolocation.getCurrentPosition(function (position) {
                     initialLocation = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
                     loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
-                    updateMapLocation(loc, true); // 初始定位
+                    updateMapLocation(loc, map.getZoom(), true); // 初始定位
                 });
 
-                function updateMapLocation(location, initial = false) {
-                    currentZoom = map.getZoom(); // 否则保持当前缩放级别
+                function updateMapLocation(location, zoomLevel, initial = false) {
                     map.entities.clear();
-                    map.setView({location: location, zoom: currentZoom});
+                    map.setView({location: location, zoom: zoomLevel});
                     let pushpin = new Microsoft.Maps.Pushpin(location);
                     map.entities.push(pushpin);
                     // 逆地理编码获取地址，并确保搜索结果为当前视图中心
@@ -251,24 +250,24 @@
                                 document.getElementById('order-comment').value = result.name;
                                 if (!initial) {
                                     // 确保搜索框中的结果更新为当前位置
-                                    map.setView({center: location, zoom: currentZoom});
+                                    map.setView({center: location, zoom: zoomLevel});
                                 }
                             }
                         }
                     });
+                    currentZoom = zoomLevel;
                 }
 
-// 点击地图获取新位置时，不重新设定视图中心
+                // 点击地图获取新位置时，不重新设定视图中心
                 Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
                     if (e.location) {
-                        updateMapLocation(e.location, true);
+                        updateMapLocation(e.location, map.getZoom(), true);
                     }
                 });
 
-// “定位到我”按钮逻辑，确保返回初始位置时视图中心和缩放级别一致
+                // “定位到我”按钮逻辑，确保返回初始位置时视图中心和缩放级别一致
                 $('#LocateMeButton').click(function (e) {
-                    e.preventDefault();
-                    updateMapLocation(initialLocation, true);
+                    updateMapLocation(initialLocation, map.getZoom(), true);
                 });
 
 
