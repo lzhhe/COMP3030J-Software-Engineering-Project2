@@ -155,16 +155,16 @@ class Order(db.Model):  # 工单
         return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'
 
 
-class UserTemplate(db.Model): # 用户模板
-    __tablename__ = 'userTemplate'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 每个模板的唯一标识符
-    UID = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)
-    wasteName = db.Column(db.String(256), nullable=False)  # 模板的名称
-    wasteType = Column(SQLEnum(WasteType), nullable=False)
-    attribution = db.Column(db.Text, nullable=False)
-    # UID和name做联合key，确保用户对每个名字的模板是唯一的
-    __table_args__ = (UniqueConstraint('UID', 'name', name='uid_name_unique'),)
-    user = db.relationship('User', backref=db.backref('templates', lazy=True))
-
-    def __repr__(self):
-        return f'<UserTemplate id:{self.id} UID:{self.UID} name:{self.name} wasteType:{self.wasteType} attribution:{self.attribution}>'
+# class UserTemplate(db.Model): # 用户模板
+#     __tablename__ = 'userTemplate'
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 每个模板的唯一标识符
+#     UID = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)
+#     wasteName = db.Column(db.String(256), nullable=False)  # 模板的名称
+#     wasteType = Column(SQLEnum(WasteType), nullable=False)
+#     attribution = db.Column(db.Text, nullable=False)
+#     # UID和name做联合key，确保用户对每个名字的模板是唯一的
+#     __table_args__ = (UniqueConstraint('UID', 'wasteName', name='uid_name_unique'),)
+#     user = db.relationship('User', backref=db.backref('templates', lazy=True))
+#
+#     def __repr__(self):
+#         return f'<UserTemplate id:{self.id} UID:{self.UID} name:{self.name} wasteType:{self.wasteType} attribution:{self.attribution}>'
