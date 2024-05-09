@@ -8,12 +8,12 @@
     </div>
     {% if user %}
         {% set status = user.status|enum_to_string %}
-        {% if status == 'Waste Manager' %}
-            <div class="pico" role="group">
-                <button class="secondary" id="create-dept">Dept+</button>
-                <button class="secondary" id="create-waste">Waste+</button>
-            </div>
-        {% endif %}
+{#        {% if status == 'Waste Manager' %}#}
+{#            <div class="pico" role="group">#}
+{#                <button class="secondary" id="create-dept">Dept+</button>#}
+{#                <button class="secondary" id="create-waste">Waste+</button>#}
+{#            </div>#}
+{#        {% endif %}#}
         <div class="user-box">
             <div class="user-info">
                 <p class="user-name">{{ user.username }}</p>
