@@ -216,3 +216,33 @@ def build_arima():
     return jsonify({'dataset': timeDataset, 'forecasts': weightForecasts})
     # return jsonify({'forecasts': weightForecasts})
 
+@government.route('/adjust_free_proportion')
+def adjust_free_proportion():
+    data = request.json
+    wasteType = data.get('wasteType')
+    newProportion = data.get('proportion')
+    freeProportionLine = FreeProportion.query.filter_by(wasteType=wasteType).first()
+    freeProportionLine.freeProportion = newProportion
+    db.session.commit()
+
+@government.route('/update_free_proportion')
+def update_free_proportion():
+    current_date = datetime.now()
+    if current_date.day == 1:
+        update_free_capacity_monthly()
+
+
+def update_free_capacity_monthly():
+    try:
+        free_proportions = FreeProportion.query.all()
+
+        for free_proportion in free_proportions:
+            max_capacity = ProcessCapacity.query.filter_by(wasteType=free_proportion.wasteType).first().maxCapacity
+            new_free_capacity = max_capacity * free_proportion.freeProportion
+            free_proportion.freeCapacity = new_free_capacity
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print("update capacity error:", e)
+    finally:
+        db.session.close()

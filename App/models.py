@@ -156,9 +156,9 @@ class Order(db.Model):  # 工单
         return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'
 
 
-class UserTemplate(db.Model): # 用户模板
+class UserTemplate(db.Model):  # 用户模板
     __tablename__ = 'usertemplate'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 每个模板的唯一标识符
+    TID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 每个模板的唯一标识符
     UID = db.Column(db.Integer, db.ForeignKey('user.UID'), nullable=False)
     wasteName = db.Column(db.String(256), nullable=False)  # 模板的名称
     wasteType = Column(SQLEnum(WasteType), nullable=False)
@@ -169,3 +169,11 @@ class UserTemplate(db.Model): # 用户模板
 
     def __repr__(self):
         return f'<UserTemplate id:{self.id} UID:{self.UID} name:{self.name} wasteType:{self.wasteType} attribution:{self.attribution}>'
+
+
+class FreeProportion(db.Model):  # 免费份额
+    __tablename__ = 'freeproportion'
+    FID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 每种wasteType的唯一标识符
+    wasteType = Column(SQLEnum(WasteType), nullable=False)
+    freeProportion = Column(db.Integer, nullable=False)  # 政府给予的份额
+    freeCapacity = Column(db.Float, nullable=False)
