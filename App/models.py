@@ -65,7 +65,7 @@ class WasteType(Enum):
 class WasteSource(Enum):
     INTERNAL = auto()  # 内部
     EXTERNAL = auto()  # 外部
-    EXTERNALFREE = auto()  # 外部免费
+    EXTERNAL_FREE = auto()  # 外部免费
 
 
 @unique
@@ -110,7 +110,6 @@ class Waste(db.Model):  # 产生的废物映射部门种类
     WID = db.Column(db.Integer, primary_key=True, autoincrement=True)  # id唯一
     wasteType = Column(SQLEnum(WasteType), nullable=False)
     wasteDepartment = db.Column(SQLEnum(DepartmentType), nullable=True)
-    wasteSource = Column(SQLEnum(WasteSource), nullable=False, default=WasteSource.INTERNAL)
 
 
 class WasteStorage(db.Model):  # 储存能力
@@ -151,6 +150,7 @@ class Order(db.Model):  # 工单
     department_id = db.Column(db.Integer, db.ForeignKey('department.DID'), nullable=True)
     # 设置与Department表的关系
     department = db.relationship('Department', backref=db.backref('orders', lazy=True))
+    wasteSource = Column(SQLEnum(WasteSource), nullable=False, default=WasteSource.INTERNAL)
 
     def __repr__(self):
         return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'

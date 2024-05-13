@@ -1,4 +1,5 @@
 from collections import defaultdict
+from copy import deepcopy
 from datetime import datetime, timedelta
 from functools import wraps
 from random import random
@@ -91,7 +92,7 @@ def buildWeightDataset():
 
         # 检查废物类型是否在数据集中，如果不在，则初始化为 dateList
         if waste_type_name not in dataset:
-            dataset[waste_type_name] = [entry.copy() for entry in dateList]  # 深拷贝 dateList
+            dataset[waste_type_name] = deepcopy(dateList)  # 深拷贝 dateList
 
         for entry in dataset[waste_type_name]:
             if entry[0] == order_date:
@@ -102,7 +103,7 @@ def buildWeightDataset():
     for category in dataset:
         dataset[category].sort(key=lambda x: x[0])
 
-    # print(dict(dataset))
+    print("weight dataset: ", dict(dataset))
     return dict(dataset)
 
 
@@ -142,7 +143,7 @@ def buildTimeDataset():
     thirty_days_ago = datetime.now() - timedelta(days=30)
     orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.date >= thirty_days_ago).all()
     dataset = defaultdict(list)
-    dateList = generate_time_array()  # 形式为[date, []]
+    dateList = generate_time_array()  # [date, []]
 
     # 构建每个类别的时间序列
     for order in orders:
@@ -152,19 +153,19 @@ def buildTimeDataset():
 
         # 检查废物类型是否在数据集中，如果不在，则初始化为 dateList
         if waste_type_name not in dataset:
-            dataset[waste_type_name] = [entry.copy() for entry in dateList]  # 深拷贝 dateList
+            dataset[waste_type_name] = deepcopy(dateList)  # 深拷贝 dateList
 
+        # print("category: ", waste_type_name)
         for entry in dataset[waste_type_name]:
-            print(entry)
             if entry[0] == order_date:
-                if waste_type_name == "HEAVY_METAL_WASTEWATER":
-                    print(order_date,process_time)
-                entry[1].append(process_time)  # 创建新的处理时间列表并添加处理时间
+                # print("category: ", waste_type_name, " date: ", order_date, " process time: ", process_time)
+                entry[1].append(process_time)
+                # print(entry)
                 break
 
-        print(dict(dataset))
-
-    print(dict(dataset))
+    for category in dataset:
+        dataset[category].sort(key=lambda x: x[0])
+    # print("Time dataset: ", dict(dataset))
     return dict(dataset)
 
 
@@ -173,9 +174,15 @@ def forecastTime(dataset, days=5, order=(1, 1, 1)):
     for category, data in dataset.items():
         # 提取每个类别的重量和日期数据
         dates = [entry[0] for entry in data]
-        print(dates)
-        times = [entry[1] for entry in data]
-        print(times)
+        # print(dates)
+        times = []
+        for entry in data:
+            if len(entry[1]) != 0:
+                averageTime = sum(entry[1]) / len(entry[1])
+            else:
+                averageTime = 0
+            times.append(averageTime)
+        # print(times)
         df = pd.DataFrame({'Date': dates, 'Times': times})
 
         df['Date'] = pd.to_datetime(df['Date'])
@@ -200,10 +207,11 @@ def build_arima():
     weightDataset = buildWeightDataset()
     weightForecasts = forecastWeight(weightDataset)
     weightForecasts = {category: forecast for category, forecast in weightForecasts.items()}
-    # print("Weight Forecasts:", weightForecasts)
+    print("Weight Forecasts:", weightForecasts)
 
     timeDataset = buildTimeDataset()
     timeForecasts = forecastTime(timeDataset)
     timeForecasts = {category: forecast for category, forecast in timeForecasts.items()}
     print("Time Forecasts:", timeForecasts)
     return jsonify({'dataset': timeDataset, 'forecasts': weightForecasts})
+    # return jsonify({'forecasts': weightForecasts})
