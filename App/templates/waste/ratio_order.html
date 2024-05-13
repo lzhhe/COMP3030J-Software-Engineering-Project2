@@ -135,9 +135,9 @@
     </section>
     <script>
         $(document).ready(function () {
-            function toggleChartType(chart, currentType, data, pieOptions, barOptions) {
-                let newType = currentType === 'pie' ? 'bar' : 'pie';
-                let newOptions = currentType === 'pie' ? barOptions : pieOptions;
+            function toggleChartType(chart, currentType, data, doughnutOptions, barOptions) {
+                let newType = currentType === 'doughnut' ? 'bar' : 'doughnut';
+                let newOptions = currentType === 'doughnut' ? barOptions : doughnutOptions;
                 chart.config.type = newType;
                 chart.options = newOptions;
                 chart.update();
@@ -169,7 +169,7 @@
             let ctx3 = document.getElementById('chart3').getContext('2d');
             let ctx4 = document.getElementById('chart4').getContext('2d');
 
-            let pieOptions = {
+            let doughnutOptions = {
                 responsive: true,
                 plugins: {
                     legend: {
@@ -189,7 +189,8 @@
                 animation: {
                     duration: 1000,
                     easing: 'easeOutQuart'
-                }
+                },
+                cutout: '60%'
             }
 
             let barOptions = {
@@ -219,9 +220,9 @@
             }
 
             let chart1 = new Chart(ctx1, {
-                type: 'pie',
+                type: 'doughnut',
                 data: data1,
-                options: pieOptions
+                options: doughnutOptions
             });
 
             let data2 = {
@@ -233,9 +234,9 @@
             }
 
             let chart2 = new Chart(ctx2, {
-                type: 'pie',
+                type: 'doughnut',
                 data: data2,
-                options: pieOptions
+                options: doughnutOptions
             });
 
             let data3 = {
@@ -246,9 +247,9 @@
                 labels: dept_orders.map(item => item.type)
             }
             let chart3 = new Chart(ctx3, {
-                type: 'pie',
+                type: 'doughnut',
                 data: data3,
-                options: pieOptions
+                options: doughnutOptions
             });
 
             let data4 = {
@@ -260,21 +261,21 @@
             }
 
             let chart4 = new Chart(ctx4, {
-                type: 'pie',
+                type: 'doughnut',
                 data: data4,
-                options: pieOptions
+                options: doughnutOptions
             });
 
             document.getElementById('change1').addEventListener('click', function () {
-                toggleChartType(chart1, chart1.config.type, data1, pieOptions, barOptions);
+                toggleChartType(chart1, chart1.config.type, data1, doughnutOptions, barOptions);
             });
 
             document.getElementById('change3').addEventListener('click', function () {
-                toggleChartType(chart3, chart3.config.type, data3, pieOptions, barOptions);
+                toggleChartType(chart3, chart3.config.type, data3, doughnutOptions, barOptions);
             });
 
             document.getElementById('change4').addEventListener('click', function () {
-                toggleChartType(chart4, chart4.config.type, data4, pieOptions, barOptions);
+                toggleChartType(chart4, chart4.config.type, data4, doughnutOptions, barOptions);
             });
         });
     </script>
