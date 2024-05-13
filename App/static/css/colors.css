@@ -52,6 +52,13 @@
 
     --loader1: #cddce5;
 
+    --luotianyi1: #66ccff;
+    --luotianyi2: #94e1ff;
+    --luotianyi3: #c2f1ff;
+    --luotianyi4: #53b0e6;
+    --luotianyi5: #3987bf;
+    --chuyinweilai: #39c5bb;
+
 
     --dept1: #E178C5;
     --dept2: #FF8E8F;
@@ -249,6 +256,14 @@
 
     --loader1: #1f1f1f;
 
+    --luotianyi1: #4b98bd;
+    --luotianyi2: #74aac7;
+    --luotianyi3: #95b6c2;
+    --luotianyi4: #4088b2;
+    --luotianyi5: #2c6994;
+    --chuyinweilai: #2a918a;
+
+
     --dept1: #9b4f85;
     --dept2: #7e4646;
     --dept3: #986d53;
@@ -427,6 +442,6 @@
 
 }
 
-:root[data-theme="dark"] img{
+:root[data-theme="dark"] img {
     filter: brightness(70%) contrast(80%);
 }

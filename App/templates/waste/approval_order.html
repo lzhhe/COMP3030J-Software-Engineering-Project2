@@ -110,7 +110,7 @@
             <form method="dialog" class="form-edit">
                 <label>{{ _("Start-Date:") }}
                     <input type="date" id="processing-sdate" aria-label="Read-only input" readonly></label>
-                <label>{{ _("End-Date:") }}
+                <label>{{ _("Est.Date:") }}
                     <input type="date" id="processing-edate" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Whole-Weight:") }}
                     <input type="number" id="processing-wweight" aria-label="Read-only input" readonly></label>
@@ -285,7 +285,7 @@
                                     {{ _("Start-Date") }}
                                 </th>
                                 <th scope="col" class="underline sortable">
-                                    {{ _("End-Date") }}
+                                    {{ _("Est.Date") }}
                                 </th>
                                 <th scope="col" class="no-sort">
                                     {{ _("Operation") }}
@@ -331,9 +331,6 @@
                                 <th scope="col" class="underline sortable">
                                     {{ _("Date") }}
                                 </th>
-                                <th scope="col" class="no-sort">
-                                    {{ _("Operation") }}
-                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -344,12 +341,6 @@
                                     <td>{{ order.department.departmentType | enum_to_string }}</td>
                                     <td>{{ order.wasteType | enum_to_string }}</td>
                                     <td>{{ order.date }}</td>
-                                    <td><i class="iconfont icon-chakan view-order"
-                                           data-id="{{ order.OID }}"
-                                           data-comment="{{ order.comment }}"
-                                           data-attribution="{{ order.attribution }}"></i>
-                                        <i class="iconfont icon-gouxuan confirm-order"
-                                           data-id="{{ order.OID }}"></i></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -376,7 +367,7 @@
             let today = new Date();  // 获取当前日期
             let yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);  // 昨天
             let dayBeforeYesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2);  // 前天
-            function generateRandomDatePair() {
+            function getEstDate() {
                 let startDate = Math.random() > 0.5 ? yesterday : dayBeforeYesterday;
                 let randomDays = Math.floor(Math.random() * 10) + 1;
                 let endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + randomDays);
@@ -403,7 +394,7 @@
             $('#view-table3 tbody tr').each(function () {
                 let startDateCell = $(this).find('td').eq(3);  // 假设开始日期在第四列
                 let endDateCell = $(this).find('td').eq(4);   // 假设结束日期在第五列
-                let dates = generateRandomDatePair();  // 生成随机日期对
+                let dates = getEstDate();  // 生成随机日期对
                 startDateCell.text(dates.startDate);    // 设置开始日期
                 endDateCell.text(dates.endDate);    // 设置结束日期
             });
@@ -800,7 +791,7 @@
                                         timer: 2000,
                                         timerProgressBar: true,background: swalcolor,
                                     });
-                                    let dates = generateRandomDatePair();  // 生成随机日期对
+                                    let dates = getEstDate();  // 生成随机日期对
                                     table2.row($(self).closest('tr')).remove().draw(false);
                                     table3.row.add([
                                         '', orderName, orderWType, dates.startDate, dates.endDate,
