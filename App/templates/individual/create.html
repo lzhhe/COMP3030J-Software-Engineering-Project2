@@ -599,6 +599,23 @@
                 return false; // 防止进一步的事件冒泡或默认行为
             });
 
+            const view_templates = $('#view-templates').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                lengthMenu: [6, 12, 24],
+                pageLength: 6,
+                responsive: true,
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3], className: 'dt-head-center'},
+                    {targets: [0, 1, 2], className: 'dt-body-left'},
+                    {targets: [3], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false}
+                ],
+            });
+
             $('#createTem').click(function () {
                 let isValid = true;
 
@@ -639,13 +656,13 @@
                     });
 
                     let temInfo = {
-                        templateName: temName,
-                        templateType: temType,
-                        templateAttr: temAttr
+                        waste_name: temName,
+                        wasteType: temType,
+                        attribution: temAttr
                     };
 
                     $.ajax({
-                        url: "/department/template",
+                        url: "{{ url_for('utils.createTemplate') }}",
                         type: "POST",
                         data: JSON.stringify(temInfo),
                         contentType: "application/json;charset=UTF-8",
@@ -662,7 +679,11 @@
                                     timerProgressBar: true,
                                     background: swalcolor,
                                 });
-                                window.location.href = "/department/";
+                                const newR = view_templates.row.add([
+                                    temName, temType, temAttr,
+                                    `<i class="iconfont icon-gouxuan"></i>
+                                    <i class="iconfont icon-shanchu delete-tem" data-id="${oid}"></i>`
+                                ]).draw(false).node();
                             } else {
                                 Swal.fire({
                                     text: response.message,
@@ -680,23 +701,6 @@
                 }
             });
 
-
-            const view_templates = $('#view-templates').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true,
-                info: true,
-                lengthMenu: [6, 12, 24],
-                pageLength: 6,
-                responsive: true,
-                autoWidth: true,
-                columnDefs: [
-                    {targets: [0, 1, 2, 3], className: 'dt-head-center'},
-                    {targets: [0, 1, 2], className: 'dt-body-left'},
-                    {targets: [3], className: 'dt-body-center'},
-                    {targets: 'no-sort', orderable: false}
-                ],
-            });
 
             $(document).on('click', '.delete-tem', function () {
                 let oid = $(this).data('id');

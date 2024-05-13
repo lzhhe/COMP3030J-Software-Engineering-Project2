@@ -154,6 +154,7 @@ def enum_to_string(enum):
 def string_to_enum(string):
     return string.replace(' ', '_').upper()
 
+
 @utils.route('/createTemplate')
 def createTemplate():
     user = g.user
@@ -162,25 +163,28 @@ def createTemplate():
     data = request.get_json()
     wasteName = data.get('waste_name')
     wasteType = data.get('wasteType')
+    wasteType = string_to_enum(wasteType)
     attribution = data.get('attribution')
 
-    new_template = UserTemplate(UID=uid, name=wasteName, wasteType=wasteType, attribution=attribution)
+    new_template = UserTemplate(UID=uid, wasteName=wasteName, wasteType=wasteType, attribution=attribution)
     db.session.add(new_template)
     db.session.commit()
+    now_t = UserTemplate.query.filter(UID=uid, wasteName=wasteName).first()
+    TID = now_t.TID
 
-    return jsonify({"message": f"This template has created"})
+    return jsonify({"message": "successful", "TID": TID})
 
-def parse_attributions(attr_str): # 解析json
-    attr_dict = {}
+
+def parse_attributions(attr_str):  # 解析json
+    attr_dict = []
     try:
-        # 按空格拆分获取每个属性
         attributes = attr_str.split()
         for attribute in attributes:
-            key, value = attribute.split(':')
-            attr_dict[key] = value
+            attr_dict.append(attribute)
     except Exception as e:
         print("Error parsing attributions:", e)
     return attr_dict
+
 
 @utils.route('/getTemplate', methods=['GET'])
 def getTemplate():
@@ -198,4 +202,3 @@ def getTemplate():
         return jsonify(templates_data), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 200
-
