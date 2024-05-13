@@ -7,7 +7,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
-from .views_utils import enum_to_string, string_to_enum
+from .views_utils import *
 
 department = Blueprint('department', __name__, url_prefix='/department')  # department is name of blueprint
 

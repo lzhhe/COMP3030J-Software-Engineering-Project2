@@ -3,7 +3,7 @@ from flask_babel import Babel, gettext as _
 from App import create_app
 from App.extents import db
 from App.models import User
-from App.views_utils import string_to_enum, enum_to_string
+from App.views_utils import string_to_enum, enum_to_string, parse_attributions
 
 app = create_app()
 
@@ -42,6 +42,7 @@ def my_context():
 
 app.jinja_env.filters['string_to_enum'] = string_to_enum
 app.jinja_env.filters['enum_to_string'] = enum_to_string
+app.jinja_env.filters['parse_attributions'] = parse_attributions
 app.jinja_env.filters['reverse_order'] = lambda order: 'desc' if order == 'asc' else 'asc'
 
 if __name__ == '__main__':

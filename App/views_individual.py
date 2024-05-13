@@ -4,6 +4,8 @@ from functools import wraps
 from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
 from sqlalchemy import and_, or_
 from werkzeug.security import generate_password_hash, check_password_hash
+from .views_utils import *
+
 
 from .models import *
 
@@ -15,17 +17,18 @@ def index():
     return render_template('individual/index.html', methods=['POST'])
 
 
-
 @individual.route('/create')
 def create():
     api_key = "392c5833885dafa9515b33b18592414e"
     api_security = "2e288d9ae8003f33cc1b58b5fd941663"
-    bing_api= "Alq9HEx7RGafIXHgY_oQiWYC9zxJWP-TTp5KZuGetS1YmaojcXw9FSa8cv_jeIKE"
+    bing_api = "Alq9HEx7RGafIXHgY_oQiWYC9zxJWP-TTp5KZuGetS1YmaojcXw9FSa8cv_jeIKE"
     wastes = None
     user = g.user
+    uid = user.UID
     if user is not None:
         wasteTypes = Waste.query.all()
         wastes = []
         for w in wasteTypes:
             wastes.append(w.wasteType)
-    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key, a3=bing_api)
+    all_templates = getTemplates(uid)
+    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key, a3=bing_api, all_templates=all_templates)

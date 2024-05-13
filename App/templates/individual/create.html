@@ -109,6 +109,10 @@
             color: var(--primary-color);
         }
 
+        .pico input[type="number"].attr {
+            width: 6rem;
+        }
+
         #location-container {
             width: 90%;
         }
@@ -234,16 +238,24 @@
         }
 
         .icon-gouxuan {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--doing1);
+        }
+
+        #createTem .icon-gouxuan {
             color: var(--doing1);
             font-size: 4rem;
         }
 
         .icon-shanchu {
+            cursor: pointer;
+            font-size: 1.5rem;
             color: var(--tododelete);
         }
 
-        .icon-shanchu:hover {
-            scale: 1.2;
+        .icon-gouxuan:hover .icon-shanchu:hover {
+            font-size: 2rem;
             transition: all 0.3s ease;
         }
 
@@ -291,28 +303,8 @@
                     {{ _("Attributes:") }}
                     <div class="order-attributes">
                         <label class="number-input no-pico-label order-attribute" for="order-a1">
-                            <input type="text" id="order-a1" name="order-a1" required data-attr="CO2">
+                            <input type="number" class="attr" id="order-a1" name="order-a1" required data-attr="CO2">
                             <span>CO2</span>
-                        </label>
-                        <label class="number-input no-pico-label order-attribute" for="order-a2">
-                            <input type="text" id="order-a2" name="order-a2" required data-attr="J">
-                            <span>J</span>
-                        </label>
-                        <label class="number-input no-pico-label order-attribute" for="order-a3">
-                            <input type="text" id="order-a3" name="order-a3" required data-attr="SO2">
-                            <span>SO2</span>
-                        </label>
-                        <label class="number-input no-pico-label order-attribute" for="order-a4">
-                            <input type="text" id="order-a4" name="order-a4" required data-attr="SO4">
-                            <span>SO4</span>
-                        </label>
-                        <label class="number-input no-pico-label order-attribute" for="order-a5">
-                            <input type="text" id="order-a5" name="order-a5" required data-attr="SO4">
-                            <span>SO4</span>
-                        </label>
-                        <label class="number-input no-pico-label order-attribute" for="order-a6">
-                            <input type="text" id="order-a6" name="order-a6" required data-attr="SO4">
-                            <span>SO4</span>
                         </label>
                     </div>
                     <div id="location-container">
@@ -395,9 +387,9 @@
                                 <td>{{ templates.wasteType }}</td>
                                 <td>{{ templates.attribution }}</td>
                                 <td>
-                                    <i class="iconfont icon-gouxuan"></i>
+                                    <i class="iconfont icon-gouxuan use-tem"></i>
                                     <i class="iconfont icon-shanchu delete-tem"
-                                       data-id="{{ templates.id }}"></i></td>
+                                       data-id="{{ templates.TID }}"></i></td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -590,7 +582,11 @@
                         background: swalcolor,
                     });
                 } else {
-                    $('.quyu2').append('<input type="text" class="input-attr">');
+                    let newInput = $('<input type="text" class="input-attr">');
+                    $('.quyu2').append(newInput);
+                    setTimeout(function () {
+                        newInput.focus();
+                    }, 100); // 使
                 }
             });
             $('.quyu2').on('contextmenu', '.input-attr', function (event) {
@@ -620,20 +616,25 @@
                 let isValid = true;
 
                 // 检查下拉框是否已选择（假设下拉框的选择存储在 data-value 属性中）
-                if ($('#temType').attr('data-value') === '') {
+                if ($('#temType').data('value') === '') {
                     isValid = false;
+                    console.log(1)
                 }
 
                 // 检查地址输入框是否为空
-                if ($('#temName').val().trim() === '') {
+                if ($('#temName').val() === '') {
                     isValid = false;
+                    console.log(2)
+
                 }
 
                 // 检查quyu2中的所有输入框是否为空
                 $('.quyu2 input[type="text"]').each(function () {
-                    if ($(this).val().trim() === '') {
+                    if ($(this).val() === '') {
                         isValid = false;
+                        console.log(3)
                     }
+
                 });
 
                 if (!isValid) {
@@ -649,7 +650,7 @@
                     });
                 } else {
                     let temName = $('#temName').val();
-                    let temType = $('#temType').attr('data-value');
+                    let temType = $('#temType').data('value');
                     let temAttr = '';
                     $('.quyu2 input[type="text"]').each(function () {
                         temAttr += $(this).val() + ' ';
@@ -681,8 +682,8 @@
                                 });
                                 const newR = view_templates.row.add([
                                     temName, temType, temAttr,
-                                    `<i class="iconfont icon-gouxuan"></i>
-                                    <i class="iconfont icon-shanchu delete-tem" data-id="${oid}"></i>`
+                                    `<i class="iconfont icon-gouxuan use-tem"></i>
+                                    <i class="iconfont icon-shanchu delete-tem" data-id="${response.TID}"></i>`
                                 ]).draw(false).node();
                             } else {
                                 Swal.fire({
@@ -703,7 +704,7 @@
 
 
             $(document).on('click', '.delete-tem', function () {
-                let oid = $(this).data('id');
+                let TID = $(this).data('id');
                 let self = this; // Save the reference to the button
 
                 Swal.fire({
@@ -716,12 +717,13 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.value) {
+                        console.log(TID)
                         // 用户点击了确认按钮
                         $.ajax({
-                            url: `/department/delete_order/${oid}`,
+                            url: '/deleteTemplate/' + encodeURIComponent(TID),
                             type: 'DELETE',
                             success: function (res) {
-                                if (res.message === 0) {
+                                if (res.message === 'successful') {
                                     Swal.fire({
                                         title: "{{ _('Delete successful') }}",
                                         icon: "success",
@@ -766,6 +768,58 @@
                         // 用户点击了取消按钮或关闭了对话框
                         Swal.fire({
                             title: "{{ _('Deletion cancelled') }}",
+                            text: "{{ _('Your template is safe') }}",
+                            icon: "info",
+                            background: swalcolor,
+                        });
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.use-tem', function () {
+                let row = $(this).closest('tr');
+                let orderName = row.find('td').eq(0).text();  // 第一列的值
+                let wasteType = row.find('td').eq(1).text();  // 第二列的值
+                let attrs = row.find('td').eq(2).text().trim().split(' ');  // 第三列的值，按空格分割
+
+                Swal.fire({
+                    title: "{{ _('Are you sure to use this template?') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Yes!') }}",
+                    cancelButtonText: "{{ _('No') }}",
+                    background: swalcolor,
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $('#order-name').val(orderName);  // 设置订单名
+                        $('.order-choose .dropdown').attr('data-value', wasteType); // 设置废物类型值
+                        $('.order-choose summary').text(`${wasteType}`); // 更新摘要显示选择的废物类型
+
+                        $('.order-attributes').empty();
+                        attrs.forEach(function (attr, index) {
+                            let label = $(`<label class="number-input no-pico-label order-attribute" for="order-a${index + 1}">
+                        <input type="number" class="attr" id="order-a${index + 1}" name="order-a${index + 1}" required data-attr="${attr}">
+                        <span>${attr}</span>
+                      </label>`);
+                            $('.order-attributes').append(label);
+                        });
+                        Swal.fire({
+                            title: "{{ _('Apply successfully') }}",
+                            icon: "success",
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            background: swalcolor,
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Use cancelled') }}",
                             text: "{{ _('Your template is safe') }}",
                             icon: "info",
                             background: swalcolor,

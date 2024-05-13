@@ -155,7 +155,7 @@ def string_to_enum(string):
     return string.replace(' ', '_').upper()
 
 
-@utils.route('/createTemplate')
+@utils.route('/createTemplate', methods=['POST'])
 def createTemplate():
     user = g.user
     uid = user.UID
@@ -165,40 +165,45 @@ def createTemplate():
     wasteType = data.get('wasteType')
     wasteType = string_to_enum(wasteType)
     attribution = data.get('attribution')
+    try:
+        new_template = UserTemplate(UID=uid, wasteName=wasteName, wasteType=wasteType, attribution=attribution)
+        db.session.add(new_template)
+        db.session.commit()
+        now_t = UserTemplate.query.filter_by(UID=uid, wasteName=wasteName).first()
+        TID = now_t.TID
+        return jsonify({"message": "successful", "TID": TID}), 200
+    except KeyError:
+        return jsonify({'message': 'The name has existed'}), 200
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'message': 'The name has existed', 'error': str(e)}), 200
 
-    new_template = UserTemplate(UID=uid, wasteName=wasteName, wasteType=wasteType, attribution=attribution)
-    db.session.add(new_template)
-    db.session.commit()
-    now_t = UserTemplate.query.filter(UID=uid, wasteName=wasteName).first()
-    TID = now_t.TID
 
-    return jsonify({"message": "successful", "TID": TID})
+@utils.route('/deleteTemplate/<TID>', methods=['DELETE'])
+def deleteTemplate(TID):
+    tem = UserTemplate.query.filter_by(TID=TID).first()
+    if tem:
+        db.session.delete(tem)
+        db.session.commit()
+        return jsonify({'message': 'successful'}), 200
+    else:
+        return jsonify({'message': 'failed'}), 200
 
 
 def parse_attributions(attr_str):  # 解析json
     attr_dict = []
-    try:
-        attributes = attr_str.split()
-        for attribute in attributes:
-            attr_dict.append(attribute)
-    except Exception as e:
-        print("Error parsing attributions:", e)
+    attributes = attr_str.split()
+    for attribute in attributes:
+        attr_dict.append(attribute)
     return attr_dict
 
 
-@utils.route('/getTemplate', methods=['GET'])
-def getTemplate():
-    user = g.user
-    uid = user.UID
-    try:
-        templates = UserTemplate.query.filter_by(UID=uid).all()
-        templates_data = [{
-            'id': template.id,
-            'name': template.name,
-            'wasteType': template.wasteType.name,
-            'attribution': parse_attributions(template.attribution)
-        } for template in templates]
-
-        return jsonify(templates_data), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 200
+def getTemplates(uid):
+    templates = UserTemplate.query.filter_by(UID=uid).all()
+    templates_data = [{
+        'TID': template.TID,
+        'wasteName': template.wasteName,
+        'wasteType': enum_to_string(template.wasteType),
+        'attribution': template.attribution
+    } for template in templates]
+    return templates_data
