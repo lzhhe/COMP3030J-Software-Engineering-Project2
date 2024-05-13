@@ -297,7 +297,7 @@ body {
     top: 0;
     right: 0;
     position: fixed;
-    z-index: 10000;
+    z-index: 20;
 }
 
 .container.active {
@@ -518,7 +518,7 @@ body {
     padding-right: 1rem;
 }
 
-.about-list {
+.about-list, .card-list {
     margin-top: 2.67rem;
     margin-block-end: 2.67rem;
 }
@@ -527,21 +527,36 @@ body {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    width: fit-content;
+    text-align: left;
 }
+
+.card-item {
+    display: flex;
+    text-align: left;
+}
+.card-item i{
+    color: var(--dark-orange);
+    font-size: 1.4rem;
+}
+
 
 .about-text {
     font-size: 0.8rem;
     line-height: 1.4rem;
 }
 
-.about-icon i {
+.card-text {
+    font-size: 1rem;
+    line-height: 1.2rem;
+}
+
+.about-icon i{
     min-width: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--dark-orange);
 }
 
-.about-item:not(:last-child) {
+.about-item:not(:last-child), .card-item:not(:last-child) {
     margin-block-end: 0.67rem;
 }
 
@@ -637,13 +652,21 @@ body {
     overflow: hidden;
 }
 
-.scrollbox_container_card p {
+.scrollbox_container_card div {
+    z-index: 1;
+    position: absolute;
+    top: 3rem;
+    margin-left: 2.5rem;
+    margin-right: 2rem;
+}
+
+.scrollbox_container_card div h1 {
     font-family: sans-serif;
     font-size: 3rem;
-    color: #171717;
+    color: var(--text-color);
     font-weight: 900;
-    text-transform: uppercase;
     z-index: 1;
+    margin-bottom: 2rem;
 }
 
 .scc_city {
