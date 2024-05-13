@@ -427,9 +427,99 @@
 {% if user %}
     {% set status = user.status|enum_to_string %}
     {% if status == 'Individual User' %}
-        <div></div>
+        <section class="section2" id="feature">
+            <div class="feature-intro">
+                <p class="section-subtitle">management</p>
+                <h2 class="h2 section-title">Switch to pages to deal with waste</h2>
+                <p class="section-text">You can view or manage your order and check how much you are contributing to the
+                    environment</p>
+            </div>
+            <ul class="feature-list grid-list">
+                <li>
+                    <div class="feature-card" style="--card-number: '01'">
+                        <div class="card-icon">
+                            <img src="../static/image/alink/pic1.svg" alt="">
+                        </div>
+                        <h3 class="h3 card-title">Creat order</h3>
+                        <p class="card-text">
+                            Users can create stand-alone waste orders, select waste sources and attributes, and simply
+                            operate
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-card" style="--card-number: '02'">
+                        <div class="card-icon">
+                            <img src="../static/image/alink/pic2.svg" alt="">
+                        </div>
+                        <h3 class="h3 card-title">View contr.</h3>
+                        <p class="card-text">
+                            Users can see the trend of their treated waste from hazardous to non-hazardous and can fully
+                            enlighten the public.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-card" style="--card-number: '03'">
+                        <div class="card-icon">
+                            <img src="../static/image/alink/pic7.svg" alt="">
+                        </div>
+                        <h3 class="h3 card-title">Recognize waste</h3>
+                        <p class="card-text">
+                            Identify types of waste and improve the efficiency of waste disposal.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </section>
     {% else %}
-        <div></div>
+        <section class="section2" id="feature">
+            <div class="feature-intro">
+                <p class="section-subtitle">management</p>
+                <h2 class="h2 section-title">Switch to pages to deal with waste</h2>
+                <p class="section-text">You can view or manage your order and check how much you are contributing to the
+                    environment</p>
+            </div>
+            <ul class="feature-list grid-list">
+                <li>
+                    <div class="feature-card" style="--card-number: '01'">
+                        <div class="card-icon">
+                            <img src="../static/image/alink/pic8.svg" alt="">
+                        </div>
+                        <h3 class="h3 card-title">Projection time</h3>
+                        <p class="card-text">
+                            The government can see the weight and hazards of different wastes produced by our company at
+                            different times.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-card" style="--card-number: '02'">
+                        <div class="card-icon">
+                            <img src="../static/image/alink/pic9.svg" alt="">
+                        </div>
+                        <h3 class="h3 card-title">Projection weight</h3>
+                        <p class="card-text">
+                            The government can see the company's projections of the maximum waste content capacity that
+                            the world in its current state can handle
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="feature-card" style="--card-number: '03'">
+                        <div class="card-icon">
+                            <img src="../static/image/alink/pic6.svg" alt="">
+                        </div>
+                        <h3 class="h3 card-title">Carbon neutral data</h3>
+                        <p class="card-text">
+                            Governments can see our company's contribution to protecting the environment and tracking
+                            our
+                            carbon neutral footprint.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </section>
     {% endif %}
 {% else %}
     <section class="section2" id="feature">
