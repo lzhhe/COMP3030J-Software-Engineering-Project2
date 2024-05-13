@@ -153,3 +153,49 @@ def enum_to_string(enum):
 
 def string_to_enum(string):
     return string.replace(' ', '_').upper()
+
+@utils.route('/createTemplate')
+def createTemplate():
+    user = g.user
+    uid = user.UID
+
+    data = request.get_json()
+    wasteName = data.get('waste_name')
+    wasteType = data.get('wasteType')
+    attribution = data.get('attribution')
+
+    new_template = UserTemplate(UID=uid, name=wasteName, wasteType=wasteType, attribution=attribution)
+    db.session.add(new_template)
+    db.session.commit()
+
+    return jsonify({"message": f"This template has created"})
+
+def parse_attributions(attr_str): # 解析json
+    attr_dict = {}
+    try:
+        # 按空格拆分获取每个属性
+        attributes = attr_str.split()
+        for attribute in attributes:
+            key, value = attribute.split(':')
+            attr_dict[key] = value
+    except Exception as e:
+        print("Error parsing attributions:", e)
+    return attr_dict
+
+@utils.route('/getTemplate', methods=['GET'])
+def getTemplate():
+    user = g.user
+    uid = user.UID
+    try:
+        templates = UserTemplate.query.filter_by(UID=uid).all()
+        templates_data = [{
+            'id': template.id,
+            'name': template.name,
+            'wasteType': template.wasteType.name,
+            'attribution': parse_attributions(template.attribution)
+        } for template in templates]
+
+        return jsonify(templates_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 200
+

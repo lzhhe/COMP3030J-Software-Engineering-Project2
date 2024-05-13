@@ -17,14 +17,14 @@
         }
 
         // 调用 build_kmeans 接口
-        {#fetchData('/government/build_kmeans')#}
-        {#    .then(data => {#}
-        {#        // 处理返回的数据#}
-        {#        document.getElementById('kmeans-data').innerText = JSON.stringify(data);#}
-        {#    })#}
-        {#    .catch(error => {#}
-        {#        console.error('Error fetching kmeans data:', error);#}
-        {#    });#}
+        fetchData('/government/build_kmeans')
+            .then(data => {
+                // 处理返回的数据
+                document.getElementById('kmeans-data').innerText = JSON.stringify(data);
+            })
+            .catch(error => {
+                console.error('Error fetching kmeans data:', error);
+            });
 
         // 调用 build_arima 接口
         fetchData('/government/build_arima')
