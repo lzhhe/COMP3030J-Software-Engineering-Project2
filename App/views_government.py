@@ -215,3 +215,4 @@ def build_arima():
     print("Time Forecasts:", timeForecasts)
     return jsonify({'dataset': timeDataset, 'forecasts': weightForecasts})
     # return jsonify({'forecasts': weightForecasts})
+
