@@ -19,6 +19,7 @@ def index():
     departmentType = None
     wastes = None
     user = g.user
+    uid = user.UID
     if user.department_id is not None:
         d = user.department
         department = d.departmentName
@@ -28,8 +29,9 @@ def index():
         wastes = []
         for wasteType in wasteTypes:
             wastes.append(wasteType.wasteType)
+    all_templates = getTemplates(uid)
     return render_template('department/create_order.html', department=department, departmentType=departmentType,
-                           wastes=wastes, departmentDID=departmentDID)
+                           wastes=wastes, departmentDID=departmentDID, all_templates=all_templates)
 
 
 @department.route('/setdepartment', methods=['POST'])
