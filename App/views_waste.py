@@ -205,6 +205,11 @@ def finish(OID):
             order.orderStatus = OrderStatus.FINISHED
             order.finishDate = datetime.today()  # 记录完成时间
             db.session.commit()
+
+            # 恢复处理仓的能力
+            processCapacity = ProcessCapacity.query.filter_by(wasteType=order.wasteType).first()
+            processCapacity.currentCapacity = processCapacity.currentCapacity - order.weight * order.multiplier
+            db.session.commit()
             return jsonify({"message": "successfully"}), 200
     else:
         return jsonify({"error": "Order not found"}), 200
