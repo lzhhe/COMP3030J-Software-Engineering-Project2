@@ -20,7 +20,7 @@
                     </li>
                     <li class="menu__item">
                         <div class="information">
-                            <div class="user-info">
+                            <div class="user-info" data-uid="{{ user.UID }}">
                                 <span>{{ user.username }}</span>
                                 <span>{{ user.status | enum_to_string }}</span>
                             </div>

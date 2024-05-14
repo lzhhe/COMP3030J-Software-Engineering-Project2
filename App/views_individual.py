@@ -6,7 +6,6 @@ from sqlalchemy import and_, or_
 from werkzeug.security import generate_password_hash, check_password_hash
 from .views_utils import *
 
-
 from .models import *
 
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
@@ -31,4 +30,45 @@ def create():
         for w in wasteTypes:
             wastes.append(w.wasteType)
     all_templates = getTemplates(uid)
-    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key, a3=bing_api, all_templates=all_templates)
+    return render_template('individual/create.html', wastes=wastes, a1=api_security, a2=api_key, a3=bing_api,
+                           all_templates=all_templates)
+
+
+@individual.route('/createorder', methods=['POST'])
+def createorder():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+    user = g.user
+    data = request.get_json()
+    uid = user.UID
+    order_name = data.get('orderName')
+    waste_type = string_to_enum(data.get('wasteType'))
+    weight = data.get('weight')
+    attribution = data.get('attribution')
+    address = data.get('address')
+    comment = data.get('comment', '')  # 如果没有提供，使用空字符串
+
+    # 验证数据是否完整
+    if not all([order_name, weight, attribution, waste_type, address]):
+        return jsonify({"message": "Missing required data for the order"}), 200
+
+    # 创建新的工单记录
+    new_order = Order(
+        UID=uid,
+        date=date.today(),
+        wasteType=waste_type,
+        orderName=order_name,
+        weight=weight,
+        attribution=attribution,
+        comment=comment,
+        address=address,
+        wasteSource='EXTERNAL',
+        orderStatus='UNCONFIRMED'
+    )
+
+    # 添加到数据库并提交
+    db.session.add(new_order)
+    db.session.commit()
+
+    # 返回成功消息
+    return jsonify({"message": "successful"}), 200

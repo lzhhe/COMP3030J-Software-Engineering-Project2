@@ -238,7 +238,7 @@
                 document.querySelectorAll('.order-attribute').forEach(function (item) {
                     const attrName = $(item).find('input').data('attr');
                     const attrValue = $(item).find('input').val();
-                    attribution += attrValue + attrName + ' ';
+                    attribution += attrName + ':' + attrValue + '%' + ' ';
                 });
                 if (orderName === "" || weight === "" || type === "" || attribution === "") {
                     Swal.fire({
@@ -277,7 +277,12 @@
                                 timerProgressBar: true,
                                 background: swalcolor,
                             });
-                            window.location.href = "/department/";
+                            $("#order-name").val('');
+                            $("#order-weight").val('');
+                            $("#order-comment").val('');
+                            document.querySelectorAll('.order-attribute').forEach(function (item) {
+                                $(item).find('input').val('');
+                            });
                         } else {
                             Swal.fire({
                                 text: response.message,

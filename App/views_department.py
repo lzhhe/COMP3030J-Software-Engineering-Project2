@@ -179,6 +179,8 @@ def register():
     data = request.get_json()
     uid = user.UID
     department_id = data.get('departmentID')
+    department = user.department
+    address = department.departmentAddress
     order_name = data.get('orderName')
     waste_type = string_to_enum(data.get('wasteType'))
     weight = data.get('weight')
@@ -200,6 +202,8 @@ def register():
         weight=weight,
         attribution=attribution,
         comment=comment,
+        wasteSource='INTERNAL',
+        address=address,
         orderStatus='UNCONFIRMED'
     )
 

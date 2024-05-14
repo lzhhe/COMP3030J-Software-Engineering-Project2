@@ -279,7 +279,7 @@
                 <h2>{{ _("Create Order") }}</h2>
             </div>
             <div class="form-container">
-                <form class="pico" id="orderForm" method="post" action="/department/createorder">
+                <form class="pico" id="orderForm" method="post">
                     <label for="order-name">{{ _("Order name:") }}
                         <input type="text" id="order-name" name="order-name" required>
                     </label>
@@ -296,20 +296,25 @@
                             </ul>
                         </details>
                         <label class="number-input no-pico-label" for="order-weight">{{ _("Weight: ") }}
-                            <input type="number" id="order-weight" name="order-weight" required>
+                            <input type="number" id="order-weight" name="order-weight" required min="0"
+                                   oninput="enforce1(this)">
                             <span>kg</span>
                         </label>
                     </div>
-                    {{ _("Attributes:") }}
+                    {{ _("Attributes: (percentage)") }}
                     <div class="order-attributes">
                         <label class="number-input no-pico-label order-attribute" for="order-a1">
-                            <input type="number" class="attr" id="order-a1" name="order-a1" required data-attr="CO2">
+                            <input type="number" class="attr" id="order-a1" name="order-a1" required data-attr="CO2"
+                                   min="0" max="100" oninput="enforce2(this)">
                             <span>CO2</span>
                         </label>
                     </div>
+                    <label for="order-comment">{{ _("Order comment:") }}
+                        <textarea rows="2" cols="50" id="order-comment" name="order-comment"></textarea>
+                    </label>
                     <div id="location-container">
-                        <label for="order-comment">{{ _("Your address:") }}
-                            <input type="text" id="order-comment" name="order-comment">
+                        <label for="order-address">{{ _("Your address:") }}
+                            <input type="text" id="order-address" name="order-address">
                         </label>
                     </div>
                     <div id="location-map" style="margin-left: auto; margin-right: auto"></div>
@@ -418,7 +423,7 @@
             // 加载AutoSuggest和Search模块
             Microsoft.Maps.loadModule(['Microsoft.Maps.AutoSuggest', 'Microsoft.Maps.Search'], function () {
                 let manager = new Microsoft.Maps.AutosuggestManager({map: map});
-                manager.attachAutosuggest('#order-comment', '#location-container', selectedSuggestion);
+                manager.attachAutosuggest('#order-address', '#location-container', selectedSuggestion);
                 let searchManager = new Microsoft.Maps.Search.SearchManager(map);
 
                 // 定义选中建议后的行为
@@ -444,7 +449,7 @@
                         location: location,
                         callback: function (result) {
                             if (result.name) {
-                                document.getElementById('order-comment').value = result.name;
+                                document.getElementById('order-address').value = result.name;
                                 if (!initial) {
                                     // 确保搜索框中的结果更新为当前位置
                                     map.setView({center: location, zoom: zoomLevel});
@@ -481,6 +486,25 @@
             console.log('页面关闭，清理不需要的缓存');
         });
 
+        function enforce1(input) {
+            const min = 0;
+            const v = input.value;
+            if (v < min) {
+                input.value = min;
+            }
+        }
+
+        function enforce2(input) {
+            const min = 0;
+            const max = 100;
+            const v = input.value;
+            if (v < min) {
+                input.value = min;
+            } else if (v > max) {
+                input.value = max;
+            }
+        }
+
         $(document).ready(function () {
             let isDark = $('html').attr('data-theme') === 'dark';
             let swalcolor = '';
@@ -496,16 +520,16 @@
 
             $("#createOrderBtn").click(function (e) {
                 e.preventDefault();
-                const did = $('.user-department').data('did');
                 const orderName = $("#order-name").val();
                 const weight = $("#order-weight").val();
                 const type = $('.dropdown').data('value');
                 const comment = $("#order-comment").val();
+                const address = $('#order-address').val();
                 let attribution = '';
                 document.querySelectorAll('.order-attribute').forEach(function (item) {
                     const attrName = $(item).find('input').data('attr');
                     const attrValue = $(item).find('input').val();
-                    attribution += attrValue + attrName + ' ';
+                    attribution += attrName + ':' + attrValue + '%' + ' ';
                 });
                 if (orderName === "" || weight === "" || type === "" || attribution === "") {
                     Swal.fire({
@@ -519,15 +543,15 @@
                     });
                 }
                 const orderInfo = {
-                    departmentID: did,
                     orderName: orderName,
                     weight: weight,
                     wasteType: type,
                     attribution: attribution,
-                    comment: comment
+                    comment: comment,
+                    address: address
                 };
                 $.ajax({
-                    url: "/department/register",
+                    url: "/individual/createorder",
                     type: "POST",
                     data: JSON.stringify(orderInfo),
                     contentType: "application/json;charset=UTF-8",
@@ -544,7 +568,12 @@
                                 timerProgressBar: true,
                                 background: swalcolor,
                             });
-                            window.location.href = "/department/";
+                            $("#order-name").val('');
+                            $("#order-weight").val('');
+                            $("#order-comment").val('');
+                            document.querySelectorAll('.order-attribute').forEach(function (item) {
+                                $(item).find('input').val('');
+                            });
                         } else {
                             Swal.fire({
                                 text: response.message,
@@ -800,7 +829,7 @@
                         $('.order-attributes').empty();
                         attrs.forEach(function (attr, index) {
                             let label = $(`<label class="number-input no-pico-label order-attribute" for="order-a${index + 1}">
-                        <input type="number" class="attr" id="order-a${index + 1}" name="order-a${index + 1}" required data-attr="${attr}">
+                        <input type="number" class="attr" id="order-a${index + 1}" name="order-a${index + 1}" required data-attr="${attr}" min="0" max="100" oninput="enforce2(this)">
                         <span>${attr}</span>
                       </label>`);
                             $('.order-attributes').append(label);
