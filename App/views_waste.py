@@ -1,8 +1,12 @@
+from collections import defaultdict
+from copy import deepcopy
 from datetime import datetime, timedelta
 from functools import wraps
 
+import pandas as pd
 from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
 from sqlalchemy import and_, or_, Date, func
+from statsmodels.tsa.arima.model import ARIMA
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import *
@@ -128,10 +132,17 @@ def process(OID):
                 wasteStorage = WasteStorage.query.filter_by(wasteType=wasteType).first()
                 wasteStorage.currentCapacity = wasteStorage.currentCapacity - weight
                 db.session.commit()
+
+                forecastTime = build_arima(wasteType)
+                forecastFinishDate = order.date + timedelta(days=len(forecastTime))
+                order.finishDate = forecastFinishDate
+                db.session.commit()
+
                 return jsonify({"message": "successfully"}), 200
             else:
                 return jsonify({
                     "message": f"The capacity of this type ({wasteType}) is overload if add this order into process"}), 200
+
     else:
         return jsonify({"error": "Order not found"}), 200
 
@@ -161,10 +172,10 @@ def finish(OID):
 @waste.route('/modifyMultiplier/<OID>', methods=['PUT'])
 def modifyMultiplier(OID):
     data = request.json
-    print(OID)
+    # print(OID)
     # OID = data.get('OID')
     newMultiplier = data.get('multiplier')
-    print(newMultiplier)
+    # print(newMultiplier)
     order = Order.query.filter_by(OID=OID).first()
     order.multiplier = newMultiplier
     db.session.commit()
@@ -309,3 +320,65 @@ def getProcess():
     ]
 
     return jsonify(result)
+
+
+# 直接获取对应种类的
+def generate_time_array():
+    current_date = datetime.now().date()
+    date_values = [[current_date - timedelta(days=i), []] for i in range(30)]
+    return date_values
+
+
+def buildTimeDataset(wasteType):
+    # 获取最近30天内的订单数据
+    thirty_days_ago = datetime.now() - timedelta(days=30)
+    orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
+                                Order.date >= thirty_days_ago).all()
+    dateList = generate_time_array()  # [date, []]
+
+    # 构建每个类别的时间序列
+    for order in orders:
+        order_date = order.date
+        process_time = (order.finishDate - order.date).days  # 计算处理时间（天）
+        for date_entry in dateList:
+            if date_entry[0] == order_date:
+                date_entry[1].append(process_time)
+
+    dateList.sort(key=lambda x: x[0])
+    print("Time dataset: ", dateList)
+    return dateList
+
+
+def forecastTime(dateList, days=1, order=(1, 1, 1)):
+    dates = [entry[0] for entry in dateList]
+    # print(dates)
+    times = []
+    for entry in dateList:
+        if len(entry[1]) != 0:
+            averageTime = sum(entry[1]) / len(entry[1])
+        else:
+            averageTime = 0
+        times.append(averageTime)
+    # print(times)
+    df = pd.DataFrame({'Date': dates, 'Times': times})
+
+    df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date', inplace=True)
+    df.index.freq = 'D'
+    # 应用ARIMA模型
+    model = ARIMA(df, order=order, freq='D')
+    fitted_model = model.fit()
+    forecast = fitted_model.forecast(steps=days)
+
+    # print(forecast)
+    # print(forecast.__class__)
+    # print(forecast[0])
+
+    return forecast
+
+
+def build_arima(wasteType):
+    timeDataset = buildTimeDataset(wasteType)
+    timeForecast = forecastTime(timeDataset)
+    # print("Time Forecast:", timeForecast)
+    return timeForecast

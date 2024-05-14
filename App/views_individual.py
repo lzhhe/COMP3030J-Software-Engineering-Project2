@@ -46,7 +46,7 @@ def createorder():
     weight = data.get('weight')
     attribution = data.get('attribution')
     address = data.get('address')
-    comment = data.get('comment', '')  # 如果没有提供，使用空字符串
+    comment = data.get('comment', '')
 
     # 验证数据是否完整
     if not all([order_name, weight, attribution, waste_type, address]):
