@@ -3,6 +3,190 @@
     <link rel="stylesheet" href="../../static/css/department/create_order.css">
     <link rel="stylesheet" href="../../static/css/swiper.css">
     <link rel="stylesheet" href="../../static/css/utils/swiper-bundle.min.css"/>
+    <style>
+        .pico input[type="number"].attr {
+            width: 6rem;
+        }
+
+        #temType {
+            width: 100%;
+        }
+
+        #createTemDialog {
+            position: fixed;
+            top: 3rem;
+            right: -2rem;
+            display: flex;
+            flex-direction: column;
+            width: 0;
+            border-radius: 0.6rem;
+            background: var(--panel2-color);
+            box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+            5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+            43px 35px 80px rgba(0, 0, 0, 0.07);
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .5s ease, width .4s ease, visibility .5s ease;
+            padding: 0.6rem;
+            overflow-y: auto;
+            max-height: 90dvh;
+        }
+
+        .showTem {
+            width: 50dvw !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            right: 2rem !important;
+        }
+
+        .jiangjiechuanglimoban {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 0.15rem solid var(--border-color);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease, visibility 3s ease;
+        }
+
+        .showTem .jiangjiechuanglimoban {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .jiangjiechuanglimoban p {
+            font-size: 0.9rem;
+        }
+
+        .jiangjiechuanglimoban p b {
+            font-size: 1.1rem;
+            font-family: Ubuntu, serif;
+        }
+
+        .chuangjianmoban {
+            display: grid;
+            grid-template-columns: 4fr 4.5fr 1.5fr;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            height: 4rem;
+        }
+
+        .quyu1 {
+            display: flex;
+            flex-direction: column;
+            padding: 0.4rem;
+            border: 0.06rem solid var(--sky3);
+            border-radius: 0.6rem;
+        }
+
+        .quyu2 {
+            padding: 0.4rem;
+            border: 0.06rem solid var(--sky3);
+            border-radius: 0.6rem;
+            overflow-y: auto;
+        }
+
+        .input-attr {
+            display: inline-block; /* 使输入框以行内块级元素显示 */
+            width: 4rem; /* 设置固定宽度 */
+            padding: 0.1rem 0.1rem; /* 内边距 */
+            margin: 0.2rem 0.4rem; /* 顶部和底部外边距，水平方向无外边距 */
+            border: 0.06rem solid var(--border-color); /* 边框 */
+            border-radius: 0.3rem; /* 圆角 */
+            box-shadow: 0 0.12rem 0.24rem rgba(0, 0, 0, 0.1); /* 轻微的阴影，增加立体感 */
+            transition: all 0.3s; /* 平滑过渡效果 */
+        }
+
+        .input-attr:focus {
+            border-color: var(--luotianyi5); /* 聚焦时的边框颜色 */
+            box-shadow: 0 0 0.2rem rgba(91, 155, 213, 0.5); /* 聚焦时的阴影，提高边框亮度和视觉效果 */
+            outline: none; /* 去除默认的聚焦轮廓 */
+        }
+
+        #addAttr {
+            cursor: pointer;
+            outline: none;
+            border: none;
+            background: none;
+            border-radius: 50%;
+            transition: transform 300ms ease;
+            transform-origin: center;
+        }
+
+        .plus-icon {
+            width: 3rem;
+            height: 3rem;
+            stroke: var(--luotianyi1);
+            fill: none;
+            transition: all 300ms ease;
+        }
+
+        #addAttr:hover .plus-icon {
+            transform: rotate(90deg);
+            fill: var(--luotianyi4);
+        }
+
+        #addAttr:active .plus-icon {
+            stroke: var(--luotianyi3);
+            fill: var(--luotianyi2);
+        }
+
+        .circle {
+            transition: stroke-width 300ms ease;
+            stroke-width: 1.5;
+        }
+
+        .plus-horizontal, .plus-vertical {
+            transition: stroke-width 300ms ease;
+            stroke-width: 1.5;
+        }
+
+        .quyu3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.4rem;
+            border: 0.06rem solid var(--sky3);
+            border-radius: 0.6rem;
+        }
+
+        .quyu3 #createTem {
+            margin: auto;
+        }
+
+        td i {
+            display: inline;
+        }
+
+        .icon-gouxuan {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--doing1);
+        }
+
+        #createTem .icon-gouxuan {
+            color: var(--doing1);
+            font-size: 4rem;
+        }
+
+        .icon-shanchu {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--tododelete);
+        }
+
+        .icon-gouxuan:hover .icon-shanchu:hover {
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+    </style>
 {% endblock %}
 {% block extra_js %}
     <script src="../../static/js/utils/swiper-bundle.min.js"></script>
@@ -61,6 +245,93 @@
             </form>
         </article>
     </dialog>
+
+    <div id="createTemDialog">
+        <div class="title-top">
+            <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
+                 title="Scene">
+            <h2>{{ _("Templates") }}</h2>
+        </div>
+        <div class="jiangjiechuanglimoban">
+            <p>You can choose one type of <b>waste</b>, set one <b>template name</b>, then add many
+                different <b>attributes</b> to create one <b>template</b>.
+            </p>
+            <p>Middle area's button is to create a text, you need to type in, like CO2, SO4, if you want to
+                add a new attribution, please fill all text, or right-click to delete.
+                <br>You can select one template to create one order</p>
+        </div>
+        <div class="chuangjianmoban">
+            <div class="quyu1 pico">
+                <input type="text" id="temName" placeholder="please input name" required>
+                <details class="pico dropdown" data-value="" id="temType">
+                    <summary>{{ _("choose one type: ") }}</summary>
+                    <ul>
+                        {% for waste in wastes %}
+                            <li data-value="{{ waste }}">
+                                <a href="#">
+                                    <i class="iconfont icon-{{ waste.name }}"></i>
+                                    <span>{{ waste|enum_to_string }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </div>
+            <div class="quyu2">
+                <button title="Add New" id="addAttr">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-icon">
+                        <circle cx="12" cy="12" r="10" class="circle"></circle>
+                        <path d="M8 12H16" class="plus-horizontal"></path>
+                        <path d="M12 16V8" class="plus-vertical"></path>
+                    </svg>
+                </button>
+
+            </div>
+            <div class="quyu3">
+                <button id="createTem"><i class="iconfont icon-gouxuan"></i></button>
+            </div>
+        </div>
+        <div class="tables" style="box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+43px 35px 80px rgba(0, 0, 0, 0.07); padding: 10px; border-radius: 10px; margin-top: 8rem; margin-left: 0.6rem;margin-right: 0.6rem;">
+            <div>
+                <table class="table row-border stripe order-column compact" id="view-templates"
+                       style="width: 100%; ">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="no-sort">{{ _("Name") }}</th>
+                        <th scope="col" class="underline">
+                            {{ _("W-Type") }}
+                        </th>
+                        <th scope="col" class="underline">
+                            {{ _("Attrs.") }}
+                        </th>
+                        <th scope="col" class="no-sort">
+                            {{ _("Opts") }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for templates in all_templates %}
+                        <tr>
+                            <td>{{ templates.wasteName }}</td>
+                            <td>{{ templates.wasteType }}</td>
+                            <td>{{ templates.attribution }}</td>
+                            <td>
+                                <i class="iconfont icon-gouxuan use-tem"></i>
+                                <i class="iconfont icon-shanchu delete-tem"
+                                   data-id="{{ templates.TID }}"></i></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="pico" style="padding-top: 2rem; margin-right: 2rem;display: flex;
+  flex-direction: row-reverse;">
+            <button id="closeTem" class="secondary">
+                Cancel
+            </button>
+        </footer>
+    </div>
     <section class="dashboard">
         {% include "top.html" %}
         {% if department %}
@@ -70,13 +341,19 @@
                         <img src="../../static/image/icon/intro1.svg" alt="home" class="icons icon-nav" title="Scene">
                         <h2>{{ _("Introduction") }}</h2>
                     </div>
-                    <p>{{ _("Hi, the ") }} {{ departmentType|enum_to_string }}{{ _(" Manager, welcome.") }} <br>
+                    <div class="pandb"><p>{{ _("Hi, the ") }}
+                        {{ departmentType|enum_to_string }}{{ _(" Manager, welcome.") }} <br>
                         {% for waste in wastes %}
                             <b>{{ waste|enum_to_string }}, </b>
                         {% endfor %}
                         {{ _("You can choose these types to handle. ") }}<br>
                         {{ _("you need to select one of the waste types and set the required weight, attributes, and comments. ") }}
                     </p>
+                        <div class="pico">
+                            <button id="openTemCreate" class="pico">Templates</button>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="create-order">
                     <div class="order-form">
@@ -102,35 +379,24 @@
                                     </ul>
                                 </details>
                                 <label class="number-input no-pico-label" for="order-weight">{{ _("Weight: ") }}
-                                    <input type="number" id="order-weight" name="order-weight" required>
+                                    <input type="number" id="order-weight" name="order-weight" required min="0"
+                                           oninput="enforce1(this)">
                                     <span>kg</span>
                                 </label>
                             </div>
                             {{ _("Attributes:") }}
                             <div class="order-attributes">
                                 <label class="number-input no-pico-label order-attribute" for="order-a1">
-                                    <input type="text" id="order-a1" name="order-a1" required data-attr="CO2">
+                                    <input type="number" class="attr" id="order-a1" name="order-a1" required
+                                           data-attr="CO2"
+                                           min="0" max="100" oninput="enforce2(this)">
                                     <span>CO2</span>
                                 </label>
                                 <label class="number-input no-pico-label order-attribute" for="order-a2">
-                                    <input type="text" id="order-a2" name="order-a2" required data-attr="J">
-                                    <span>J</span>
-                                </label>
-                                <label class="number-input no-pico-label order-attribute" for="order-a3">
-                                    <input type="text" id="order-a3" name="order-a3" required data-attr="SO2">
+                                    <input type="number" class="attr" id="order-a2" name="order-a2" required
+                                           data-attr="SO2"
+                                           min="0" max="100" oninput="enforce2(this)">
                                     <span>SO2</span>
-                                </label>
-                                <label class="number-input no-pico-label order-attribute" for="order-a4">
-                                    <input type="text" id="order-a4" name="order-a4" required data-attr="SO4">
-                                    <span>SO4</span>
-                                </label>
-                                <label class="number-input no-pico-label order-attribute" for="order-a5">
-                                    <input type="text" id="order-a5" name="order-a5" required data-attr="SO4">
-                                    <span>SO4</span>
-                                </label>
-                                <label class="number-input no-pico-label order-attribute" for="order-a6">
-                                    <input type="text" id="order-a6" name="order-a6" required data-attr="SO4">
-                                    <span>SO4</span>
                                 </label>
                             </div>
                             <label for="order-comment">{{ _("Order comment:") }}
@@ -159,6 +425,25 @@
         {% if not department %}
             departmentDialog.showModal(); // 如果用户没有部门，则展示对话框
         {% endif %}
+
+        function enforce1(input) {
+            const min = 0;
+            const v = input.value;
+            if (v < min) {
+                input.value = min;
+            }
+        }
+
+        function enforce2(input) {
+            const min = 0;
+            const max = 100;
+            const v = input.value;
+            if (v < min) {
+                input.value = min;
+            } else if (v > max) {
+                input.value = max;
+            }
+        }
 
         $(document).ready(function () {
             let isDark = $('html').attr('data-theme') === 'dark';
@@ -302,6 +587,278 @@
                 const details = $(this).closest('.dropdown');
                 details.find('summary').text(spanText);
                 details.data('value', spanText);
+            });
+
+
+            const temDialog = $('#createTemDialog'); // 使用 jQuery 获取元素
+
+            $('#openTemCreate').click(function () {
+                temDialog.addClass('showTem'); // 添加类以显示对话框
+            });
+
+            $('#closeTem').click(function () {
+                temDialog.removeClass('showTem'); // 移除类以隐藏对话框
+            });
+
+            $('#addAttr').click(function () {
+                // 检查最后一个输入框是否已填写
+                let lastInput = $('.quyu2 input').last();
+                if (lastInput.length !== 0 && lastInput.val().trim() === '') {
+                    Swal.fire({
+                        toast: true,
+                        text: "Please fill all texts.",
+                        icon: "error",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: swalcolor,
+                    });
+                } else {
+                    let newInput = $('<input type="text" class="input-attr">');
+                    $('.quyu2').append(newInput);
+                    setTimeout(function () {
+                        newInput.focus();
+                    }, 100); // 使
+                }
+            });
+            $('.quyu2').on('contextmenu', '.input-attr', function (event) {
+                event.preventDefault(); // 阻止默认的右键菜单
+                $(this).remove(); // 删除当前被右键点击的输入框
+                return false; // 防止进一步的事件冒泡或默认行为
+            });
+
+            const view_templates = $('#view-templates').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                lengthMenu: [6, 12, 24],
+                pageLength: 6,
+                responsive: true,
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3], className: 'dt-head-center'},
+                    {targets: [0, 1, 2], className: 'dt-body-left'},
+                    {targets: [3], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false}
+                ],
+            });
+
+            $('#createTem').click(function () {
+                let isValid = true;
+
+                // 检查下拉框是否已选择（假设下拉框的选择存储在 data-value 属性中）
+                if ($('#temType').data('value') === '') {
+                    isValid = false;
+                    console.log(1)
+                }
+
+                // 检查地址输入框是否为空
+                if ($('#temName').val() === '') {
+                    isValid = false;
+                    console.log(2)
+
+                }
+
+                // 检查quyu2中的所有输入框是否为空
+                $('.quyu2 input[type="text"]').each(function () {
+                    if ($(this).val() === '') {
+                        isValid = false;
+                        console.log(3)
+                    }
+
+                });
+
+                if (!isValid) {
+                    Swal.fire({
+                        toast: true,
+                        text: "Please fill all information.",
+                        icon: "error",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: swalcolor,
+                    });
+                } else {
+                    let temName = $('#temName').val();
+                    let temType = $('#temType').data('value');
+                    let temAttr = '';
+                    $('.quyu2 input[type="text"]').each(function () {
+                        temAttr += $(this).val() + ' ';
+                    });
+
+                    let temInfo = {
+                        waste_name: temName,
+                        wasteType: temType,
+                        attribution: temAttr
+                    };
+
+                    $.ajax({
+                        url: "{{ url_for('utils.createTemplate') }}",
+                        type: "POST",
+                        data: JSON.stringify(temInfo),
+                        contentType: "application/json;charset=UTF-8",
+                        success: function (response) {
+                            if (response.message === "successful") {
+                                Swal.fire({
+                                    toast: true,
+                                    text: "create successful",
+                                    icon: "success",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    background: swalcolor,
+                                });
+                                const newR = view_templates.row.add([
+                                    temName, temType, temAttr,
+                                    `<i class="iconfont icon-gouxuan use-tem"></i>
+                                    <i class="iconfont icon-shanchu delete-tem" data-id="${response.TID}"></i>`
+                                ]).draw(false).node();
+                            } else {
+                                Swal.fire({
+                                    text: response.message,
+                                    icon: "error",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    background: swalcolor,
+                                });
+                            }
+                        }
+                    });
+
+                }
+            });
+
+
+            $(document).on('click', '.delete-tem', function () {
+                let TID = $(this).data('id');
+                let self = this; // Save the reference to the button
+
+                Swal.fire({
+                    title: "{{ _('Are you sure to delete this template?') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Yes!') }}",
+                    cancelButtonText: "{{ _('No') }}",
+                    background: swalcolor,
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        console.log(TID)
+                        // 用户点击了确认按钮
+                        $.ajax({
+                            url: '/deleteTemplate/' + encodeURIComponent(TID),
+                            type: 'DELETE',
+                            success: function (res) {
+                                if (res.message === 'successful') {
+                                    Swal.fire({
+                                        title: "{{ _('Delete successful') }}",
+                                        icon: "success",
+                                        toast: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        background: swalcolor,
+                                    });
+                                    view_templates.row($(self).closest('tr')).remove().draw(false);
+                                } else {
+                                    Swal.fire({
+                                        title: "{{ _('Delete failed') }}",
+                                        icon: "error",
+                                        toast: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        background: swalcolor,
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    title: "{{ _('Delete failed') }}",
+                                    icon: "error",
+                                    toast: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    background: swalcolor,
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Deletion cancelled') }}",
+                            text: "{{ _('Your template is safe') }}",
+                            icon: "info",
+                            background: swalcolor,
+                        });
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.use-tem', function () {
+                let row = $(this).closest('tr');
+                let orderName = row.find('td').eq(0).text();  // 第一列的值
+                let wasteType = row.find('td').eq(1).text();  // 第二列的值
+                let attrs = row.find('td').eq(2).text().trim().split(' ');  // 第三列的值，按空格分割
+
+                Swal.fire({
+                    title: "{{ _('Are you sure to use this template?') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Yes!') }}",
+                    cancelButtonText: "{{ _('No') }}",
+                    background: swalcolor,
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $('#order-name').val(orderName);  // 设置订单名
+                        $('.order-choose .dropdown').attr('data-value', wasteType); // 设置废物类型值
+                        $('.order-choose summary').text(`${wasteType}`); // 更新摘要显示选择的废物类型
+
+                        $('.order-attributes').empty();
+                        attrs.forEach(function (attr, index) {
+                            let label = $(`<label class="number-input no-pico-label order-attribute" for="order-a${index + 1}">
+                        <input type="number" class="attr" id="order-a${index + 1}" name="order-a${index + 1}" required data-attr="${attr}" min="0" max="100" oninput="enforce2(this)">
+                        <span>${attr}</span>
+                      </label>`);
+                            $('.order-attributes').append(label);
+                        });
+                        Swal.fire({
+                            title: "{{ _('Apply successfully') }}",
+                            icon: "success",
+                            toast: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            background: swalcolor,
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Use cancelled') }}",
+                            text: "{{ _('Your template is safe') }}",
+                            icon: "info",
+                            background: swalcolor,
+                        });
+                    }
+                });
             });
         });
     </script>
