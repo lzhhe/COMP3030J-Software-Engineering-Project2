@@ -9,7 +9,7 @@
     margin-bottom: 20px;
 }
 
-tbody tr td:nth-child(6) i {
+tbody tr td:nth-child(6) i, tbody tr td:nth-child(7) i {
     cursor: pointer;
     display: inline-block;
     margin-right: 10px;
@@ -20,20 +20,20 @@ tbody tr td:nth-child(6) i {
     font-weight: bold;
 }
 
-tbody tr td:nth-child(6) i:hover {
+tbody tr td:nth-child(6) i:hover, tbody tr td:nth-child(7) i:hover {
     scale: 1.5;
     transition: all 0.3s ease-in-out;
 }
 
-tbody tr td:nth-child(6) i.icon-chakan {
+tbody tr td:nth-child(6) i.icon-chakan, tbody tr td:nth-child(7) i.icon-chakan {
     color: var(--todocreate);
 }
 
-tbody tr td:nth-child(6) i.icon-shanchu {
+tbody tr td:nth-child(6) i.icon-shanchu, tbody tr td:nth-child(7) i.icon-shanchu {
     color: var(--tododelete);
 }
 
-tbody tr td:nth-child(6) i.icon-gouxuan {
+tbody tr td:nth-child(6) i.icon-gouxuan, tbody tr td:nth-child(7) i.icon-gouxuan {
     color: var(--doing1);
 }
 

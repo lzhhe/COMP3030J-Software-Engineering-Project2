@@ -1,10 +1,1014 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'waste/index.html' %}
+{% block extra_css %}
+    <link rel="stylesheet" href="../../static/css/department/edit_order.css">
+    <link rel="stylesheet" href="../../static/css/department/view_order.css">
+    <style>
+        #processing-wweight {
+            color: var(--skin4);
+            border: 2px solid var(--skin2);
+        }
 
-</body>
-</html>
+        #processing-lweight {
+            color: var(--doing1);
+            border: 2px solid var(--doing2);
+        }
+
+        #processing-accomplish {
+            color: var(--sky1);
+            border: 2px solid var(--sky3);
+        }
+
+        .progress-box {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--skin3), var(--done1), var(--todo1));; /* 背景色透明，通过JS设置渐变 */
+            border-radius: 5px;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: var(--progress-bar-background);
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            left: 0;
+            transition: left 1s ease-in-out; /* 平滑过渡动画 */
+        }
+
+        .status-dot {
+            height: 1.2rem;
+            width: 1.2rem;
+            border-radius: 50%;
+            display: inline-block;
+            transform: translateX(-50%);
+        }
+
+        .status-blue {
+            background-color: var(--luotianyi5);
+        }
+
+        .status-green {
+            background-color: var(--chuyinweilai);
+        }
+
+    </style>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+{% block title %}Approval Order{% endblock %}
+
+{% block mainBody %}
+    <dialog class="pico" id="view-unconfirmed-dialog">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label>{{ _("Name:") }}
+                    <input type="text" id="unconfirmed-name" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Source:") }}
+                    <input type="text" id="unconfirmed-source" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Waste-Type:") }}
+                    <input type="text" id="unconfirmed-wastetype" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Date:") }}
+                    <input type="date" id="unconfirmed-date" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Weight:") }}
+                    <input type="number" id="unconfirmed-weight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Attribution:") }}
+                    <input type="text" id="unconfirmed-attribution" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Address:") }}
+                    <textarea rows="2" cols="30" id="unconfirmed-address" aria-label="Read-only input"
+                              readonly></textarea></label>
+                <label>{{ _("Comment:") }}
+                    <textarea rows="3" cols="30" id="unconfirmed-comment" aria-label="Read-only input"
+                              readonly></textarea></label>
+                <input type="hidden" id="unconfirmed-id">
+                <input type="hidden" id="unconfirmed-multiplier">
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-unconfirmed" class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <dialog class="pico" id="view-confirmed-dialog">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label>{{ _("Name:") }}
+                    <input type="text" id="confirmed-name" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Source:") }}
+                    <input type="text" id="confirmed-source" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Waste-Type:") }}
+                    <input type="text" id="confirmed-wastetype" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Date:") }}
+                    <input type="date" id="confirmed-date" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Weight:") }}
+                    <input type="number" id="confirmed-weight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Multiplier:") }}
+                    <input type="number" id="confirmed-multiplier" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Attribution:") }}
+                    <input type="text" id="confirmed-attribution" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Address:") }}
+                    <textarea rows="2" cols="30" id="confirmed-address" aria-label="Read-only input"
+                              readonly></textarea></label>
+                <label>{{ _("Comment:") }}
+                    <textarea rows="3" cols="30" id="confirmed-comment" aria-label="Read-only input"
+                              readonly></textarea></label>
+                <input type="hidden" id="confirmed-id">
+            </form>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-confirmed" class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+    <dialog class="pico" id="view-processing-dialog">
+        <article>
+            <form method="dialog" class="form-edit">
+                <label>{{ _("Start-Date:") }}
+                    <input type="date" id="processing-sdate" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Est.Date:") }}
+                    <input type="date" id="processing-edate" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Whole-Weight:") }}
+                    <input type="number" id="processing-wweight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Less-Weight:") }}
+                    <input type="number" id="processing-lweight" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Accomplish-Rate:") }}
+                    <input type="text" id="processing-accomplish" aria-label="Read-only input" readonly></label>
+                <input type="hidden" autofocus id="focus-tool">
+            </form>
+            <div class="progress-box">
+                <div id="progress-bar"></div>
+            </div>
+            <footer style="display: flex; justify-content: flex-end;">
+                <button id="cancel-processing" class="outline secondary"> {{ _("Cancel") }}</button>
+            </footer>
+        </article>
+    </dialog>
+    <section class="dashboard">
+        {% include "top.html" %}
+
+        <div class="content">
+            <div class="content1">
+                <div class="title-top">
+                    <img src="../../static/image/icon/datasave.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Total statistics") }}</h2>
+                </div>
+                <div class="boxes">
+                    <div class="box box1 selected-box" id="unconfirmed-box">
+                        <img src="../../static/image/icon/unconfirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Unconfirmed") }}</b>
+                        <span class="box-number">{{ unconfirmed_count }}</span>
+                    </div>
+                    <div class="box box2" id="confirmed-box">
+                        <img src="../../static/image/icon/confirm.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Confirmed") }}</b>
+                        <span class="box-number">{{ confirm_count }}</span>
+                    </div>
+                    <div class="box box3" id="processing-box">
+                        <img src="../../static/image/icon/diliver.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Processing") }}</b>
+                        <span class="box-number">{{ processing_count }}</span>
+                    </div>
+                    <div class="box box4" id="finished-box">
+                        <img src="../../static/image/icon/qianbao.svg" alt="home" class="icons icon-nav data-icon"
+                             title="Scene">
+                        <b class="box-text">{{ _("Finished") }}</b>
+                        <span class="box-number">{{ finished_count }}</span>
+                    </div>
+                </div>
+                {% include "progress_bar.html" %}
+            </div>
+            <div class="content2">
+                <div class="title-top">
+                    <img src="../../static/image/icon/structure.svg" alt="home" class="icons icon-nav"
+                         title="Scene">
+                    <h2>{{ _("Tables") }}</h2>
+                </div>
+                <div class="tables" id="table1" style="box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+43px 35px 80px rgba(0, 0, 0, 0.07); padding: 10px; border-radius: 10px;">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table1"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Order-Name") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Date") }}
+                                </th>
+                                <th scope="col" class="underline sortable">{{ _("Source") }}</th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders1 %}
+                                {% set source_str = order.wasteSource | enum_to_string %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.orderName }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td>
+                                        {% if source_str == "External" %}
+                                            <span class="status-dot status-blue" title="Paid"></span>
+                                        {% elif source_str == "External Free" %}
+                                            <span class="status-dot status-green" title="Free"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td><i class="iconfont icon-chakan view-unconfirmed"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"
+                                           data-weight="{{ order.weight }}"
+                                           data-name="{{ order.orderName }}"
+                                           data-multiplier="{{ order.multiplier }}"
+                                           data-address="{{ order.address }}"
+                                           data-source="{{ source_str }}"></i>
+                                        <i class="iconfont icon-gouxuan confirm-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tables" id="table2" style="display: none; box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+43px 35px 80px rgba(0, 0, 0, 0.07); padding: 10px; border-radius: 10px;">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table2"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Order-Name") }}</th>
+                                <th scope="col" class="underline">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline">
+                                    {{ _("Weight") }}
+                                </th>
+                                <th scope="col" class="underline">
+                                    {{ _("Multiple") }}
+                                </th>
+                                <th scope="col" class="underline sortable">{{ _("Source") }}</th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders2 %}
+                                {% set source_str = order.wasteSource | enum_to_string %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.orderName }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.weight }}</td>
+                                    <td contenteditable="true" class="multiplier">{{ order.multiplier }}</td>
+                                    <td>
+                                        {% if source_str == "External" %}
+                                            <span class="status-dot status-blue" title="Paid"></span>
+                                        {% elif source_str == "External Free" %}
+                                            <span class="status-dot status-green" title="Free"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td><i class="iconfont icon-chakan view-confirmed"
+                                           data-id="{{ order.OID }}"
+                                           data-comment="{{ order.comment }}"
+                                           data-attribution="{{ order.attribution }}"
+                                           data-address="{{ order.address }}"
+                                           data-date="{{ order.date }}"
+                                           data-source="{{ source_str }}"
+                                    ></i>
+                                        <i class="iconfont icon-gouxuan processing-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tables" id="table3" style="display: none; box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+43px 35px 80px rgba(0, 0, 0, 0.07); padding: 10px; border-radius: 10px;">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table3"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="no-sort">{{ _("Order-Name") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Start-Date") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Est.Date") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Source") }}
+                                </th>
+                                <th scope="col" class="no-sort">
+                                    {{ _("Operation") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders3 %}
+                                {% set source_str = order.wasteSource | enum_to_string %}
+                                <tr>
+                                    <td></td>
+                                    <td> {{ order.orderName }}</td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.finishDate }}</td>
+                                    <td>
+                                        {% if source_str == "External" %}
+                                            <span class="status-dot status-blue" title="Paid"></span>
+                                        {% elif source_str == "External Free" %}
+                                            <span class="status-dot status-green" title="Free"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td><i class="iconfont icon-chakan view-processing"
+                                           data-id="{{ order.OID }}"
+                                           data-weight="{{ order.weight }}"
+                                           data-source="{{ source_str }}"></i>
+                                        <i class="iconfont icon-gouxuan finished-order"
+                                           data-id="{{ order.OID }}"></i></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tables" id="table4" style="display: none; box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+43px 35px 80px rgba(0, 0, 0, 0.07); padding: 10px; border-radius: 10px;">
+                    <div>
+                        <table class="table row-border stripe order-column compact" id="view-table4"
+                               style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="no-sort">{{ _("Serial num") }}</th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Waste-Type") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Date") }}
+                                </th>
+                                <th scope="col" class="underline sortable">
+                                    {{ _("Source") }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders4 %}
+                                {% set source_str = order.wasteSource | enum_to_string %}
+                                <tr>
+                                    <td></td>
+                                    <td>{{ order.wasteType | enum_to_string }}</td>
+                                    <td>{{ order.finishDate }}</td>
+                                    <td>
+                                        {% if source_str == "External" %}
+                                            <span class="status-dot status-blue" title="Paid"></span>
+                                        {% elif source_str == "External Free" %}
+                                            <span class="status-dot status-green" title="Free"></span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            function formatDate(date) {
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1; // 月份是从0开始的，所以要加1
+                let day = date.getDate();
+
+                // 保证月和日的部分始终是两位数字
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                return year + '-' + month + '-' + day;
+            }
+
+            const msPerDay = 24 * 60 * 60 * 1000; // 每天的毫秒数
+            let today = new Date();  // 获取当前日期
+            let isDark = $('html').attr('data-theme') === 'dark';
+            let swalcolor = '';
+            const themeButton = $('#themeSwitch input');
+            themeButton.change(function () {
+                if (isDark) {
+                    swalcolor = '#F0F9FF';
+                } else {
+                    swalcolor = '#353738';
+                }
+                isDark = !isDark
+            });
+            const progressBar = $('#progress-bar');
+
+            const dialog1 = document.querySelector('#view-unconfirmed-dialog');
+            const dialog2 = document.querySelector('#view-confirmed-dialog');
+            const dialog3 = document.querySelector('#view-processing-dialog');
+
+            // 当任何一个 box 被点击时
+            function handleBoxClick(boxId) {
+                // Remove the 'selected-box' class from all boxes
+                let stepIndex = 0;
+                $(".box").removeClass('selected-box');
+                // Add 'selected-box' class to the clicked box
+                $('#' + boxId).addClass('selected-box');
+                // Determine the corresponding table ID from the box ID
+                let tableId = "#table";  // Base ID for tables
+                switch (boxId) {
+                    case 'unconfirmed-box':
+                        tableId += "1";
+                        stepIndex = 1;
+                        break;
+                    case 'confirmed-box':
+                        tableId += "2";
+                        stepIndex = 2;
+                        break;
+                    case 'processing-box':
+                        tableId += "3";
+                        stepIndex = 3;
+                        break;
+                    case 'finished-box':
+                        tableId += "4";
+                        stepIndex = 4;
+                        break;
+                }
+                // Hide all tables
+                $(".tables").hide();
+                // Show the corresponding table
+                $(tableId).show();
+                updateProgress(stepIndex);
+            }
+
+            function updateProgress(stepIndex) {
+                // Remove 'active' class from all steps
+                $(".progress-bar li").removeClass('active');
+                // Add 'active' class to the current step and all previous steps
+                $(".progress-bar li").slice(0, stepIndex).addClass('active');
+            }
+
+// Attach event handler to all boxes
+            $(".box").click(function () {
+                handleBoxClick($(this).attr('id'));
+            });
+
+            const table1 = $('#view-table1').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5], className: 'dt-head-center'},
+                    {targets: [1, 2, 3], className: 'dt-body-left'},
+                    {targets: [0, 4, 5], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0,
+                        "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+                drawCallback: function (settings) {
+                    let api = this.api();
+                    let start = api.page.info().start; // 获取当前页的起始序号
+                    api.column(0, {page: 'current'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = start + i + 1; // 更新当前页的每个序号
+                    });
+                },
+            })
+
+            const table2 = $('#view-table2').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5, 6], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5, 6], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0,
+                        "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+                drawCallback: function (settings) {
+                    let api = this.api();
+                    let start = api.page.info().start; // 获取当前页的起始序号
+                    api.column(0, {page: 'current'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = start + i + 1; // 更新当前页的每个序号
+                    });
+                },
+            })
+
+            const table3 = $('#view-table3').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3, 4, 5, 6], className: 'dt-head-center'},
+                    {targets: [1, 2, 3, 4], className: 'dt-body-left'},
+                    {targets: [0, 5, 6], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0,
+                        "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+                drawCallback: function (settings) {
+                    let api = this.api();
+                    let start = api.page.info().start; // 获取当前页的起始序号
+                    api.column(0, {page: 'current'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = start + i + 1; // 更新当前页的每个序号
+                    });
+                },
+            })
+
+            const table4 = $('#view-table4').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable sorting
+                info: true, // Show information about the table
+                lengthMenu: [6, 12, 24], // Set the page length options
+                pageLength: 6,
+                responsive: true, // Enable responsive layout
+                autoWidth: true,
+                columnDefs: [
+                    {targets: [0, 1, 2, 3], className: 'dt-head-center'},
+                    {targets: [1, 2], className: 'dt-body-left'},
+                    {targets: [0, 3], className: 'dt-body-center'},
+                    {targets: 'no-sort', orderable: false},
+                    {
+                        targets: 0,
+                        "render": function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                ],
+                drawCallback: function (settings) {
+                    let api = this.api();
+                    let start = api.page.info().start; // 获取当前页的起始序号
+                    api.column(0, {page: 'current'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = start + i + 1; // 更新当前页的每个序号
+                    });
+                },
+            })
+            $('#view-table1').on('click', '.view-unconfirmed', function () {
+                const orderName = $(this).data('name');
+                const orderAddress = $(this).data('address');
+                const orderComment = $(this).data('comment');
+                const orderAttribute = $(this).data('attribution');
+                const orderWeight = $(this).data('weight');
+                const orderMultiplier = $(this).data('multiplier');
+                const orderSource = $(this).data('source');
+                const orderRow = $(this).closest('tr');
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderDate = orderRow.find('td:nth-child(4)').text();
+                $('#unconfirmed-name').val(orderName);
+                $('#unconfirmed-source').val(orderSource);
+                $('#unconfirmed-wastetype').val(orderWType);
+                $('#unconfirmed-date').val(orderDate);
+                $('#unconfirmed-weight').val(orderWeight);
+                $('#unconfirmed-attribution').val(orderAttribute);
+                $('#unconfirmed-address').val(orderAddress);
+                $('#unconfirmed-comment').val(orderComment);
+                $('#unconfirmed-multiplier').val(orderMultiplier);
+                dialog1.showModal();
+            });
+
+            $('#view-table1').on('click', '.confirm-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                const orderRow = $(self).closest('tr');
+                const i = orderRow.find('.view-unconfirmed');
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderDate = orderRow.find('td:nth-child(4)').text();
+                const orderName = i.data('name');
+                const orderComment = i.data('comment');
+                const orderAttribute = i.data('attribution');
+                const orderAddress = i.data('address');
+                const orderWeight = i.data('weight');
+                const orderMultiplier = i.data('multiplier');
+                const orderSource = i.data('source');
+                Swal.fire({
+                    text: "{{ _('Are you sure to confirm this order?') }}",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Confirm') }}",
+                    cancelButtonText: "{{ _('Cancel') }}",
+                    closeOnClickOutside: true,
+                    closeOnEsc: true,
+                    reverseButtons: true,
+                    background: swalcolor,
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `/waste/confirm/${oid}`,
+                            type: 'PUT',
+                            success: function (res) {
+                                if (res.message === 'Order confirmed successfully') {
+                                    let statusDotHtml = '';
+                                    if (orderSource === 'External') {
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid"></span>';
+                                    } else if (orderSource === 'External Free') {
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free"></span>';
+                                    }
+                                    Swal.fire({
+                                        toast: true,
+                                        text: "{{ _('Confirm success') }}",
+                                        icon: "success",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                    table1.row($(self).closest('tr')).remove().draw(false);
+                                    const newR = table2.row.add([
+                                        '', orderName, orderWType, orderWeight, orderMultiplier, statusDotHtml,
+                                        `<i class="iconfont icon-chakan view-confirmed" data-id="${oid}" data-comment="${orderComment}" data-attribution="${orderAttribute}" data-source="${orderSource}"  data-date="${orderDate}" data-address="${orderAddress}"></i>
+                                    <i class="iconfont icon-gouxuan processing-order" data-id="${oid}"></i>`
+                                    ]).draw(false).node();
+                                    $(newR).find('td:eq(4)').addClass('multiplier').attr('contenteditable', 'true');  // 给新行添加可编辑的multiplier列
+                                    $('#unconfirmed-box .box-number').text(table1.rows().count());  // Update unconfirmed count
+                                    $('#confirmed-box .box-number').text(table2.rows().count());    // Update confirmed count
+                                } else {
+                                    Swal.fire({
+                                        toast: true,
+                                        text: res.message,
+                                        icon: "error",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    text: err,
+                                    icon: "error",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true, background: swalcolor,
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Confirmation cancelled') }}",
+                            text: "{{ _('order is safe') }}", background: swalcolor,
+                            icon: "info"
+                        });
+                    }
+                });
+            });
+            $('#cancel-unconfirmed').click(function () {
+                dialog1.close();
+            });
+            $('#view-table2').on('click', '.view-confirmed', function () {
+                const orderDate = $(this).data('date');
+                const orderAddress = $(this).data('address');
+                const orderComment = $(this).data('comment');
+                const orderSource = $(this).data('source');
+                const orderAttribute = $(this).data('attribution');
+                const orderRow = $(this).closest('tr');
+                const orderName = orderRow.find('td:nth-child(2)').text();
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderWeight = orderRow.find('td:nth-child(4)').text();
+                const orderMultiplier = orderRow.find('td:nth-child(5)').text();
+                $('#confirmed-name').val(orderName);
+                $('#confirmed-source').val(orderSource);
+                $('#confirmed-wastetype').val(orderWType);
+                $('#confirmed-date').val(orderDate);
+                $('#confirmed-weight').val(orderWeight);
+                $('#confirmed-attribution').val(orderAttribute);
+                $('#confirmed-address').val(orderAddress);
+                $('#confirmed-comment').val(orderComment);
+                $('#confirmed-multiplier').val(orderMultiplier);
+                dialog2.showModal();
+            });
+            $('#cancel-confirmed').click(function () {
+                dialog2.close();
+            });
+
+            $('#view-table2').on('blur', 'td.multiplier', function () {
+                // 当单元格失去焦点时触发
+                const $this = $(this);
+                let newValue = $this.text().trim();
+
+                // 检查值是否为正整数或小数
+                if (newValue && !isNaN(newValue) && +newValue > 0) {
+                    let row = table2.row($this.closest('tr'));
+                    let data = row.data();
+                    data[4] = newValue;  // 假设multiplier是在第五列（索引为4）
+                    const OID = $this.closest('tr').find('.view-confirmed').data('id');
+                    $.ajax({
+                        url: `modifyMultiplier/${OID}`, // 您的Flask路由
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({multiplier: newValue}),
+                        success: function (res) {
+                            Swal.fire({
+                                toast: true,
+                                text: 'Multiplier updated successfully.',
+                                icon: "success",
+                                closeOnClickOutside: true,
+                                closeOnEsc: true,
+                                position: 'top-end',
+                                timer: 2000,
+                                timerProgressBar: true, background: swalcolor,
+                            });
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            $this.text($this.data('originalValue')); // 如果更新失败，重置为原来的值
+                        }
+                    });
+                    row.data(data).draw(false);  // 更新表格并重绘当前页
+                } else {
+                    // 如果输入无效，重置单元格内容为原始值
+                    $this.text($this.data('originalValue'));
+                    Swal.fire({
+                        toast: true,
+                        text: 'Please enter a valid positive number.',
+                        icon: "info",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        position: 'top-end',
+                        timer: 2000,
+                        timerProgressBar: true, background: swalcolor,
+                    });
+                }
+            }).on('focus', 'td.multiplier', function () {
+                // 当单元格获得焦点时触发，保存当前值以便重置
+                const $this = $(this);
+                $this.data('originalValue', $this.text());
+            });
+            $('#view-table2').on('click', '.processing-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                const orderRow = $(self).closest('tr');
+                const i = orderRow.find('.view-confirmed')
+                const orderDate = i.data('date');
+                const orderSource = i.data('source');
+                const orderName = orderRow.find('td:nth-child(2)').text();
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                const orderWeight = orderRow.find('td:nth-child(4)').text();
+                Swal.fire({
+                    text: "{{ _('Are you sure to make this order processing?') }}",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Confirm') }}",
+                    cancelButtonText: "{{ _('Cancel') }}",
+                    closeOnClickOutside: true,
+                    closeOnEsc: true,
+                    reverseButtons: true, background: swalcolor,
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `/waste/process/${oid}`,
+                            type: 'PUT',
+                            success: function (res) {
+                                if (res.message === 'successfully') {
+                                    let statusDotHtml = '';
+                                    if (orderSource === 'External') {
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid"></span>';
+                                    } else if (orderSource === 'External Free') {
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free"></span>';
+                                    }
+                                    Swal.fire({
+                                        toast: true,
+                                        text: 'Order processing success',
+                                        icon: "success",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                    let date = res.fdate;
+                                    date = new Date(date);
+                                    date = formatDate(date);
+                                    table2.row($(self).closest('tr')).remove().draw(false);
+                                    table3.row.add([
+                                        '', orderName, orderWType, orderDate, date, statusDotHtml,
+                                        `<i class="iconfont icon-chakan view-processing" data-id="${oid}" data-weight="${orderWeight}" data-source="${orderSource}"></i>
+                                    <i class="iconfont icon-gouxuan finished-order" data-id="${oid}"></i>`
+                                    ]).draw(false);
+                                    $('#confirmed-box .box-number').text(table2.rows().count());  // Update unconfirmed count
+                                    $('#processing-box .box-number').text(table3.rows().count());    // Update confirmed count
+                                } else {
+                                    Swal.fire({
+                                        toast: true,
+                                        text: res.message,
+                                        icon: "error",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    toast: true,
+                                    text: err,
+                                    icon: "error",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true, background: swalcolor,
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Processing cancelled') }}",
+                            text: "{{ _('order is safe') }}", background: swalcolor,
+                            icon: "info"
+                        });
+                    }
+                });
+            });
+            $('#view-table3').on('click', '.view-processing', function () {
+                const orderWW = parseFloat($(this).data('weight'));
+                const orderRow = $(this).closest('tr');
+                const d1 = orderRow.find('td:nth-child(4)').text()
+                const d2 = orderRow.find('td:nth-child(5)').text()
+                const orderSD = new Date(d1);
+                const orderED = new Date(d2);
+
+                let daysFromTodayToEnd = Math.max((orderED - today) / msPerDay, 0); // 如果是负数，使用0
+                let daysFromStartToEnd = (orderED - orderSD) / msPerDay;
+                let ratio = daysFromStartToEnd > 0 ? daysFromTodayToEnd / daysFromStartToEnd : 0; // 防止除以零
+                let lessWeight = orderWW * ratio;
+
+                if (orderED < today) { // 如果预计结束时间早于今天
+                    lessWeight = 0; // 剩余重量为0
+                    ratio = 0; // 完成度100%
+                }
+
+                $('#processing-sdate').val(d1);
+                $('#processing-edate').val(d2);
+                $('#processing-wweight').val(orderWW.toFixed(2));
+                $('#processing-lweight').val(lessWeight.toFixed(2));
+                // 更新进度条
+                updateProgressBar(1 - ratio); // 完成度为 1 减去 ratio
+                dialog3.showModal();
+                $('#focus-tool').focus();
+
+            });
+
+            function updateProgressBar(ratio) {
+                $('#processing-accomplish').val((ratio * 100).toFixed(2) + '%');
+                const percentage = ratio * 100;
+                requestAnimationFrame(function update() {
+                    progressBar.css('left', percentage + '%');
+                });
+            }
+
+            $('#cancel-processing').click(function () {
+                progressBar.css('left', '0');
+                dialog3.close();
+            });
+
+
+            $('#view-table3').on('click', '.finished-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                const orderRow = $(self).closest('tr');
+                const i = orderRow.find('.view-processing')
+                const orderSource = i.data('source');
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                Swal.fire({
+                    text: "{{ _('Are you sure to make this order finished?') }}",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Confirm') }}",
+                    cancelButtonText: "{{ _('Cancel') }}",
+                    closeOnClickOutside: true,
+                    closeOnEsc: true,
+                    reverseButtons: true, background: swalcolor,
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `/waste/finish/${oid}`,
+                            type: 'PUT',
+                            success: function (res) {
+                                if (res.message === 'successfully') {
+                                    let statusDotHtml = '';
+                                    if (orderSource === 'External') {
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid"></span>';
+                                    } else if (orderSource === 'External Free') {
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free"></span>';
+                                    }
+                                    Swal.fire({
+                                        toast: true,
+                                        text: 'Order finished success',
+                                        icon: "success",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                    let d = formatDate(today)
+                                    table3.row($(self).closest('tr')).remove().draw(false);
+                                    table4.row.add([
+                                        '', orderWType, d, statusDotHtml
+                                    ]).draw(false);
+                                    $('#processing-box .box-number').text(table3.rows().count());  // Update unconfirmed count
+                                    $('#finished-box .box-number').text(table4.rows().count());    // Update confirmed count
+                                } else {
+                                    Swal.fire({
+                                        toast: true,
+                                        text: res.message,
+                                        icon: "error",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    toast: true,
+                                    text: err,
+                                    icon: "error",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true, background: swalcolor,
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Finish cancelled') }}",
+                            text: "{{ _('order is safe') }}", background: swalcolor,
+                            icon: "info"
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

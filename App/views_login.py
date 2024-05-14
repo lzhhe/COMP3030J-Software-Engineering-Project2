@@ -38,6 +38,13 @@ def log():
     # if user and check_password_hash(user.password, password):
     if user and user.password == password:
         # 密码验证成功
+        # if user.status.name == 'WASTE_MANAGER':
+        #     should_finished_orders = Order.query.filter_by(orderStatus='PROCESSING').all()
+        #     for order in should_finished_orders:
+        #         if order.finishDate < datetime.today().date():
+        #             order.orderStatus = OrderStatus.FINISHED
+        #             order.finishDate = datetime.today()
+        #     db.session.commit()
         session['UID'] = user.UID  # 使用Flask的session来保存用户状态
         return jsonify({'message': 'Login successful', 'status': user.status.name}), 200
     else:
