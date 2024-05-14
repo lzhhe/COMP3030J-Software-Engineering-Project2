@@ -64,6 +64,8 @@
                     <input type="number" id="unconfirmed-weight" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Attribution:") }}
                     <input type="text" id="unconfirmed-attribution" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Address:") }}
+                    <input type="text" id="unconfirmed-address" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Comment:") }}
                     <textarea rows="3" cols="30" id="unconfirmed-comment" aria-label="Read-only input"
                               readonly></textarea></label>
@@ -95,6 +97,8 @@
                     <input type="number" id="confirmed-multiplier" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Attribution:") }}
                     <input type="text" id="confirmed-attribution" aria-label="Read-only input" readonly></label>
+                <label>{{ _("Address:") }}
+                    <input type="text" id="confirmed-address" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Comment:") }}
                     <textarea rows="3" cols="30" id="confirmed-comment" aria-label="Read-only input"
                               readonly></textarea></label>
@@ -118,8 +122,7 @@
                     <input type="number" id="processing-lweight" aria-label="Read-only input" readonly></label>
                 <label>{{ _("Accomplish-Rate:") }}
                     <input type="text" id="processing-accomplish" aria-label="Read-only input" readonly></label>
-                <input type="hidden" id="processing-id">
-
+                <input type="hidden" autofocus id="focus-tool">
             </form>
             <div class="progress-box">
                 <div id="progress-bar"></div>
@@ -150,7 +153,7 @@
                         <img src="../../static/image/icon/confirm.svg" alt="home" class="icons icon-nav data-icon"
                              title="Scene">
                         <b class="box-text">{{ _("Confirmed") }}</b>
-                        <span class="box-number">{{ confirmed_count }}</span>
+                        <span class="box-number">{{ confirm_count }}</span>
                     </div>
                     <div class="box box3" id="processing-box">
                         <img src="../../static/image/icon/diliver.svg" alt="home" class="icons icon-nav data-icon"
@@ -209,6 +212,7 @@
                                            data-weight="{{ order.weight }}"
                                            data-name="{{ order.orderName }}"
                                            data-multiplier="{{ order.multiplier }}"
+                                           data-address="{{ order.address }}"
                                            data-depttype="{{ order.department.departmentType | enum_to_string }}"></i>
                                         <i class="iconfont icon-gouxuan confirm-order"
                                            data-id="{{ order.OID }}"></i></td>
@@ -257,6 +261,7 @@
                                            data-attribution="{{ order.attribution }}"
                                            data-depttype="{{ order.department.departmentType | enum_to_string }}"
                                            data-deptname="{{ order.department.departmentName }}"
+                                           data-address="{{ order.address }}"
                                            data-date="{{ order.date }}"
                                     ></i>
                                         <i class="iconfont icon-gouxuan processing-order"
@@ -298,10 +303,12 @@
                                     <td></td>
                                     <td> {{ order.orderName }}</td>
                                     <td>{{ order.wasteType | enum_to_string }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.finishDate }}</td>
                                     <td><i class="iconfont icon-chakan view-processing"
                                            data-id="{{ order.OID }}"
+                                           data-depttype="{{ order.department.departmentType | enum_to_string }}"
+                                           data-deptname="{{ order.department.departmentName }}"
                                            data-weight="{{ order.weight }}"></i>
                                         <i class="iconfont icon-gouxuan finished-order"
                                            data-id="{{ order.OID }}"></i></td>
@@ -340,7 +347,7 @@
                                     <td> {{ order.department.departmentName }}</td>
                                     <td>{{ order.department.departmentType | enum_to_string }}</td>
                                     <td>{{ order.wasteType | enum_to_string }}</td>
-                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.finishDate }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -352,6 +359,20 @@
     </section>
     <script>
         $(document).ready(function () {
+            function formatDate(date) {
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1; // 月份是从0开始的，所以要加1
+                let day = date.getDate();
+
+                // 保证月和日的部分始终是两位数字
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+
+                return year + '-' + month + '-' + day;
+            }
+
+            const msPerDay = 24 * 60 * 60 * 1000; // 每天的毫秒数
+            let today = new Date();  // 获取当前日期
             let isDark = $('html').attr('data-theme') === 'dark';
             let swalcolor = '';
             const themeButton = $('#themeSwitch input');
@@ -364,41 +385,6 @@
                 isDark = !isDark
             });
             const progressBar = $('#progress-bar');
-            let today = new Date();  // 获取当前日期
-            let yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);  // 昨天
-            let dayBeforeYesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2);  // 前天
-            function getEstDate() {
-                let startDate = Math.random() > 0.5 ? yesterday : dayBeforeYesterday;
-                let randomDays = Math.floor(Math.random() * 10) + 1;
-                let endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + randomDays);
-                return {
-                    startDate: formatDate(startDate),
-                    endDate: formatDate(endDate)
-                };
-            }
-
-            function formatDate(date) {
-                let d = new Date(date),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
-
-                if (month.length < 2)
-                    month = '0' + month;
-                if (day.length < 2)
-                    day = '0' + day;
-
-                return [year, month, day].join('-');
-            }
-
-            $('#view-table3 tbody tr').each(function () {
-                let startDateCell = $(this).find('td').eq(3);  // 假设开始日期在第四列
-                let endDateCell = $(this).find('td').eq(4);   // 假设结束日期在第五列
-                let dates = getEstDate();  // 生成随机日期对
-                startDateCell.text(dates.startDate);    // 设置开始日期
-                endDateCell.text(dates.endDate);    // 设置结束日期
-            });
-
 
             const dialog1 = document.querySelector('#view-unconfirmed-dialog');
             const dialog2 = document.querySelector('#view-confirmed-dialog');
@@ -571,6 +557,7 @@
             })
             $('#view-table1').on('click', '.view-unconfirmed', function () {
                 const orderName = $(this).data('name');
+                const orderAddress = $(this).data('address');
                 const orderComment = $(this).data('comment');
                 const orderAttribute = $(this).data('attribution');
                 const orderWeight = $(this).data('weight');
@@ -587,6 +574,7 @@
                 $('#unconfirmed-date').val(orderDate);
                 $('#unconfirmed-weight').val(orderWeight);
                 $('#unconfirmed-attribution').val(orderAttribute);
+                $('#unconfirmed-address').val(orderAddress);
                 $('#unconfirmed-comment').val(orderComment);
                 $('#unconfirmed-multiplier').val(orderMultiplier);
                 dialog1.showModal();
@@ -603,6 +591,7 @@
                 const orderName = i.data('name');
                 const orderComment = i.data('comment');
                 const orderAttribute = i.data('attribution');
+                const orderAddress = i.data('address');
                 const orderWeight = i.data('weight');
                 const orderDType = i.data('depttype');
                 const orderMultiplier = i.data('multiplier');
@@ -631,12 +620,12 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,background: swalcolor,
+                                        timerProgressBar: true, background: swalcolor,
                                     });
                                     table1.row($(self).closest('tr')).remove().draw(false);
                                     const newR = table2.row.add([
                                         '', orderName, orderWType, orderWeight, orderMultiplier,
-                                        `<i class="iconfont icon-chakan view-confirmed" data-id="${oid}" data-comment="${orderComment}" data-attribution="${orderAttribute}" data-depttype="${orderDType}" data-deptname="${orderDName}" data-date="${orderDate}"></i>
+                                        `<i class="iconfont icon-chakan view-confirmed" data-id="${oid}" data-comment="${orderComment}" data-attribution="${orderAttribute}" data-depttype="${orderDType}" data-deptname="${orderDName}" data-date="${orderDate}" data-address="${orderAddress}"></i>
                                     <i class="iconfont icon-gouxuan processing-order" data-id="${oid}"></i>`
                                     ]).draw(false).node();
                                     $(newR).find('td:eq(4)').addClass('multiplier').attr('contenteditable', 'true');  // 给新行添加可编辑的multiplier列
@@ -651,7 +640,7 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,background: swalcolor,
+                                        timerProgressBar: true, background: swalcolor,
                                     });
                                 }
                             },
@@ -663,7 +652,7 @@
                                     closeOnEsc: true,
                                     position: 'top-end',
                                     timer: 2000,
-                                    timerProgressBar: true,background: swalcolor,
+                                    timerProgressBar: true, background: swalcolor,
                                 });
                             }
                         });
@@ -671,7 +660,7 @@
                         // 用户点击了取消按钮或关闭了对话框
                         Swal.fire({
                             title: "{{ _('Confirmation cancelled') }}",
-                            text: "{{ _('order is safe') }}",background: swalcolor,
+                            text: "{{ _('order is safe') }}", background: swalcolor,
                             icon: "info"
                         });
                     }
@@ -683,6 +672,7 @@
             $('#view-table2').on('click', '.view-confirmed', function () {
                 const orderDName = $(this).data('deptname');
                 const orderDate = $(this).data('date');
+                const orderAddress = $(this).data('address');
                 const orderComment = $(this).data('comment');
                 const orderDType = $(this).data('depttype');
                 const orderAttribute = $(this).data('attribution');
@@ -698,6 +688,7 @@
                 $('#confirmed-date').val(orderDate);
                 $('#confirmed-weight').val(orderWeight);
                 $('#confirmed-attribution').val(orderAttribute);
+                $('#confirmed-address').val(orderAddress);
                 $('#confirmed-comment').val(orderComment);
                 $('#confirmed-multiplier').val(orderMultiplier);
                 dialog2.showModal();
@@ -731,7 +722,7 @@
                                 closeOnEsc: true,
                                 position: 'top-end',
                                 timer: 2000,
-                                timerProgressBar: true,background: swalcolor,
+                                timerProgressBar: true, background: swalcolor,
                             });
                         },
                         error: function (xhr, textStatus, errorThrown) {
@@ -750,7 +741,7 @@
                         closeOnEsc: true,
                         position: 'top-end',
                         timer: 2000,
-                        timerProgressBar: true,background: swalcolor,
+                        timerProgressBar: true, background: swalcolor,
                     });
                 }
             }).on('focus', 'td.multiplier', function () {
@@ -762,6 +753,10 @@
                 let oid = $(this).data('id');
                 let self = this; // Save the reference to the button
                 const orderRow = $(self).closest('tr');
+                const i = orderRow.find('.view-confirmed')
+                const dname = i.data('deptname');
+                const orderDate = i.data('date');
+                const dtpe = i.data('depttype');
                 const orderName = orderRow.find('td:nth-child(2)').text();
                 const orderWType = orderRow.find('td:nth-child(3)').text();
                 const orderWeight = orderRow.find('td:nth-child(4)').text();
@@ -773,7 +768,7 @@
                     cancelButtonText: "{{ _('Cancel') }}",
                     closeOnClickOutside: true,
                     closeOnEsc: true,
-                    reverseButtons: true,background: swalcolor,
+                    reverseButtons: true, background: swalcolor,
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
@@ -789,13 +784,15 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,background: swalcolor,
+                                        timerProgressBar: true, background: swalcolor,
                                     });
-                                    let dates = getEstDate();  // 生成随机日期对
+                                    let date = res.fdate;
+                                    date = new Date(date);
+                                    date = formatDate(date);
                                     table2.row($(self).closest('tr')).remove().draw(false);
                                     table3.row.add([
-                                        '', orderName, orderWType, dates.startDate, dates.endDate,
-                                        `<i class="iconfont icon-chakan view-processing" data-id="${oid}" data-weight="${orderWeight}"></i>
+                                        '', orderName, orderWType, orderDate, date,
+                                        `<i class="iconfont icon-chakan view-processing" data-id="${oid}" data-weight="${orderWeight}" data-depttype="${dtpe}" data-deptname="${dname}"></i>
                                     <i class="iconfont icon-gouxuan finished-order" data-id="${oid}"></i>`
                                     ]).draw(false);
                                     $('#confirmed-box .box-number').text(table2.rows().count());  // Update unconfirmed count
@@ -809,7 +806,7 @@
                                         closeOnEsc: true,
                                         position: 'top-end',
                                         timer: 2000,
-                                        timerProgressBar: true,background: swalcolor,
+                                        timerProgressBar: true, background: swalcolor,
                                     });
                                 }
                             },
@@ -822,7 +819,7 @@
                                     closeOnEsc: true,
                                     position: 'top-end',
                                     timer: 2000,
-                                    timerProgressBar: true,background: swalcolor,
+                                    timerProgressBar: true, background: swalcolor,
                                 });
                             }
                         });
@@ -830,7 +827,7 @@
                         // 用户点击了取消按钮或关闭了对话框
                         Swal.fire({
                             title: "{{ _('Processing cancelled') }}",
-                            text: "{{ _('order is safe') }}",background: swalcolor,
+                            text: "{{ _('order is safe') }}", background: swalcolor,
                             icon: "info"
                         });
                     }
@@ -839,22 +836,30 @@
             $('#view-table3').on('click', '.view-processing', function () {
                 const orderWW = parseFloat($(this).data('weight'));
                 const orderRow = $(this).closest('tr');
-                const orderSD = orderRow.find('td:nth-child(4)').text();
-                const orderED = orderRow.find('td:nth-child(5)').text();
+                const d1 = orderRow.find('td:nth-child(4)').text()
+                const d2 = orderRow.find('td:nth-child(5)').text()
+                const orderSD = new Date(d1);
+                const orderED = new Date(d2);
 
-                // 计算 less-weight
-                const ratio = Math.random() * 0.8 + 0.1; // 0.1 到 0.9 之间
-                const lessWeight = orderWW * ratio;
+                let daysFromTodayToEnd = Math.max((orderED - today) / msPerDay, 0); // 如果是负数，使用0
+                let daysFromStartToEnd = (orderED - orderSD) / msPerDay;
+                let ratio = daysFromStartToEnd > 0 ? daysFromTodayToEnd / daysFromStartToEnd : 0; // 防止除以零
+                let lessWeight = orderWW * ratio;
 
-                $('#processing-sdate').val(orderSD);
-                $('#processing-edate').val(orderED);
+                if (orderED < today) { // 如果预计结束时间早于今天
+                    lessWeight = 0; // 剩余重量为0
+                    ratio = 0; // 完成度100%
+                }
+
+                $('#processing-sdate').val(d1);
+                $('#processing-edate').val(d2);
                 $('#processing-wweight').val(orderWW.toFixed(2));
                 $('#processing-lweight').val(lessWeight.toFixed(2));
-
                 // 更新进度条
-                updateProgressBar(1 - lessWeight / orderWW);
-
+                updateProgressBar(1 - ratio); // 完成度为 1 减去 ratio
                 dialog3.showModal();
+                $('#focus-tool').focus();
+
             });
 
             function updateProgressBar(ratio) {
@@ -869,6 +874,86 @@
                 progressBar.css('left', '0');
                 dialog3.close();
             });
+
+
+            $('#view-table3').on('click', '.finished-order', function () {
+                let oid = $(this).data('id');
+                let self = this; // Save the reference to the button
+                const orderRow = $(self).closest('tr');
+                const i = orderRow.find('.view-processing')
+                const dtpe = i.data('depttype');
+                const dname = i.data('deptname');
+                const orderWType = orderRow.find('td:nth-child(3)').text();
+                Swal.fire({
+                    text: "{{ _('Are you sure to make this order finished?') }}",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "{{ _('Confirm') }}",
+                    cancelButtonText: "{{ _('Cancel') }}",
+                    closeOnClickOutside: true,
+                    closeOnEsc: true,
+                    reverseButtons: true, background: swalcolor,
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `/waste/finish/${oid}`,
+                            type: 'PUT',
+                            success: function (res) {
+                                if (res.message === 'successfully') {
+                                    Swal.fire({
+                                        toast: true,
+                                        text: 'Order finished success',
+                                        icon: "success",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                    let d = formatDate(today)
+                                    table3.row($(self).closest('tr')).remove().draw(false);
+                                    table4.row.add([
+                                        '', dname, dtpe, orderWType, d
+                                    ]).draw(false);
+                                    $('#processing-box .box-number').text(table3.rows().count());  // Update unconfirmed count
+                                    $('#finished-box .box-number').text(table4.rows().count());    // Update confirmed count
+                                } else {
+                                    Swal.fire({
+                                        toast: true,
+                                        text: res.message,
+                                        icon: "error",
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true, background: swalcolor,
+                                    });
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire({
+                                    toast: true,
+                                    text: err,
+                                    icon: "error",
+                                    closeOnClickOutside: true,
+                                    closeOnEsc: true,
+                                    position: 'top-end',
+                                    timer: 2000,
+                                    timerProgressBar: true, background: swalcolor,
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // 用户点击了取消按钮或关闭了对话框
+                        Swal.fire({
+                            title: "{{ _('Finish cancelled') }}",
+                            text: "{{ _('order is safe') }}", background: swalcolor,
+                            icon: "info"
+                        });
+                    }
+                });
+            });
+
         });
     </script>
 {% endblock %}

@@ -26,24 +26,70 @@ def index():
                            waste_storage=waste_storage, all_departments=all_departments)
 
 
-@waste.route('/approval')
-def approval():
-    # 状态统计
+@waste.route('/approvalIN')
+def approval1():
+    all_internal_orders = Order.query.filter_by(wasteSource='INTERNAL').all()
+
     status_counts = {
-        'unconfirmed_count': Order.query.filter_by(orderStatus='UNCONFIRMED').count(),
-        'confirmed_count': Order.query.filter_by(orderStatus='CONFIRM').count(),
-        'processing_count': Order.query.filter_by(orderStatus='PROCESSING').count(),
-        'finished_count': Order.query.filter_by(orderStatus='FINISHED').count()
+        'unconfirmed_count': 0,
+        'confirm_count': 0,
+        'processing_count': 0,
+        'finished_count': 0
     }
-    queries = {}
-    for i, status in enumerate(['UNCONFIRMED', 'CONFIRM', 'PROCESSING', 'FINISHED'], start=1):
-        query = Order.query.filter_by(orderStatus=status)
-        queries[f'orders{i}'] = query.all()
+    orders1, orders2, orders3, orders4 = [], [], [], []
+    orders_dict = {
+        'UNCONFIRMED': orders1,
+        'CONFIRM': orders2,
+        'PROCESSING': orders3,
+        'FINISHED': orders4
+    }
+    for order in all_internal_orders:
+        if order.orderStatus.name in orders_dict:
+            orders_dict[order.orderStatus.name].append(order)
+            status_counts[f'{order.orderStatus.name.lower()}_count'] += 1
+    queries = {
+        'orders1': orders1,
+        'orders2': orders2,
+        'orders3': orders3,
+        'orders4': orders4
+    }
     all_departments = []
     for d in list(DepartmentType):
         all_departments.append(d)
 
     return render_template('waste/approval_order.html', **queries, **status_counts, all_departments=all_departments)
+
+
+@waste.route('/approvalEX')
+def approval2():
+    # 状态统计
+    all_uninternal_orders = Order.query.filter(Order.wasteSource != 'INTERNAL').all()
+
+    status_counts = {
+        'unconfirmed_count': 0,
+        'confirm_count': 0,
+        'processing_count': 0,
+        'finished_count': 0
+    }
+    orders1, orders2, orders3, orders4 = [], [], [], []
+    orders_dict = {
+        'UNCONFIRMED': orders1,
+        'CONFIRM': orders2,
+        'PROCESSING': orders3,
+        'FINISHED': orders4
+    }
+    for order in all_uninternal_orders:
+        if order.orderStatus.name in orders_dict:
+            orders_dict[order.orderStatus.name].append(order)
+            status_counts[f'{order.orderStatus.name.lower()}_count'] += 1
+    queries = {
+        'orders1': orders1,
+        'orders2': orders2,
+        'orders3': orders3,
+        'orders4': orders4
+    }
+
+    return render_template('waste/approval_order2.html', **queries, **status_counts)
 
 
 @waste.route('/ratio')
@@ -108,8 +154,6 @@ def confirm(OID):
 
 @waste.route('/process/<OID>', methods=['PUT'])
 def process(OID):
-    # data = request.get_json()
-    # OID = data.get('OID')
     if OID is None:
         return jsonify({"error": "Missing OID in request"}), 200
     order = Order.query.filter_by(OID=OID).first()
@@ -138,7 +182,7 @@ def process(OID):
                 order.finishDate = forecastFinishDate
                 db.session.commit()
 
-                return jsonify({"message": "successfully"}), 200
+                return jsonify({"message": "successfully", "fdate": forecastFinishDate}), 200
             else:
                 return jsonify({
                     "message": f"The capacity of this type ({wasteType}) is overload if add this order into process"}), 200
@@ -147,7 +191,7 @@ def process(OID):
         return jsonify({"error": "Order not found"}), 200
 
 
-@waste.route('/finish/<OID>', methods=['POST'])
+@waste.route('/finish/<OID>', methods=['PUT'])
 def finish(OID):
     # data = request.get_json()
     # OID = data.get('OID')
@@ -156,15 +200,12 @@ def finish(OID):
     order = Order.query.filter_by(OID=OID).first()
     if order:
         if order.orderStatus != OrderStatus.PROCESSING:
-            return jsonify({"message": f"This order ({order.OID}) has not been in processing yet "})
-
+            return jsonify({"message": f"This order ({order.OID}) has not been in processing yet "}), 200
         else:
-
             order.orderStatus = OrderStatus.FINISHED
-            order.finishDate = datetime.utcnow  # 记录完成时间
+            order.finishDate = datetime.today()  # 记录完成时间
             db.session.commit()
-            return jsonify({"message": f"This order status ({order.OID}) has been changed to finish "})
-
+            return jsonify({"message": "successfully"}), 200
     else:
         return jsonify({"error": "Order not found"}), 200
 

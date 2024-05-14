@@ -152,8 +152,6 @@ class Order(db.Model):  # 工单
     department = db.relationship('Department', backref=db.backref('orders', lazy=True))
     wasteSource = Column(SQLEnum(WasteSource), nullable=False, default=WasteSource.INTERNAL)
     address = db.Column(db.String(500), nullable=False)
-    def __repr__(self):
-        return f'<Order OID:{self.OID} DID:{self.DID} date:{self.date} orderName:{self.orderName}>'
 
 
 class UserTemplate(db.Model):  # 用户模板
