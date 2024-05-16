@@ -1,15 +1,7 @@
-from collections import defaultdict
-from copy import deepcopy
-from datetime import datetime, timedelta
-from functools import wraps
+from datetime import timedelta
 
-import pandas as pd
-from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
-from sqlalchemy import and_, or_, Date, func
-from statsmodels.tsa.arima.model import ARIMA
-from werkzeug.security import generate_password_hash, check_password_hash
+from sklearn.tree import DecisionTreeRegressor
 
-from .models import *
 from .views_utils import *
 
 waste = Blueprint('waste', __name__, url_prefix='/waste')  # waste is name of blueprint
@@ -177,8 +169,9 @@ def process(OID):
                 wasteStorage.currentCapacity = wasteStorage.currentCapacity - weight
                 db.session.commit()
 
-                forecastTime = build_arima(wasteType)
-                forecastFinishDate = order.date + timedelta(days=len(forecastTime))
+                forecastTime = predict_weight(wasteType, weight)
+                forecastFinishDate = order.date + timedelta(days=forecastTime)
+                # print(forecastFinishDate)
                 order.finishDate = forecastFinishDate
                 db.session.commit()
 
@@ -291,63 +284,37 @@ def getProcess():
     return jsonify(result)
 
 
-# 直接获取对应种类的
-def generate_time_array():
-    current_date = datetime.now().date()
-    date_values = [[current_date - timedelta(days=i), []] for i in range(30)]
-    return date_values
-
-
 def buildTimeDataset(wasteType):
     # 获取最近30天内的订单数据
     thirty_days_ago = datetime.now() - timedelta(days=30)
     orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
                                 Order.date >= thirty_days_ago).all()
-    dateList = generate_time_array()  # [date, []]
-
+    X_train = []
+    Y_train = []
+    temp_train = []
     # 构建每个类别的时间序列
     for order in orders:
-        order_date = order.date
         process_time = (order.finishDate - order.date).days  # 计算处理时间（天）
-        for date_entry in dateList:
-            if date_entry[0] == order_date:
-                date_entry[1].append(process_time)
-
-    dateList.sort(key=lambda x: x[0])
-    print("Time dataset: ", dateList)
-    return dateList
+        order_weight = order.weight
+        X_train.append([order_weight])
+        Y_train.append(process_time)
+    # print(X_train, Y_train)
+    return X_train, Y_train
 
 
-def forecastTime(dateList, days=1, order=(1, 1, 1)):
-    dates = [entry[0] for entry in dateList]
-    # print(dates)
-    times = []
-    for entry in dateList:
-        if len(entry[1]) != 0:
-            averageTime = sum(entry[1]) / len(entry[1])
-        else:
-            averageTime = 0
-        times.append(averageTime)
-    # print(times)
-    df = pd.DataFrame({'Date': dates, 'Times': times})
+def build_decisionTree(X_train, y_train, weight):
+    model = DecisionTreeRegressor()
+    model.fit(X_train, y_train)
 
-    df['Date'] = pd.to_datetime(df['Date'])
-    df.set_index('Date', inplace=True)
-    df.index.freq = 'D'
-    # 应用ARIMA模型
-    model = ARIMA(df, order=order, freq='D')
-    fitted_model = model.fit()
-    forecast = fitted_model.forecast(steps=days)
+    weight_2d = [[weight]]
 
-    # print(forecast)
-    # print(forecast.__class__)
-    # print(forecast[0])
+    predicted_time = model.predict(weight_2d)
 
-    return forecast
+    return int(predicted_time)
 
 
-def build_arima(wasteType):
-    timeDataset = buildTimeDataset(wasteType)
-    timeForecast = forecastTime(timeDataset)
-    # print("Time Forecast:", timeForecast)
-    return timeForecast
+def predict_weight(wasteType, weight):
+    X_train, Y_train = buildTimeDataset(wasteType)
+    predict_time = build_decisionTree(X_train, Y_train, weight)
+    # print("predict: ", predict_time)
+    return predict_time
