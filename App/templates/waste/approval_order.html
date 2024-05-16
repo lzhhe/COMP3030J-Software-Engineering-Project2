@@ -40,6 +40,61 @@
             transition: left 1s ease-in-out; /* 平滑过渡动画 */
         }
 
+        .circle-box {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2rem;
+            width: 10rem;
+            height: 10rem;
+            background: var(--panel2-color);
+            border-radius: 50%;
+            border: 0.4rem solid var(--panel-color);
+            box-shadow: 0 0 0 0.4rem var(--luotianyi1);
+            overflow: hidden;
+        }
+
+        #circle-bar {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--luotianyi1);
+            border-radius: 50%;
+            box-shadow: inset 0 0 3rem rgba(0, 0, 0, 0.5);
+        }
+
+        #circle-bar:before, #circle-bar:after {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -75%);
+            background: #000;
+        }
+
+        #circle-bar:before {
+            border-radius: 45%;
+            background: rgba(255, 255, 255, 1);
+            animation: wave 5s linear infinite;
+        }
+
+        #circle-bar:after {
+            border-radius: 40%;
+            background: rgba(255, 255, 255, .5);
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translate(-50%, -75%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -75%) rotate(360deg);
+            }
+        }
+
+
     </style>
 {% endblock %}
 {% block extra_js %}
@@ -129,6 +184,12 @@
             <div class="progress-box">
                 <div id="progress-bar"></div>
             </div>
+            <div class="circle-box">
+                <div id="circle-bar"></div>
+            </div>
+            {#            <div class="progress-box2">#}
+            {#                <div id="progress-bar2"></div>#}
+            {#            </div>#}
             <footer style="display: flex; justify-content: flex-end;">
                 <button id="cancel-processing" class="outline secondary"> {{ _("Cancel") }}</button>
             </footer>

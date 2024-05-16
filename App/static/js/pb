@@ -1,0 +1,61 @@
+if (CSS.paintWorklet) {
+    CSS.paintWorklet.addModule('../../static/js/progressbar.js');
+}
+
+
+
+.progress-box2 {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    width: 10rem;
+    height: 15rem;
+    background: var(--panel2-color);
+    overflow: hidden;
+    border-radius: 0.2rem;
+}
+
+@property --animation-tick {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 1000;
+}
+
+@property --height {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0.1;
+}
+
+@property --amplitude {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 1;
+}
+
+#progress-bar2 {
+    width: 100%;
+    height: 100%;
+    background: paint(waveDraw);
+    --amplitude: 3;
+    --gap: 28;
+    --animation-tick: 500;
+    --height: 0.9;
+    --color1: var(--luotianyi3);
+    --color2: var(--luotianyi2);
+    --color3: var(--luotianyi1);
+
+    animation: move1 20s infinite linear;
+    transition: --amplitude 2s, --height 8s;
+}
+
+#progress-bar2:hover {
+    --amplitude: 10;
+    --height: 0;
+}
+
+@keyframes move1 {
+    100% {
+        --animation-tick: 0;
+    }
+}
