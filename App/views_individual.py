@@ -1,9 +1,13 @@
-import os
-import random
-import string
+import base64
+import io
 
 import cv2
 import numpy as np
+from PIL import Image
+
+import random
+import string
+
 from ultralytics import YOLO
 
 from .models import *
@@ -139,68 +143,61 @@ def recognize():
     user = g.user
     return render_template('individual/recognize.html')
 
-
 @individual.route('/analyze-image', methods=['POST'])
 def analyze_image():
     time.sleep(2)
     file = request.files.get('file')
     if not file:
         return jsonify({'error': 'No file provided'}), 200
-        # 假设进行了某种形式的文件分析
-    save_path = './analyze_store'
-    file_path = os.path.join(save_path, file.filename)
-    os.makedirs(save_path, exist_ok=True)
-    file.save(file_path)
-    analysis_result = perform_analysis(file)  # 这是伪代码
-    print(file_path)
-    os.remove(file_path)
-    if analysis_result:
-        return jsonify({'message': 'successful', 'data': analysis_result}), 200
+
+    # 读取上传的图像文件
+    image_data = file.read()
+    image = Image.open(io.BytesIO(image_data)).convert("RGB")
+    image_np = np.array(image)
+
+    images_base64_list, labels = perform_analysis(image_np)
+    if len(images_base64_list) != 0 and len(labels) != 0:
+        # 将图像 Base64 字符串列表和标签列表作为响应发送回前端
+        return jsonify({'message': 'successful', 'images': images_base64_list, 'labels': labels}), 200
     else:
         return jsonify({'message': 'analysis failed'}), 200
 
 
-def perform_analysis(file):
-    # 分析文件的逻辑
-    return True  # 临时返回True，表示成功
-
-
-def predict_image(image):
-    # 加载YOLO模型
-    model = YOLO("pt_file")
+def perform_analysis(image):
+    model = YOLO("App/huazhongv8.pt")
 
     # 对传入的图像进行预测
-    results = model.predict(image, persist=False)
+    results = model.predict(image)
 
     boxes = results[0].boxes.xyxy.cpu().numpy().astype(int)
     labels = results[0].boxes.cls.cpu().numpy()
     confs = results[0].boxes.conf.cpu().numpy()
-    for box, label, conf in zip(boxes, labels, confs):
+
+    extracted_images = []
+    extracted_labels = []
+
+    for index, (box, label, conf) in enumerate(zip(boxes, labels, confs)):
+        if index >= 10:
+            break
         x1, y1, x2, y2 = box
-        label_text = f"Label: {label} Confidence: {conf:.2f}"
+
+        label_name = model.names[label]
+        label_text = f"label_name: {label_name}"
         cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
         cv2.putText(image, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-    return image
 
+        extracted_image = image[y1:y2, x1:x2].copy()
+        extracted_images.append(extracted_image)
+        extracted_labels.append(label_text)
 
-@individual.route('/classify', methods=['POST'])
-def classify():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'})
+    # 将提取的图像转换为 Base64 字符串
+    images_base64_list = []
+    for img in extracted_images:
+        img_pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        img_byte_arr = io.BytesIO()
+        img_pil.save(img_byte_arr, format='PNG')
+        img_byte_arr.seek(0)
+        img_base64 = base64.b64encode(img_byte_arr.read()).decode('utf-8')
+        images_base64_list.append(img_base64)
 
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'})
-
-    if file:
-        # 读取上传的图像文件
-        nparr = np.frombuffer(file.read(), np.uint8)
-        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-
-        result_image = predict_image(image)
-
-        _, img_encoded = cv2.imencode('.jpg', result_image)
-        img_bytes = img_encoded.tobytes()
-
-        return img_bytes
+    return images_base64_list, extracted_labels
