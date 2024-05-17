@@ -224,15 +224,16 @@ def adjust_free_proportion():
     freeProportionLine = FreeProportion.query.filter_by(wasteType=wasteType).first()
     freeProportionLine.freeProportion = newProportion
     db.session.commit()
+    update_free_capacity()
 
 @government.route('/update_free_proportion')
-def update_free_proportion():
+def update_free_proportion_monthly():
     current_date = datetime.now()
     if current_date.day == 1:
-        update_free_capacity_monthly()
+        update_free_capacity()
 
 
-def update_free_capacity_monthly():
+def update_free_capacity():
     try:
         free_proportions = FreeProportion.query.all()
 
