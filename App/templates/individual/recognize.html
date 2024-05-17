@@ -295,6 +295,7 @@
                 <progress id="progress-analyze" max="100"></progress>
                 <span aria-busy="true" id="progress-detail">Uploading and analyze...</span>
             </div>
+            <div class="result-container"></div>
         </div>
     </section>
     <!-- 图片预览模态框 -->
@@ -355,10 +356,25 @@
             const previewImg = $('#preview-img');
             const closeBtn = $('#close-preview');
             const loader = $('.loader-container');
+            const resultContainer = $('.result-container');
             updateImage.hide();
             customBtn.click(function (e) {
                 defaultBtn.click()
             });
+
+            function uploadAbout() {
+                loader.hide();
+                cancelUpdate.removeClass('disabled-div');
+                customBtn.prop('disabled', false);
+                analyzeBtn.prop('disabled', false);
+                $('#progress-detail').remove();
+                $('#progress-analyze').remove();
+                const newP = $('<progress id="progress-analyze" max="100"></progress>');
+                const newD = $('<span aria-busy="true" id="progress-detail">Uploading and analyze...</span>');
+                loader.append(newP);
+                loader.append(newD);
+            }
+
             // 当文件选择按钮有文件选中时
             defaultBtn.on('change', function (e) {
                 const file = e.target.files[0];
@@ -427,26 +443,26 @@
                                     $('#progress-detail').text('Generating the results...');
                                     let currentProgress = parseFloat($('#progress-analyze').val());
                                     if (res.message === 'successful') {
+                                        let contentHTML = '';
+                                        res.images.forEach((imageBase64, index) => {
+                                            const label = res.labels[index];
+                                            contentHTML += `<div class="result-item">
+                                <img src="data:image/png;base64,${imageBase64}" alt="Analyzed Image Part">
+                                <p>${label}</p>
+                            </div>`;
+                                        });
                                         const interval = setInterval(() => {
                                             if (currentProgress < 100) {
                                                 currentProgress += 1; // 每次增加1%
                                                 $('#progress-analyze').val(currentProgress);
                                             } else {
                                                 clearInterval(interval);
-                                                loader.hide();
-                                                cancelUpdate.removeClass('disabled-div');
-                                                customBtn.prop('disabled', false);
-                                                analyzeBtn.prop('disabled', false);
-                                                $('#progress-detail').remove();
-                                                $('#progress-analyze').remove();
-                                                const newP = $('<progress id="progress-analyze" max="100"></progress>');
-                                                const newD = $('<span aria-busy="true" id="progress-detail">Uploading and analyze...</span>');
-                                                loader.append(newP);
-                                                loader.append(newD);
+                                                uploadAbout();
+                                                resultContainer.html(contentHTML);
                                             }
-                                        }, 50);
+                                        }, 100);
                                     } else {
-                                        loader.hide();
+                                        uploadAbout();
                                         Swal.fire({
                                             title: "{{ _('Analyze failed') }}",
                                             icon: "error",
@@ -461,7 +477,7 @@
                                     }
                                 },
                                 error: function (error) {
-                                    loader.hide()
+                                    uploadAbout();
                                     Swal.fire({
                                         title: "{{ _('Flask wrong') }}",
                                         icon: "error",
@@ -500,10 +516,24 @@
             updateImage.click(function () {
                 const src = $(this).attr('src');
                 if (src) {
-                    previewImg.attr('src', src);
+                    previewImg.attr('src', src)
+                        .css({
+                            'scale': '1',
+                        });
                     modal.css('display', 'flex');
                 }
             });
+            resultContainer.on('click', 'img', function () {
+                const src = $(this).attr('src');
+                if (src) {
+                    previewImg.attr('src', src)
+                        .css({
+                            'scale': '2.5',
+                        });
+                    modal.css('display', 'flex');
+                }
+            });
+
 
             // 关闭预览
             closeBtn.click(function () {

@@ -143,6 +143,7 @@ def recognize():
     user = g.user
     return render_template('individual/recognize.html')
 
+
 @individual.route('/analyze-image', methods=['POST'])
 def analyze_image():
     time.sleep(2)
@@ -157,7 +158,6 @@ def analyze_image():
 
     images_base64_list, labels = perform_analysis(image_np)
     if len(images_base64_list) != 0 and len(labels) != 0:
-        # 将图像 Base64 字符串列表和标签列表作为响应发送回前端
         return jsonify({'message': 'successful', 'images': images_base64_list, 'labels': labels}), 200
     else:
         return jsonify({'message': 'analysis failed'}), 200
@@ -182,11 +182,11 @@ def perform_analysis(image):
         x1, y1, x2, y2 = box
 
         label_name = model.names[label]
-        label_text = f"label_name: {label_name}"
-        cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
-        cv2.putText(image, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        label_text = f"{label_name}"
+        # cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+        # cv2.putText(image, label_text, (x1, y1 + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        extracted_image = image[y1:y2, x1:x2].copy()
+        extracted_image = cv2.resize(image[y1:y2, x1:x2].copy(), (224, 224), interpolation=cv2.INTER_CUBIC)
         extracted_images.append(extracted_image)
         extracted_labels.append(label_text)
 
