@@ -211,7 +211,7 @@ def process(OID):
                 wasteStorage.currentCapacity = wasteStorage.currentCapacity - weight
                 db.session.commit()
 
-                forecastTime = predict_weight(wasteType, weight)
+                forecastTime = predict_weight(wasteType, weight, order.attribution)
                 forecastFinishDate = order.date + timedelta(days=forecastTime)
                 # print(forecastFinishDate)
                 order.finishDate = forecastFinishDate
@@ -337,26 +337,27 @@ def buildTimeDataset(wasteType):
     # 构建每个类别的时间序列
     for order in orders:
         process_time = (order.finishDate - order.date).days  # 计算处理时间（天）
+        order_attributions = order.attribution.count(":")
         order_weight = order.weight
-        X_train.append([order_weight])
+        X_train.append([order_weight, order_attributions])
         Y_train.append(process_time)
-    # print(X_train, Y_train)
+    print(X_train, Y_train)
     return X_train, Y_train
 
 
-def build_decisionTree(X_train, y_train, weight):
+def build_decisionTree(X_train, y_train, weight, attribution):
     model = DecisionTreeRegressor()
     model.fit(X_train, y_train)
 
-    weight_2d = [[weight]]
+    weight_2d = [[weight, attribution.count(":")]]
 
     predicted_time = model.predict(weight_2d)
 
     return int(predicted_time)
 
 
-def predict_weight(wasteType, weight):
+def predict_weight(wasteType, weight, attribution):
     X_train, Y_train = buildTimeDataset(wasteType)
-    predict_time = build_decisionTree(X_train, Y_train, weight)
-    # print("predict: ", predict_time)
+    predict_time = build_decisionTree(X_train, Y_train, weight, attribution)
+    print("predict: ", predict_time)
     return predict_time
