@@ -58,24 +58,6 @@
 {% endblock %}
 {% block extra_js %}
     <script type="text/javascript">
-
-        let dept_orders = [
-            {% for key, value in dept_orders.items() %}
-                {
-                    "type": "{{ key }}",
-                    "num": {{ value }}
-                },
-            {% endfor %}
-        ];
-        let dept_weights = [
-            {% for key, value in dept_weights.items() %}
-                {
-                    "type": "{{ key }}",
-                    "weight": {{ value }}
-                },
-            {% endfor %}
-        ];
-
         let order_nums = [
             {% for key, value in nums.items() %}
                 {
@@ -92,8 +74,6 @@
                 },
             {% endfor %}
         ];
-
-
     </script>
     <script src="../../static/js/utils/chart.js"></script>
 {% endblock %}
@@ -102,18 +82,7 @@
 {% block mainBody %}
 
     <section class="dashboard">
-        <div class="ratio-container">
-            <div class="chart-container">
-                <div class="chart-title canchange underline" id="change1"><h2>{{ _("Department Order Ratio") }}</h2>
-                </div>
-                <canvas id="chart1"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-title canchange underline" id="change2">
-                    <h2>{{ _("Department Waste Weight Ratio") }}</h2></div>
-                <canvas id="chart2"></canvas>
-            </div>
-        </div>
+
         <div class="ratio-container">
             <div class="chart-container">
                 <div class="chart-title canchange underline" id="change3"><h2>{{ _("Status Ratio") }}</h2></div>
@@ -166,8 +135,6 @@
             let c11 = rootStyle.getPropertyValue('--dept11').trim();
             let c12 = rootStyle.getPropertyValue('--dept12').trim();
 
-            let ctx1 = document.getElementById('chart1').getContext('2d');
-            let ctx2 = document.getElementById('chart2').getContext('2d');
             let ctx3 = document.getElementById('chart3').getContext('2d');
             let ctx4 = document.getElementById('chart4').getContext('2d');
 
@@ -213,34 +180,6 @@
                 }
             }
 
-            let data1 = {
-                datasets: [{
-                    data: dept_orders.map(item => item.num),
-                    backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
-                }],
-                labels: dept_orders.map(item => item.type)
-            }
-
-            let chart1 = new Chart(ctx1, {
-                type: 'doughnut',
-                data: data1,
-                options: doughnutOptions
-            });
-
-            let data2 = {
-                datasets: [{
-                    data: dept_weights.map(item => item.weight),
-                    backgroundColor: [c1, c2, c3, c4, c5, c6, c7, c8, c9],
-                }],
-                labels: dept_weights.map(item => item.type)
-            }
-
-            let chart2 = new Chart(ctx2, {
-                type: 'doughnut',
-                data: data2,
-                options: doughnutOptions
-            });
-
             let data3 = {
                 datasets: [{
                     data: order_nums.map(item => item.count),
@@ -268,9 +207,6 @@
                 options: doughnutOptions
             });
 
-            document.getElementById('change1').addEventListener('click', function () {
-                toggleChartType(chart1, chart1.config.type, data1, doughnutOptions, barOptions);
-            });
             document.getElementById('change3').addEventListener('click', function () {
                 toggleChartType(chart3, chart3.config.type, data3, doughnutOptions, barOptions);
             });
@@ -279,9 +215,6 @@
                 toggleChartType(chart4, chart4.config.type, data4, doughnutOptions, barOptions);
             });
 
-            document.getElementById('change2').addEventListener('click', function () {
-                toggleChartType(chart2, chart2.config.type, data2, doughnutOptions, barOptions);
-            });
         });
     </script>
 {% endblock %}

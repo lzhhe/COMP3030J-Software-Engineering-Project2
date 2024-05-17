@@ -72,3 +72,37 @@ def createorder():
 
     # 返回成功消息
     return jsonify({"message": "successful"}), 200
+
+
+@individual.route('/contribution')
+def contribution():
+    global all_orders, orders_by_day
+    wastes = None
+    user = g.user
+    uid = user.UID
+    if user is not None:
+        all_orders = Order.query.filter_by(UID=uid).all()
+        current_year = datetime.now().year
+        orders_by_day = {}  # 用于存储每个日期的订单数量，格式为 {日期: 订单数量}
+        for order in all_orders:
+            order_date = order.date
+            if order_date.year == current_year:
+                date_str = order_date.strftime('%Y-%m-%d')
+                orders_by_day[date_str] = orders_by_day.get(date_str, 0) + 1
+    print(orders_by_day)
+
+    return render_template('individual/contribution.html', all_orders=all_orders, orders_by_day=orders_by_day)
+
+
+@individual.route('/recognize')
+def recognize():
+    wastes = None
+    user = g.user
+    uid = user.UID
+    if user is not None:
+        wasteTypes = Waste.query.all()
+        wastes = []
+        for w in wasteTypes:
+            wastes.append(w.wasteType)
+    all_templates = getTemplates(uid)
+    return render_template('individual/recognize.html', wastes=wastes, all_templates=all_templates)

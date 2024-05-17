@@ -1,0 +1,416 @@
+{% extends 'individual/base.html' %}
+{% block extra_css %}
+    <style>
+
+        .header .container {
+            border-bottom: 0.12rem solid var(--border-color);
+
+        }
+
+        .individual-orders {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            padding: 7.5rem 3rem 4rem;
+            gap: 0.8rem;
+            background: var(--panel2-color);
+        }
+
+        .individual-orders-module {
+            display: flex;
+            flex-direction: column;
+            border-radius: 0.6rem;
+            background: var(--panel-color);
+            box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+            5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+            43px 35px 80px rgba(0, 0, 0, 0.07);
+        }
+
+        .title-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-bottom: 0.2rem solid var(--border-color);
+        }
+
+        .icons {
+            width: 2rem;
+            margin-right: 1.5rem;
+        }
+
+        .form-container {
+            padding: 1rem 2rem;
+        }
+
+        .pico label.no-pico-label {
+            display: flex;
+            align-items: center;
+        }
+
+        .pico input[type="number"] {
+            width: 12rem;
+            margin-left: 1rem;
+        }
+
+        .order-attributes {
+            display: flex;
+            flex-direction: row;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .order-choose {
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+        }
+
+        .dropdown {
+            width: 25rem;
+        }
+
+        .dropdown li a {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .dropdown li a i {
+            display: inline;
+            margin-left: 1rem;
+            margin-right: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .dropdown li:hover i,
+        .dropdown li:hover span {
+            color: var(--primary-color);
+        }
+
+        .pico .no-pico-label input[type="text"] {
+            width: 10rem;
+            margin-left: 1rem;
+        }
+
+        .pico label.no-pico-label i {
+            font-size: 1.5em;
+        }
+
+        .pico label.no-pico-label span {
+            margin-left: 0.5rem;
+        }
+
+        .pico label.no-pico-label:hover i, .pico label.no-pico-label:hover span {
+            color: var(--primary-color);
+        }
+
+        .pico input[type="number"].attr {
+            width: 6rem;
+        }
+
+        .update-container {
+            font-family: Poppins, sans-serif;
+            font-weight: bold;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            height: 38rem;
+            width: 40rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .update-container .update-wrapper {
+            position: relative;
+            height: 32rem;
+            width: 100%;
+            border-radius: 0.6rem;
+            border: 0.2rem dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .update-wrapper.active {
+            border: none;
+        }
+
+        .update-wrapper .update-image {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .update-wrapper .update-image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 0.6rem;
+        }
+
+        .update-wrapper .update-icon i {
+            font-size: 16rem;
+            color: var(--purple2);
+        }
+
+        .update-wrapper .update-text {
+            font-size: 1.8rem;
+            color: var(--shangchuan1);
+        }
+
+        .update-wrapper #cancel-update {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            cursor: pointer;
+            color: var(--purple2);
+            display: none;
+        }
+
+        .update-wrapper.active #cancel-update {
+            display: block;
+        }
+
+        .update-wrapper.active #cancel-update:hover {
+            color: var(--todoclose);
+        }
+
+        .update-wrapper #cancel-update i {
+            font-size: 1.8rem;
+        }
+
+        .update-wrapper .update-file-name {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            color: var(--t-color);
+            padding: 0.5rem 0;
+            font-size: 1.2rem;
+            background: var(--panel2-color);
+            font-weight: 400;
+            display: none;
+
+        }
+
+        .update-wrapper.active .update-file-name {
+            display: block;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        #update-custom-btn, #analyze-custom-btn {
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+
+    </style>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+{% block title %}
+    indi-recognition
+{% endblock %}
+{% block content %}
+    {% include 'switch2.html' %}
+    {% include 'aichat.html' %}
+    {% include 'header2.html' %}
+    <section class="individual-orders">
+        <div class="individual-orders-module">
+            <div class="title-top">
+                <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("Upload image") }}</h2>
+            </div>
+            <div class="update-container pico">
+                <div class="update-wrapper">
+                    <div class="update-image">
+                        <img src="" alt="">
+                    </div>
+                    <div class="update-content">
+                        <div class="update-icon">
+                            <i class="iconfont icon-shangchuan"></i>
+                        </div>
+                        <div class="update-text">
+                            No image selected yet!
+                        </div>
+                    </div>
+                    <div id="cancel-update">
+                        <i class="iconfont icon-guanbi1"></i>
+                    </div>
+                    <div class="update-file-name">
+                        File name here
+                    </div>
+                </div>
+                <input id="update-default-btn" type="file" hidden>
+                <div class="button-group">
+                    <button class="outline secondary" id="update-custom-btn">choose an image</button>
+                    <button class="outline" id="analyze-custom-btn">analyze it</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="individual-orders-module">
+            <div class="title-top">
+                <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("Result") }}</h2>
+            </div>
+        </div>
+    </section>
+    <!-- 图片预览模态框 -->
+    <div id="image-preview-modal"
+         style="display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 1000;">
+        <img alt="" id="preview-img" src="" style="max-width: 90%; max-height: 80%; object-fit: contain;">
+        <button id="close-preview"
+                style="position: absolute; top: 1rem; right: 2rem; font-size: 5rem; background: none; border: none; color: var(--tododelete); cursor: pointer;">
+            &times;
+        </button>
+    </div>
+
+
+    <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
+        <i class="iconfont icon-top"></i>
+    </a>
+    {% include 'footer2.html' %}
+    <script>
+
+        $('.header__logo').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/individual/index';
+        });
+
+        window.addEventListener('beforeunload', function (event) {
+            console.log('页面关闭，清理不需要的缓存');
+        });
+
+        $(document).ready(function () {
+            let isDark = $('html').attr('data-theme') === 'dark';
+            let swalcolor = '';
+            const themeButton = $('#themeSwitch input');
+            themeButton.change(function () {
+                if (isDark) {
+                    swalcolor = '#F0F9FF';
+                } else {
+                    swalcolor = '#353738';
+                }
+                isDark = !isDark
+            });
+
+
+            $('.dropdown li').click(function () {
+                const spanText = $(this).find('span').text();
+                const details = $(this).closest('.dropdown');
+                details.find('summary').text(spanText);
+                details.data('value', spanText);
+            });
+
+            const updateWrapper = $('.update-wrapper');
+            const fileName = $('.update-file-name');
+            const cancelUpdate = $('#cancel-update');
+            const defaultBtn = $('#update-default-btn');
+            const customBtn = $('#update-custom-btn');
+            const analyzeBtn = $('#analyze-custom-btn');
+            const updateImage = $('.update-image img');
+            const modal = $('#image-preview-modal');
+            const previewImg = $('#preview-img');
+            const closeBtn = $('#close-preview');
+            updateImage.hide();
+            customBtn.click(function (e) {
+                defaultBtn.click()
+            });
+            // 当文件选择按钮有文件选中时
+            defaultBtn.on('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // 检查文件类型是否为图片
+                    if (!file.type.startsWith('image/')) {
+                        Swal.fire({
+                            text: "Please upload image file.",
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            background: swalcolor,
+                        });
+                        return; // 如果不是图片，终止函数
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const imgSrc = e.target.result;
+                        updateImage.show();
+                        updateImage.attr('src', imgSrc); // 显示图片预览
+                        updateWrapper.addClass('active'); // 可以用于控制样式，例如显示取消按钮
+                    };
+                    reader.readAsDataURL(file);
+                    fileName.text(file.name); // 显示文件名
+                }
+            });
+            analyzeBtn.click(function (e) {
+                if (updateImage.attr('src') === "") {
+                    Swal.fire({
+                        text: "Please upload image file.",
+                        icon: "error",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: swalcolor,
+                    });
+                } else {
+                    Swal.fire({
+                        text: "hahahh.",
+                        icon: "success",
+                        closeOnClickOutside: true,
+                        closeOnEsc: true,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: swalcolor,
+                    });
+                }
+            });
+
+            // 当点击取消上传按钮时，清除已选择的文件
+            cancelUpdate.click(function (e) {
+                updateImage.hide();
+                defaultBtn.val("");  // 清除选中的文件
+                updateImage.attr('src', ""); // 清除图片预览
+                updateWrapper.removeClass('active'); // 移除激活状态
+            });
+
+            // 显示图片预览模态框
+            updateImage.click(function () {
+                const src = $(this).attr('src');
+                if (src) {
+                    previewImg.attr('src', src);
+                    modal.css('display', 'flex');
+                }
+            });
+
+            // 关闭预览
+            closeBtn.click(function () {
+                modal.hide();
+            });
+
+            // 点击模态框背景也可以关闭预览
+            modal.click(function (e) {
+                if (e.target === this) { // 确保点击的是背景而非图片本身
+                    modal.hide();
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

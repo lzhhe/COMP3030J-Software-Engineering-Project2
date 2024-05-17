@@ -1,16 +1,48 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4488647 */
-  src: url('iconfont.woff2?t=1714748431812') format('woff2'),
-       url('iconfont.woff?t=1714748431812') format('woff'),
-       url('iconfont.ttf?t=1714748431812') format('truetype');
+  src: url('iconfont.woff2?t=1715930345846') format('woff2'),
+       url('iconfont.woff?t=1715930345846') format('woff'),
+       url('iconfont.ttf?t=1715930345846') format('truetype');
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 1rem;
+  font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shangyige:before {
+  content: "\e617";
+}
+
+.icon-xiayige:before {
+  content: "\e61e";
+}
+
+.icon-shangchuan:before {
+  content: "\e616";
+}
+
+.icon-guanbi1:before {
+  content: "\e636";
+}
+
+.icon-bilibili:before {
+  content: "\e611";
+}
+
+.icon-csdn:before {
+  content: "\e613";
+}
+
+.icon-gmail:before {
+  content: "\e614";
+}
+
+.icon-github:before {
+  content: "\e615";
 }
 
 .icon-youjiantou:before {

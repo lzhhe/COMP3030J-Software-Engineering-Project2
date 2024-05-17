@@ -32,10 +32,15 @@
                         <span class="link-name">{{ _("Approval-EX") }}</span>
                     </a>
                 </li>
-                <li class="{{ 'current-page' if request.path == url_for('waste.ratio') else 'underline' }}">
-                    <a href="{{ url_for('waste.ratio') }}">
+                <li class="{{ 'current-page' if request.path == url_for('waste.ratio1') else 'underline' }}">
+                    <a href="{{ url_for('waste.ratio1') }}">
                         <img src="../../static/image/icon/bbb.svg" alt="home" class="icons icon-nav" title="Analyze">
-                        <span class="link-name">{{ _("Ratio") }}</span>
+                        <span class="link-name">{{ _("Ratio-IN") }}</span>
+                    </a></li>
+                <li class="{{ 'current-page' if request.path == url_for('waste.ratio2') else 'underline' }}">
+                    <a href="{{ url_for('waste.ratio2') }}">
+                        <img src="../../static/image/icon/bbb.svg" alt="home" class="icons icon-nav" title="Analyze">
+                        <span class="link-name">{{ _("Ratio-EX") }}</span>
                     </a></li>
             </ul>
             <ul class="logout-mod">

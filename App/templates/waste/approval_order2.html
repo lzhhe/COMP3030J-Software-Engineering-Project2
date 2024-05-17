@@ -41,15 +41,16 @@
         }
 
         .status-dot {
-            height: 1.2rem;
-            width: 1.2rem;
-            border-radius: 50%;
+            height: 1.5rem;
+            width: 4rem;
+            border-radius: 0.6rem;
             display: inline-block;
-            transform: translateX(-50%);
+            transform: translateX(-25%);
+            font-family: "Gen Jyuu Gothic Monospace Heavy", sans-serif;
         }
 
         .status-blue {
-            background-color: var(--luotianyi5);
+            background-color: var(--luotianyi4);
         }
 
         .status-green {
@@ -222,9 +223,9 @@
                                     <td>{{ order.date }}</td>
                                     <td>
                                         {% if source_str == "External" %}
-                                            <span class="status-dot status-blue" title="Paid"></span>
+                                            <span class="status-dot status-blue" title="Paid">Paid</span>
                                         {% elif source_str == "External Free" %}
-                                            <span class="status-dot status-green" title="Free"></span>
+                                            <span class="status-dot status-green" title="Free">Free</span>
                                         {% endif %}
                                     </td>
                                     <td><i class="iconfont icon-chakan view-unconfirmed"
@@ -280,9 +281,9 @@
                                     <td contenteditable="true" class="multiplier">{{ order.multiplier }}</td>
                                     <td>
                                         {% if source_str == "External" %}
-                                            <span class="status-dot status-blue" title="Paid"></span>
+                                            <span class="status-dot status-blue" title="Paid">Paid</span>
                                         {% elif source_str == "External Free" %}
-                                            <span class="status-dot status-green" title="Free"></span>
+                                            <span class="status-dot status-green" title="Free">Free</span>
                                         {% endif %}
                                     </td>
                                     <td><i class="iconfont icon-chakan view-confirmed"
@@ -340,9 +341,9 @@
                                     <td>{{ order.finishDate }}</td>
                                     <td>
                                         {% if source_str == "External" %}
-                                            <span class="status-dot status-blue" title="Paid"></span>
+                                            <span class="status-dot status-blue" title="Paid">Paid</span>
                                         {% elif source_str == "External Free" %}
-                                            <span class="status-dot status-green" title="Free"></span>
+                                            <span class="status-dot status-green" title="Free">Free</span>
                                         {% endif %}
                                     </td>
                                     <td><i class="iconfont icon-chakan view-processing"
@@ -387,9 +388,9 @@
                                     <td>{{ order.finishDate }}</td>
                                     <td>
                                         {% if source_str == "External" %}
-                                            <span class="status-dot status-blue" title="Paid"></span>
+                                            <span class="status-dot status-blue" title="Paid">Paid</span>
                                         {% elif source_str == "External Free" %}
-                                            <span class="status-dot status-green" title="Free"></span>
+                                            <span class="status-dot status-green" title="Free">Free</span>
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -655,9 +656,9 @@
                                 if (res.message === 'Order confirmed successfully') {
                                     let statusDotHtml = '';
                                     if (orderSource === 'External') {
-                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid"></span>';
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid">Paid</span>';
                                     } else if (orderSource === 'External Free') {
-                                        statusDotHtml = '<span class="status-dot status-green" title="Free"></span>';
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free">Free</span>';
                                     }
                                     Swal.fire({
                                         toast: true,
@@ -822,9 +823,9 @@
                                 if (res.message === 'successfully') {
                                     let statusDotHtml = '';
                                     if (orderSource === 'External') {
-                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid"></span>';
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid">Paid</span>';
                                     } else if (orderSource === 'External Free') {
-                                        statusDotHtml = '<span class="status-dot status-green" title="Free"></span>';
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free">Free</span>';
                                     }
                                     Swal.fire({
                                         toast: true,
@@ -951,9 +952,9 @@
                                 if (res.message === 'successfully') {
                                     let statusDotHtml = '';
                                     if (orderSource === 'External') {
-                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid"></span>';
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid">Paid</span>';
                                     } else if (orderSource === 'External Free') {
-                                        statusDotHtml = '<span class="status-dot status-green" title="Free"></span>';
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free">Free</span>';
                                     }
                                     Swal.fire({
                                         toast: true,

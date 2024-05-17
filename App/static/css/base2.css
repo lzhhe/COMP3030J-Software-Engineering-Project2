@@ -1015,7 +1015,7 @@ body {
 
 /* ================================ */
 
-@media (max-width: 925px) {
+@media screen and (max-width: 925px) {
     body.lock {
         overflow: hidden;
     }
@@ -1152,7 +1152,7 @@ body {
     }
 }
 
-@media (max-width: 525px) {
+@media screen and (max-width: 525px) {
     .home__title {
         font-size: calc(3.33rem + (80 - 50) * ((100rem - 21rem) / (500 - 320)));;
     }

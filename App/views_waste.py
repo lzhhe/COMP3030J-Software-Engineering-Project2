@@ -84,35 +84,77 @@ def approval2():
     return render_template('waste/approval_order2.html', **queries, **status_counts)
 
 
-@waste.route('/ratio')
-def ratio():
-    # 所有的订单
-    allOrders = Order.query.all()
-    unconfirmed_orders = Order.query.filter_by(orderStatus='UNCONFIRMED').all()
-    confirmed_orders = Order.query.filter_by(orderStatus='CONFIRM').all()
-    processing_orders = Order.query.filter_by(orderStatus='PROCESSING').all()
-    finished_orders = Order.query.filter_by(orderStatus='FINISHED').all()
+@waste.route('/ratioIN')
+def ratio1():
+    # 获取所有内部来源的订单，并预加载相关部门数据
+    all_orders = Order.query.filter_by(wasteSource='INTERNAL').options(db.joinedload(Order.department)).all()
+
+    # 使用字典来存储不同状态的订单数量
     nums = {
-        'unconfirmed': len(unconfirmed_orders),
-        'confirmed': len(confirmed_orders),
-        'processing': len(processing_orders),
-        'finished': len(finished_orders)
+        'unconfirmed': 0,
+        'confirm': 0,
+        'processing': 0,
+        'finished': 0
     }
-    waste_weights = {enum_to_string(waste_type): 0 for waste_type in list(WasteType)}
-    dept_orders = {enum_to_string(dept_type): 0 for dept_type in list(DepartmentType)}
-    dept_weights = {enum_to_string(dept_type): 0 for dept_type in list(DepartmentType)}
-    for order in allOrders:
+
+    # 初始化废物类型和部门类型的统计数据
+    waste_weights = {enum_to_string(waste_type): 0 for waste_type in WasteType}
+    dept_orders = {enum_to_string(dept_type): 0 for dept_type in DepartmentType}
+    dept_weights = {enum_to_string(dept_type): 0 for dept_type in DepartmentType}
+
+    # 迭代所有订单来填充数据
+    for order in all_orders:
+        # 根据订单状态更新状态计数
+        order_status_key = enum_to_string(order.orderStatus).lower()
+        if order_status_key in nums:
+            nums[order_status_key] += 1
+
+        # 累加废物重量
         if enum_to_string(order.wasteType) in waste_weights:
             waste_weights[enum_to_string(order.wasteType)] += order.weight
-        if enum_to_string(order.department.departmentType) in dept_orders:
-            dept_orders[enum_to_string(order.department.departmentType)] += 1
-            dept_weights[enum_to_string(order.department.departmentType)] += order.weight
-    all_departments = []
-    for d in list(DepartmentType):
-        all_departments.append(d)
+
+        # 累加部门订单数和重量
+        dept_type_key = enum_to_string(order.department.departmentType)
+        if dept_type_key in dept_orders:
+            dept_orders[dept_type_key] += 1
+            dept_weights[dept_type_key] += order.weight
+
+    # 获取所有部门类型
+    all_departments = [enum_to_string(d) for d in DepartmentType]
 
     return render_template('waste/ratio_order.html', nums=nums, waste_weights=waste_weights,
                            dept_weights=dept_weights, dept_orders=dept_orders, all_departments=all_departments)
+
+
+@waste.route('/ratioEX')
+def ratio2():
+    # 获取所有内部来源的订单，并预加载相关部门数据
+    all_orders = Order.query.filter(Order.wasteSource != 'INTERNAL').all()
+
+    # 使用字典来存储不同状态的订单数量
+    nums = {
+        'unconfirmed': 0,
+        'confirm': 0,
+        'processing': 0,
+        'finished': 0
+    }
+
+    # 初始化废物类型和部门类型的统计数据
+    waste_weights = {enum_to_string(waste_type): 0 for waste_type in WasteType}
+
+    # 迭代所有订单来填充数据
+    for order in all_orders:
+        # 根据订单状态更新状态计数
+        order_status_key = enum_to_string(order.orderStatus).lower()
+        if order_status_key in nums:
+            nums[order_status_key] += 1
+
+        # 累加废物重量
+        if enum_to_string(order.wasteType) in waste_weights:
+            waste_weights[enum_to_string(order.wasteType)] += order.weight
+    print(nums)
+    print(waste_weights)
+    return render_template('waste/ratio_order2.html', nums=nums, waste_weights=waste_weights)
 
 
 # 工单处理相关
