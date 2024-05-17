@@ -1,3 +1,5 @@
+import os
+import time
 from datetime import datetime
 from functools import wraps
 
@@ -77,7 +79,6 @@ def createorder():
 @individual.route('/contribution')
 def contribution():
     global all_orders, orders_by_day
-    wastes = None
     user = g.user
     uid = user.UID
     if user is not None:
@@ -96,13 +97,30 @@ def contribution():
 
 @individual.route('/recognize')
 def recognize():
-    wastes = None
     user = g.user
-    uid = user.UID
-    if user is not None:
-        wasteTypes = Waste.query.all()
-        wastes = []
-        for w in wasteTypes:
-            wastes.append(w.wasteType)
-    all_templates = getTemplates(uid)
-    return render_template('individual/recognize.html', wastes=wastes, all_templates=all_templates)
+    return render_template('individual/recognize.html')
+
+
+@individual.route('/analyze-image', methods=['POST'])
+def analyze_image():
+    time.sleep(2)
+    file = request.files.get('file')
+    if not file:
+        return jsonify({'error': 'No file provided'}), 200
+        # 假设进行了某种形式的文件分析
+    save_path = './analyze_store'
+    file_path = os.path.join(save_path, file.filename)
+    os.makedirs(save_path, exist_ok=True)
+    file.save(file_path)
+    analysis_result = perform_analysis(file)  # 这是伪代码
+    print(file_path)
+    os.remove(file_path)
+    if analysis_result:
+        return jsonify({'message': 'successful', 'data': analysis_result}), 200
+    else:
+        return jsonify({'message': 'analysis failed'}), 200
+
+
+def perform_analysis(file):
+    # 分析文件的逻辑
+    return True  # 临时返回True，表示成功

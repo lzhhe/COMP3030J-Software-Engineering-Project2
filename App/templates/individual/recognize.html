@@ -184,6 +184,12 @@
             font-size: 1.8rem;
         }
 
+        .disabled-div {
+            pointer-events: none; /* 禁止鼠标事件 */
+            opacity: 0.5; /* 变更透明度以表示禁用状态 */
+            cursor: not-allowed; /* 鼠标样式更改为不允许图标 */
+        }
+
         .update-wrapper .update-file-name {
             position: absolute;
             bottom: 0;
@@ -211,6 +217,26 @@
             font-weight: 600;
             cursor: pointer;
             text-transform: uppercase;
+        }
+
+        #progress-detail {
+            font-size: 1.6rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0.4rem
+        }
+
+        .loader-container {
+            display: none;
+            width: 70%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .individual-orders {
+                grid-template-columns: 1fr;
+            }
         }
 
 
@@ -258,13 +284,16 @@
                     <button class="outline" id="analyze-custom-btn">analyze it</button>
                 </div>
             </div>
-
         </div>
         <div class="individual-orders-module">
             <div class="title-top">
                 <img src="../../static/image/icon/order.svg" alt="home" class="icons icon-nav"
                      title="Scene">
                 <h2>{{ _("Result") }}</h2>
+            </div>
+            <div class="loader-container pico">
+                <progress id="progress-analyze" max="100"></progress>
+                <span aria-busy="true" id="progress-detail">Uploading and analyze...</span>
             </div>
         </div>
     </section>
@@ -325,6 +354,7 @@
             const modal = $('#image-preview-modal');
             const previewImg = $('#preview-img');
             const closeBtn = $('#close-preview');
+            const loader = $('.loader-container');
             updateImage.hide();
             customBtn.click(function (e) {
                 defaultBtn.click()
@@ -371,13 +401,89 @@
                     });
                 } else {
                     Swal.fire({
-                        text: "hahahh.",
-                        icon: "success",
-                        closeOnClickOutside: true,
-                        closeOnEsc: true,
-                        timer: 3000,
-                        timerProgressBar: true,
+                        text: "Are you sure to analyze this image?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "{{ _('Yes!') }}",
+                        cancelButtonText: "{{ _('No') }}",
                         background: swalcolor,
+                        reverseButtons: true,
+                    }).then((result) => {
+                        if (result.value) {
+                            const file = $('#update-default-btn')[0].files[0];
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            loader.show();
+                            cancelUpdate.addClass('disabled-div');
+                            customBtn.prop('disabled', true);
+                            analyzeBtn.prop('disabled', true);
+                            $.ajax({
+                                url: '/individual/analyze-image',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (res) {
+                                    $('#progress-detail').text('Generating the results...');
+                                    let currentProgress = parseFloat($('#progress-analyze').val());
+                                    if (res.message === 'successful') {
+                                        const interval = setInterval(() => {
+                                            if (currentProgress < 100) {
+                                                currentProgress += 1; // 每次增加1%
+                                                $('#progress-analyze').val(currentProgress);
+                                            } else {
+                                                clearInterval(interval);
+                                                loader.hide();
+                                                cancelUpdate.removeClass('disabled-div');
+                                                customBtn.prop('disabled', false);
+                                                analyzeBtn.prop('disabled', false);
+                                                $('#progress-detail').remove();
+                                                $('#progress-analyze').remove();
+                                                const newP = $('<progress id="progress-analyze" max="100"></progress>');
+                                                const newD = $('<span aria-busy="true" id="progress-detail">Uploading and analyze...</span>');
+                                                loader.append(newP);
+                                                loader.append(newD);
+                                            }
+                                        }, 50);
+                                    } else {
+                                        loader.hide();
+                                        Swal.fire({
+                                            title: "{{ _('Analyze failed') }}",
+                                            icon: "error",
+                                            toast: true,
+                                            position: 'top-end',
+                                            timer: 2000,
+                                            timerProgressBar: true,
+                                            closeOnClickOutside: true,
+                                            closeOnEsc: true,
+                                            background: swalcolor,
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    loader.hide()
+                                    Swal.fire({
+                                        title: "{{ _('Flask wrong') }}",
+                                        icon: "error",
+                                        toast: true,
+                                        position: 'top-end',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+                                        closeOnClickOutside: true,
+                                        closeOnEsc: true,
+                                        background: swalcolor,
+                                    });
+                                }
+                            });
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            // 用户点击了取消按钮或关闭了对话框
+                            Swal.fire({
+                                title: "{{ _('Analyze cancelled') }}",
+                                text: "{{ _('Your information is safe') }}",
+                                icon: "info",
+                                background: swalcolor,
+                            });
+                        }
                     });
                 }
             });

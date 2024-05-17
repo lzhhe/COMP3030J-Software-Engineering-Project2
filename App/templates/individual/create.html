@@ -746,8 +746,6 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.value) {
-                        console.log(TID)
-                        // 用户点击了确认按钮
                         $.ajax({
                             url: '/deleteTemplate/' + encodeURIComponent(TID),
                             type: 'DELETE',
