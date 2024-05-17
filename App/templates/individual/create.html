@@ -263,6 +263,7 @@
 {% endblock %}
 {% block extra_js %}
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{ a3 }}' async defer></script>
+    <script type='text/javascript' src='../../static/js/utils/qrcode.min.js'></script>
 {% endblock %}
 {% block title %}
     indi-create
@@ -518,6 +519,93 @@
                 isDark = !isDark
             });
 
+            // 创建订单的函数
+            function createOrder(orderInfo) {
+                $.ajax({
+                    url: "/individual/createorder",
+                    type: "POST",
+                    data: JSON.stringify(orderInfo),
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (response) {
+                        if (response.message === "successful") {
+                            Swal.fire({
+                                toast: true,
+                                text: "Create successful",
+                                icon: "success",
+                                position: 'top-start',
+                                timer: 2000,
+                                timerProgressBar: true,
+                                background: swalcolor,
+                            }).then(function () {
+                                $("#order-name").val('');
+                                $("#order-weight").val('');
+                                $("#order-comment").val('');
+                                document.querySelectorAll('.order-attribute').forEach(function (item) {
+                                    $(item).find('input').val('');
+                                });
+                            });
+                        } else {
+                            Swal.fire({
+                                text: response.message,
+                                icon: "error",
+                                timer: 3000,
+                                timerProgressBar: true,
+                                background: swalcolor,
+                            });
+                        }
+                    }
+                });
+            }
+
+            // 显示二维码并要求用户验证
+            function showQRCodeAndVerify(code, orderInfo) {
+                orderInfo.free = false; // 标记订单不使用免费额度
+                const qrCodeContainer = document.createElement('div');
+                qrCodeContainer.style.display = 'flex'; // 居中显示二维码
+                qrCodeContainer.style.justifyContent = 'center';
+                // 设置二维码的属性和内容
+                new QRCode(qrCodeContainer, {
+                    text: code,
+                    width: 128,
+                    height: 128
+                });
+                qrCodeContainer.title = '';
+                // 确保二维码渲染完成后再显示 Swal 弹窗
+                setTimeout(() => {
+                    Swal.fire({
+                        title: 'Scan QR code to pay',
+                        html: qrCodeContainer.outerHTML + '<input id="verification-code" class="swal2-input" placeholder="Enter verification code">',
+                        focusConfirm: false,
+                        showCancelButton: true, // 显示取消按钮
+                        confirmButtonText: 'Verify',
+                        reverseButtons: true,
+                        preConfirm: () => {
+                            const userEnteredCode = Swal.getPopup().querySelector('#verification-code').value;
+                            // 比较用户输入的验证码与生成的验证码
+                            if (userEnteredCode.toLowerCase() === code.toLowerCase()) {
+                                // 如果验证码正确，调用创建订单的函数
+                                createOrder(orderInfo);
+                            } else {
+                                // 验证码不正确，显示错误提示
+                                Swal.showValidationMessage("Incorrect verification code. Please try again.");
+                                return false;
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // 如果用户点击了确认并且验证码正确
+                            Swal.fire({
+                                title: 'Verified!',
+                                text: 'Your order is being processed.',
+                                icon: 'success',
+                                timer: 1500
+                            });
+                        }
+                    });
+                }, 100); // 小延迟确保 DOM 更新
+            }
+
+
             $("#createOrderBtn").click(function (e) {
                 e.preventDefault();
                 const orderName = $("#order-name").val();
@@ -542,44 +630,31 @@
                         background: swalcolor,
                     });
                 }
-                const orderInfo = {
+                let orderInfo = {
                     orderName: orderName,
                     weight: weight,
                     wasteType: type,
                     attribution: attribution,
                     comment: comment,
-                    address: address
+                    address: address,
+                    free: true
                 };
                 $.ajax({
-                    url: "/individual/createorder",
+                    url: "/individual/check_free_proportion",
                     type: "POST",
                     data: JSON.stringify(orderInfo),
                     contentType: "application/json;charset=UTF-8",
                     success: function (response) {
-                        if (response.message === "successful") {
-                            Swal.fire({
-                                toast: true,
-                                text: "create successful",
-                                icon: "success",
-                                closeOnClickOutside: true,
-                                closeOnEsc: true,
-                                position: 'top-start',
-                                timer: 2000,
-                                timerProgressBar: true,
-                                background: swalcolor,
-                            });
-                            $("#order-name").val('');
-                            $("#order-weight").val('');
-                            $("#order-comment").val('');
-                            document.querySelectorAll('.order-attribute').forEach(function (item) {
-                                $(item).find('input').val('');
-                            });
+                        if (response.status === "OK") {
+                            // 份额充足，直接创建订单
+                            createOrder(orderInfo);
+                        } else if (response.status === "OVER_LIMIT") {
+                            const code = response.code; // 假设后端返回一个需要用于生成二维码的码
+                            showQRCodeAndVerify(code, orderInfo);
                         } else {
                             Swal.fire({
                                 text: response.message,
                                 icon: "error",
-                                closeOnClickOutside: true,
-                                closeOnEsc: true,
                                 timer: 3000,
                                 timerProgressBar: true,
                                 background: swalcolor,

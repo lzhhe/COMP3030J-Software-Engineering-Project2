@@ -1,4 +1,6 @@
 import os
+import random
+import string
 
 import cv2
 import numpy as np
@@ -33,6 +35,26 @@ def create():
                            all_templates=all_templates)
 
 
+def generate_verification_code(length=6):
+    # 生成指定长度的随机字母数字组合
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+
+
+@individual.route('/check_free_proportion', methods=['POST'])
+def check_free_proportion():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+    data = request.get_json()
+    waste_type = string_to_enum(data.get('wasteType'))
+    weight = int(data.get('weight'))
+    if use_free_proportion(waste_type, weight):
+        return jsonify({"status": "OK"}), 200
+    else:
+        # 超出免费份额，生成验证码
+        code = generate_verification_code()
+        return jsonify({"status": "OVER_LIMIT", "code": code}), 200
+
+
 @individual.route('/createorder', methods=['POST'])
 def createorder():
     if not request.is_json:
@@ -42,21 +64,24 @@ def createorder():
     uid = user.UID
     order_name = data.get('orderName')
     waste_type = string_to_enum(data.get('wasteType'))
-    weight = data.get('weight')
+    weight = int(data.get('weight'))
     attribution = data.get('attribution')
     address = data.get('address')
     comment = data.get('comment', '')
 
-    use_free = data.get('use_free')
+    free = data.get('free')
 
     # 验证数据是否完整
     if not all([order_name, weight, attribution, waste_type, address]):
         return jsonify({"message": "Missing required data for the order"}), 200
 
     # 创建新的工单记录
-
-    if use_free_proportion(waste_type, weight, use_free):
+    if free:
         wasteSource = "EXTERNAL_FREE"
+        free_proportion = FreeProportion.query.filter_by(wasteType=waste_type).first()
+        available_capacity = free_proportion.freeCapacity
+        free_proportion.freeCapacity = available_capacity - weight
+        db.session.commit()
     else:
         wasteSource = "EXTERNAL"
 
@@ -80,16 +105,15 @@ def createorder():
     # 返回成功消息
     return jsonify({"message": "successful"}), 200
 
-def use_free_proportion(wasteType, weight, free_proportion):
-    if free_proportion:
-        free_proportion = FreeProportion.query.filter_by(wasteType=wasteType)
-        available_capacity = free_proportion.freeCapacity
-        if available_capacity - weight >= 0:
-            free_proportion.available_capacity = available_capacity - weight
-            db.session.commit()
-            return True
-        else:
-            return False
+
+def use_free_proportion(wasteType, weight):
+    free_proportion = FreeProportion.query.filter_by(wasteType=wasteType).first()
+    available_capacity = free_proportion.freeCapacity
+    if available_capacity - weight >= 0:
+        return True
+    else:
+        return False
+
 
 @individual.route('/contribution')
 def contribution():
@@ -139,8 +163,6 @@ def analyze_image():
 def perform_analysis(file):
     # 分析文件的逻辑
     return True  # 临时返回True，表示成功
-
-
 
 
 def predict_image(image):
