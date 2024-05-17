@@ -1,22 +1,15 @@
+from copy import deepcopy
 from collections import defaultdict
 from copy import deepcopy
-from datetime import datetime, timedelta
-from functools import wraps
-from random import random
-
-from collections import defaultdict
+from datetime import timedelta
 
 import numpy as np
 import pandas as pd
-from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
 from sklearn.cluster import KMeans
-from sqlalchemy import and_, or_
 from statsmodels.tsa.arima.model import ARIMA
-from werkzeug.security import generate_password_hash, check_password_hash
-
-from .views_utils import *
 
 from .models import *
+from .views_utils import *
 
 government = Blueprint('government', __name__, url_prefix='/government')  # government is name of blueprint
 
@@ -216,33 +209,38 @@ def build_arima():
     return jsonify({'dataset': timeDataset, 'forecasts': weightForecasts})
     # return jsonify({'forecasts': weightForecasts})
 
+
 @government.route('/adjust_free_proportion')
 def adjust_free_proportion():
     data = request.json
     wasteType = data.get('wasteType')
     newProportion = data.get('proportion')
     freeProportionLine = FreeProportion.query.filter_by(wasteType=wasteType).first()
+    oldProportion = freeProportionLine.freeProportion
+
     freeProportionLine.freeProportion = newProportion
     db.session.commit()
 
+    differenceProportion = newProportion - oldProportion
+
+    max_capacity = ProcessCapacity.query.filter_by(wasteType=freeProportionLine.wasteType).first().maxCapacity
+    freeProportionLine.freeCapacity = freeProportionLine.freeCapacity + max_capacity * differenceProportion
+
+    db.session.commit()
+
+
 @government.route('/update_free_proportion')
-def update_free_proportion():
+def update_free_proportion_monthly():
     current_date = datetime.now()
     if current_date.day == 1:
-        update_free_capacity_monthly()
+        renew_free_capacity()
 
 
-def update_free_capacity_monthly():
-    try:
-        free_proportions = FreeProportion.query.all()
+def renew_free_capacity():
+    free_proportions = FreeProportion.query.all()
 
-        for free_proportion in free_proportions:
-            max_capacity = ProcessCapacity.query.filter_by(wasteType=free_proportion.wasteType).first().maxCapacity
-            new_free_capacity = max_capacity * free_proportion.freeProportion
-            free_proportion.freeCapacity = new_free_capacity
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        print("update capacity error:", e)
-    finally:
-        db.session.close()
+    for free_proportion in free_proportions:
+        max_capacity = ProcessCapacity.query.filter_by(wasteType=free_proportion.wasteType).first().maxCapacity
+        new_free_capacity = max_capacity * free_proportion.freeProportion
+        free_proportion.freeCapacity = new_free_capacity
+    db.session.commit()
