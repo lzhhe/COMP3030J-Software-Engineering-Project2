@@ -1,14 +1,11 @@
 import os
-import time
-from datetime import datetime
-from functools import wraps
 
-from flask import Blueprint, render_template, request, redirect, session, url_for, g, app, jsonify
-from sqlalchemy import and_, or_
-from werkzeug.security import generate_password_hash, check_password_hash
-from .views_utils import *
+import cv2
+import numpy as np
+from ultralytics import YOLO
 
 from .models import *
+from .views_utils import *
 
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
 
@@ -50,11 +47,19 @@ def createorder():
     address = data.get('address')
     comment = data.get('comment', '')
 
+    use_free = data.get('use_free')
+
     # 验证数据是否完整
     if not all([order_name, weight, attribution, waste_type, address]):
         return jsonify({"message": "Missing required data for the order"}), 200
 
     # 创建新的工单记录
+
+    if use_free_proportion(waste_type, weight, use_free):
+        wasteSource = "EXTERNAL_FREE"
+    else:
+        wasteSource = "EXTERNAL"
+
     new_order = Order(
         UID=uid,
         date=date.today(),
@@ -64,7 +69,7 @@ def createorder():
         attribution=attribution,
         comment=comment,
         address=address,
-        wasteSource='EXTERNAL',
+        wasteSource=wasteSource,
         orderStatus='UNCONFIRMED'
     )
 
@@ -75,6 +80,16 @@ def createorder():
     # 返回成功消息
     return jsonify({"message": "successful"}), 200
 
+def use_free_proportion(wasteType, weight, free_proportion):
+    if free_proportion:
+        free_proportion = FreeProportion.query.filter_by(wasteType=wasteType)
+        available_capacity = free_proportion.freeCapacity
+        if available_capacity - weight >= 0:
+            free_proportion.available_capacity = available_capacity - weight
+            db.session.commit()
+            return True
+        else:
+            return False
 
 @individual.route('/contribution')
 def contribution():
@@ -124,3 +139,46 @@ def analyze_image():
 def perform_analysis(file):
     # 分析文件的逻辑
     return True  # 临时返回True，表示成功
+
+
+
+
+def predict_image(image):
+    # 加载YOLO模型
+    model = YOLO("pt_file")
+
+    # 对传入的图像进行预测
+    results = model.predict(image, persist=False)
+
+    boxes = results[0].boxes.xyxy.cpu().numpy().astype(int)
+    labels = results[0].boxes.cls.cpu().numpy()
+    confs = results[0].boxes.conf.cpu().numpy()
+    for box, label, conf in zip(boxes, labels, confs):
+        x1, y1, x2, y2 = box
+        label_text = f"Label: {label} Confidence: {conf:.2f}"
+        cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+        cv2.putText(image, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+    return image
+
+
+@individual.route('/classify', methods=['POST'])
+def classify():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    if file:
+        # 读取上传的图像文件
+        nparr = np.frombuffer(file.read(), np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        result_image = predict_image(image)
+
+        _, img_encoded = cv2.imencode('.jpg', result_image)
+        img_bytes = img_encoded.tobytes()
+
+        return img_bytes
