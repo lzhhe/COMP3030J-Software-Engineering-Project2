@@ -14,9 +14,15 @@ from .views_utils import *
 government = Blueprint('government', __name__, url_prefix='/government')  # government is name of blueprint
 
 
-@government.route('/')
+@government.route('/index')
 def index():
     return render_template('government/index.html')
+
+
+@government.route('/freeproportion')
+def free_p():
+    free_query = FreeProportion.query.all()
+    return render_template('government/free_proportion.html', free_list=free_query)
 
 
 def buildKmeansDataset():
@@ -195,6 +201,9 @@ def forecastTime(dataset, days=5, order=(1, 1, 1)):
     return forecasts
 
 
+'''两个趋势的预测'''
+
+
 @government.route('/build_arima')
 def build_arima():
     weightDataset = buildWeightDataset()
@@ -210,23 +219,34 @@ def build_arima():
     # return jsonify({'forecasts': weightForecasts})
 
 
-@government.route('/adjust_free_proportion')
+'''更改免费份额'''
+
+
+@government.route('/adjust_free_proportion', methods=['POST'])
 def adjust_free_proportion():
     data = request.json
-    wasteType = data.get('wasteType')
-    newProportion = data.get('proportion')
-    freeProportionLine = FreeProportion.query.filter_by(wasteType=wasteType).first()
-    oldProportion = freeProportionLine.freeProportion
-
-    freeProportionLine.freeProportion = newProportion
-    db.session.commit()
-
-    differenceProportion = newProportion - oldProportion
-
-    max_capacity = ProcessCapacity.query.filter_by(wasteType=freeProportionLine.wasteType).first().maxCapacity
-    freeProportionLine.freeCapacity = freeProportionLine.freeCapacity + max_capacity * differenceProportion
-
-    db.session.commit()
+    freeList = data.get('freeList')
+    if not freeList:
+        return jsonify({"error": "Invalid request, freeList is missing"}), 200
+    for item in freeList:
+        wasteType = item.get('wasteType')
+        newProportion = int(item.get('freeProportion'))
+        # 查询当前的废物比例
+        freeProportionLine = FreeProportion.query.filter_by(wasteType=wasteType).first()
+        if not freeProportionLine:
+            continue  # 如果没有找到对应的废物类型，则跳过
+        oldProportion = freeProportionLine.freeProportion
+        # 更新比例
+        freeProportionLine.freeProportion = newProportion
+        # 计算比例差异
+        differenceProportion = newProportion - oldProportion
+        # 查询处理能力
+        max_capacity = ProcessCapacity.query.filter_by(wasteType=wasteType).first()
+        if max_capacity:
+            freeProportionLine.freeCapacity = freeProportionLine.freeCapacity + 0.01 * (
+                        max_capacity.maxCapacity * differenceProportion)
+        db.session.commit()
+    return jsonify({"message": "successful"}), 200
 
 
 @government.route('/update_free_proportion')
