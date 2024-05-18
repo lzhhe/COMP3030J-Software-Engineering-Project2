@@ -15,6 +15,44 @@ from .views_utils import *
 
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
 
+'''拯救树 棵，保护水 升，净化空气 立方米，增加土壤肥沃 吨，节约能源 千瓦时，CO2 减排量 公斤'''
+waste_contribution = {
+    WasteType.HEAVY_METAL_WASTEWATER: {'tree': 0.02, 'water': 5, 'air': 3, 'soil': 0.01, 'energy': 1, 'co2': 1.5},
+    WasteType.EXHAUST_GAS: {'tree': 0.01, 'water': 2, 'air': 10, 'soil': 0.005, 'energy': 0.5, 'co2': 5},
+    WasteType.MINERAL_RESIDUE: {'tree': 0.02, 'water': 8, 'air': 1, 'soil': 0.02, 'energy': 2, 'co2': 2},
+    WasteType.CUTTING_FLUID: {'tree': 0.03, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
+    WasteType.METAL_CHIPS: {'tree': 0.03, 'water': 6, 'air': 3, 'soil': 0.03, 'energy': 2, 'co2': 1.5},
+    WasteType.PLASTIC: {'tree': 0.02, 'water': 4, 'air': 1, 'soil': 0.02, 'energy': 1.5, 'co2': 1.5},
+    WasteType.COMPOSITE_MATERIAL_CUTTING_WASTE: {'tree': 0.03, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3,
+                                                 'co2': 2},
+    WasteType.WASTE_PAINT: {'tree': 0.02, 'water': 5, 'air': 3, 'soil': 0.01, 'energy': 1, 'co2': 1.5},
+    WasteType.DUST: {'tree': 0.01, 'water': 2, 'air': 10, 'soil': 0.005, 'energy': 0.5, 'co2': 5},
+    WasteType.CHEMICALS: {'tree': 0.04, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
+    WasteType.CATALYZER: {'tree': 0.05, 'water': 8, 'air': 3, 'soil': 0.04, 'energy': 5, 'co2': 5},
+    WasteType.CHEMICAL_PROPELLANTS: {'tree': 0.05, 'water': 8, 'air': 3, 'soil': 0.04, 'energy': 5, 'co2': 5},
+    WasteType.FUEL_RESIDUES: {'tree': 0.02, 'water': 8, 'air': 1, 'soil': 0.02, 'energy': 8, 'co2': 5},
+    WasteType.DISCARDED_ELECTRONIC_COMPONENTS: {'tree': 0.04, 'water': 5, 'air': 3, 'soil': 0.1, 'energy': 2,
+                                                'co2': 1.5},
+    WasteType.HYDRAULIC_OIL: {'tree': 0.04, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
+    WasteType.LUBRICANT_WASTE: {'tree': 0.04, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
+    WasteType.HAZARDOUS_CHEMICALS: {'tree': 0.05, 'water': 8, 'air': 3, 'soil': 0.04, 'energy': 5, 'co2': 5},
+    WasteType.WASTE_EXPERIMENTAL_EQUIPMENT: {'tree': 0.05, 'water': 5, 'air': 8, 'soil': 0.02, 'energy': 6, 'co2': 2},
+    WasteType.WASTE_HEAT: {'tree': 0.03, 'water': 3, 'air': 4, 'soil': 0.05, 'energy': 10, 'co2': 8},
+    WasteType.WASTE_PAPER: {'tree': 0.15, 'water': 3, 'air': 2, 'soil': 0.01, 'energy': 3, 'co2': 3},
+    WasteType.HOUSEHOLD_WASTE: {'tree': 0.15, 'water': 3, 'air': 3, 'soil': 0.02, 'energy': 3, 'co2': 3},
+}
+
+attribution_contribution = {
+    'CO2': {'tree': 3, 'water': 2, 'air': 4, 'soil': 1, 'energy': 2, 'co2': 10},
+    'SO2': {'tree': 2, 'water': 2, 'air': 5, 'soil': 2, 'energy': 1, 'co2': 3},
+    'J': {'tree': 1, 'water': 1, 'air': 1, 'soil': 3, 'energy': 20, 'co2': 2},
+    'N2': {'tree': 2, 'water': 1, 'air': 4, 'soil': 2, 'energy': 5, 'co2': 3},
+    'CL2': {'tree': 1, 'water': 2, 'air': 5, 'soil': 2, 'energy': 4, 'co2': 4},
+    'FE': {'tree': 1, 'water': 1, 'air': 2, 'soil': 1, 'energy': 8, 'co2': 1},
+    'S': {'tree': 1, 'water': 1, 'air': 2, 'soil': 1, 'energy': 5, 'co2': 2},
+    'C': {'tree': 3, 'water': 1, 'air': 2, 'soil': 1, 'energy': 6, 'co2': 6},
+}
+
 
 @individual.route('/index')
 def index():
@@ -133,7 +171,6 @@ def contribution():
             if order_date.year == current_year:
                 date_str = order_date.strftime('%Y-%m-%d')
                 orders_by_day[date_str] = orders_by_day.get(date_str, 0) + 1
-    print(orders_by_day)
 
     return render_template('individual/contribution.html', all_orders=all_orders, orders_by_day=orders_by_day)
 
