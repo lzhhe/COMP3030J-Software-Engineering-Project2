@@ -296,7 +296,7 @@ def perform_analysis(image):
     extracted_labels = []
 
     for index, (box, label, conf) in enumerate(zip(boxes, labels, confs)):
-        if index >= 10:
+        if index >= 9:
             break
         x1, y1, x2, y2 = box
 
@@ -305,7 +305,7 @@ def perform_analysis(image):
         # cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
         # cv2.putText(image, label_text, (x1, y1 + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        extracted_image = cv2.resize(image[y1:y2, x1:x2].copy(), (224, 224), interpolation=cv2.INTER_CUBIC)
+        extracted_image = cv2.resize(image[y1:y2, x1:x2].copy(), (200, 200), interpolation=cv2.INTER_CUBIC)
         extracted_images.append(extracted_image)
         extracted_labels.append(label_text)
 

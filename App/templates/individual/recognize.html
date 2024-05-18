@@ -233,6 +233,31 @@
             margin-left: auto;
         }
 
+        .result-container {
+            padding: 0.4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0.4rem;
+            border-radius: 0.8rem;
+            border: 0.2rem dashed var(--border-color);
+        }
+        .result-item img {
+            border-radius: 0.6rem;
+            overflow: hidden;
+        }
+
+        .result-item p {
+            font-size: 1.5rem;
+        }
+
         @media screen and (max-width: 1000px) {
             .individual-orders {
                 grid-template-columns: 1fr;
@@ -426,6 +451,7 @@
                         reverseButtons: true,
                     }).then((result) => {
                         if (result.value) {
+                            resultContainer.empty();
                             const file = $('#update-default-btn')[0].files[0];
                             const formData = new FormData();
                             formData.append('file', file);

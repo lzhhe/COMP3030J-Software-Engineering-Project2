@@ -213,6 +213,42 @@
                 }
             }
 
+            let polarAreaOptions = {
+                responsive: true,
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: false
+                        },
+                        suggestedMin: 0, // 设定最小值，确保从零开始
+                        ticks: {
+                            stepSize: 1 // 可以根据具体数据调整步长
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top' // 图例位置
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                let label = tooltipItem.label;
+                                let value = tooltipItem.raw;
+                                let total = tooltipItem.chart.data.datasets[0].data.reduce((acc, curr) => acc + curr, 0);
+                                let percentage = ((value / total) * 100).toFixed(2) + '%'; // 计算百分比
+                                return `${label}: ${percentage} (${value})`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
+            };
+
+
             let data1 = {
                 datasets: [{
                     data: dept_orders.map(item => item.num),

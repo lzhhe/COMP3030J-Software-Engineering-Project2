@@ -8,34 +8,6 @@
     {% include 'footer1.html' %}
     <div id="kmeans-data"></div>
     <div id="arima-forecasts"></div>
-
-    <script>
-        // 使用 fetch API 调用 Flask 后端的接口
-        async function fetchData(url) {
-            const response = await fetch(url);
-            return response.json();
-        }
-
-        // 调用 build_kmeans 接口
-        fetchData('/government/build_kmeans')
-            .then(data => {
-                // 处理返回的数据
-                document.getElementById('kmeans-data').innerText = JSON.stringify(data);
-            })
-            .catch(error => {
-                console.error('Error fetching kmeans data:', error);
-            });
-
-        // 调用 build_arima 接口
-        fetchData('/government/build_arima')
-            .then(data => {
-                // 处理返回的数据
-                document.getElementById('arima-forecasts').innerText = JSON.stringify(data);
-            })
-            .catch(error => {
-                console.error('Error fetching arima forecasts:', error);
-            });
-    </script>
     <script>
         $('.header__logo').click(function (e) {
             e.preventDefault();
