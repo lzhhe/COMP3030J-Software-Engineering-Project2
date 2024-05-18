@@ -1,57 +1,70 @@
 import base64
 import io
+import random
+import re
+import string
 
 import cv2
 import numpy as np
 from PIL import Image
-
-import random
-import string
-
 from ultralytics import YOLO
 
-from .models import *
 from .views_utils import *
 
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
 
-'''拯救树 棵，保护水 升，净化空气 立方米，增加土壤肥沃 吨，节约能源 千瓦时，CO2 减排量 公斤'''
 waste_contribution = {
-    WasteType.HEAVY_METAL_WASTEWATER: {'tree': 0.02, 'water': 5, 'air': 3, 'soil': 0.01, 'energy': 1, 'co2': 1.5},
-    WasteType.EXHAUST_GAS: {'tree': 0.01, 'water': 2, 'air': 10, 'soil': 0.005, 'energy': 0.5, 'co2': 5},
-    WasteType.MINERAL_RESIDUE: {'tree': 0.02, 'water': 8, 'air': 1, 'soil': 0.02, 'energy': 2, 'co2': 2},
-    WasteType.CUTTING_FLUID: {'tree': 0.03, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
-    WasteType.METAL_CHIPS: {'tree': 0.03, 'water': 6, 'air': 3, 'soil': 0.03, 'energy': 2, 'co2': 1.5},
-    WasteType.PLASTIC: {'tree': 0.02, 'water': 4, 'air': 1, 'soil': 0.02, 'energy': 1.5, 'co2': 1.5},
-    WasteType.COMPOSITE_MATERIAL_CUTTING_WASTE: {'tree': 0.03, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3,
-                                                 'co2': 2},
-    WasteType.WASTE_PAINT: {'tree': 0.02, 'water': 5, 'air': 3, 'soil': 0.01, 'energy': 1, 'co2': 1.5},
-    WasteType.DUST: {'tree': 0.01, 'water': 2, 'air': 10, 'soil': 0.005, 'energy': 0.5, 'co2': 5},
-    WasteType.CHEMICALS: {'tree': 0.04, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
-    WasteType.CATALYZER: {'tree': 0.05, 'water': 8, 'air': 3, 'soil': 0.04, 'energy': 5, 'co2': 5},
-    WasteType.CHEMICAL_PROPELLANTS: {'tree': 0.05, 'water': 8, 'air': 3, 'soil': 0.04, 'energy': 5, 'co2': 5},
-    WasteType.FUEL_RESIDUES: {'tree': 0.02, 'water': 8, 'air': 1, 'soil': 0.02, 'energy': 8, 'co2': 5},
-    WasteType.DISCARDED_ELECTRONIC_COMPONENTS: {'tree': 0.04, 'water': 5, 'air': 3, 'soil': 0.1, 'energy': 2,
-                                                'co2': 1.5},
-    WasteType.HYDRAULIC_OIL: {'tree': 0.04, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
-    WasteType.LUBRICANT_WASTE: {'tree': 0.04, 'water': 10, 'air': 4, 'soil': 0.04, 'energy': 3, 'co2': 2},
-    WasteType.HAZARDOUS_CHEMICALS: {'tree': 0.05, 'water': 8, 'air': 3, 'soil': 0.04, 'energy': 5, 'co2': 5},
-    WasteType.WASTE_EXPERIMENTAL_EQUIPMENT: {'tree': 0.05, 'water': 5, 'air': 8, 'soil': 0.02, 'energy': 6, 'co2': 2},
-    WasteType.WASTE_HEAT: {'tree': 0.03, 'water': 3, 'air': 4, 'soil': 0.05, 'energy': 10, 'co2': 8},
-    WasteType.WASTE_PAPER: {'tree': 0.15, 'water': 3, 'air': 2, 'soil': 0.01, 'energy': 3, 'co2': 3},
-    WasteType.HOUSEHOLD_WASTE: {'tree': 0.15, 'water': 3, 'air': 3, 'soil': 0.02, 'energy': 3, 'co2': 3},
+    WasteType.HEAVY_METAL_WASTEWATER: {'tree': 0.001, 'water': 0.5, 'air': 0, 'soil': 0.01, 'energy': 0},
+    WasteType.EXHAUST_GAS: {'tree': 0.01, 'water': 0, 'air': 1, 'soil': 0.0005, 'energy': 0.1},
+    WasteType.MINERAL_RESIDUE: {'tree': 0.002, 'water': 0.2, 'air': 0.1, 'soil': 0.02, 'energy': 0.2},
+    WasteType.CUTTING_FLUID: {'tree': 0.003, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.METAL_CHIPS: {'tree': 0.003, 'water': 0.6, 'air': 0.3, 'soil': 0.03, 'energy': 0.2},
+    WasteType.PLASTIC: {'tree': 0.002, 'water': 0.4, 'air': 0.1, 'soil': 0.02, 'energy': 0.15},
+    WasteType.COMPOSITE_MATERIAL_CUTTING_WASTE: {'tree': 0.003, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.WASTE_PAINT: {'tree': 0.002, 'water': 0.5, 'air': 0.3, 'soil': 0.01, 'energy': 0.1},
+    WasteType.DUST: {'tree': 0.01, 'water': 0.02, 'air': 1, 'soil': 0.0005, 'energy': 0.05},
+    WasteType.CHEMICALS: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.CATALYZER: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
+    WasteType.CHEMICAL_PROPELLANTS: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
+    WasteType.FUEL_RESIDUES: {'tree': 0.002, 'water': 0.8, 'air': 0.1, 'soil': 0.02, 'energy': 0.8},
+    WasteType.DISCARDED_ELECTRONIC_COMPONENTS: {'tree': 0.004, 'water': 0.5, 'air': 0.3, 'soil': 0.1, 'energy': 0.2},
+    WasteType.HYDRAULIC_OIL: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.LUBRICANT_WASTE: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.HAZARDOUS_CHEMICALS: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
+    WasteType.WASTE_EXPERIMENTAL_EQUIPMENT: {'tree': 0.005, 'water': 0.5, 'air': 0.8, 'soil': 0.02, 'energy': 0.6},
+    WasteType.WASTE_HEAT: {'tree': 0.003, 'water': 0.3, 'air': 0.4, 'soil': 0.05, 'energy': 1},
+    WasteType.WASTE_PAPER: {'tree': 0.015, 'water': 0.3, 'air': 0.2, 'soil': 0.01, 'energy': 0.3},
+    WasteType.HOUSEHOLD_WASTE: {'tree': 0.015, 'water': 0.3, 'air': 0.3, 'soil': 0.02, 'energy': 0.3},
 }
 
-attribution_contribution = {
-    'CO2': {'tree': 3, 'water': 2, 'air': 4, 'soil': 1, 'energy': 2, 'co2': 10},
-    'SO2': {'tree': 2, 'water': 2, 'air': 5, 'soil': 2, 'energy': 1, 'co2': 3},
-    'J': {'tree': 1, 'water': 1, 'air': 1, 'soil': 3, 'energy': 20, 'co2': 2},
-    'N2': {'tree': 2, 'water': 1, 'air': 4, 'soil': 2, 'energy': 5, 'co2': 3},
-    'CL2': {'tree': 1, 'water': 2, 'air': 5, 'soil': 2, 'energy': 4, 'co2': 4},
-    'FE': {'tree': 1, 'water': 1, 'air': 2, 'soil': 1, 'energy': 8, 'co2': 1},
-    'S': {'tree': 1, 'water': 1, 'air': 2, 'soil': 1, 'energy': 5, 'co2': 2},
-    'C': {'tree': 3, 'water': 1, 'air': 2, 'soil': 1, 'energy': 6, 'co2': 6},
-}
+attribution_contribution = [
+    # 绿化
+    'Co2',
+
+    # 水 富营养物
+    'NH3',
+    'No3',
+    'Po4',
+    'So4',
+    'Benzene',  # 有机物苯
+    'Phenol',  # 酚
+    'Chlorinated',  # 氯代
+    'plastics',  # 微塑料
+
+    # 大气 污染物
+    'NO',
+    'So2',
+    'PM10',
+    'PM2.5',
+
+    # 土壤 重金属含量
+    'Pb',
+    'Cd',
+    'Hg',
+    'Cr',
+    'Cu'
+
+]
 
 
 @individual.route('/index')
@@ -173,6 +186,75 @@ def contribution():
                 orders_by_day[date_str] = orders_by_day.get(date_str, 0) + 1
 
     return render_template('individual/contribution.html', all_orders=all_orders, orders_by_day=orders_by_day)
+
+
+@individual.route('/green_power')
+def green_power():
+    user = g.user
+    uid = user.UID
+    orders = Order.query.filter_by(UID=uid).all()
+    contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
+    waste_dict = {'Co2': 0,
+                  'NH3': 0, 'No3': 0, 'Po4': 0, 'So4' : 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0, 'Microplastics': 0,
+                  'NOX': 0, 'So2': 0, 'PM10': 0, 'PM2.5': 0,
+                  'Pb': 0, 'Cd': 0, 'Hg': 0, 'Cr': 0, 'Cu': 0
+                  }
+    for order in orders:
+        wasteType = order.wasteType
+        weight = order.weight
+        contribution_weight = order.weight * order.multiplier
+
+        contribution_ratios = waste_contribution.get(wasteType)
+
+        for key, value in contribution_ratios.items():
+            contribution_dict[key] += contribution_weight * value
+
+        # 处理订单属性
+        if order.attribution:
+            attribution_dict = parse_attribution(order.attribution, attribution_contribution)
+            # 更新waste_dict中的属性值
+            for attr, ratio in attribution_dict.items():
+                if attr in waste_dict:
+                    waste_dict[attr] += weight * ratio
+
+    print(contribution_dict)
+    print(waste_dict)
+
+    waste_dict.update(contribution_dict)
+    print(waste_dict)
+
+    return render_template('individual/index.html', waste_dict=waste_dict)
+
+
+
+
+
+def parse_attribution(attribution_str, keywords):
+    attribution_dict={}
+
+    attribution_list = attribution_str[:-1].split(" ")
+    print("attribution_list",attribution_list)
+    for attribution in attribution_list:
+        # 将化学式和百分比分开
+        chemical_formula, percentage = attribution.split(":")
+        # 根据百分比计算贡献值
+        contribution_ratio = float(percentage.strip('%')) / 100
+
+        # 对化学式进行拆分，提取元素符号
+        elements = re.findall(r"[A-Z][a-z]*\d*", chemical_formula)
+        for element in elements:
+            print("element",element)
+            # 检查元素符号是否在关键字中
+            if element in keywords:
+                # 更新反馈字典
+                if element in attribution_dict:
+                    attribution_dict[element] += contribution_ratio
+                else:
+                    attribution_dict[element] = contribution_ratio
+    print (attribution_dict)
+    return attribution_dict
+
+
 
 
 @individual.route('/recognize')
