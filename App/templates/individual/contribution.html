@@ -190,6 +190,34 @@
             font-size: 1.5rem;
         }
 
+        .contribution-container {
+            height: inherit;
+            box-shadow: 0 1.2px 5.3px rgba(0, 0, 0, 0.02), 0 4.4px 17.9px rgba(0, 0, 0, 0.034);
+            border-radius: 0.6rem;
+            overflow: hidden; /* Prevents any child elements from overflowing */
+        }
+
+        .contribution-description div {
+            display: flex;
+            align-items: center;
+            height: 15rem;
+            position: relative;
+            margin: 1rem;
+            animation-duration: 3s;
+            text-align: center;
+        }
+
+        .notneed {
+            display: none;
+        }
+
+        .contribution-description img {
+            position: absolute;
+            height: 4rem;
+            width: 4rem;
+        }
+
+
         @media screen and (max-width: 1000px) {
             .individual-orders-module1 {
                 grid-template-columns: 1fr;
@@ -251,6 +279,88 @@
                     <img src="../../static/image/alink/pic2.svg" alt="home" class="icons icon-nav"
                          title="Scene">
                     <h2>{{ _("Contribution") }}</h2>
+                </div>
+                <div class="contribution-description">
+                    <div class="div1">
+                        <img alt="" src="../../static/image/contribution/tree1.svg"
+                             style="z-index: 1;left: 1rem;top: 1rem;">
+                        <img alt="" src="../../static/image/contribution/tree2.svg"
+                             style="z-index: 1;left: 6rem;top: 4rem;height: 5rem;width: 5rem">
+                        <img alt="" src="../../static/image/contribution/tree3.svg"
+                             style="z-index: 1;left: 3rem;top: 10rem;height: 3rem;width: 3rem">
+                        <p style="z-index: 1;font-weight: 600;margin-left:16rem;font-size: 4rem; font-family: IndieFlower,sans-serif">
+                            You are planting
+                            <br><b
+                                style="z-index: 1;font-size: 4.5rem; font-family: HanaleiFill,sans-serif;color: var(--sky4)">{{ waste_dict.tree }}</b>
+                            trees!</p>
+                    </div>
+                    <div class="div2">
+                        <img alt="" src="../../static/image/contribution/water1.png"
+                             style="z-index: 1;left: 8rem;top: 1.2rem;height: 3rem;width: 3rem;">
+                        <img alt="" src="../../static/image/contribution/water2.svg"
+                             style="z-index: 1;right: 5rem;top: 4rem;height: 6rem;width: 6rem">
+                        <img alt="" src="../../static/image/contribution/water3.svg"
+                             style="z-index: 1;left: 3rem;top: 10rem;">
+                        <p style="z-index: 1;font-weight: 500;margin-left:14rem;font-size: 3.5rem; font-family: Lobster-Regular,sans-serif">
+                            You are protecting
+                            <br><b
+                                style="z-index: 1;font-size: 4.5rem; font-family: Merienda-Regular,sans-serif;color: var(--luotianyi4)">{{ waste_dict.water }}</b>
+                            kg water!</p>
+                    </div>
+                    <div class="div3">
+                        <img alt="" src="../../static/image/contribution/o21.png"
+                             style="z-index: 1;left: 1rem;top: 1rem;">
+                        <img alt="" src="../../static/image/contribution/o22.png"
+                             style="z-index: 1;left: 30rem;top: 4rem;height: 10rem;width: 10rem">
+                        <img alt="" src="../../static/image/contribution/o23.png"
+                             style="z-index: 1;left: 3rem;top: 10rem;height: 3rem;width: 3rem">
+                        <p style="z-index: 2;font-weight: 600;margin-left:10rem;font-size: 4rem; font-family: GloriaHallelujah,sans-serif">
+                            You are purifying
+                            <br><b
+                                style="font-size: 5rem; font-family: RuslanDisplay,sans-serif;color: var(--done1)">{{ waste_dict.air }}</b>
+                        </p>
+                    </div>
+                    <div class="div4">
+                        <img alt="" src="../../static/image/contribution/soil1.png"
+                             style="z-index: 1;left: 2rem;top: 1rem;">
+                        <img alt="" src="../../static/image/contribution/soil2.png"
+                             style="height: 120%; width: 100%">
+                        <img alt="" src="../../static/image/contribution/soil3.png"
+                             style="z-index: 1;left: 4rem;top: 10rem;height: 3rem;width: 3rem">
+                        <p style="z-index: 1;font-weight: 400;margin-left:16rem;font-size: 3rem; font-family: Monoton-Regular,sans-serif">
+                            You&nbsp;&nbsp;&nbsp;are&nbsp;&nbsp;&nbsp;saving
+                            <br><b
+                                style="z-index: 1;font-size: 4.5rem; font-family: GloriaHallelujah,sans-serif;color: var(--skin1)">{{ waste_dict.soil }}</b>
+                            &nbsp;&nbsp;&nbsp;kg&nbsp;&nbsp;&nbsp;soils!</p>
+                    </div>
+                    <div class="div5" style="overflow: hidden">
+                        <img alt="" src="../../static/image/contribution/energy1.svg"
+                             style="left: 1rem;top: 1rem;">
+                        <img alt="" src="../../static/image/contribution/energy2.svg"
+                             style="left: 4rem;top: 10rem;height: 2.5rem;width: 2.5rem">
+                        <img alt="" src="../../static/image/contribution/energy3.svg"
+                             style="left: 9rem;top: 2rem;height: 5rem;width: 5rem">
+                        <img alt="" src="../../static/image/contribution/energy4.svg"
+                             style="right: 2rem;top: 3rem;height: 3rem;width: 3rem">
+                        <img alt="" src="../../static/image/contribution/energy5.png"
+                             style="right: 6rem;top: 7rem;">
+                        <p style="font-weight: 500;margin-left:15rem;font-size: 3rem; font-family: Merienda-Regular,sans-serif">
+                            You are retrenching
+                            <br><b
+                                style="font-size: 4rem; font-family: Merriweather,sans-serif;color: var(--sky4)">{{ waste_dict.energy }}</b>
+                            J energy!</p>
+                    </div>
+{#                    <div class="div6">#}
+{#                        <img alt="" src="../../static/image/contribution/co21.png"#}
+{#                             style="left: 1rem;top: 1rem;">#}
+{#                        <img alt="" src="../../static/image/contribution/co22.png"#}
+{#                             style="left: 6rem;top: 4rem;height: 5rem;width: 5rem">#}
+{#                        <p style="font-weight: 600;margin-left:16rem;font-size: 4rem; font-family: IndieFlower,sans-serif">#}
+{#                            You are planing#}
+{#                            <br><b#}
+{#                                style="font-size: 4.5rem; font-family: HanaleiFill,sans-serif;color: var(--sky4)">55</b>#}
+{#                            trees!</p>#}
+{#                    </div>#}
                 </div>
             </div>
 
@@ -501,6 +611,450 @@
                 e.preventDefault();
                 cal.next(3);
             });
+
+            {#以下是贡献度的内容#}
+            const contributionContainer = $('.contribution-description');
+            const allDivs = $('.div1, .div2, .div3, .div4, .div5, .div6');
+            const totalDivs = allDivs.length;
+
+            const div1 = $('.div1');
+            const imgList1 = div1.find('img');
+            const div2 = $('.div2');
+            const imgList2 = div2.find('img');
+            const div3 = $('.div3');
+            const imgList3 = div3.find('img');
+            const div4 = $('.div4');
+            const imgList4 = div4.find('img');
+            const div5 = $('.div5');
+            const imgList5 = div5.find('img');
+            const div6 = $('.div6');
+            const imgList6 = div6.find('img');
+
+            gsap.set(allDivs, {autoAlpha: 0, display: 'none'});
+            gsap.set(div1, {autoAlpha: 1, display: 'flex'});
+
+            function animateDivs() {
+                let currentDivIndex = 0;
+                let divTimelines = []; // 存储每个div的独立时间线
+                allDivs.each(function (index) {
+                    const div = $(this);
+                    // 创建时间线并添加显示和隐藏动画
+                    const tl = gsap.timeline({
+                        paused: true,
+                        onComplete: function () {
+                            // 当动画完成后，隐藏div并准备显示下一个div
+                            gsap.set(div, {autoAlpha: 0, display: 'none'});
+                            showNextDiv(); // 切换到下一个div
+                        }
+                    })
+                        .to(div, {duration: 1, autoAlpha: 1, display: 'flex', ease: 'power1.in'})
+                        .to(div, {duration: 1, autoAlpha: 0, delay: 4}); // 移除了display: 'none'，因为它会在onComplete中设置
+                    divTimelines.push(tl); // 将时间线添加到数组
+                });
+
+                function showNextDiv() {
+                    divTimelines[currentDivIndex].kill();
+                    currentDivIndex = (currentDivIndex + 1) % totalDivs;
+                    runOneTimeAnimation(currentDivIndex);
+                    divTimelines[currentDivIndex].restart();
+                }
+
+                function runOneTimeAnimation(index) {
+                    switch (index) {
+                        case 0:
+                            div1onetime();
+                            break;
+                        case 1:
+                            div2onetime();
+                            break;
+                        case 2:
+                            div3onetime();
+                            break;
+                        case 3:
+                            div4onetime();
+                            break;
+                        case 4:
+                            div5onetime();
+                            break;
+                        {#case 5:#}
+                        {#    div6onetime();#}
+                        {#    break;#}
+                    }
+                }
+
+                runOneTimeAnimation(currentDivIndex);
+                divTimelines[currentDivIndex].restart();
+            }
+
+            animateDivs();
+
+            imgList1.each(function (index) {
+                // 根据索引来定义不同的动画参数
+                let deltaY, duration;
+                switch (index) {
+                    case 0:
+                        deltaY = -15; // 第一个图片上下移动15单位
+                        duration = 1; // 持续时间为1秒
+                        break;
+                    case 1:
+                        deltaY = -20; // 第二个图片上下移动20单位
+                        duration = 1.5; // 持续时间为1.5秒
+                        break;
+                    case 2:
+                        deltaY = -10; // 第三个图片上下移动10单位
+                        duration = 0.8; // 持续时间为0.8秒
+                        break;
+                    default:
+                        deltaY = -12; // 其他图片默认上下移动12单位
+                        duration = 1.2; // 持续时间为1.2秒
+                }
+                // 应用动画
+                gsap.fromTo(this, {y: 0}, {
+                    y: deltaY, // 上下移动的距离，根据索引变化
+                    duration: duration, // 动画持续时间，根据索引变化
+                    repeat: -1, // 无限循环
+                    yoyo: true, // 恢复原位
+                    ease: 'power1.out' // 缓动函数，使动画更平滑
+                });
+            });
+
+            $('.div1 p').each(function () {
+                // 先淡入文本
+                gsap.from(this, {
+                    autoAlpha: 0, // 开始时的透明度
+                    duration: 3, // 渐变持续时间
+                    ease: 'power1.out' // 缓动函数
+                });
+                gsap.set(this, {rotationX: -15, rotationY: -30});
+                // 添加往复旋转动画
+                gsap.to(this, {
+                    rotationX: 15,
+                    rotationY: 30,
+                    duration: 3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power2.inOut'
+                });
+            });
+
+            function div1onetime() {
+                $('.div1 b').each(function () {
+                    gsap.from(this, {
+                        onStart: () => {
+                            // 使用GSAP的插件或自定义函数实现计数器效果
+                            let counter = {val: 0};
+                            gsap.to(counter, {
+                                duration: 2,
+                                val: parseInt($(this).text()), // 假定xxx是目标值
+                                roundProps: "val",
+                                onUpdate: () => {
+                                    document.querySelector(".div1 b").textContent = counter.val;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            imgList2.each(function (index) {
+                // 根据索引来定义不同的动画参数
+                let deltaX, deltaY, opacity, scale, rotation, duration;
+                switch (index) {
+                    case 0:
+                        deltaX = -5;
+                        deltaY = -15;
+                        opacity = 0.5;
+                        scale = 1.1;
+                        rotation = 10;
+                        duration = 1;
+                        break;
+                    case 1:
+                        deltaX = 10;
+                        deltaY = -20;
+                        opacity = 0.8;
+                        scale = 1.2;
+                        rotation = -10;
+                        duration = 1.5;
+                        break;
+                    case 2:
+                        deltaX = 0;
+                        deltaY = -10;
+                        opacity = 1;
+                        scale = 1;
+                        rotation = 5;
+                        duration = 0.8;
+                        break;
+                    default:
+                        deltaX = 0;
+                        deltaY = -12;
+                        opacity = 0.7;
+                        scale = 1.1;
+                        rotation = 0;
+                        duration = 1.2;
+                        break;
+                }
+                // 应用动画
+                gsap.fromTo(this, {x: 0, y: 0, opacity: 1, scale: 1, rotation: 0}, {
+                    x: deltaX,
+                    y: deltaY,
+                    opacity: opacity,
+                    scale: scale,
+                    rotation: rotation,
+                    duration: duration,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.out'
+                });
+            });
+
+
+            $('.div2 p').each(function () {
+                // 应用动画到整个段落
+                gsap.fromTo(this, {
+                    opacity: 0.5, // 开始的透明度
+                    scale: 0.9 // 开始的缩放大小
+                }, {
+                    opacity: 1, // 结束的透明度
+                    scale: 1, // 结束的缩放大小
+                    duration: 2, // 动画持续时间
+                    repeat: -1, // 无限重复
+                    yoyo: true, // 往返动作
+                    ease: 'power1.inOut' // 缓动函数，使动画平滑进行
+                });
+            });
+
+            function div2onetime() {
+                $('.div2 b').each(function () {
+                    gsap.from(this, {
+                        onStart: () => {
+                            // 使用GSAP的插件或自定义函数实现计数器效果
+                            let counter = {val: 0};
+                            gsap.to(counter, {
+                                duration: 2,
+                                val: parseInt($(this).text()), // 假定xxx是目标值
+                                roundProps: "val",
+                                onUpdate: () => {
+                                    document.querySelector(".div2 b").textContent = counter.val;
+                                }
+                            });
+                        }
+                    });
+                });
+
+            }
+
+            imgList3.each(function (index) {
+                // 根据索引来定义不同的动画参数
+                let deltaX, deltaY, opacity, scale, rotation, duration;
+                switch (index) {
+                    case 0:
+                        deltaX = -10;
+                        opacity = 0.5;
+                        scale = 0.9;
+                        duration = 1;
+                        break;
+                    case 1:
+                        deltaX = 10;
+                        deltaY = -20;
+                        opacity = 0.8;
+                        scale = 1.1;
+                        rotation = -10;
+                        duration = 1.5;
+                        break;
+                    case 2:
+                        deltaX = 0;
+                        deltaY = -10;
+                        opacity = 1;
+                        scale = 1;
+                        duration = 0.8;
+                        break;
+                    default:
+                        deltaX = 0;
+                        deltaY = -12;
+                        opacity = 0.7;
+                        scale = 1.1;
+                        rotation = 0;
+                        duration = 1.2;
+                        break;
+                }
+                // 应用动画
+                gsap.fromTo(this, {x: 0, y: 0, opacity: 1, scale: 1, rotation: 0}, {
+                    x: deltaX,
+                    y: deltaY,
+                    opacity: opacity,
+                    scale: scale,
+                    rotation: rotation,
+                    duration: duration,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                });
+            });
+
+            function div3onetime() {
+                $('.div3 p').each(function () {
+                    gsap.from(this, {
+                        duration: 2,
+                        x: -100,
+                        opacity: 0,
+                        ease: "power1.out"
+                    });
+                });
+                $('.div3 b').each(function () {
+                    gsap.from(this, {
+                        onStart: () => {
+                            // 使用GSAP的插件或自定义函数实现计数器效果
+                            let counter = {val: 0};
+                            gsap.to(counter, {
+                                duration: 2,
+                                val: parseInt($(this).text()), // 假定xxx是目标值
+                                roundProps: "val",
+                                onUpdate: () => {
+                                    document.querySelector(".div3 b").textContent = counter.val;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            imgList4.each(function (index) {
+                // 根据索引来定义不同的动画参数
+                let deltaX, deltaY, opacity, scale, rotation, duration;
+                switch (index) {
+                    case 0:
+                        deltaX = -10;
+                        duration = 1;
+                        rotation = 5;
+                        break;
+                    case 2:
+                        deltaX = 10;
+                        deltaY = -20;
+                        opacity = 0.8;
+                        scale = 1.1;
+                        rotation = -10;
+                        duration = 1.5;
+                        break;
+                }
+                // 应用动画
+                gsap.fromTo(this, {x: 0, y: 0, opacity: 1, scale: 1, rotation: 0}, {
+                    x: deltaX,
+                    y: deltaY,
+                    opacity: opacity,
+                    scale: scale,
+                    rotation: rotation,
+                    duration: duration,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                });
+            });
+
+            imgList5.each(function (index) {
+                // 根据索引来定义不同的动画参数
+                let deltaX, deltaY, opacity, scale, rotation, duration;
+                switch (index) {
+                    case 0:
+                        deltaX = -10;
+                        duration = 1;
+                        rotation = 5;
+                        break;
+                    case 1:
+                        deltaX = 10;
+                        deltaY = -20;
+                        opacity = 0.8;
+                        scale = 1.1;
+                        rotation = -10;
+                        duration = 1.5;
+                        break;
+                    case 2:
+                        deltaX = -10;
+                        deltaY = 20;
+                        opacity = 1;
+                        scale = 0.9;
+                        rotation = 5;
+                        duration = 1.2;
+                        break;
+                    case 3:
+                        deltaY = -30;
+                        opacity = 0.6;
+                        scale = 1.2;
+                        rotation = -20;
+                        duration = 1.8;
+                        break;
+                    case 4:
+                        deltaY = 10;
+                        opacity = 0.8;
+                        duration = 1.6;
+                        break;
+                }
+                // 应用动画
+                gsap.fromTo(this, {x: 0, y: 0, opacity: 1, scale: 1, rotation: 0}, {
+                    x: deltaX,
+                    y: deltaY,
+                    opacity: opacity,
+                    scale: scale,
+                    rotation: rotation,
+                    duration: duration,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                });
+            });
+
+            function div4onetime() {
+                $('.div4 p').each(function () {
+                    gsap.from(this, {
+                        duration: 2,
+                        y: 100,
+                        opacity: 0,
+                        ease: "power1.out"
+                    });
+                });
+                $('.div4 b').each(function () {
+                    gsap.from(this, {
+                        onStart: () => {
+                            // 使用GSAP的插件或自定义函数实现计数器效果
+                            let counter = {val: 0};
+                            gsap.to(counter, {
+                                duration: 2,
+                                val: parseInt($(this).text()), // 假定xxx是目标值
+                                roundProps: "val",
+                                onUpdate: () => {
+                                    document.querySelector(".div4 b").textContent = counter.val;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function div5onetime() {
+                $('.div5 p').each(function () {
+                    gsap.from(this, {
+                        duration: 2,
+                        rotationZ: 30,
+                        opacity: 0,
+                        ease: "power1.out"
+                    });
+                });
+                $('.div5 b').each(function () {
+                    gsap.from(this, {
+                        onStart: () => {
+                            // 使用GSAP的插件或自定义函数实现计数器效果
+                            let counter = {val: 0};
+                            gsap.to(counter, {
+                                duration: 2,
+                                val: parseInt($(this).text()), // 假定xxx是目标值
+                                roundProps: "val",
+                                onUpdate: () => {
+                                    document.querySelector(".div5 b").textContent = counter.val;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
         });
     </script>
 {% endblock %}

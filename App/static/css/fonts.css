@@ -32,3 +32,46 @@
     font-family: ReeyRegular;
     src: url('./font/ReeyRegular.ttf');
 }
+
+@font-face {
+    font-family: GloriaHallelujah;
+    src: url('./font/GloriaHallelujah.ttf');
+}
+@font-face {
+    font-family: IndieFlower;
+    src: url('./font/IndieFlower.ttf');
+}
+
+@font-face {
+    font-family: KirangHaerang-Regular;
+    src: url('./font/KirangHaerang-Regular.ttf');
+}
+
+@font-face {
+    font-family: Lobster-Regular;
+    src: url('./font/Lobster-Regular.ttf');
+}
+
+@font-face {
+    font-family: Merienda-Regular;
+    src: url('./font/Merienda-Regular.ttf');
+}
+
+@font-face {
+    font-family: Monoton-Regular;
+    src: url('./font/Monoton-Regular.ttf');
+}
+
+@font-face {
+    font-family: RobotoMono-Regular;
+    src: url('./font/RobotoMono-Regular.ttf');
+}
+
+@font-face {
+    font-family: RuslanDisplay;
+    src: url('./font/RuslanDisplay.ttf');
+}
+@font-face {
+    font-family: Sunflower-Medium;
+    src: url('./font/Sunflower-Medium.ttf');
+}

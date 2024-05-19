@@ -175,65 +175,55 @@ def contribution():
     global all_orders, orders_by_day
     user = g.user
     uid = user.UID
+    contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
+    waste_dict = {'Co2': 0,
+                  'NH3': 0, 'No3': 0, 'Po4': 0, 'So4': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
+                  'Microplastics': 0,
+                  'NOX': 0, 'So2': 0, 'PM10': 0, 'PM2.5': 0,
+                  'Pb': 0, 'Cd': 0, 'Hg': 0, 'Cr': 0, 'Cu': 0
+                  }
     if user is not None:
         all_orders = Order.query.filter_by(UID=uid).all()
         current_year = datetime.now().year
         orders_by_day = {}  # 用于存储每个日期的订单数量，格式为 {日期: 订单数量}
+
         for order in all_orders:
+            wasteType = order.wasteType
+            weight = order.weight
+            contribution_weight = order.weight * order.multiplier
+
+            contribution_ratios = waste_contribution.get(wasteType)
+
+            for key, value in contribution_ratios.items():
+                contribution_dict[key] += contribution_weight * value
+
+            # 处理订单属性
+            if order.attribution:
+                attribution_dict = parse_attribution(order.attribution, attribution_contribution)
+                # 更新waste_dict中的属性值
+                for attr, ratio in attribution_dict.items():
+                    if attr in waste_dict:
+                        waste_dict[attr] += weight * ratio
             order_date = order.date
             if order_date.year == current_year:
                 date_str = order_date.strftime('%Y-%m-%d')
                 orders_by_day[date_str] = orders_by_day.get(date_str, 0) + 1
-
-    return render_template('individual/contribution.html', all_orders=all_orders, orders_by_day=orders_by_day)
-
-
-@individual.route('/green_power')
-def green_power():
-    user = g.user
-    uid = user.UID
-    orders = Order.query.filter_by(UID=uid).all()
-    contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
-    waste_dict = {'Co2': 0,
-                  'NH3': 0, 'No3': 0, 'Po4': 0, 'So4' : 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0, 'Microplastics': 0,
-                  'NOX': 0, 'So2': 0, 'PM10': 0, 'PM2.5': 0,
-                  'Pb': 0, 'Cd': 0, 'Hg': 0, 'Cr': 0, 'Cu': 0
-                  }
-    for order in orders:
-        wasteType = order.wasteType
-        weight = order.weight
-        contribution_weight = order.weight * order.multiplier
-
-        contribution_ratios = waste_contribution.get(wasteType)
-
-        for key, value in contribution_ratios.items():
-            contribution_dict[key] += contribution_weight * value
-
-        # 处理订单属性
-        if order.attribution:
-            attribution_dict = parse_attribution(order.attribution, attribution_contribution)
-            # 更新waste_dict中的属性值
-            for attr, ratio in attribution_dict.items():
-                if attr in waste_dict:
-                    waste_dict[attr] += weight * ratio
-
+    for key, value in contribution_dict.items():
+        contribution_dict[key] = round(value)
     print(contribution_dict)
     print(waste_dict)
 
     waste_dict.update(contribution_dict)
     print(waste_dict)
-
-    return render_template('individual/index.html', waste_dict=waste_dict)
-
-
-
+    return render_template('individual/contribution.html', all_orders=all_orders, orders_by_day=orders_by_day,
+                           waste_dict=waste_dict)
 
 
 def parse_attribution(attribution_str, keywords):
-    attribution_dict={}
+    attribution_dict = {}
 
     attribution_list = attribution_str[:-1].split(" ")
-    print("attribution_list",attribution_list)
+    print("attribution_list", attribution_list)
     for attribution in attribution_list:
         # 将化学式和百分比分开
         chemical_formula, percentage = attribution.split(":")
@@ -243,7 +233,7 @@ def parse_attribution(attribution_str, keywords):
         # 对化学式进行拆分，提取元素符号
         elements = re.findall(r"[A-Z][a-z]*\d*", chemical_formula)
         for element in elements:
-            print("element",element)
+            print("element", element)
             # 检查元素符号是否在关键字中
             if element in keywords:
                 # 更新反馈字典
@@ -251,10 +241,8 @@ def parse_attribution(attribution_str, keywords):
                     attribution_dict[element] += contribution_ratio
                 else:
                     attribution_dict[element] = contribution_ratio
-    print (attribution_dict)
+    print(attribution_dict)
     return attribution_dict
-
-
 
 
 @individual.route('/recognize')
