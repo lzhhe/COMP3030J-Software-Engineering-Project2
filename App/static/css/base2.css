@@ -541,13 +541,15 @@ body {
 
 
 .about-text {
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.4rem;
+    font-family: Merienda-Regular, sans-serif;
 }
 
 .card-text {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.2rem;
+    font-family: Sunflower-Medium, sans-serif;
 }
 
 .about-icon i{

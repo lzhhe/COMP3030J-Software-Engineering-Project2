@@ -291,7 +291,7 @@
                         <p style="z-index: 1;font-weight: 600;margin-left:16rem;font-size: 4rem; font-family: IndieFlower,sans-serif">
                             You are planting
                             <br><b
-                                style="z-index: 1;font-size: 4.5rem; font-family: HanaleiFill,sans-serif;color: var(--sky4)">{{ waste_dict.tree }}</b>
+                                style="z-index: 1;font-size: 4.5rem; font-family: HanaleiFill,sans-serif;color: var(--sky4)">{{ waste_dict.normal.tree }}</b>
                             trees!</p>
                     </div>
                     <div class="div2">
@@ -304,7 +304,7 @@
                         <p style="z-index: 1;font-weight: 500;margin-left:14rem;font-size: 3.5rem; font-family: Lobster-Regular,sans-serif">
                             You are protecting
                             <br><b
-                                style="z-index: 1;font-size: 4.5rem; font-family: Merienda-Regular,sans-serif;color: var(--luotianyi4)">{{ waste_dict.water }}</b>
+                                style="z-index: 1;font-size: 4.5rem; font-family: Merienda-Regular,sans-serif;color: var(--luotianyi4)">{{ waste_dict.normal.water }}</b>
                             kg water!</p>
                     </div>
                     <div class="div3">
@@ -317,7 +317,7 @@
                         <p style="z-index: 2;font-weight: 600;margin-left:10rem;font-size: 4rem; font-family: GloriaHallelujah,sans-serif">
                             You are purifying
                             <br><b
-                                style="font-size: 5rem; font-family: RuslanDisplay,sans-serif;color: var(--done1)">{{ waste_dict.air }}</b>
+                                style="font-size: 5rem; font-family: RuslanDisplay,sans-serif;color: var(--done1)">{{ waste_dict.normal.air }}</b>
                         </p>
                     </div>
                     <div class="div4">
@@ -330,7 +330,7 @@
                         <p style="z-index: 1;font-weight: 400;margin-left:16rem;font-size: 3rem; font-family: Monoton-Regular,sans-serif">
                             You&nbsp;&nbsp;&nbsp;are&nbsp;&nbsp;&nbsp;saving
                             <br><b
-                                style="z-index: 1;font-size: 4.5rem; font-family: GloriaHallelujah,sans-serif;color: var(--skin1)">{{ waste_dict.soil }}</b>
+                                style="z-index: 1;font-size: 4.5rem; font-family: GloriaHallelujah,sans-serif;color: var(--skin1)">{{ waste_dict.normal.soil }}</b>
                             &nbsp;&nbsp;&nbsp;kg&nbsp;&nbsp;&nbsp;soils!</p>
                     </div>
                     <div class="div5" style="overflow: hidden">
@@ -347,20 +347,20 @@
                         <p style="font-weight: 500;margin-left:15rem;font-size: 3rem; font-family: Merienda-Regular,sans-serif">
                             You are retrenching
                             <br><b
-                                style="font-size: 4rem; font-family: Merriweather,sans-serif;color: var(--sky4)">{{ waste_dict.energy }}</b>
+                                style="font-size: 4rem; font-family: Merriweather,sans-serif;color: var(--sky4)">{{ waste_dict.normal.energy }}</b>
                             J energy!</p>
                     </div>
-{#                    <div class="div6">#}
-{#                        <img alt="" src="../../static/image/contribution/co21.png"#}
-{#                             style="left: 1rem;top: 1rem;">#}
-{#                        <img alt="" src="../../static/image/contribution/co22.png"#}
-{#                             style="left: 6rem;top: 4rem;height: 5rem;width: 5rem">#}
-{#                        <p style="font-weight: 600;margin-left:16rem;font-size: 4rem; font-family: IndieFlower,sans-serif">#}
-{#                            You are planing#}
-{#                            <br><b#}
-{#                                style="font-size: 4.5rem; font-family: HanaleiFill,sans-serif;color: var(--sky4)">55</b>#}
-{#                            trees!</p>#}
-{#                    </div>#}
+                    <div class="div6">
+                        <img alt="" src="../../static/image/contribution/co21.png"
+                             style="left: 1rem;top: 1rem;">
+                        <img alt="" src="../../static/image/contribution/co22.png"
+                             style="left: 2rem;top: 8rem;height: 5rem;width: 5rem">
+                        <p style="font-weight: 300;margin-left:10rem;font-size: 2rem; font-family: Sunflower-Medium,sans-serif">
+                            {% for att in waste_dict.a %}
+                                <span>{{ att.attr }}: </span>
+                                <b style="font-size: 2.5rem; font-family: KirangHaerang-Regular,sans-serif;color: var(--dark-orange)">{{ att.v }}</b>
+                            {% endfor %}</p>
+                    </div>
                 </div>
             </div>
 
@@ -676,9 +676,9 @@
                         case 4:
                             div5onetime();
                             break;
-                        {#case 5:#}
-                        {#    div6onetime();#}
-                        {#    break;#}
+                        case 5:
+                            div6onetime();
+                            break;
                     }
                 }
 
@@ -1002,6 +1002,37 @@
                 });
             });
 
+
+            imgList6.each(function (index) {
+                // 根据索引来定义不同的动画参数
+                let deltaX, deltaY, opacity, scale, rotation, duration;
+                switch (index) {
+                    case 0:
+                        deltaX = -10;
+                        duration = 1;
+                        rotation = 5;
+                        break;
+                    case 1:
+                        deltaY = -20;
+                        opacity = 0.8;
+                        scale = 1.1;
+                        duration = 1.5;
+                        break;
+                }
+                // 应用动画
+                gsap.fromTo(this, {x: 0, y: 0, opacity: 1, scale: 1, rotation: 0}, {
+                    x: deltaX,
+                    y: deltaY,
+                    opacity: opacity,
+                    scale: scale,
+                    rotation: rotation,
+                    duration: duration,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                });
+            });
+
             function div4onetime() {
                 $('.div4 p').each(function () {
                     gsap.from(this, {
@@ -1049,6 +1080,33 @@
                                 roundProps: "val",
                                 onUpdate: () => {
                                     document.querySelector(".div5 b").textContent = counter.val;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function div6onetime() {
+                $('.div6 p').each(function () {
+                    gsap.from(this, {
+                        duration: 2,
+                        x: -40,
+                        opacity: 0,
+                        ease: "power1.out"
+                    });
+                });
+                $('.div6 b').each(function () {
+                    gsap.from(this, {
+                        onStart: () => {
+                            // 使用GSAP的插件或自定义函数实现计数器效果
+                            let counter = {val: 0};
+                            gsap.to(counter, {
+                                duration: 2,
+                                val: parseFloat($(this).text()), // 假定xxx是目标值
+                                onUpdate: () => {
+                                    // 格式化为两位小数
+                                    $(this).text(counter.val.toFixed(2));
                                 }
                             });
                         }

@@ -44,7 +44,13 @@ var(--today-background-color)
 }
 
 
+.swiper-slide h4 {
+    font-family: ShadowsIntoLight, sans-serif;
+    font-size: 2rem;
+}
+
 .swiper-slide p {
+    font-family: Signika-Regular, sans-serif;
     text-align: left;
     border-radius: 5px;
     border: #0F9E5E dot-dash 1px;

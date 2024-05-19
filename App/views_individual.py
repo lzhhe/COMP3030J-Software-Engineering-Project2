@@ -212,11 +212,11 @@ def contribution():
         contribution_dict[key] = round(value)
     print(contribution_dict)
     print(waste_dict)
-
-    waste_dict.update(contribution_dict)
-    print(waste_dict)
+    filtered_waste_dict = [{'attr': k, 'v': v} for k, v in waste_dict.items() if v != 0]
+    combined_dict = {'normal': contribution_dict, 'a': filtered_waste_dict}
+    print(combined_dict)
     return render_template('individual/contribution.html', all_orders=all_orders, orders_by_day=orders_by_day,
-                           waste_dict=waste_dict)
+                           waste_dict=combined_dict)
 
 
 def parse_attribution(attribution_str, keywords):

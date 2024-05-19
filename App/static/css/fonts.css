@@ -75,3 +75,12 @@
     font-family: Sunflower-Medium;
     src: url('./font/Sunflower-Medium.ttf');
 }
+
+@font-face {
+    font-family: ShadowsIntoLight;
+    src: url('./font/ShadowsIntoLight.ttf');
+}
+@font-face {
+    font-family: Signika-Regular;
+    src: url('./font/Signika-Regular.ttf');
+}
