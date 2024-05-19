@@ -541,9 +541,10 @@
             const monthsPerPage = 4;
 
             // 计算当前页的起始日期和结束日期
-            const startDate = new Date(currentYear, currentMonth, 1); // 月份从 0 开始，因此要减 1
-            const minDate = new Date(currentYear, 1, 1)
-            const maxDate = new Date(currentYear + 1, 0, 1)
+            const startDate = new Date(currentYear, currentMonth - 3, 1); // 月份从 0 开始，因此要减 1
+            const minDate = new Date(currentYear - 1, currentMonth, 1)
+            const maxDate = new Date(currentYear, currentMonth, 1);
+            console.log(minDate, maxDate)
 
 
             const cal = new CalHeatmap();

@@ -175,6 +175,7 @@ def contribution():
     global all_orders, orders_by_day
     user = g.user
     uid = user.UID
+    today = datetime.now()
     contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
     waste_dict = {'Co2': 0,
                   'NH3': 0, 'No3': 0, 'Po4': 0, 'So4': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
@@ -184,7 +185,8 @@ def contribution():
                   }
     if user is not None:
         all_orders = Order.query.filter_by(UID=uid).all()
-        current_year = datetime.now().year
+        current_year = today.year
+        current_month = today.month
         orders_by_day = {}  # 用于存储每个日期的订单数量，格式为 {日期: 订单数量}
 
         for order in all_orders:
@@ -205,7 +207,8 @@ def contribution():
                     if attr in waste_dict:
                         waste_dict[attr] += weight * ratio
             order_date = order.date
-            if order_date.year == current_year:
+            if ((order_date.year == current_year and order_date.month <= current_month)
+                    or (order_date.year == current_year - 1 and order_date.month >= current_month)):
                 date_str = order_date.strftime('%Y-%m-%d')
                 orders_by_day[date_str] = orders_by_day.get(date_str, 0) + 1
     for key, value in contribution_dict.items():

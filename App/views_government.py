@@ -25,6 +25,11 @@ def free_p():
     return render_template('government/free_proportion.html', free_list=free_query)
 
 
+@government.route('forecast')
+def forecast():
+    return render_template('government/forecast.html')
+
+
 def buildKmeansDataset():
     orders = Order.query.filter(Order.orderStatus == "FINISHED").all()
     dataset = defaultdict(list)
@@ -244,7 +249,7 @@ def adjust_free_proportion():
         max_capacity = ProcessCapacity.query.filter_by(wasteType=wasteType).first()
         if max_capacity:
             freeProportionLine.freeCapacity = freeProportionLine.freeCapacity + 0.01 * (
-                        max_capacity.maxCapacity * differenceProportion)
+                    max_capacity.maxCapacity * differenceProportion)
         db.session.commit()
     return jsonify({"message": "successful"}), 200
 

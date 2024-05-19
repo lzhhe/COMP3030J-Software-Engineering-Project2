@@ -1,0 +1,110 @@
+{% extends 'government/base.html' %}
+{% block extra_css %}
+    <style>
+
+        .header .container {
+            border-bottom: 0.12rem solid var(--border-color);
+
+        }
+
+        .individual-create {
+            position: relative;
+            padding: 7.5rem 3rem 4rem;
+            gap: 0.8rem;
+            background: var(--panel2-color);
+        }
+
+        .individual-create-module {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0.6rem;
+            background: var(--panel-color);
+            box-shadow: 1.5px 1.2px 5.3px rgba(0, 0, 0, 0.02),
+            5.5px 4.4px 17.9px rgba(0, 0, 0, 0.034),
+            43px 35px 80px rgba(0, 0, 0, 0.07);
+        }
+
+        .title-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-bottom: 0.2rem solid var(--border-color);
+        }
+
+        .icons {
+            width: 2rem;
+            margin-right: 1.5rem;
+        }
+
+        .individual-create-module p {
+            margin: 0.3rem 2rem 1rem;
+        }
+
+        .individual-create-module b, .individual-create-module i {
+            font-size: 1.2rem;
+        }
+
+
+    </style>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+{% block title %}
+    gov-portion
+{% endblock %}
+{% block content %}
+    {% include 'switch2.html' %}
+    {% include 'aichat.html' %}
+    {% include 'header1.html' %}
+    <section class="individual-create">
+        <div class="individual-create-module">
+            <div class="title-top">
+                <img src="../../static/image/alink/pic6.svg" alt="home" class="icons icon-nav"
+                     title="Scene">
+                <h2>{{ _("3d 21维度预测") }}</h2>
+                {#                <div class="pico" style="display: inline-block; margin-left: 5rem">#}
+                {#                    <button class="outline" id="upload-button">upload proportion</button>#}
+                {#                </div>#}
+            </div>
+            <p>Below is a forecast of <b>21 types of waste</b> that our system offers, and you can help us adjust the
+                amount
+                of
+                <b>free proportion</b> we offer to the public, expressed as a <i>percentage</i>. The maximum acceptable
+                free level for each
+                type of waste is <i>half</i></p>
+            <div class="">
+
+            </div>
+        </div>
+    </section>
+    <a href="#top" class="back-top-btn" aria-label="Back to top" data-back-top-btn>
+        <i class="iconfont icon-top"></i>
+    </a>
+    {% include 'footer1.html' %}
+    <script>
+        $('.header__logo').click(function (e) {
+            e.preventDefault();
+            window.location.href = '/government/index';
+        });
+
+        window.addEventListener('beforeunload', function (event) {
+            console.log('页面关闭，清理不需要的缓存');
+        });
+
+        $(document).ready(function () {
+            let isDark = $('html').attr('data-theme') === 'dark';
+            let swalcolor = '';
+            const themeButton = $('#themeSwitch input');
+            themeButton.change(function () {
+                if (isDark) {
+                    swalcolor = '#F0F9FF';
+                } else {
+                    swalcolor = '#353738';
+                }
+                isDark = !isDark
+            });
+        });
+    </script>
+{% endblock %}
