@@ -90,7 +90,6 @@
                  style="width: 92%; height: 30rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;
 border-radius: 0.6rem; z-index: 1">
             </div>
-
         </div>
         <div class="individual-create-module">
             <div class="title-top">
@@ -141,6 +140,9 @@ border-radius: 0.6rem; z-index: 1">
                 }
                 isDark = !isDark
             });
+
+            const chart1 = echarts.init(document.getElementById('chart1'));
+            const chart2 = echarts.init(document.getElementById('chart2'));
 
             const rootStyle = getComputedStyle(document.documentElement);
             let color1 = rootStyle.getPropertyValue('--sky1').trim();

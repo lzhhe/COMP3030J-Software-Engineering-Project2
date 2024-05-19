@@ -196,7 +196,7 @@ def buildTimeDataset():
 
     for category in dataset:
         dataset[category].sort(key=lambda x: x[0])
-    # print("Time dataset: ", dict(dataset))
+    print("Time dataset: ", dict(dataset))
     return dict(dataset)
 
 
@@ -233,9 +233,6 @@ def forecastTime(dataset, days=5, order=(1, 1, 1)):
     return forecasts
 
 
-'''两个趋势的预测'''
-
-
 @government.route('/build_arima')
 def build_arima():
     weightDataset = buildWeightDataset()
@@ -247,7 +244,7 @@ def build_arima():
     timeForecasts = forecastTime(timeDataset)
     timeForecasts = {category: forecast for category, forecast in timeForecasts.items()}
     print("Time Forecasts:", timeForecasts)
-    return jsonify({'dataset': timeDataset, 'forecasts': weightForecasts})
+    return jsonify({'weight_forecasts': weightForecasts, 'time_forecasts': timeForecasts})
     # return jsonify({'forecasts': weightForecasts})
 
 
