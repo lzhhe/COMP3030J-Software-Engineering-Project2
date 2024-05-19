@@ -33,6 +33,7 @@
             margin-bottom: 1rem;
             padding: 1rem;
             border-bottom: 0.2rem solid var(--border-color);
+            z-index: 1;
         }
 
         .icons {
@@ -42,6 +43,7 @@
 
         .individual-create-module p {
             margin: 0.3rem 2rem 1rem;
+            z-index: 1;
         }
 
         .individual-create-module b, .individual-create-module i {
@@ -51,6 +53,7 @@
 {% endblock %}
 {% block extra_js %}
     <script src="../../static/js/utils/echarts.min.js"></script>
+    <script src="../../static/js/utils/echarts-gl.min.js"></script>
     <script type="text/javascript">
         let dw = [
             {% for k, v in daily_weight.items() %}
@@ -60,10 +63,12 @@
                 },
             {% endfor %}
         ]
+        let categories = {{ categories_string | tojson }};
+        let data = {{ scatter_data | tojson }};
     </script>
 {% endblock %}
 {% block title %}
-    gov-portion
+    gov-statistics
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -72,21 +77,25 @@
     <section class="individual-create">
         <div class="individual-create-module">
             <div class="title-top">
-                <img src="../../static/image/alink/pic6.svg" alt="home" class="icons icon-nav"
+                <img src="../../static/image/dataicon/databack.svg" alt="home" class="icons icon-nav"
                      title="Scene">
                 <h2>{{ _("3D AI Prediction") }}</h2>
                 {#                <div class="pico" style="display: inline-block; margin-left: 5rem">#}
                 {#                    <button class="outline" id="upload-button">upload proportion</button>#}
                 {#                </div>#}
             </div>
-            <p>The chart below shows the total weight distribution of <b>21 types of waste in a year.</b> (include
-                today)<br>
-                You can dynamically display the data intensity by pulling the <i>time bar</i> below
+            <p>This 3D chart displays the <b>predicted average values</b> for all types of waste. These calculations are
+                based
+                on the <b>weight and duration time</b> of all orders for each type of waste. To avoid the
+                influence of
+                <i>outliers and extreme values</i>, relevant machine learning algorithms have been used for
+                <i>centralization calculations</i>.
             </p>
             <div id="ai-pre"
-                 style="width: 92%; height: 36rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
-
+                 style="width: 92%; height: 40rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;
+border-radius: 0.6rem; z-index: 1">
             </div>
+
         </div>
         <div class="individual-create-module">
             <div class="title-top">
@@ -102,8 +111,7 @@
                 You can dynamically display the data intensity by pulling the <i>time bar</i> below
             </p>
             <div id="daily-weight"
-                 style="width: 92%; height: 36rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
-
+                 style="width: 92%; height: 40rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
             </div>
         </div>
     </section>
@@ -134,6 +142,7 @@
                 isDark = !isDark
             });
             const chart = echarts.init(document.getElementById('daily-weight'), null, {renderer: 'canvas'});
+            const chart2 = echarts.init(document.getElementById('ai-pre'), null, {renderer: 'canvas'});
 
 
             const dates = dw.map(item => item.date);
@@ -238,7 +247,65 @@
                 ]
             };
 
+            const option2 = {
+                tooltip: {
+                    formatter: function (params) {
+                        var data = params.data || [0, 0, 0];
+                        var category = categories[data[0]];
+                        return category + '<br>Weight: ' + data[1] + '<br>Duration: ' + data[2];
+                    }
+                },
+                xAxis3D: {
+                    type: 'category',
+                    data: categories,
+                    name: 'wasteType',
+                    axisLabel: {
+                        interval: 0,  // 强制显示所有标签
+                        rotate: 45,  // 轴标签旋转45度
+                        textStyle: {
+                            fontSize: 10  // 可调整字体大小适应显示
+                        }
+                    },
+                },
+                yAxis3D: {
+                    type: 'value',
+                    name: 'Weight'
+                },
+                zAxis3D: {
+                    type: 'value',
+                    name: 'Duration'
+                },
+                grid3D: {
+                    boxWidth: 200,
+                    boxDepth: 90,
+                    viewControl: {
+                        rotateSensitivity: 1,
+                        autoRotate: true, // 自动旋转
+                        autoRotateAfterStill: 10, // 静止一段时间后自动开始旋转
+                        distance: 300 // 视角距离
+                    },
+                    light: {
+                        main: {
+                            intensity: 1.2,
+                            shadow: true
+                        },
+                        ambient: {
+                            intensity: 0.3
+                        }
+                    }
+                },
+                series: [{
+                    type: 'scatter3D',
+                    symbolSize: 12,
+                    dimensions: ['Category Index', 'Weight', 'Duration'],
+                    data: data,
+                    itemStyle: {
+                        opacity: 0.8
+                    }
+                }]
+            };
             chart.setOption(option);
+            chart2.setOption(option2);
         });
     </script>
 {% endblock %}

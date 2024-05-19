@@ -36,13 +36,25 @@ def statistics():
     sorted_daily_weight = {k: daily_weight[k] for k in sorted(daily_weight)}
 
     centerForecast = build_kmeans()
-    centerResult = {}
-    for category, center in centerForecast.items():
-        centerResult[category] = []
-        centerResult[category].append(center[0][0])
-        centerResult[category].append(center[0][1])
+    scatter_data = []
+    categories = list(centerForecast.keys())  # 保留垃圾类型的列表
+    categories_string = []
+    for ca in categories:
+        categories_string.append(ca.replace('_', ' ').title())
+    for idx, category in enumerate(categories):
+        center = centerForecast[category][0]
+        scatter_data.append([idx, center[0], center[1]])  # X, Y, Z
     return render_template('government/statistics.html', daily_weight=sorted_daily_weight,
-                           centerResult=centerResult)
+                           scatter_data=scatter_data, categories_string=categories_string)
+
+
+@government.route('/forecast')
+def forecast():
+    wasteTypes = Waste.query.all()
+    wastes = []
+    for w in wasteTypes:
+        wastes.append(w.wasteType)
+    return render_template('government/forecast.html', wasteTypes=wastes)
 
 
 def buildKmeansDataset():

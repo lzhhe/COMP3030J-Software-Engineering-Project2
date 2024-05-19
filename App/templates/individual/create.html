@@ -285,7 +285,7 @@
                         <input type="text" id="order-name" name="order-name" required>
                     </label>
                     <div class="order-choose">
-                        <details class="pico dropdown" data-value="">
+                        <details class="pico dropdown" data-value="" style="font-family: Sunflower-Medium, sans-serif">
                             <summary>{{ _("Please choose one waste type: ") }}</summary>
                             <ul>
                                 {% for waste in wastes %}
@@ -340,7 +340,7 @@
             <div class="chuangjianmoban">
                 <div class="quyu1 pico">
                     <input type="text" id="temName" placeholder="please input name" required>
-                    <details class="pico dropdown" data-value="" id="temType">
+                    <details class="pico dropdown" data-value="" id="temType" style="font-family: Sunflower-Medium, sans-serif">
                         <summary>{{ _("choose one type: ") }}</summary>
                         <ul>
                             {% for waste in wastes %}
