@@ -42,14 +42,13 @@ attribution_contribution = [
     'Co2',
 
     # 水 富营养物
-    'NH3',
     'No3',
     'Po4',
     'So4',
     'Benzene',  # 有机物苯
     'Phenol',  # 酚
     'Chlorinated',  # 氯代
-    'plastics',  # 微塑料
+    'Plastics',  # 微塑料
 
     # 大气 污染物
     'NO',

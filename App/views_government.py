@@ -25,9 +25,24 @@ def free_p():
     return render_template('government/free_proportion.html', free_list=free_query)
 
 
-@government.route('forecast')
-def forecast():
-    return render_template('government/forecast.html')
+@government.route('statistics')
+def statistics():
+    today = datetime.now()
+    last_year_today = today - timedelta(days=365)
+    orders = Order.query.filter(Order.date.between(last_year_today, today)).all()
+    daily_weight = {}
+    for order in orders:
+        daily_weight[order.date] = daily_weight.get(order.date, 0) + order.weight
+    sorted_daily_weight = {k: daily_weight[k] for k in sorted(daily_weight)}
+
+    centerForecast = build_kmeans()
+    centerResult = {}
+    for category, center in centerForecast.items():
+        centerResult[category] = []
+        centerResult[category].append(center[0][0])
+        centerResult[category].append(center[0][1])
+    return render_template('government/statistics.html', daily_weight=sorted_daily_weight,
+                           centerResult=centerResult)
 
 
 def buildKmeansDataset():
@@ -39,7 +54,7 @@ def buildKmeansDataset():
         weight = order.weight
         duration = (order.finishDate - order.date).days
 
-        dataset[waste_type_name].append([weight, duration])
+        dataset[waste_type_name].append((weight, duration))
 
     print("KmeansDataset: ", dict(dataset))
 
@@ -71,7 +86,7 @@ def build_kmeans():
     centers = TypeKmeansCenter(dataset)
     centers = {category: center.tolist() for category, center in centers.items()}
     print("KMeans Centers:", centers)
-    return jsonify({'dataset': dataset, 'centers': centers})
+    return centers
 
 
 def generate_array():
