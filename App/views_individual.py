@@ -13,58 +13,6 @@ from .views_utils import *
 
 individual = Blueprint('individual', __name__, url_prefix='/individual')  # individual is name of blueprint
 
-waste_contribution = {
-    WasteType.HEAVY_METAL_WASTEWATER: {'tree': 0.001, 'water': 0.5, 'air': 0, 'soil': 0.01, 'energy': 0},
-    WasteType.EXHAUST_GAS: {'tree': 0.01, 'water': 0, 'air': 1, 'soil': 0.0005, 'energy': 0.1},
-    WasteType.MINERAL_RESIDUE: {'tree': 0.002, 'water': 0.2, 'air': 0.1, 'soil': 0.02, 'energy': 0.2},
-    WasteType.CUTTING_FLUID: {'tree': 0.003, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
-    WasteType.METAL_CHIPS: {'tree': 0.003, 'water': 0.6, 'air': 0.3, 'soil': 0.03, 'energy': 0.2},
-    WasteType.PLASTIC: {'tree': 0.002, 'water': 0.4, 'air': 0.1, 'soil': 0.02, 'energy': 0.15},
-    WasteType.COMPOSITE_MATERIAL_CUTTING_WASTE: {'tree': 0.003, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
-    WasteType.WASTE_PAINT: {'tree': 0.002, 'water': 0.5, 'air': 0.3, 'soil': 0.01, 'energy': 0.1},
-    WasteType.DUST: {'tree': 0.01, 'water': 0.02, 'air': 1, 'soil': 0.0005, 'energy': 0.05},
-    WasteType.CHEMICALS: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
-    WasteType.CATALYZER: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
-    WasteType.CHEMICAL_PROPELLANTS: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
-    WasteType.FUEL_RESIDUES: {'tree': 0.002, 'water': 0.8, 'air': 0.1, 'soil': 0.02, 'energy': 0.8},
-    WasteType.DISCARDED_ELECTRONIC_COMPONENTS: {'tree': 0.004, 'water': 0.5, 'air': 0.3, 'soil': 0.1, 'energy': 0.2},
-    WasteType.HYDRAULIC_OIL: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
-    WasteType.LUBRICANT_WASTE: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
-    WasteType.HAZARDOUS_CHEMICALS: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
-    WasteType.WASTE_EXPERIMENTAL_EQUIPMENT: {'tree': 0.005, 'water': 0.5, 'air': 0.8, 'soil': 0.02, 'energy': 0.6},
-    WasteType.WASTE_HEAT: {'tree': 0.003, 'water': 0.3, 'air': 0.4, 'soil': 0.05, 'energy': 1},
-    WasteType.WASTE_PAPER: {'tree': 0.015, 'water': 0.3, 'air': 0.2, 'soil': 0.01, 'energy': 0.3},
-    WasteType.HOUSEHOLD_WASTE: {'tree': 0.015, 'water': 0.3, 'air': 0.3, 'soil': 0.02, 'energy': 0.3},
-}
-
-attribution_contribution = [
-    # 绿化
-    'Co2',
-
-    # 水 富营养物
-    'No3',
-    'Po4',
-    'So4',
-    'Benzene',  # 有机物苯
-    'Phenol',  # 酚
-    'Chlorinated',  # 氯代
-    'Plastics',  # 微塑料
-
-    # 大气 污染物
-    'NO',
-    'So2',
-    'PM10',
-    'PM2.5',
-
-    # 土壤 重金属含量
-    'Pb',
-    'Cd',
-    'Hg',
-    'Cr',
-    'Cu'
-
-]
-
 
 @individual.route('/index')
 def index():
@@ -169,6 +117,60 @@ def use_free_proportion(wasteType, weight):
         return False
 
 
+waste_contribution = {
+    WasteType.HEAVY_METAL_WASTEWATER: {'tree': 0.001, 'water': 0.5, 'air': 0, 'soil': 0.01, 'energy': 0},
+    WasteType.EXHAUST_GAS: {'tree': 0.01, 'water': 0, 'air': 1, 'soil': 0.0005, 'energy': 0.1},
+    WasteType.MINERAL_RESIDUE: {'tree': 0.002, 'water': 0.2, 'air': 0.1, 'soil': 0.02, 'energy': 0.2},
+    WasteType.CUTTING_FLUID: {'tree': 0.003, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.METAL_CHIPS: {'tree': 0.003, 'water': 0.6, 'air': 0.3, 'soil': 0.03, 'energy': 0.2},
+    WasteType.PLASTIC: {'tree': 0.002, 'water': 0.4, 'air': 0.1, 'soil': 0.02, 'energy': 0.15},
+    WasteType.COMPOSITE_MATERIAL_CUTTING_WASTE: {'tree': 0.003, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.WASTE_PAINT: {'tree': 0.002, 'water': 0.5, 'air': 0.3, 'soil': 0.01, 'energy': 0.1},
+    WasteType.DUST: {'tree': 0.01, 'water': 0.02, 'air': 1, 'soil': 0.0005, 'energy': 0.05},
+    WasteType.CHEMICALS: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.CATALYZER: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
+    WasteType.CHEMICAL_PROPELLANTS: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
+    WasteType.FUEL_RESIDUES: {'tree': 0.002, 'water': 0.8, 'air': 0.1, 'soil': 0.02, 'energy': 0.8},
+    WasteType.DISCARDED_ELECTRONIC_COMPONENTS: {'tree': 0.004, 'water': 0.5, 'air': 0.3, 'soil': 0.1, 'energy': 0.2},
+    WasteType.HYDRAULIC_OIL: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.LUBRICANT_WASTE: {'tree': 0.004, 'water': 1, 'air': 0.4, 'soil': 0.04, 'energy': 0.3},
+    WasteType.HAZARDOUS_CHEMICALS: {'tree': 0.005, 'water': 0.8, 'air': 0.3, 'soil': 0.04, 'energy': 0.5},
+    WasteType.WASTE_EXPERIMENTAL_EQUIPMENT: {'tree': 0.005, 'water': 0.5, 'air': 0.8, 'soil': 0.02, 'energy': 0.6},
+    WasteType.WASTE_HEAT: {'tree': 0.003, 'water': 0.3, 'air': 0.4, 'soil': 0.05, 'energy': 1},
+    WasteType.WASTE_PAPER: {'tree': 0.015, 'water': 0.3, 'air': 0.2, 'soil': 0.01, 'energy': 0.3},
+    WasteType.HOUSEHOLD_WASTE: {'tree': 0.015, 'water': 0.3, 'air': 0.3, 'soil': 0.02, 'energy': 0.3},
+}
+
+compound_contribution = [
+    # 水 富营养物
+    'NH4',
+    'NO3',
+    'PO4',
+    'SO4',
+
+    # 土壤 重金属含量
+    'Pb',
+    'Cd',
+    'Hg',
+    'Cr',
+    'Cu'
+]
+simple_substance_contribution = [
+
+    'CO2',
+    'Benzene',  # 有机物苯
+    'Phenol',  # 酚
+    'Chlorinated',  # 氯代
+    'Plastics',  # 微塑料
+    'NO',
+    'NO2',
+    'SO2',
+    'PM10',
+    'PM2.5',
+
+]
+
+
 @individual.route('/contribution')
 def contribution():
     global all_orders, orders_by_day
@@ -176,10 +178,10 @@ def contribution():
     uid = user.UID
     today = datetime.now()
     contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
-    waste_dict = {'Co2': 0,
-                  'NH3': 0, 'No3': 0, 'Po4': 0, 'So4': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
+    waste_dict = {'CO2': 0,
+                  'NH4': 0, 'NO3': 0, 'PO4': 0, 'SO4': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
                   'Microplastics': 0,
-                  'NOX': 0, 'So2': 0, 'PM10': 0, 'PM2.5': 0,
+                  'NO': 0, 'NO2': 0, 'SO2': 0, 'PM10': 0, 'PM2.5': 0,
                   'Pb': 0, 'Cd': 0, 'Hg': 0, 'Cr': 0, 'Cu': 0
                   }
     if user is not None:
@@ -200,7 +202,8 @@ def contribution():
 
             # 处理订单属性
             if order.attribution:
-                attribution_dict = parse_attribution(order.attribution, attribution_contribution)
+                attribution_dict = parse_attribution(order.attribution, simple_substance_contribution,
+                                                     compound_contribution)
                 # 更新waste_dict中的属性值
                 for attr, ratio in attribution_dict.items():
                     if attr in waste_dict:
@@ -221,28 +224,33 @@ def contribution():
                            waste_dict=combined_dict)
 
 
-def parse_attribution(attribution_str, keywords):
+def parse_attribution(attribution_str, simple_keywords, compound_keywords):
     attribution_dict = {}
 
     attribution_list = attribution_str[:-1].split(" ")
-    print("attribution_list", attribution_list)
+    # print("attribution_list", attribution_list)
     for attribution in attribution_list:
         # 将化学式和百分比分开
         chemical_formula, percentage = attribution.split(":")
-        # 根据百分比计算贡献值
-        contribution_ratio = float(percentage.strip('%')) / 100
+        print("chemical_formula", chemical_formula)
 
-        # 对化学式进行拆分，提取元素符号
-        elements = re.findall(r"[A-Z][a-z]*\d*", chemical_formula)
-        for element in elements:
-            print("element", element)
-            # 检查元素符号是否在关键字中
-            if element in keywords:
-                # 更新反馈字典
-                if element in attribution_dict:
-                    attribution_dict[element] += contribution_ratio
+        for keyword in simple_keywords:
+
+            if chemical_formula == keyword:
+                contribution_ratio = float(percentage.strip('%')) / 100
+                if keyword in attribution_dict:
+                    attribution_dict[keyword] += contribution_ratio
                 else:
-                    attribution_dict[element] = contribution_ratio
+                    attribution_dict[keyword] = contribution_ratio
+
+        for keyword in compound_keywords:
+            if keyword in chemical_formula and keyword!=chemical_formula:
+                contribution_ratio = float(percentage.strip('%')) / 100
+                if keyword in attribution_dict:
+                    attribution_dict[keyword] += contribution_ratio
+                else:
+                    attribution_dict[keyword] = contribution_ratio
+
     print(attribution_dict)
     return attribution_dict
 
@@ -273,7 +281,7 @@ def analyze_image():
 
 
 def perform_analysis(image):
-    model = YOLO("App/huazhongv8.pt")
+    model = YOLO("App/best.pt")
 
     # 对传入的图像进行预测
     results = model.predict(image)
@@ -295,7 +303,8 @@ def perform_analysis(image):
         # cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
         # cv2.putText(image, label_text, (x1, y1 + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        extracted_image = cv2.resize(image[y1:y2, x1:x2].copy(), (200, 200), interpolation=cv2.INTER_CUBIC)
+        extracted_image = cv2.resize(cv2.cvtColor(image[y1:y2, x1:x2].copy(), cv2.COLOR_BGR2RGB), (200, 200),
+                                     interpolation=cv2.INTER_CUBIC)
         extracted_images.append(extracted_image)
         extracted_labels.append(label_text)
 
