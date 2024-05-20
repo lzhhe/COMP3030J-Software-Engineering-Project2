@@ -270,7 +270,7 @@
 {% block extra_js %}
 {% endblock %}
 {% block title %}
-    indi-recognition
+{{ _("indi-recognition") }}
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -293,20 +293,20 @@
                             <i class="iconfont icon-shangchuan"></i>
                         </div>
                         <div class="update-text">
-                            No image selected yet!
+                            {{ _("No image selected yet!")}}
                         </div>
                     </div>
                     <div id="cancel-update">
                         <i class="iconfont icon-guanbi1"></i>
                     </div>
                     <div class="update-file-name">
-                        File name here
+                        {{ _("File name here")}}
                     </div>
                 </div>
                 <input id="update-default-btn" type="file" hidden>
                 <div class="button-group">
-                    <button class="outline secondary" id="update-custom-btn">choose an image</button>
-                    <button class="outline" id="analyze-custom-btn">analyze it</button>
+                    <button class="outline secondary" id="update-custom-btn">{{ _("choose an image")}}</button>
+                    <button class="outline" id="analyze-custom-btn">{{ _("analyze it")}}</button>
                 </div>
             </div>
         </div>
@@ -318,7 +318,7 @@
             </div>
             <div class="loader-container pico">
                 <progress id="progress-analyze" max="100"></progress>
-                <span aria-busy="true" id="progress-detail">Uploading and analyze...</span>
+                <span aria-busy="true" id="progress-detail">{{ _("Uploading and analyze...")}}</span>
             </div>
             <div class="result-container"></div>
         </div>
@@ -407,7 +407,7 @@
                     // 检查文件类型是否为图片
                     if (!file.type.startsWith('image/')) {
                         Swal.fire({
-                            text: "Please upload image file.",
+                            text: "{{_('Please upload image file')}}.",
                             icon: "error",
                             closeOnClickOutside: true,
                             closeOnEsc: true,
@@ -432,7 +432,7 @@
             analyzeBtn.click(function (e) {
                 if (updateImage.attr('src') === "") {
                     Swal.fire({
-                        text: "Please upload image file.",
+                        text: "{{_('Please upload image file')}}.",
                         icon: "error",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -442,7 +442,7 @@
                     });
                 } else {
                     Swal.fire({
-                        text: "Are you sure to analyze this image?",
+                        text: "{{_('Are you sure to analyze this image')}}?",
                         icon: "question",
                         showCancelButton: true,
                         confirmButtonText: "{{ _('Yes!') }}",

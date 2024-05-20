@@ -70,11 +70,11 @@
             // 使用 Swal 弹出确认对话框
             Swal.fire({
                 position: 'top',
-                title: 'Are you sure to logout?',
+                title: '{{_("Are you sure to logout?")}}',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
+                confirmButtonText: '{{_("Yes")}}',
+                cancelButtonText: '{{_("No")}}',
                 reverseButtons: true,
                 timer: 4000,
                 timerProgressBar: true,
@@ -91,11 +91,11 @@
             if (event.which === 27) {
                 Swal.fire({
                     position: 'top',
-                    title: 'Are you sure to logout?',
+                    title: '{{_("Are you sure to logout?")}}',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
+                    confirmButtonText: '{{_("Yes")}}',
+                    cancelButtonText: '{{_("No")}}',
                     reverseButtons: true,
                     timer: 4000,
                     timerProgressBar: true,
@@ -127,8 +127,8 @@
                     text: content,
                     icon: 'info',
                     showCancelButton: true,
-                    confirmButtonText: 'Login',
-                    cancelButtonText: 'Cancel',
+                    confirmButtonText: '{{_("Login")}}',
+                    cancelButtonText: '{{_("Cancel")}}',
                     background: swalcolor,
                     reverseButtons: true,
                 }).then((result) => {
@@ -175,7 +175,7 @@
     sr.reveal(`.section-subtitle`, {origin: 'left'})
     sr.reveal(`.section-title`, {origin: 'right'})
     sr.reveal(`.section-text`, {origin: 'bottom'})
-    
+
     const header = document.querySelector("[data-header]");
     const backTopBtn = document.querySelector("[data-back-top-btn]");
 

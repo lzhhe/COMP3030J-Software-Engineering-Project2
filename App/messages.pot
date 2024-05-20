@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-18 21:29+0800\n"
+"POT-Creation-Date: 2024-05-20 16:33+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,199 +17,655 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: templates/login.html:26
-msgid "Login Page"
+#: templates/base.html:102 templates/base.html:123 templates/base2.html:98
+#: templates/base2.html:119
+msgid "Are you sure to logout"
 msgstr ""
 
-#: templates/login.html:31
-msgid "Choose your identity"
+#: templates/base.html:105 templates/base.html:126 templates/base2.html:65
+#: templates/base2.html:101 templates/base2.html:122
+#: templates/government/base.html:63 templates/government/base.html:99
+#: templates/government/base.html:120 templates/individual/base.html:76
+#: templates/individual/base.html:97
+msgid "Yes"
 msgstr ""
 
-#: templates/login.html:35
-msgid "Three types:"
+#: templates/base.html:106 templates/base.html:127 templates/base2.html:66
+#: templates/base2.html:102 templates/base2.html:123
+#: templates/department/create_order.html:750
+#: templates/department/create_order.html:826
+#: templates/department/edit_order.html:138 templates/government/base.html:64
+#: templates/government/base.html:100 templates/government/base.html:121
+#: templates/individual/base.html:77 templates/individual/base.html:98
+#: templates/individual/create.html:819 templates/individual/create.html:893
+#: templates/individual/recognize.html:449
+msgid "No"
 msgstr ""
 
-#: templates/login.html:37
-msgid "Choose…"
+#: templates/base2.html:19
+msgid "W-Management"
 msgstr ""
 
-#: templates/department/index.html:11 templates/login.html:39
-msgid "Department Manager"
+#: templates/base2.html:62
+msgid "Please login to use functions"
 msgstr ""
 
-#: templates/login.html:39
-msgid "Development"
-msgstr ""
-
-#: templates/login.html:41
-msgid "Government Manager"
-msgstr ""
-
-#: templates/login.html:41
-msgid "Government"
-msgstr ""
-
-#: templates/login.html:43
-msgid "Waste Manager"
-msgstr ""
-
-#: templates/login.html:43
-msgid "Waste"
-msgstr ""
-
-#: templates/login.html:45
-msgid "Individual User"
-msgstr ""
-
-#: templates/login.html:45
-msgid "Individual user"
-msgstr ""
-
-#: templates/department/edit_order.html:28 templates/login.html:50
-#: templates/waste/approval_order.html:74
-#: templates/waste/approval_order.html:104
-#: templates/waste/approval_order.html:128
-msgid "Cancel"
-msgstr ""
-
-#: templates/department/edit_order.html:29 templates/login.html:51
-msgid "Confirm"
-msgstr ""
-
-#: templates/login.html:55 templates/login.html:82 templates/login.html:109
-msgid "Show Password"
-msgstr ""
-
-#: templates/login.html:56
-msgid "Hide Password"
-msgstr ""
-
-#: templates/login.html:68
-msgid "Create Account"
-msgstr ""
-
-#: templates/login.html:70
-msgid "by use your email for registering"
-msgstr ""
-
-#: templates/login.html:73 templates/login.html:97 templates/login.html:160
-msgid "Username"
-msgstr ""
-
-#: templates/login.html:74 templates/login.html:164
-msgid "Email"
-msgstr ""
-
-#: templates/login.html:78 templates/login.html:101
-msgid "Password"
-msgstr ""
-
-#: templates/login.html:84
-msgid "Choose one identity?"
-msgstr ""
-
-#: templates/login.html:86
-msgid "Register"
-msgstr ""
-
-#: templates/login.html:94
-msgid "Enter System"
-msgstr ""
-
-#: templates/login.html:96
-msgid "by use your username and password"
-msgstr ""
-
-#: templates/login.html:111
-msgid "Forget Your Password?"
-msgstr ""
-
-#: templates/login.html:113
+#: templates/base2.html:155 templates/government/base.html:153
+#: templates/individual/base.html:130 templates/login.html:114
 msgid "Login"
 msgstr ""
 
-#: templates/login.html:121
-msgid "Welcome Back!"
+#: templates/base2.html:156 templates/department/edit_order.html:28
+#: templates/government/base.html:154 templates/individual/base.html:131
+#: templates/login.html:51 templates/waste/approval_order.html:132
+#: templates/waste/approval_order.html:165
+#: templates/waste/approval_order.html:194
+#: templates/waste/approval_order.html:666
+#: templates/waste/approval_order.html:831
+#: templates/waste/approval_order.html:955
+#: templates/waste/approval_order2.html:92
+#: templates/waste/approval_order2.html:123
+#: templates/waste/approval_order2.html:146
+#: templates/waste/approval_order2.html:645
+#: templates/waste/approval_order2.html:813
+#: templates/waste/approval_order2.html:942
+msgid "Cancel"
 msgstr ""
 
-#: templates/login.html:122
-msgid "Enter your personal details to use all site features"
+#: templates/content.html:8
+msgid "Clash studio"
 msgstr ""
 
-#: templates/login.html:123
-msgid "Switch to Login"
+#: templates/content.html:9 templates/footer.html:4 templates/footer1.html:4
+#: templates/footer2.html:4
+msgid "Waste Management"
 msgstr ""
 
-#: templates/login.html:125
-msgid "Password must contain the following:"
+#: templates/content.html:10
+msgid "Let's recycle and protect the environment"
 msgstr ""
 
-#: templates/login.html:126
-msgid "length from"
+#: templates/content.html:11
+msgid ""
+"We are committed to recycling waste, reducing carbon emissions and making"
+" the\n"
+"                            planet a better place"
 msgstr ""
 
-#: templates/login.html:128 templates/login.html:131 templates/login.html:134
-#: templates/login.html:136
-msgid "A"
+#: templates/content.html:22
+msgid "About us"
 msgstr ""
 
-#: templates/login.html:128
-msgid "lowercase"
+#: templates/content.html:23
+msgid "What are the goals and pursuits of our company"
 msgstr ""
 
-#: templates/login.html:128 templates/login.html:131 templates/login.html:136
-msgid "letter"
+#: templates/content.html:24
+msgid "We have our own equipment to deal with waste"
 msgstr ""
 
-#: templates/login.html:131
-msgid "uppercase"
+#: templates/content.html:25
+msgid ""
+"and we want to make it available to the public to help everyone protect "
+"the environment"
 msgstr ""
 
-#: templates/login.html:134
-msgid "number"
+#: templates/content.html:33
+msgid ""
+"Deal with all kinds of harmful substances to reduce carbon emissions in "
+"society"
 msgstr ""
 
-#: templates/login.html:136
-msgid "special"
+#: templates/content.html:41
+msgid "Provide a powerful waste treatment device, users can use a certain amount"
 msgstr ""
 
-#: templates/login.html:143
-msgid "Hello Friend!"
+#: templates/content.html:49
+msgid ""
+"Reducing energy consumption and improving the efficiency of waste "
+"disposal through clear\n"
+"                            operational\n"
+"                            processes improves one-stop solutions for "
+"customers."
 msgstr ""
 
-#: templates/login.html:144
-msgid "Register with your personal details to use all site features"
+#: templates/content.html:59
+msgid ""
+"Maximize recycling and reuse of resources and reduce environmental impact"
+" through centralized waste\n"
+"                            disposal"
 msgstr ""
 
-#: templates/login.html:145
-msgid "Switch to Register"
+#: templates/content.html:68
+msgid ""
+"Dispose of waste in strict compliance with environmental protection "
+"regulations to safeguard the\n"
+"                            work environment and public health"
 msgstr ""
 
-#: templates/login.html:161
-msgid "Enter Username"
+#: templates/content.html:77
+msgid ""
+"Actively fulfilling social responsibility to achieve truly efficient and "
+"sound waste disposal\n"
+"                            through projects and government oversight"
 msgstr ""
 
-#: templates/login.html:165
-msgid "Enter Email"
+#: templates/content.html:95
+msgid "Trusted For Our Services"
 msgstr ""
 
-#: templates/login.html:167
-msgid "New password"
+#: templates/content.html:96
+msgid ""
+"We will protect your data and the environment with a high degree\n"
+"                of responsibility"
 msgstr ""
 
-#: templates/login.html:168
-msgid "Enter new password"
+#: templates/content.html:106
+msgid "Waste Deal"
 msgstr ""
 
-#: templates/login.html:171
-msgid "Retrieve Password"
+#: templates/content.html:109
+msgid ""
+"We will dispose of the waste you want to dispose of, and submitted waste "
+"orders go through an\n"
+"                            interlocking disposal process"
 msgstr ""
 
-#: templates/swiper.html:5
+#: templates/content.html:112
+msgid ""
+"Waste orders submitted by customers will pass through two interlocking "
+"stages\n"
+"                        of\n"
+"                        confirmation and disposal, depending on important"
+" attributes such as the sector from which they\n"
+"                        come, the weight, the properties of the waste, "
+"and the percentage of the waste, and will eventually\n"
+"                        be turned into non-hazardous goods and end up "
+"being recycled"
+msgstr ""
+
+#: templates/content.html:121 templates/content.html:150
+#: templates/content.html:202 templates/content.html:229
+#: templates/content.html:255
+msgid "View Detail"
+msgstr ""
+
+#: templates/content.html:131
+msgid "Tough Predict"
+msgstr ""
+
+#: templates/content.html:134
+msgid ""
+"Based on the properties of the waste in the order we will predict for you"
+" the best way to handle it\n"
+"                            and the expected completion time"
+msgstr ""
+
+#: templates/content.html:137
+msgid ""
+"Based on a detailed analysis of the attributes of the waste in your order"
+" -\n"
+"                        including, but not limited to, its weight, rate, "
+"and type of waste - our administrators will develop\n"
+"                        an optimal treatment plan for the waste - one "
+"that has undergone a rigorous Environmental Impact\n"
+"                        Assessment to ensure minimal disruption to the "
+"ecosystem while maximizing recycling and reuse of\n"
+"                        resources"
+msgstr ""
+
+#: templates/content.html:142
+msgid ""
+"We will also provide you with an expected completion time, with the aim "
+"of creating a\n"
+"                            cost-effective\n"
+"                            and environmentally friendly solution, while "
+"ensuring that the production process is not affected by\n"
+"                            the accumulation of waste"
+msgstr ""
+
+#: templates/content.html:160
+msgid "Concl. Exhibited"
+msgstr ""
+
+#: templates/content.html:163
+msgid ""
+"Presentation of the results of the treatment and the contribution of this"
+" initiative to the\n"
+"                            environment, increasing your enthusiasm"
+msgstr ""
+
+#: templates/content.html:166
+msgid ""
+"Provide efficient results of waste disposal services, our page focuses on"
+"\n"
+"                        presenting the positive impact of these results "
+"on environmental protection. Provide detailed\n"
+"                        documentation and transparent reporting for each "
+"disposal task, including the type of waste,\n"
+"                        treatment method, reuse or recycling rate, and "
+"final disposal method"
+msgstr ""
+
+#: templates/content.html:184
+msgid "Hazard Analyze"
+msgstr ""
+
+#: templates/content.html:187
+msgid "Analyze waste hazards and use interesting effects to show you how"
+msgstr ""
+
+#: templates/content.html:189
+msgid ""
+"By analyzing waste hazards, we can also raise public awareness of the\n"
+"                        importance\n"
+"                        of waste disposal and environmental protection"
+msgstr ""
+
+#: templates/content.html:192
+msgid ""
+"As a waste management organization, we understand that improper waste "
+"disposal, including but not\n"
+"                            limited to chemical, biological and physical "
+"hazards, poses a serious threat to the environment and\n"
+"                            human health. Therefore, a careful assessment"
+" of the hazards of waste is conducted to ensure that\n"
+"                            the most appropriate treatment measures are "
+"taken and to educate users on the importance of waste\n"
+"                            disposal"
+msgstr ""
+
+#: templates/content.html:212
+msgid "AI Guide"
+msgstr ""
+
+#: templates/content.html:215
+msgid ""
+"Our system has a separate AI Assistant plugin that helps users use the "
+"site and learn relevant\n"
+"                            specialized content"
+msgstr ""
+
+#: templates/content.html:218
+msgid ""
+"We have introduced an advanced AI Assistant plug-in, which not only "
+"enhances\n"
+"                        the\n"
+"                        interactivity of our website, but also provides a"
+" powerful platform for users to learn and grow -\n"
+"                        the AI Assistant plug-in provides real-time "
+"online consultation and Q&A to help users quickly solve\n"
+"                        any problems encountered in the course of using "
+"the website. At the same time AI Guide contains a\n"
+"                        rich knowledge base covering a more comprehensive"
+" range of specialized knowledge in the waste\n"
+"                        treatment industry"
+msgstr ""
+
+#: templates/content.html:239
+msgid "News Share"
+msgstr ""
+
+#: templates/content.html:242
+msgid ""
+"Offers a range of useful environmentally related news and recommended "
+"sites"
+msgstr ""
+
+#: templates/content.html:244
+msgid ""
+"We are committed to promoting environmental awareness and sustainable\n"
+"                        development. With these websites and resources "
+"not only provide us with valuable information, but\n"
+"                        also help us and our clients to stay up-to-date "
+"with the latest developments in the field of\n"
+"                        environmental protection, so that we can better "
+"serve the community and promote the development of\n"
+"                        environmental protection. Through these channels,"
+" we are able to access industry information in a\n"
+"                        timely manner and continuously improve the "
+"quality of our services, as well as educate and inspire\n"
+"                        the public to work together for a greener and "
+"more sustainable world"
+msgstr ""
+
+#: templates/content.html:264
+msgid "The steps we will work"
+msgstr ""
+
+#: templates/content.html:265
+msgid "All waste will be handled according to the following procedures"
+msgstr ""
+
+#: templates/content.html:266
+msgid ""
+"Thank you for your\n"
+"                contribution to protecting the environment"
+msgstr ""
+
+#: templates/content.html:274 templates/department/dashboard.html:207
+#: templates/department/view_order.html:23
+#: templates/department/view_order.html:58
+#: templates/individual/contribution.html:380
+#: templates/waste/approval_order.html:212
+#: templates/waste/approval_order2.html:164
+msgid "Unconfirmed"
+msgstr ""
+
+#: templates/content.html:278
+msgid ""
+"Orders for waste disposal are submitted with complete attribute\n"
+"                                    information, such as type, quantity, "
+"and source of the waste"
+msgstr ""
+
+#: templates/content.html:284
+msgid ""
+"These details are crucial for determining the treatment method and\n"
+"                                    estimating costs"
+msgstr ""
+
+#: templates/content.html:290
+msgid ""
+"After submission, orders await review by administrators to ensure all\n"
+"                                    necessary\n"
+"                                    information\n"
+"                                    is provided and complies with the "
+"standards and regulations of the waste management\n"
+"                                    center"
+msgstr ""
+
+#: templates/content.html:299
+msgid ""
+"dministrators may contact the submitter for additional details or\n"
+"                                    clarification if\n"
+"                                    needed"
+msgstr ""
+
+#: templates/content.html:306
+msgid ""
+"This stage is the starting point of the process, ensuring that all\n"
+"                                    subsequent steps can\n"
+"                                    proceed smoothly"
+msgstr ""
+
+#: templates/content.html:324
+msgid ""
+"Once an order is confirmed by administrators, it indicates acceptance\n"
+"                                    and readiness to begin processing the"
+" waste"
+msgstr ""
+
+#: templates/content.html:329
+msgid ""
+"Waste materials are collected and transported according to a\n"
+"                                    predetermined schedule"
+msgstr ""
+
+#: templates/content.html:334
+msgid ""
+"During this stage, waste may be temporarily stored before further\n"
+"                                    processing"
+msgstr ""
+
+#: templates/content.html:339
+msgid ""
+"Transport and storage must adhere to strict safety and environmental\n"
+"                                    protection standards to prevent "
+"pollution"
+msgstr ""
+
+#: templates/content.html:344
+msgid ""
+"Simultaneously, the waste management center may start preparing\n"
+"                                    resources and equipment needed for "
+"processing, such as scheduling personnel and\n"
+"                                    equipment"
+msgstr ""
+
+#: templates/content.html:355 templates/department/dashboard.html:221
+#: templates/department/view_order.html:35
+#: templates/department/view_order.html:68
+#: templates/individual/contribution.html:390
+#: templates/waste/approval_order.html:224
+#: templates/waste/approval_order2.html:176
+msgid "Processing"
+msgstr ""
+
+#: templates/content.html:359
+msgid ""
+"Upon arrival at the treatment facility, waste materials begin\n"
+"                                    specialized, targeted harmless "
+"treatment"
+msgstr ""
+
+#: templates/content.html:364
+msgid ""
+"Treatment methods are selected based on the type and characteristics\n"
+"                                    of\n"
+"                                    the waste, which may include "
+"physical, chemical, or biological technologies"
+msgstr ""
+
+#: templates/content.html:370
+msgid ""
+"The goal of this stage is to reduce or eliminate the hazardous nature\n"
+"                                    of the waste, transforming it into a "
+"form that is harmless or poses minimal harm to the\n"
+"                                    environment"
+msgstr ""
+
+#: templates/content.html:376
+msgid ""
+"Treatment must strictly follow environmental protection regulations\n"
+"                                    and\n"
+"                                    safety operation procedures to "
+"prevent secondary pollution"
+msgstr ""
+
+#: templates/content.html:382
+msgid ""
+"By-products such as energy recovery and metal recycling may be\n"
+"                                    generated during treatment, which can"
+" be used for further resource utilization"
+msgstr ""
+
+#: templates/content.html:393 templates/department/dashboard.html:228
+#: templates/department/view_order.html:41
+#: templates/department/view_order.html:73
+#: templates/individual/contribution.html:395
+#: templates/waste/approval_order.html:230
+#: templates/waste/approval_order2.html:182
+msgid "Finished"
+msgstr ""
+
+#: templates/content.html:397
+msgid ""
+"Once the waste materials have undergone harmless treatment, the\n"
+"                                    process\n"
+"                                    moves to the finished stage"
+msgstr ""
+
+#: templates/content.html:403
+msgid ""
+"This signifies that the waste is no longer hazardous and can be safely\n"
+"                                    disposed of or utilized"
+msgstr ""
+
+#: templates/content.html:408
+msgid ""
+"Treated waste may be sent to landfills for final disposal or resourced\n"
+"                                    based on its characteristics"
+msgstr ""
+
+#: templates/content.html:413
+msgid ""
+"For example, metals and recyclable materials may be recovered and\n"
+"                                    reused, reducing the demand for new "
+"resources"
+msgstr ""
+
+#: templates/content.html:418
+msgid ""
+"The waste management center records and reports the treatment outcomes\n"
+"                                    to demonstrate that the waste has "
+"been properly treated according to regulations"
+msgstr ""
+
+#: templates/content.html:423
+msgid ""
+"The completion of this stage marks the end of an order and provides\n"
+"                                    valuable data and experience for the "
+"waste management center to improve future\n"
+"                                    processes"
+msgstr ""
+
+#: templates/content.html:440 templates/content.html:497
+#: templates/content.html:548
+msgid "management"
+msgstr ""
+
+#: templates/content.html:441 templates/content.html:498
+#: templates/content.html:549
+msgid "Switch to pages to deal with waste"
+msgstr ""
+
+#: templates/content.html:442 templates/content.html:499
+msgid ""
+"You can view or manage your order and check how much you are contributing"
+" to\n"
+"                        the\n"
+"                        environment"
+msgstr ""
+
+#: templates/content.html:452 templates/content.html:559
+msgid "Creat order"
+msgstr ""
+
+#: templates/content.html:454
+msgid ""
+"Users can create stand-alone waste orders, select waste sources and "
+"attributes, and simply\n"
+"                                    operate"
+msgstr ""
+
+#: templates/content.html:467 templates/content.html:574
+msgid "View contr"
+msgstr ""
+
+#: templates/content.html:469
+msgid ""
+"Users can see the trend of their treated waste from hazardous to non-"
+"hazardous and can\n"
+"                                    fully\n"
+"                                    enlighten the public."
+msgstr ""
+
+#: templates/content.html:483 templates/content.html:589
+msgid "Recognize waste"
+msgstr ""
+
+#: templates/content.html:485 templates/content.html:591
+msgid "Identify types of waste and improve the efficiency of waste disposal"
+msgstr ""
+
+#: templates/content.html:509 templates/content.html:604
+msgid "Projection time"
+msgstr ""
+
+#: templates/content.html:511
+msgid ""
+"The government can see the weight and hazards of different wastes "
+"produced by our company\n"
+"                                    at\n"
+"                                    different times"
+msgstr ""
+
+#: templates/content.html:522 templates/content.html:619
+msgid "Projection weight"
+msgstr ""
+
+#: templates/content.html:524
+msgid ""
+"The government can see the company's projections of the maximum waste "
+"content capacity that\n"
+"                            the world in its current state can handle"
+msgstr ""
+
+#: templates/content.html:534 templates/content.html:634
+msgid "Carbon neutral data"
+msgstr ""
+
+#: templates/content.html:536
+msgid ""
+"Governments can see our company's contribution to protecting the "
+"environment and tracking\n"
+"                            our\n"
+"                            carbon neutral footprint."
+msgstr ""
+
+#: templates/content.html:550
+msgid ""
+"You can view or manage your order and check how much you are contributing"
+" to the\n"
+"                    environment"
+msgstr ""
+
+#: templates/content.html:561
+msgid ""
+"Users can create stand-alone waste orders, select waste sources and "
+"attributes, and simply\n"
+"                                operate"
+msgstr ""
+
+#: templates/content.html:576
+msgid ""
+"Users can see the trend of their treated waste from hazardous to non-"
+"hazardous and can fully\n"
+"                                enlighten the public"
+msgstr ""
+
+#: templates/content.html:606
+msgid ""
+"The government can see the weight and hazards of different wastes "
+"produced by our company at\n"
+"                                different times"
+msgstr ""
+
+#: templates/content.html:621
+msgid ""
+"The government can see the company's projections of the maximum waste "
+"content capacity that the\n"
+"                        world in its current state can handle"
+msgstr ""
+
+#: templates/content.html:636
+msgid ""
+"Governments can see our company's contribution to protecting the "
+"environment and tracking our\n"
+"                        carbon neutral footprint"
+msgstr ""
+
+#: templates/content.html:650
+msgid "hazard"
+msgstr ""
+
+#: templates/content.html:651
+msgid "Discussed For Waste"
+msgstr ""
+
+#: templates/content.html:652
+msgid ""
+"You can see the types of wastes we can handle and the\n"
+"                corresponding hazards in the form of an infinite wheeling"
+" slide"
+msgstr ""
+
+#: templates/content.html:659 templates/swiper.html:5
 msgid "Heavy metal water"
 msgstr ""
 
-#: templates/swiper.html:6
+#: templates/content.html:660 templates/swiper.html:6
 msgid ""
 "Produced from metallurgical industry, electroplating factory, mine, etc.,"
 "\n"
@@ -221,11 +677,11 @@ msgid ""
 "environment and human health."
 msgstr ""
 
-#: templates/swiper.html:11
+#: templates/content.html:666 templates/swiper.html:11
 msgid "Exhaust gas"
 msgstr ""
 
-#: templates/swiper.html:12
+#: templates/content.html:667 templates/swiper.html:12
 msgid ""
 "It mainly comes from the combustion of fuel in the industrial production "
 "process,\n"
@@ -236,11 +692,11 @@ msgid ""
 "                    problems such as acid rain and greenhouse effect."
 msgstr ""
 
-#: templates/swiper.html:18
+#: templates/content.html:673 templates/swiper.html:18
 msgid "Mineral residue"
 msgstr ""
 
-#: templates/swiper.html:19
+#: templates/content.html:674 templates/swiper.html:19
 msgid ""
 "It is produced during mining and mineral processing, mainly including "
 "rock\n"
@@ -251,11 +707,11 @@ msgid ""
 "                    quality."
 msgstr ""
 
-#: templates/swiper.html:25
+#: templates/content.html:680 templates/swiper.html:25
 msgid "Cutting fluid"
 msgstr ""
 
-#: templates/swiper.html:26
+#: templates/content.html:681 templates/swiper.html:26
 msgid ""
 "Used in metal working to reduce temperature and friction and extend tool "
 "life.\n"
@@ -264,11 +720,11 @@ msgid ""
 "                    discharged, will pollute water and soil."
 msgstr ""
 
-#: templates/swiper.html:31
+#: templates/content.html:686 templates/swiper.html:31
 msgid "Metal chips"
 msgstr ""
 
-#: templates/swiper.html:32
+#: templates/content.html:687 templates/swiper.html:32
 msgid ""
 "The debris and chips produced during metal processing may contain metals "
 "such as\n"
@@ -277,11 +733,11 @@ msgid ""
 "                    resources, but also may cause environmental pollution."
 msgstr ""
 
-#: templates/swiper.html:37
+#: templates/content.html:692 templates/swiper.html:37
 msgid "Plastic waste"
 msgstr ""
 
-#: templates/swiper.html:38
+#: templates/content.html:693 templates/swiper.html:38
 msgid ""
 "Waste plastics produced in the manufacturing process of high-end "
 "mechanical\n"
@@ -291,11 +747,11 @@ msgid ""
 "soil and water pollution."
 msgstr ""
 
-#: templates/swiper.html:43
+#: templates/content.html:698 templates/swiper.html:43
 msgid "Composite metal cutting waste"
 msgstr ""
 
-#: templates/swiper.html:44
+#: templates/content.html:699 templates/swiper.html:44
 msgid ""
 "Waste produced when cutting composite materials such as carbon fiber and "
 "glass\n"
@@ -304,11 +760,11 @@ msgid ""
 "                    to the environment if not handled properly."
 msgstr ""
 
-#: templates/swiper.html:49
+#: templates/content.html:706 templates/swiper.html:49
 msgid "Waste paint fluid"
 msgstr ""
 
-#: templates/swiper.html:50
+#: templates/content.html:707 templates/swiper.html:50
 msgid ""
 "Including expired paint, residual paint mist in the spraying process. "
 "Contains\n"
@@ -317,11 +773,11 @@ msgid ""
 "                    also harmful to human health."
 msgstr ""
 
-#: templates/swiper.html:55
+#: templates/content.html:712 templates/swiper.html:55
 msgid "Dust"
 msgstr ""
 
-#: templates/swiper.html:56
+#: templates/content.html:713 templates/swiper.html:56
 msgid ""
 "Fine particles produced during material processing, cutting, grinding, "
 "etc.\n"
@@ -330,11 +786,11 @@ msgid ""
 "                    cause harm to the human respiratory system."
 msgstr ""
 
-#: templates/swiper.html:61
+#: templates/content.html:718 templates/swiper.html:61
 msgid "Chemicals things"
 msgstr ""
 
-#: templates/swiper.html:62
+#: templates/content.html:719 templates/swiper.html:62
 msgid ""
 "Waste chemicals produced in laboratories or chemical manufacturing "
 "processes,\n"
@@ -346,11 +802,11 @@ msgid ""
 "accidents"
 msgstr ""
 
-#: templates/swiper.html:68
+#: templates/content.html:725 templates/swiper.html:68
 msgid "Catalyzer"
 msgstr ""
 
-#: templates/swiper.html:69
+#: templates/content.html:726 templates/swiper.html:69
 msgid ""
 "A substance that accelerates the rate of a chemical reaction without "
 "being\n"
@@ -359,11 +815,11 @@ msgid ""
 "                    special treatment to prevent environmental pollution."
 msgstr ""
 
-#: templates/swiper.html:74
+#: templates/content.html:731 templates/swiper.html:74
 msgid "Chemical propellants"
 msgstr ""
 
-#: templates/swiper.html:75
+#: templates/content.html:732 templates/swiper.html:75
 msgid ""
 "Chemicals used in rockets and missiles to generate thrust. These "
 "substances are\n"
@@ -372,11 +828,11 @@ msgid ""
 "                    disposal and recycling procedures."
 msgstr ""
 
-#: templates/swiper.html:80
+#: templates/content.html:737 templates/swiper.html:80
 msgid "Fuel residues"
 msgstr ""
 
-#: templates/swiper.html:81
+#: templates/content.html:738 templates/swiper.html:81
 msgid ""
 "Waste generated during the production and use of new energy, such as "
 "biomass\n"
@@ -385,11 +841,11 @@ msgid ""
 "                    will pollute the environment"
 msgstr ""
 
-#: templates/swiper.html:86
+#: templates/content.html:743 templates/swiper.html:86
 msgid "Discarded electronic components"
 msgstr ""
 
-#: templates/swiper.html:87
+#: templates/content.html:744 templates/swiper.html:87
 msgid ""
 "Including discarded chips, circuit boards, displays and other electronic\n"
 "                    equipment components. It contains heavy metals and "
@@ -397,11 +853,11 @@ msgid ""
 "                    serious threat to the environment."
 msgstr ""
 
-#: templates/swiper.html:92
+#: templates/content.html:751 templates/swiper.html:92
 msgid "Hydraulic oils"
 msgstr ""
 
-#: templates/swiper.html:93
+#: templates/content.html:752 templates/swiper.html:93
 msgid ""
 "Oils used to transmit power in machinery and equipment. If the hydraulic "
 "oil\n"
@@ -410,11 +866,11 @@ msgid ""
 "                    water and soil."
 msgstr ""
 
-#: templates/swiper.html:98
+#: templates/content.html:757 templates/swiper.html:98
 msgid "Lubricant waste"
 msgstr ""
 
-#: templates/swiper.html:99
+#: templates/content.html:758 templates/swiper.html:99
 msgid ""
 "Waste lubricating oil produced during equipment maintenance, including "
 "oil, gear\n"
@@ -423,11 +879,11 @@ msgid ""
 "                    professionally treated for reuse or disposal."
 msgstr ""
 
-#: templates/swiper.html:104
+#: templates/content.html:763 templates/swiper.html:104
 msgid "Hazardous chemicals"
 msgstr ""
 
-#: templates/swiper.html:105
+#: templates/content.html:764 templates/swiper.html:105
 msgid ""
 "Hazardous chemicals used in laboratories, including corrosive, toxic, "
 "flammable\n"
@@ -437,11 +893,11 @@ msgid ""
 " regulations."
 msgstr ""
 
-#: templates/swiper.html:110
+#: templates/content.html:769 templates/swiper.html:110
 msgid "Waste experimental equipment"
 msgstr ""
 
-#: templates/swiper.html:111
+#: templates/content.html:770 templates/swiper.html:111
 msgid ""
 "Including damaged experimental instruments, experimental consumables that"
 " have\n"
@@ -450,11 +906,11 @@ msgid ""
 "                    require special treatment to prevent contamination."
 msgstr ""
 
-#: templates/swiper.html:116
+#: templates/content.html:775 templates/swiper.html:116
 msgid "Waste paper"
 msgstr ""
 
-#: templates/swiper.html:117
+#: templates/content.html:776 templates/swiper.html:117
 msgid ""
 "Waste paper generated in offices, schools, etc., including documents, "
 "newspapers,\n"
@@ -464,11 +920,11 @@ msgid ""
 "environmental pollution."
 msgstr ""
 
-#: templates/swiper.html:122
+#: templates/content.html:781 templates/swiper.html:122
 msgid "Household waste"
 msgstr ""
 
-#: templates/swiper.html:123
+#: templates/content.html:782 templates/swiper.html:123
 msgid ""
 "Waste from household daily life, including kitchen waste, plastic, paper,"
 " etc.\n"
@@ -477,11 +933,11 @@ msgid ""
 "                    environment."
 msgstr ""
 
-#: templates/swiper.html:128
+#: templates/content.html:787 templates/swiper.html:128
 msgid "Waste heat"
 msgstr ""
 
-#: templates/swiper.html:129
+#: templates/content.html:788 templates/swiper.html:129
 msgid ""
 "Waste heat generated during the operation of data centers, factories, "
 "etc. If not\n"
@@ -489,6 +945,339 @@ msgid ""
 " also may cause local\n"
 "                    environmental temperatures to rise, affecting the "
 "ecological balance."
+msgstr ""
+
+#: templates/context_menu.html:5
+msgid "Data"
+msgstr ""
+
+#: templates/context_menu.html:9
+msgid "Add"
+msgstr ""
+
+#: templates/context_menu.html:13
+msgid "Pic"
+msgstr ""
+
+#: templates/context_menu.html:17
+msgid "Share"
+msgstr ""
+
+#: templates/context_menu.html:22
+msgid "Delete"
+msgstr ""
+
+#: templates/footer.html:6 templates/footer1.html:6 templates/footer2.html:6
+msgid ""
+"Waste disposal is open to the public free of charge, but the amount of "
+"processing requires users to pay\n"
+"                        a certain fee"
+msgstr ""
+
+#: templates/footer.html:35 templates/footer1.html:36 templates/footer2.html:36
+msgid "Quick Links"
+msgstr ""
+
+#: templates/footer.html:38
+msgid "About Us"
+msgstr ""
+
+#: templates/footer.html:41 templates/footer1.html:42 templates/footer2.html:42
+#: templates/header.html:10
+msgid "Service"
+msgstr ""
+
+#: templates/footer.html:44 templates/footer1.html:45 templates/footer2.html:45
+#: templates/header.html:13
+msgid "Flow"
+msgstr ""
+
+#: templates/footer.html:47 templates/footer1.html:48 templates/footer2.html:48
+#: templates/header.html:16
+msgid "Manage"
+msgstr ""
+
+#: templates/footer.html:52 templates/footer1.html:53 templates/footer2.html:53
+msgid "Services"
+msgstr ""
+
+#: templates/footer.html:55
+msgid "create order"
+msgstr ""
+
+#: templates/footer.html:58
+msgid "view contribution"
+msgstr ""
+
+#: templates/footer.html:61
+msgid "recognize waste"
+msgstr ""
+
+#: templates/footer.html:64
+msgid "project time"
+msgstr ""
+
+#: templates/footer.html:67
+msgid "project weight"
+msgstr ""
+
+#: templates/footer.html:70
+msgid "carbon neutral data"
+msgstr ""
+
+#: templates/footer.html:75 templates/footer1.html:70 templates/footer2.html:70
+msgid "Community"
+msgstr ""
+
+#: templates/footer.html:79
+msgid "SDGs"
+msgstr ""
+
+#: templates/footer.html:85 templates/footer1.html:80 templates/footer2.html:80
+msgid ""
+"Green\n"
+"                        Peace"
+msgstr ""
+
+#: templates/footer.html:96 templates/footer1.html:91 templates/footer2.html:91
+msgid "2024 Waste Management. All Rights Reserved by"
+msgstr ""
+
+#: templates/footer1.html:39 templates/footer2.html:39 templates/header.html:7
+msgid "About"
+msgstr ""
+
+#: templates/footer1.html:56 templates/footer2.html:56 templates/header1.html:7
+#: templates/header2.html:7
+msgid "Home"
+msgstr ""
+
+#: templates/footer1.html:59 templates/header1.html:10
+msgid "Free portion"
+msgstr ""
+
+#: templates/footer1.html:62 templates/header1.html:13
+msgid "Statistics"
+msgstr ""
+
+#: templates/footer1.html:65 templates/header1.html:16
+msgid "Forecast"
+msgstr ""
+
+#: templates/department/create_order.html:244
+#: templates/department/create_order.html:407
+#: templates/department/index.html:18 templates/footer2.html:59
+#: templates/header2.html:10 templates/individual/create.html:322
+msgid "Create"
+msgstr ""
+
+#: templates/footer2.html:62 templates/header2.html:13
+#: templates/individual/contribution.html:281
+msgid "Contribution"
+msgstr ""
+
+#: templates/footer2.html:65 templates/header2.html:16
+msgid "Recognize"
+msgstr ""
+
+#: templates/header.html:19
+msgid "Contact"
+msgstr ""
+
+#: templates/header.html:23
+msgid "LOGIN"
+msgstr ""
+
+#: templates/login.html:27
+msgid "Login Page"
+msgstr ""
+
+#: templates/login.html:32
+msgid "Choose your identity"
+msgstr ""
+
+#: templates/login.html:36
+msgid "Three types:"
+msgstr ""
+
+#: templates/login.html:38
+msgid "Choose…"
+msgstr ""
+
+#: templates/department/index.html:11 templates/login.html:40
+msgid "Department Manager"
+msgstr ""
+
+#: templates/login.html:40
+msgid "Department"
+msgstr ""
+
+#: templates/login.html:42
+msgid "Government Manager"
+msgstr ""
+
+#: templates/login.html:42
+msgid "Government"
+msgstr ""
+
+#: templates/login.html:44
+msgid "Waste Manager"
+msgstr ""
+
+#: templates/login.html:44 templates/waste/index.html:4
+msgid "Waste"
+msgstr ""
+
+#: templates/login.html:46
+msgid "Individual User"
+msgstr ""
+
+#: templates/login.html:46
+msgid "Individual user"
+msgstr ""
+
+#: templates/department/edit_order.html:29 templates/login.html:52
+#: templates/waste/approval_order.html:665
+#: templates/waste/approval_order.html:830
+#: templates/waste/approval_order.html:954
+#: templates/waste/approval_order2.html:644
+#: templates/waste/approval_order2.html:812
+#: templates/waste/approval_order2.html:941
+msgid "Confirm"
+msgstr ""
+
+#: templates/login.html:56 templates/login.html:83 templates/login.html:110
+msgid "Show Password"
+msgstr ""
+
+#: templates/login.html:57
+msgid "Hide Password"
+msgstr ""
+
+#: templates/login.html:69
+msgid "Create Account"
+msgstr ""
+
+#: templates/login.html:71
+msgid "by use your email for registering"
+msgstr ""
+
+#: templates/login.html:72
+msgid "password needs"
+msgstr ""
+
+#: templates/login.html:74 templates/login.html:98 templates/login.html:161
+msgid "Username"
+msgstr ""
+
+#: templates/login.html:75 templates/login.html:165
+msgid "Email"
+msgstr ""
+
+#: templates/login.html:79 templates/login.html:102
+msgid "Password"
+msgstr ""
+
+#: templates/login.html:85
+msgid "Choose one identity?"
+msgstr ""
+
+#: templates/login.html:87
+msgid "Register"
+msgstr ""
+
+#: templates/login.html:95
+msgid "Enter System"
+msgstr ""
+
+#: templates/login.html:97
+msgid "by use your username and password"
+msgstr ""
+
+#: templates/login.html:112
+msgid "Forget Your Password?"
+msgstr ""
+
+#: templates/login.html:122
+msgid "Welcome Back!"
+msgstr ""
+
+#: templates/login.html:123
+msgid "Enter your personal details to use all site features"
+msgstr ""
+
+#: templates/login.html:124
+msgid "Switch to Login"
+msgstr ""
+
+#: templates/login.html:126
+msgid "Password must contain the following:"
+msgstr ""
+
+#: templates/login.html:127
+msgid "length from"
+msgstr ""
+
+#: templates/login.html:129 templates/login.html:132 templates/login.html:135
+#: templates/login.html:137
+msgid "A"
+msgstr ""
+
+#: templates/login.html:129
+msgid "lowercase"
+msgstr ""
+
+#: templates/login.html:129 templates/login.html:132 templates/login.html:137
+msgid "letter"
+msgstr ""
+
+#: templates/login.html:132
+msgid "uppercase"
+msgstr ""
+
+#: templates/login.html:135
+msgid "number"
+msgstr ""
+
+#: templates/login.html:137
+msgid "special"
+msgstr ""
+
+#: templates/login.html:144
+msgid "Hello Friend!"
+msgstr ""
+
+#: templates/login.html:145
+msgid "Register with your personal details to use all site features"
+msgstr ""
+
+#: templates/login.html:146
+msgid "Switch to Register"
+msgstr ""
+
+#: templates/login.html:162
+msgid "Enter Username"
+msgstr ""
+
+#: templates/login.html:166
+msgid "Enter Email"
+msgstr ""
+
+#: templates/login.html:168
+msgid "New password"
+msgstr ""
+
+#: templates/login.html:169
+msgid "Enter new password"
+msgstr ""
+
+#: templates/login.html:172
+msgid "Retrieve Password"
+msgstr ""
+
+#: templates/progress_bar.html:2 templates/progress_bar.html:3
+#: templates/progress_bar.html:4 templates/progress_bar.html:5
+msgid "step"
 msgstr ""
 
 #: templates/switch.html:4
@@ -499,390 +1288,1071 @@ msgstr ""
 msgid "Theme_Switch"
 msgstr ""
 
-#: templates/department/create_order.html:17
+#: templates/department/create_order.html:195
+#: templates/department/create_order.html:365
+#: templates/individual/create.html:280
+msgid "Create Order"
+msgstr ""
+
+#: templates/department/create_order.html:201
 msgid "Please create a department"
 msgstr ""
 
-#: templates/department/create_order.html:22
+#: templates/department/create_order.html:206
 msgid "Metallurgy"
 msgstr ""
 
-#: templates/department/create_order.html:27
+#: templates/department/create_order.html:211
 msgid "Equipment Manufacturing"
 msgstr ""
 
-#: templates/department/create_order.html:31
+#: templates/department/create_order.html:215
 msgid "Composite Material"
 msgstr ""
 
-#: templates/department/create_order.html:35
+#: templates/department/create_order.html:219
 msgid "New Energy"
 msgstr ""
 
-#: templates/department/create_order.html:39
+#: templates/department/create_order.html:223
 msgid "Automation System"
 msgstr ""
 
-#: templates/department/create_order.html:43
+#: templates/department/create_order.html:227
 msgid "Equipment Maintenance"
 msgstr ""
 
-#: templates/department/create_order.html:47
+#: templates/department/create_order.html:231
 msgid "Laboratory"
 msgstr ""
 
-#: templates/department/create_order.html:50
+#: templates/department/create_order.html:234
 msgid "Data Center"
 msgstr ""
 
-#: templates/department/create_order.html:53
+#: templates/department/create_order.html:237
 msgid "Office"
 msgstr ""
 
-#: templates/department/create_order.html:54
+#: templates/department/create_order.html:238
 msgid "Department name:"
 msgstr ""
 
-#: templates/department/create_order.html:57
+#: templates/department/create_order.html:241
 msgid "Department address:"
 msgstr ""
 
-#: templates/department/create_order.html:60
-#: templates/department/create_order.html:127
-#: templates/department/index.html:17
-msgid "Create"
+#: templates/department/create_order.html:253
+#: templates/individual/create.html:330
+msgid "Templates"
 msgstr ""
 
-#: templates/department/create_order.html:71
+#: templates/department/create_order.html:256
+#: templates/individual/create.html:333
+msgid "You can choose one type of"
+msgstr ""
+
+#: templates/department/create_order.html:256
+#: templates/individual/create.html:333
+msgid "waste"
+msgstr ""
+
+#: templates/department/create_order.html:256
+#: templates/individual/create.html:333
+msgid "set one"
+msgstr ""
+
+#: templates/department/create_order.html:257
+#: templates/individual/create.html:333
+msgid "template name"
+msgstr ""
+
+#: templates/department/create_order.html:258
+#: templates/individual/create.html:334
+msgid "then add many different"
+msgstr ""
+
+#: templates/department/create_order.html:258
+#: templates/individual/create.html:334
+msgid "attributes"
+msgstr ""
+
+#: templates/department/create_order.html:258
+#: templates/individual/create.html:334
+msgid "to create one"
+msgstr ""
+
+#: templates/department/create_order.html:259
+#: templates/individual/create.html:334
+msgid "template"
+msgstr ""
+
+#: templates/department/create_order.html:261
+msgid ""
+"Middle area's button is to create a text, you need to type in, like CO2, "
+"SO4, if you want to\n"
+"                add a new attribution, please fill all text, or right-"
+"click to delete."
+msgstr ""
+
+#: templates/department/create_order.html:263
+#: templates/individual/create.html:338
+msgid "You can select one template to create one order"
+msgstr ""
+
+#: templates/department/create_order.html:269
+#: templates/individual/create.html:344
+msgid "choose one type: "
+msgstr ""
+
+#: templates/department/create_order.html:302
+#: templates/department/edit_order.html:53
+#: templates/department/view_order.html:86
+#: templates/individual/contribution.html:408
+#: templates/individual/create.html:377
+msgid "Name"
+msgstr ""
+
+#: templates/department/create_order.html:304
+#: templates/individual/create.html:379
+msgid "W-Type"
+msgstr ""
+
+#: templates/department/create_order.html:307
+#: templates/individual/create.html:382
+msgid "Attrs."
+msgstr ""
+
+#: templates/department/create_order.html:310
+#: templates/individual/create.html:385
+msgid "Opts"
+msgstr ""
+
+#: templates/department/create_order.html:344
 msgid "Introduction"
 msgstr ""
 
-#: templates/department/create_order.html:73
+#: templates/department/create_order.html:346
 msgid "Hi, the "
 msgstr ""
 
-#: templates/department/create_order.html:73
+#: templates/department/create_order.html:347
 msgid " Manager, welcome."
 msgstr ""
 
-#: templates/department/create_order.html:77
+#: templates/department/create_order.html:351
 msgid "You can choose these types to handle. "
 msgstr ""
 
-#: templates/department/create_order.html:78
+#: templates/department/create_order.html:352
 msgid ""
 "you need to select one of the waste types and set the required weight, "
 "attributes, and comments. "
 msgstr ""
 
-#: templates/department/create_order.html:86
-msgid "Create Order"
-msgstr ""
-
-#: templates/department/create_order.html:89
+#: templates/department/create_order.html:368
+#: templates/individual/create.html:284
 msgid "Order name:"
 msgstr ""
 
-#: templates/department/create_order.html:94
+#: templates/department/create_order.html:373
 msgid "Please choose: "
 msgstr ""
 
-#: templates/department/create_order.html:104
+#: templates/department/create_order.html:383
+#: templates/individual/create.html:299
 msgid "Weight: "
 msgstr ""
 
-#: templates/department/create_order.html:110
+#: templates/department/create_order.html:389
 msgid "Attributes:"
 msgstr ""
 
-#: templates/department/create_order.html:124
+#: templates/department/create_order.html:404
+#: templates/individual/create.html:313
 msgid "Order comment:"
 msgstr ""
 
-#: templates/department/create_order.html:134
+#: templates/department/create_order.html:414
 msgid "Description"
 msgstr ""
 
+#: templates/department/create_order.html:469
+msgid "Please select a department type and enter a department name."
+msgstr ""
+
+#: templates/department/create_order.html:492
+#: templates/department/create_order.html:558
+#: templates/department/create_order.html:709
+msgid "create successful"
+msgstr ""
+
+#: templates/department/create_order.html:532
+msgid "Please input all required fields except comments."
+msgstr ""
+
+#: templates/department/create_order.html:611
+msgid "Please fill all texts."
+msgstr ""
+
+#: templates/department/create_order.html:678
+msgid "Please fill all information."
+msgstr ""
+
+#: templates/department/create_order.html:746
+#: templates/individual/create.html:815
+msgid "Are you sure to delete this template?"
+msgstr ""
+
+#: templates/department/create_order.html:749
+#: templates/department/create_order.html:825
+#: templates/department/edit_order.html:137
+#: templates/individual/create.html:818 templates/individual/create.html:892
+#: templates/individual/recognize.html:448
+msgid "Yes!"
+msgstr ""
+
+#: templates/department/create_order.html:763
+#: templates/department/edit_order.html:150
+#: templates/individual/create.html:830
+msgid "Delete successful"
+msgstr ""
+
+#: templates/department/create_order.html:776
+#: templates/department/create_order.html:790
+#: templates/department/edit_order.html:163
+#: templates/department/edit_order.html:177
+#: templates/individual/create.html:843 templates/individual/create.html:857
+msgid "Delete failed"
+msgstr ""
+
+#: templates/department/create_order.html:805
+#: templates/department/edit_order.html:192
+#: templates/individual/create.html:872
+msgid "Deletion cancelled"
+msgstr ""
+
+#: templates/department/create_order.html:806
+#: templates/department/create_order.html:858
+#: templates/individual/create.html:873 templates/individual/create.html:925
+msgid "Your template is safe"
+msgstr ""
+
+#: templates/department/create_order.html:822
+#: templates/individual/create.html:889
+msgid "Are you sure to use this template?"
+msgstr ""
+
+#: templates/department/create_order.html:844
+#: templates/individual/create.html:911
+msgid "Apply successfully"
+msgstr ""
+
+#: templates/department/create_order.html:857
+#: templates/individual/create.html:924
+msgid "Use cancelled"
+msgstr ""
+
+#: templates/department/dashboard.html:81 templates/waste/ratio_order.html:100
+#: templates/waste/ratio_order.html:134 templates/waste/ratio_order2.html:80
+#: templates/waste/ratio_order2.html:103
+msgid "Ratio Dashboard"
+msgstr ""
+
+#: templates/department/dashboard.html:89
+msgid "7 days order"
+msgstr ""
+
+#: templates/department/dashboard.html:100
+msgid "types clarify"
+msgstr ""
+
+#: templates/department/dashboard.html:109 templates/department/index.html:33
+msgid "Dashboard"
+msgstr ""
+
+#: templates/department/dashboard.html:122
+msgid "days order"
+msgstr ""
+
+#: templates/department/dashboard.html:168
+msgid "Order Count"
+msgstr ""
+
+#: templates/department/dashboard.html:214
+#: templates/department/view_order.html:29
+#: templates/department/view_order.html:63
+#: templates/individual/contribution.html:385
+#: templates/waste/approval_order.html:218
+#: templates/waste/approval_order2.html:170
+msgid "Confirmed"
+msgstr ""
+
+#: templates/department/dashboard.html:235
+msgid "Whole"
+msgstr ""
+
+#: templates/department/edit_order.html:7
+msgid "Edit Order"
+msgstr ""
+
 #: templates/department/edit_order.html:13
-#: templates/waste/approval_order.html:53
-#: templates/waste/approval_order.html:82
+#: templates/waste/approval_order.html:108
+#: templates/waste/approval_order.html:140
+#: templates/waste/approval_order2.html:70
+#: templates/waste/approval_order2.html:100
 msgid "Name:"
 msgstr ""
 
 #: templates/department/edit_order.html:16
-#: templates/waste/approval_order.html:61
-#: templates/waste/approval_order.html:90
+#: templates/waste/approval_order.html:116
+#: templates/waste/approval_order.html:148
+#: templates/waste/approval_order2.html:76
+#: templates/waste/approval_order2.html:106
 msgid "Date:"
 msgstr ""
 
 #: templates/department/edit_order.html:18
-#: templates/waste/approval_order.html:63
-#: templates/waste/approval_order.html:92
+#: templates/waste/approval_order.html:118
+#: templates/waste/approval_order.html:150
+#: templates/waste/approval_order2.html:78
+#: templates/waste/approval_order2.html:108
 msgid "Weight:"
 msgstr ""
 
 #: templates/department/edit_order.html:20
-#: templates/waste/approval_order.html:65
-#: templates/waste/approval_order.html:96
+#: templates/waste/approval_order.html:120
+#: templates/waste/approval_order.html:154
+#: templates/waste/approval_order2.html:80
+#: templates/waste/approval_order2.html:112
 msgid "Attribution:"
 msgstr ""
 
 #: templates/department/edit_order.html:22
-#: templates/waste/approval_order.html:67
-#: templates/waste/approval_order.html:98
+#: templates/waste/approval_order.html:125
+#: templates/waste/approval_order.html:159
+#: templates/waste/approval_order2.html:85
+#: templates/waste/approval_order2.html:117
 msgid "Comment:"
 msgstr ""
 
 #: templates/department/edit_order.html:40
 #: templates/department/view_order.html:51
-#: templates/waste/approval_order.html:174
+#: templates/waste/approval_order.html:240
+#: templates/waste/approval_order2.html:192
 msgid "Tables"
 msgstr ""
 
-#: templates/department/edit_order.html:49
+#: templates/department/edit_order.html:51
 msgid "OID"
 msgstr ""
 
-#: templates/department/edit_order.html:51
-#: templates/department/view_order.html:84
-msgid "Name"
-msgstr ""
-
-#: templates/department/edit_order.html:53
-#: templates/department/view_order.html:86
-#: templates/waste/approval_order.html:189
-#: templates/waste/approval_order.html:324
+#: templates/department/edit_order.html:55
+#: templates/department/view_order.html:88
+#: templates/individual/contribution.html:410
+#: templates/waste/approval_order.html:257
+#: templates/waste/approval_order.html:402
+#: templates/waste/approval_order2.html:208
+#: templates/waste/approval_order2.html:375
 msgid "Date"
 msgstr ""
 
-#: templates/department/edit_order.html:56
-#: templates/department/view_order.html:89
+#: templates/department/edit_order.html:58
+#: templates/department/view_order.html:91
+#: templates/individual/contribution.html:413
 msgid "Type"
 msgstr ""
 
-#: templates/department/edit_order.html:59
-#: templates/department/view_order.html:92
-#: templates/waste/approval_order.html:232
+#: templates/department/edit_order.html:61
+#: templates/department/view_order.html:94
+#: templates/individual/contribution.html:416
+#: templates/waste/approval_order.html:303
+#: templates/waste/approval_order2.html:262
 msgid "Weight"
 msgstr ""
 
-#: templates/department/edit_order.html:62
-#: templates/waste/approval_order.html:192
-#: templates/waste/approval_order.html:238
-#: templates/waste/approval_order.html:285
-#: templates/waste/approval_order.html:327
+#: templates/department/edit_order.html:64
+#: templates/waste/approval_order.html:260
+#: templates/waste/approval_order.html:309
+#: templates/waste/approval_order.html:359
+#: templates/waste/approval_order2.html:212
+#: templates/waste/approval_order2.html:269
+#: templates/waste/approval_order2.html:329
 msgid "Operation"
 msgstr ""
 
-#: templates/department/edit_order.html:119
+#: templates/department/edit_order.html:134
 msgid "Are you sure to delete this order?"
 msgstr ""
 
-#: templates/department/edit_order.html:125
-msgid "Delete success"
+#: templates/department/edit_order.html:193
+msgid "Your order is safe"
 msgstr ""
 
-#: templates/department/edit_order.html:128
-#: templates/department/edit_order.html:133
-msgid "Delete failed"
-msgstr ""
-
-#: templates/department/edit_order.html:172
+#: templates/department/edit_order.html:235
 msgid "Please fill in all required fields"
 msgstr ""
 
-#: templates/department/edit_order.html:189
+#: templates/department/edit_order.html:261
 msgid "Edit success"
 msgstr ""
 
-#: templates/department/edit_order.html:203
-#: templates/department/edit_order.html:208
+#: templates/department/edit_order.html:284
+#: templates/department/edit_order.html:297
 msgid "Edit failed"
 msgstr ""
 
-#: templates/department/index.html:21
+#: templates/department/index.html:23
 msgid "Edit"
 msgstr ""
 
-#: templates/department/index.html:25
+#: templates/department/index.html:28
 msgid "History"
 msgstr ""
 
-#: templates/department/index.html:29
-msgid "Dashboard"
-msgstr ""
-
-#: templates/department/index.html:35 templates/waste/index.html:32
+#: templates/department/index.html:39 templates/waste/index.html:49
 msgid "Logout"
 msgstr ""
 
+#: templates/department/view_order.html:7
+msgid "View Order"
+msgstr ""
+
 #: templates/department/view_order.html:17
-#: templates/waste/approval_order.html:140
+#: templates/waste/approval_order.html:206
+#: templates/waste/approval_order2.html:158
 msgid "Total statistics"
 msgstr ""
 
-#: templates/department/view_order.html:23
-#: templates/department/view_order.html:58
-#: templates/waste/approval_order.html:146
-msgid "Unconfirmed"
-msgstr ""
-
-#: templates/department/view_order.html:29
-#: templates/department/view_order.html:63
-#: templates/waste/approval_order.html:152
-msgid "Confirmed"
-msgstr ""
-
-#: templates/department/view_order.html:35
-#: templates/department/view_order.html:68
-#: templates/waste/approval_order.html:158
-msgid "Processing"
-msgstr ""
-
-#: templates/department/view_order.html:41
-#: templates/department/view_order.html:73
-#: templates/waste/approval_order.html:164
-msgid "Finished"
-msgstr ""
-
-#: templates/department/view_order.html:83
-#: templates/waste/approval_order.html:182
-#: templates/waste/approval_order.html:226
-#: templates/waste/approval_order.html:273
-#: templates/waste/approval_order.html:315
+#: templates/department/view_order.html:85
+#: templates/individual/contribution.html:407
+#: templates/waste/approval_order.html:250
+#: templates/waste/approval_order.html:297
+#: templates/waste/approval_order.html:347
+#: templates/waste/approval_order.html:393
+#: templates/waste/approval_order2.html:202
+#: templates/waste/approval_order2.html:256
+#: templates/waste/approval_order2.html:314
+#: templates/waste/approval_order2.html:370
 msgid "Serial num"
 msgstr ""
 
-#: templates/department/view_order.html:95
+#: templates/department/view_order.html:97
+#: templates/individual/contribution.html:422
 msgid "Status"
 msgstr ""
 
-#: templates/waste/approval_order.html:55
-#: templates/waste/approval_order.html:84
+#: templates/government/base.html:60
+msgid "Please login to use functions!"
+msgstr ""
+
+#: templates/government/base.html:96 templates/government/base.html:117
+#: templates/individual/base.html:73 templates/individual/base.html:94
+msgid "Are you sure to logout?"
+msgstr ""
+
+#: templates/government/forecast.html:64
+msgid "gov-forecast"
+msgstr ""
+
+#: templates/government/forecast.html:75
+msgid "Duration forcast"
+msgstr ""
+
+#: templates/government/forecast.html:85 templates/government/forecast.html:109
+msgid "The chart below is for "
+msgstr ""
+
+#: templates/government/forecast.html:85 templates/government/forecast.html:109
+msgid "reference only"
+msgstr ""
+
+#: templates/government/forecast.html:85 templates/government/forecast.html:109
+msgid "The"
+msgstr ""
+
+#: templates/government/forecast.html:85
+msgid ""
+"average completion\n"
+"                    duration"
+msgstr ""
+
+#: templates/government/forecast.html:86
+msgid "of a certain waste"
+msgstr ""
+
+#: templates/government/forecast.html:87
+msgid "in"
+msgstr ""
+
+#: templates/government/forecast.html:87 templates/government/forecast.html:112
+msgid "30 days"
+msgstr ""
+
+#: templates/government/forecast.html:87 templates/government/forecast.html:112
+msgid "is calculated and the completion period in the next"
+msgstr ""
+
+#: templates/government/forecast.html:88 templates/government/forecast.html:112
+msgid "5 days"
+msgstr ""
+
+#: templates/government/forecast.html:88 templates/government/forecast.html:113
+msgid "is predicted"
+msgstr ""
+
+#: templates/government/forecast.html:99
+msgid "Weight forcast"
+msgstr ""
+
+#: templates/government/forecast.html:109
+msgid ""
+"average completion\n"
+"                    weight"
+msgstr ""
+
+#: templates/government/forecast.html:111
+msgid "of a certain waste in"
+msgstr ""
+
+#: templates/government/forecast.html:251
+msgid "No duration"
+msgstr ""
+
+#: templates/government/forecast.html:252
+#: templates/government/forecast.html:267
+msgid "No data for this type of waste"
+msgstr ""
+
+#: templates/government/forecast.html:255
+#: templates/government/forecast.html:270
+msgid "OK"
+msgstr ""
+
+#: templates/government/forecast.html:266
+msgid "No weight"
+msgstr ""
+
+#: templates/government/free_proportion.html:93
+msgid "gov-portion"
+msgstr ""
+
+#: templates/government/free_proportion.html:105
+msgid "Change proportion"
+msgstr ""
+
+#: templates/government/free_proportion.html:107
+msgid "upload proportion"
+msgstr ""
+
+#: templates/government/free_proportion.html:110
+msgid "Below is a list of"
+msgstr ""
+
+#: templates/government/free_proportion.html:110
+msgid "21 types of waste"
+msgstr ""
+
+#: templates/government/free_proportion.html:110
+msgid ""
+"that our system offers, and you can help\n"
+"                    us adjust the amount of"
+msgstr ""
+
+#: templates/government/free_proportion.html:112
+msgid "free proportion"
+msgstr ""
+
+#: templates/government/free_proportion.html:112
+msgid "we offer to the public, expressed as a"
+msgstr ""
+
+#: templates/government/free_proportion.html:112
+msgid "percentage"
+msgstr ""
+
+#: templates/government/free_proportion.html:113
+msgid "The maximum acceptable"
+msgstr ""
+
+#: templates/government/free_proportion.html:114
+msgid "free level for each type of waste is"
+msgstr ""
+
+#: templates/government/free_proportion.html:114
+msgid "half"
+msgstr ""
+
+#: templates/government/free_proportion.html:206
+msgid "Update successful"
+msgstr ""
+
+#: templates/government/statistics.html:71
+msgid "gov-statistics"
+msgstr ""
+
+#: templates/government/statistics.html:82
+msgid "3D AI Prediction"
+msgstr ""
+
+#: templates/government/statistics.html:87
+msgid "This 3D chart displays the"
+msgstr ""
+
+#: templates/government/statistics.html:87
+msgid "predicted average values"
+msgstr ""
+
+#: templates/government/statistics.html:87
+msgid ""
+"for all types of waste.\n"
+"                    These calculations are based on the"
+msgstr ""
+
+#: templates/government/statistics.html:89
+msgid "weight and duration time"
+msgstr ""
+
+#: templates/government/statistics.html:90
+msgid "of all orders for each type of waste. To avoid the influence of"
+msgstr ""
+
+#: templates/government/statistics.html:91
+msgid "outliers and extreme values"
+msgstr ""
+
+#: templates/government/statistics.html:91
+msgid "relevant machine learning algorithms have been used for"
+msgstr ""
+
+#: templates/government/statistics.html:92
+msgid "centralization calculations"
+msgstr ""
+
+#: templates/government/statistics.html:104
+msgid "Annual treatment result"
+msgstr ""
+
+#: templates/government/statistics.html:109
+msgid "he chart below shows the total weight distribution of"
+msgstr ""
+
+#: templates/government/statistics.html:109
+msgid "1 types of waste in a year"
+msgstr ""
+
+#: templates/government/statistics.html:110
+msgid "include today"
+msgstr ""
+
+#: templates/government/statistics.html:111
+msgid "You can dynamically display the data intensity by pulling the "
+msgstr ""
+
+#: templates/government/statistics.html:112
+msgid "time bar"
+msgstr ""
+
+#: templates/government/statistics.html:112
+msgid "below"
+msgstr ""
+
+#: templates/government/statistics.html:179
+msgid "Annual Waste Weight Distribution"
+msgstr ""
+
+#: templates/individual/contribution.html:245
+msgid "indi-contribution"
+msgstr ""
+
+#: templates/individual/contribution.html:258
+msgid "Frequency chart"
+msgstr ""
+
+#: templates/individual/contribution.html:292
+msgid "You are planting"
+msgstr ""
+
+#: templates/individual/contribution.html:295
+msgid "trees!"
+msgstr ""
+
+#: templates/individual/contribution.html:305
+msgid "You are protecting"
+msgstr ""
+
+#: templates/individual/contribution.html:308
+msgid "kg water!"
+msgstr ""
+
+#: templates/individual/contribution.html:318
+msgid "You are purifying"
+msgstr ""
+
+#: templates/individual/contribution.html:331
+msgid "You"
+msgstr ""
+
+#: templates/individual/contribution.html:331
+msgid "are"
+msgstr ""
+
+#: templates/individual/contribution.html:331
+msgid "saving"
+msgstr ""
+
+#: templates/individual/contribution.html:334
+msgid "soils!"
+msgstr ""
+
+#: templates/individual/contribution.html:348
+msgid "You are retrenching"
+msgstr ""
+
+#: templates/individual/contribution.html:351
+msgid "energy!"
+msgstr ""
+
+#: templates/individual/contribution.html:373
+msgid "Orders"
+msgstr ""
+
+#: templates/individual/contribution.html:419
+#: templates/waste/approval_order2.html:210
+#: templates/waste/approval_order2.html:267
+#: templates/waste/approval_order2.html:326
+#: templates/waste/approval_order2.html:378
+msgid "Source"
+msgstr ""
+
+#: templates/individual/create.html:269
+msgid "indi-create"
+msgstr ""
+
+#: templates/individual/create.html:289
+msgid "Please choose one waste type: "
+msgstr ""
+
+#: templates/individual/create.html:305
+msgid "Attributes: (percentage)"
+msgstr ""
+
+#: templates/individual/create.html:317
+msgid "Your address:"
+msgstr ""
+
+#: templates/individual/create.html:336
+msgid ""
+"Middle area's button is to create a text, you need to type in, like CO2, "
+"SO4, if you want to\n"
+"                    add a new attribution, please fill all text, or "
+"right-click to delete."
+msgstr ""
+
+#: templates/individual/create.html:533
+msgid "Create successful"
+msgstr ""
+
+#: templates/individual/create.html:576
+msgid "Scan QR code to pay"
+msgstr ""
+
+#: templates/individual/create.html:598
+msgid "Verified!"
+msgstr ""
+
+#: templates/individual/create.html:599
+msgid "Your order is being processed"
+msgstr ""
+
+#: templates/individual/create.html:624
+msgid "Please input all required fields except comments"
+msgstr ""
+
+#: templates/individual/create.html:680
+msgid "Please fill all texts"
+msgstr ""
+
+#: templates/individual/create.html:747
+msgid "Please fill all information"
+msgstr ""
+
+#: templates/individual/recognize.html:273
+msgid "indi-recognition"
+msgstr ""
+
+#: templates/individual/recognize.html:284
+msgid "Upload image"
+msgstr ""
+
+#: templates/individual/recognize.html:296
+msgid "No image selected yet!"
+msgstr ""
+
+#: templates/individual/recognize.html:303
+msgid "File name here"
+msgstr ""
+
+#: templates/individual/recognize.html:308
+msgid "choose an image"
+msgstr ""
+
+#: templates/individual/recognize.html:309
+msgid "analyze it"
+msgstr ""
+
+#: templates/individual/recognize.html:317
+msgid "Result"
+msgstr ""
+
+#: templates/individual/recognize.html:321
+msgid "Uploading and analyze..."
+msgstr ""
+
+#: templates/individual/recognize.html:410
+#: templates/individual/recognize.html:435
+msgid "Please upload image file"
+msgstr ""
+
+#: templates/individual/recognize.html:445
+msgid "Are you sure to analyze this image"
+msgstr ""
+
+#: templates/individual/recognize.html:493
+msgid "Analyze failed"
+msgstr ""
+
+#: templates/individual/recognize.html:508
+msgid "Flask wrong"
+msgstr ""
+
+#: templates/individual/recognize.html:523
+msgid "Analyze cancelled"
+msgstr ""
+
+#: templates/individual/recognize.html:524
+msgid "Your information is safe"
+msgstr ""
+
+#: templates/waste/approval_order.html:110
+#: templates/waste/approval_order.html:142
 msgid "Dept-Name:"
 msgstr ""
 
-#: templates/waste/approval_order.html:57
-#: templates/waste/approval_order.html:86
+#: templates/waste/approval_order.html:112
+#: templates/waste/approval_order.html:144
 msgid "Dept-Type:"
 msgstr ""
 
-#: templates/waste/approval_order.html:59
-#: templates/waste/approval_order.html:88
+#: templates/waste/approval_order.html:114
+#: templates/waste/approval_order.html:146
+#: templates/waste/approval_order2.html:74
+#: templates/waste/approval_order2.html:104
 msgid "Waste-Type:"
 msgstr ""
 
-#: templates/waste/approval_order.html:94
+#: templates/waste/approval_order.html:122
+#: templates/waste/approval_order.html:156
+#: templates/waste/approval_order2.html:82
+#: templates/waste/approval_order2.html:114
+msgid "Address:"
+msgstr ""
+
+#: templates/waste/approval_order.html:152
+#: templates/waste/approval_order2.html:110
 msgid "Multiplier:"
 msgstr ""
 
-#: templates/waste/approval_order.html:111
+#: templates/waste/approval_order.html:172
+#: templates/waste/approval_order2.html:130
 msgid "Start-Date:"
 msgstr ""
 
-#: templates/waste/approval_order.html:113
-msgid "End-Date:"
+#: templates/waste/approval_order.html:174
+#: templates/waste/approval_order2.html:132
+msgid "Est.Date:"
 msgstr ""
 
-#: templates/waste/approval_order.html:115
+#: templates/waste/approval_order.html:176
+#: templates/waste/approval_order2.html:134
 msgid "Whole-Weight:"
 msgstr ""
 
-#: templates/waste/approval_order.html:117
+#: templates/waste/approval_order.html:178
+#: templates/waste/approval_order2.html:136
 msgid "Less-Weight:"
 msgstr ""
 
-#: templates/waste/approval_order.html:119
+#: templates/waste/approval_order.html:180
+#: templates/waste/approval_order2.html:138
 msgid "Accomplish-Rate:"
 msgstr ""
 
-#: templates/waste/approval_order.html:183
-#: templates/waste/approval_order.html:227
-#: templates/waste/approval_order.html:274
+#: templates/waste/approval_order.html:251
+#: templates/waste/approval_order.html:298
+#: templates/waste/approval_order.html:348
+#: templates/waste/approval_order2.html:203
+#: templates/waste/approval_order2.html:257
+#: templates/waste/approval_order2.html:315
 msgid "Order-Name"
 msgstr ""
 
-#: templates/waste/approval_order.html:184
-#: templates/waste/approval_order.html:316
+#: templates/waste/approval_order.html:252
+#: templates/waste/approval_order.html:394
 msgid "Dept-Name"
 msgstr ""
 
-#: templates/waste/approval_order.html:186
-#: templates/waste/approval_order.html:229
-#: templates/waste/approval_order.html:276
-#: templates/waste/approval_order.html:321
+#: templates/waste/approval_order.html:254
+#: templates/waste/approval_order.html:300
+#: templates/waste/approval_order.html:350
+#: templates/waste/approval_order.html:399
+#: templates/waste/approval_order2.html:205
+#: templates/waste/approval_order2.html:259
+#: templates/waste/approval_order2.html:317
+#: templates/waste/approval_order2.html:372
 msgid "Waste-Type"
 msgstr ""
 
-#: templates/waste/approval_order.html:235
+#: templates/waste/approval_order.html:306
+#: templates/waste/approval_order2.html:265
 msgid "Multiple"
 msgstr ""
 
-#: templates/waste/approval_order.html:279
+#: templates/waste/approval_order.html:353
+#: templates/waste/approval_order2.html:320
 msgid "Start-Date"
 msgstr ""
 
-#: templates/waste/approval_order.html:282
-msgid "End-Date"
+#: templates/waste/approval_order.html:356
+#: templates/waste/approval_order2.html:323
+msgid "Est.Date"
 msgstr ""
 
-#: templates/waste/approval_order.html:318
+#: templates/waste/approval_order.html:396
 msgid "Dept-Type"
 msgstr ""
 
-#: templates/waste/approval_order.html:599
+#: templates/waste/approval_order.html:662
+#: templates/waste/approval_order2.html:641
 msgid "Are you sure to confirm this order?"
 msgstr ""
 
-#: templates/waste/approval_order.html:605
+#: templates/waste/approval_order.html:680
+#: templates/waste/approval_order2.html:665
 msgid "Confirm success"
 msgstr ""
 
-#: templates/waste/approval_order.html:698
+#: templates/waste/approval_order.html:725
+#: templates/waste/approval_order2.html:710
+msgid "Confirmation cancelled"
+msgstr ""
+
+#: templates/waste/approval_order.html:726
+#: templates/waste/approval_order.html:893
+#: templates/waste/approval_order.html:1013
+#: templates/waste/approval_order2.html:711
+#: templates/waste/approval_order2.html:881
+#: templates/waste/approval_order2.html:1006
+msgid "order is safe"
+msgstr ""
+
+#: templates/waste/approval_order.html:782
+msgid "Multiplier updated successfully"
+msgstr ""
+
+#: templates/waste/approval_order.html:801
+#: templates/waste/approval_order2.html:784
+msgid "Please enter a valid positive number"
+msgstr ""
+
+#: templates/waste/approval_order.html:827
+#: templates/waste/approval_order2.html:809
 msgid "Are you sure to make this order processing?"
+msgstr ""
+
+#: templates/waste/approval_order.html:892
+#: templates/waste/approval_order2.html:880
+msgid "Processing cancelled"
+msgstr ""
+
+#: templates/waste/approval_order.html:951
+#: templates/waste/approval_order2.html:938
+msgid "Are you sure to make this order finished?"
+msgstr ""
+
+#: templates/waste/approval_order.html:968
+#: templates/waste/approval_order2.html:961
+msgid "Order finished success"
+msgstr ""
+
+#: templates/waste/approval_order.html:1012
+#: templates/waste/approval_order2.html:1005
+msgid "Finish cancelled"
+msgstr ""
+
+#: templates/waste/approval_order2.html:72
+#: templates/waste/approval_order2.html:102
+msgid "Source:"
+msgstr ""
+
+#: templates/waste/approval_order2.html:955
+msgid "Paid"
+msgstr ""
+
+#: templates/waste/approval_order2.html:957
+msgid "Free"
+msgstr ""
+
+#: templates/waste/capacity_dashboard.html:40
+#: templates/waste/capacity_dashboard.html:71
+msgid "Capacity Dashboard"
 msgstr ""
 
 #: templates/waste/capacity_dashboard.html:45
 msgid "Waste Storage"
 msgstr ""
 
-#: templates/waste/capacity_dashboard.html:47
+#: templates/waste/capacity_dashboard.html:55
 msgid "Processing Capacity"
 msgstr ""
 
-#: templates/waste/capacity_dashboard.html:55
-msgid "Capacity Dashboard"
+#: templates/waste/index.html:11
+msgid "Management System"
 msgstr ""
 
-#: templates/waste/index.html:18
+#: templates/waste/index.html:19
 msgid "Capacity"
 msgstr ""
 
-#: templates/waste/index.html:22
-msgid "Approval"
+#: templates/waste/index.html:25
+msgid "Approval-IN"
 msgstr ""
 
-#: templates/waste/index.html:26
-msgid "Ratio"
+#: templates/waste/index.html:32
+msgid "Approval-EX"
 msgstr ""
 
-#: templates/waste/ratio_order.html:81
-msgid "Statue Ratio"
+#: templates/waste/index.html:38
+msgid "Ratio-IN"
 msgstr ""
 
-#: templates/waste/ratio_order.html:85
-msgid "Waste Weight Ratio"
+#: templates/waste/index.html:43
+msgid "Ratio-EX"
 msgstr ""
 
-#: templates/waste/ratio_order.html:91
+#: templates/waste/ratio_order.html:107
 msgid "Department Order Ratio"
 msgstr ""
 
-#: templates/waste/ratio_order.html:95
+#: templates/waste/ratio_order.html:113
 msgid "Department Waste Weight Ratio"
 msgstr ""
 
-#: templates/waste/ratio_order.html:105
-msgid "Ratio Dashboard"
+#: templates/waste/ratio_order.html:119 templates/waste/ratio_order2.html:88
+msgid "Status Ratio"
+msgstr ""
+
+#: templates/waste/ratio_order.html:123 templates/waste/ratio_order2.html:92
+msgid "Waste Weight Ratio"
 msgstr ""
 

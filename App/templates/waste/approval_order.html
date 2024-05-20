@@ -779,7 +779,7 @@
                         success: function (res) {
                             Swal.fire({
                                 toast: true,
-                                text: 'Multiplier updated successfully.',
+                                text: '{{_("Multiplier updated successfully")}}.',
                                 icon: "success",
                                 closeOnClickOutside: true,
                                 closeOnEsc: true,
@@ -798,7 +798,7 @@
                     $this.text($this.data('originalValue'));
                     Swal.fire({
                         toast: true,
-                        text: 'Please enter a valid positive number.',
+                        text: '{{_("Please enter a valid positive number")}}.',
                         icon: "info",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -965,7 +965,7 @@
                                 if (res.message === 'successfully') {
                                     Swal.fire({
                                         toast: true,
-                                        text: 'Order finished success',
+                                        text: '{{_("Order finished success")}}',
                                         icon: "success",
                                         closeOnClickOutside: true,
                                         closeOnEsc: true,

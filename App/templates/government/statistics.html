@@ -68,7 +68,7 @@
     </script>
 {% endblock %}
 {% block title %}
-    gov-statistics
+{{ _("gov-statistics") }}
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -84,12 +84,12 @@
                 {#                    <button class="outline" id="upload-button">upload proportion</button>#}
                 {#                </div>#}
             </div>
-            <p>This 3D chart displays the <b>predicted average values</b> for all types of waste. These calculations are
-                based
-                on the <b>weight and duration time</b> of all orders for each type of waste. To avoid the
-                influence of
-                <i>outliers and extreme values</i>, relevant machine learning algorithms have been used for
-                <i>centralization calculations</i>.
+            <p>{{ _("This 3D chart displays the")}} <b>{{ _("predicted average values")}}</b> {{ _("for all types of waste.
+                    These calculations are based on the")}}
+                <b>{{ _("weight and duration time")}}</b>
+                {{ _("of all orders for each type of waste. To avoid the influence of")}}
+                <i>{{ _("outliers and extreme values")}}</i>, {{ _("relevant machine learning algorithms have been used for")}}
+                <i>{{ _("centralization calculations")}}</i>.
             </p>
             <div id="ai-pre"
                  style="width: 92%; height: 40rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;
@@ -106,9 +106,10 @@ border-radius: 0.6rem; z-index: 1">
                 {#                    <button class="outline" id="upload-button">upload proportion</button>#}
                 {#                </div>#}
             </div>
-            <p>The chart below shows the total weight distribution of <b>21 types of waste in a year.</b> (include
-                today)<br>
-                You can dynamically display the data intensity by pulling the <i>time bar</i> below
+            <p>T{{ _("he chart below shows the total weight distribution of")}} <b>2{{ _("1 types of waste in a year")}}.</b>
+                {{ _("include today")}}<br>
+                {{ _("You can dynamically display the data intensity by pulling the ")}}
+                <i>{{ _("time bar")}}</i> {{ _("below") }}
             </p>
             <div id="daily-weight"
                  style="width: 92%; height: 40rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
@@ -175,7 +176,7 @@ border-radius: 0.6rem; z-index: 1">
                 },
                 title: {
                     left: 'center',
-                    text: 'Annual Waste Weight Distribution',
+                    text: '{{_("Annual Waste Weight Distribution")}}',
                     textStyle: {
                         color: text,  // 标题颜色
                         fontStyle: 'normal',
