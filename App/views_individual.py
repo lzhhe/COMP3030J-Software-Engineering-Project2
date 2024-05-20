@@ -153,14 +153,17 @@ compound_contribution = [
     'Cd',
     'Hg',
     'Cr',
-    'Cu'
+    'Cu',
+
+    # 有机物
+    'Benzene',  # 有机物苯
+    'Phenol',  # 酚
+    'Chlorinated',  # 氯代
 ]
 simple_substance_contribution = [
 
     'CO2',
-    'Benzene',  # 有机物苯
-    'Phenol',  # 酚
-    'Chlorinated',  # 氯代
+
     'Plastics',  # 微塑料
     'NO',
     'NO2',
@@ -180,7 +183,7 @@ def contribution():
     contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
     waste_dict = {'CO2': 0,
                   'NH4': 0, 'NO3': 0, 'PO4': 0, 'SO4': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
-                  'Microplastics': 0,
+                  'Plastics': 0,
                   'NO': 0, 'NO2': 0, 'SO2': 0, 'PM10': 0, 'PM2.5': 0,
                   'Pb': 0, 'Cd': 0, 'Hg': 0, 'Cr': 0, 'Cu': 0
                   }
