@@ -52,7 +52,10 @@ def forecast():
     wastes = []
     for w in wasteTypes:
         wastes.append(w.wasteType)
-    return render_template('government/forecast.html', wasteTypes=wastes)
+    weightDataset, durationDataset, weightTrend, durationTrend = build_arima()
+    return render_template('government/forecast.html', wasteTypes=wastes,
+                           durationDataset=durationDataset, durationTrend=durationTrend, weightDataset=weightDataset,
+                           weightTrend=weightTrend)
 
 
 def buildKmeansDataset():
@@ -237,12 +240,9 @@ def build_arima():
     weightForecasts = forecastWeight(weightDataset)
     weightForecasts = {category: forecast for category, forecast in weightForecasts.items()}
 
-    print("Weight Forecasts:", weightForecasts)
-
     for category, data in weightDataset.items():
         for item in data:
             item[0] = item[0].strftime('%Y-%m-%d')
-    print("weight_dataset: ", weightDataset)
 
     weight_trend_dict = {}
     for category, forecast in weightForecasts.items():
@@ -253,13 +253,10 @@ def build_arima():
             weight_trend_dict[category].append(
                 [(datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d'), weight_forecast])
             i += 1
-    print("weight_trend_forecast: ", weight_trend_dict)
 
     timeDataset = buildTimeDataset()
     timeForecasts = forecastTime(timeDataset)
     timeForecasts = {category: forecast for category, forecast in timeForecasts.items()}
-
-    print("Time Forecasts:", timeForecasts)
 
     for category, data in timeDataset.items():
         for item in data:
@@ -268,7 +265,6 @@ def build_arima():
                 item[1] = sum(item[1]) / len(item[1])
             else:
                 item[1] = 0
-    print("time_dataset: ", timeDataset)
 
     time_trend_dict = {}
     for category, forecast in timeForecasts.items():
@@ -279,11 +275,8 @@ def build_arima():
             time_trend_dict[category].append(
                 [(datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d'), time_forecast])
             i += 1
-    print("time_trend_forecast: ", time_trend_dict)
 
-    return jsonify(
-        {"weight_dataset: ": weightDataset, "time_dataset: ": timeDataset, "weight_trend_forecast: ": weight_trend_dict,
-         "time_trend_forecast: ": time_trend_dict})
+    return weightDataset, timeDataset, weight_trend_dict, time_trend_dict
 
 
 '''更改免费份额'''

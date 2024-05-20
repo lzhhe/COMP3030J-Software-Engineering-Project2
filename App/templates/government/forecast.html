@@ -54,7 +54,10 @@
 {% block extra_js %}
     <script src="../../static/js/utils/echarts.min.js"></script>
     <script type="text/javascript">
-
+        let durationDataset = {{ durationDataset | tojson }};
+        let weightDataset = {{ weightDataset | tojson }};
+        let durationTrend = {{ durationTrend | tojson }};
+        let weightTrend = {{ weightTrend | tojson }};
     </script>
 {% endblock %}
 {% block title %}
@@ -79,12 +82,8 @@
                     </select>
                 </div>
             </div>
-            <p>This 3D chart displays the <b>predicted average values</b> for all types of waste. These calculations are
-                based
-                on the <b>weight and duration time</b> of all orders for each type of waste. To avoid the
-                influence of
-                <i>outliers and extreme values</i>, relevant machine learning algorithms have been used for
-                <i>centralization calculations</i>.
+            <p>The chart below is for <i>reference only</i>. The <i>average completion duration</i> of a certain waste
+                in <b>30 days</b> is calculated and the completion period in the next <b>5 days</b> is predicted
             </p>
             <div id="chart1"
                  style="width: 92%; height: 30rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;
@@ -105,9 +104,8 @@ border-radius: 0.6rem; z-index: 1">
                     </select>
                 </div>
             </div>
-            <p>The chart below shows the total weight distribution of <b>21 types of waste in a year.</b> (include
-                today)<br>
-                You can dynamically display the data intensity by pulling the <i>time bar</i> below
+            <p>The chart below is for <i>reference only</i>. The <i>average completion weight</i> of a certain waste in
+                <b>30 days</b> is calculated and the completion period in the next <b>5 days</b> is predicted
             </p>
             <div id="chart2"
                  style="width: 92%; height: 30rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
@@ -141,22 +139,133 @@ border-radius: 0.6rem; z-index: 1">
                 isDark = !isDark
             });
 
-            const chart1 = echarts.init(document.getElementById('chart1'));
-            const chart2 = echarts.init(document.getElementById('chart2'));
+            const chart1 = echarts.init(document.getElementById('chart1'), null, {renderer: 'canvas'});
+            const chart2 = echarts.init(document.getElementById('chart2'), null, {renderer: 'canvas'});
+
+            const select1 = $('#durationSelect');
+            const select2 = $('#weightSelect');
 
             const rootStyle = getComputedStyle(document.documentElement);
-            let color1 = rootStyle.getPropertyValue('--sky1').trim();
-            let color2 = rootStyle.getPropertyValue('--land3').trim();
-            let color3 = rootStyle.getPropertyValue('--skin2').trim();
-            let color4 = rootStyle.getPropertyValue('--land1').trim();
-
-            let c1 = rootStyle.getPropertyValue('--luotianyi1').trim();
-            let c2 = rootStyle.getPropertyValue('--luotianyi2').trim();
-            let c3 = rootStyle.getPropertyValue('--luotianyi3').trim();
-            let c4 = rootStyle.getPropertyValue('--luotianyi4').trim();
-            let c5 = rootStyle.getPropertyValue('--luotianyi5').trim();
+            let color1 = rootStyle.getPropertyValue('--sky4').trim();
+            let color2 = rootStyle.getPropertyValue('--todoback').trim();
+            let panel = rootStyle.getPropertyValue('--panel2-color').trim();
             let text = rootStyle.getPropertyValue('--dark-orange').trim();
 
+            console.log(durationDataset)
+            console.log(weightDataset)
+            console.log(durationTrend)
+            console.log(weightTrend)
+
+            function setupChart(chart, dataset, trend, color, title, x, y, key) {
+                // 根据 key 提取对应的数据
+                const selectedData = dataset[key] || [];
+                const selectedTrend = trend[key] || [];
+                const allDates = [...selectedData.map(item => item[0]), ...selectedTrend.map(item => item[0])];
+
+                const words = key.split('_');
+                title = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+
+                const options = {
+                    animationDuration: 3000,
+                    animationEasing: 'linear',
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
+                        },
+                        position: function (pt) {
+                            return [pt[0], '10%'];
+                        }
+                    },
+                    title: {
+                        left: 'center',
+                        text: title,
+                        textStyle: {
+                            color: text,  // 假设你想要标题颜色是黑色
+                            fontStyle: 'normal',
+                            fontWeight: 'bold',
+                            fontFamily: 'Arial'
+                        }
+                    },
+                    toolbox: {
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: allDates, // 时间轴数据
+                        name: x
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: y
+                    },
+                    series: [
+                        {
+                            data: allDates.map(date => {
+                                let item = selectedData.find(item => item[0] === date);
+                                return item ? [date, item[1]] : [date, null]; // 保证数据与日期对齐
+                            }),
+                            type: 'line',
+                            symbol: 'circle',
+                            name: 'Dataset'
+                        },
+                        {
+                            data: allDates.map(date => {
+                                let item = selectedTrend.find(item => item[0] === date);
+                                return item ? [date, item[1]] : [date, null]; // 保证数据与日期对齐
+                            }),
+                            type: 'line',
+                            itemStyle: {color: color}, // 突出显示的颜色
+                            symbol: 'circle',
+                            name: 'Forecast'
+                        }
+                    ]
+                };
+                chart.setOption(options, {notMerge: true});
+            }
+
+            setupChart(chart1, durationDataset, durationTrend, color1, 'Duration condition', 'Date', 'Duration', 'HEAVY_METAL_WASTEWATER');
+            setupChart(chart2, weightDataset, weightTrend, color2, 'Weight condition', 'Date', 'Weight', 'HEAVY_METAL_WASTEWATER');
+
+
+            select1.change(function () {
+                const key = select1.val();
+                if (durationDataset[key] !== undefined) {
+                    setupChart(chart1, durationDataset, durationTrend, color1, 'Duration condition', 'Date', 'Duration', key);
+                } else {
+                    Swal.fire({
+                        title: 'No duration',
+                        text: 'No data for this type of waste',
+                        icon: 'warning',
+                        confirmButtonColor: swalcolor,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+
+            select2.change(function () {
+                const key = select2.val();
+                if (weightDataset[key] !== undefined) {
+                    setupChart(chart2, weightDataset, weightTrend, color2, 'Duration condition', 'Date', 'Weight', key);
+                } else {
+                    Swal.fire({
+                        title: 'No weight',
+                        text: 'No data for this type of waste',
+                        icon: 'warning',
+                        confirmButtonColor: swalcolor,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
         });
     </script>
 {% endblock %}
