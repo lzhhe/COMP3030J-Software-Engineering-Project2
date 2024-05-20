@@ -182,10 +182,10 @@ def contribution():
     today = datetime.now()
     contribution_dict = {'tree': 0, 'water': 0, 'air': 0, 'soil': 0, 'energy': 0}
     waste_dict = {'CO2': 0,
-                  'NH4': 0, 'NO3': 0, 'PO4': 0, 'SO4': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
+                  'NH4-': 0, 'NO3-': 0, 'PO43-': 0, 'SO42-': 0, 'Benzene': 0, 'Phenol': 0, 'Chlorinated': 0,
                   'Plastics': 0,
                   'NO': 0, 'NO2': 0, 'SO2': 0, 'PM10': 0, 'PM2.5': 0,
-                  'Pb': 0, 'Cd': 0, 'Hg': 0, 'Cr': 0, 'Cu': 0
+                  'Pb2+': 0, 'Cd2+': 0, 'Hg+': 0, 'Cr6+': 0, 'Cu2+': 0
                   }
     if user is not None:
         all_orders = Order.query.filter_by(UID=uid).all()
@@ -209,8 +209,9 @@ def contribution():
                                                      compound_contribution)
                 # 更新waste_dict中的属性值
                 for attr, ratio in attribution_dict.items():
-                    if attr in waste_dict:
-                        waste_dict[attr] += weight * ratio
+                    for category in waste_dict.keys():
+                        if attr in category:
+                            waste_dict[category] += weight * ratio
             order_date = order.date
             if ((order_date.year == current_year and order_date.month <= current_month)
                     or (order_date.year == current_year - 1 and order_date.month >= current_month)):
