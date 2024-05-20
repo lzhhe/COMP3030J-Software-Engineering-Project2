@@ -781,7 +781,7 @@
                     $this.text($this.data('originalValue'));
                     Swal.fire({
                         toast: true,
-                        text: 'Please enter a valid positive number.',
+                        text: '{{_("Please enter a valid positive number")}}.',
                         icon: "info",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -952,13 +952,13 @@
                                 if (res.message === 'successfully') {
                                     let statusDotHtml = '';
                                     if (orderSource === 'External') {
-                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid">Paid</span>';
+                                        statusDotHtml = '<span class="status-dot status-blue" title="Paid">{{_("Paid")}}</span>';
                                     } else if (orderSource === 'External Free') {
-                                        statusDotHtml = '<span class="status-dot status-green" title="Free">Free</span>';
+                                        statusDotHtml = '<span class="status-dot status-green" title="Free">{{_("Free")}}</span>';
                                     }
                                     Swal.fire({
                                         toast: true,
-                                        text: 'Order finished success',
+                                        text: '{{_("Order finished success")}}',
                                         icon: "success",
                                         closeOnClickOutside: true,
                                         closeOnEsc: true,

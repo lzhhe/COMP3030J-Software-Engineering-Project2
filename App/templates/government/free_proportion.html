@@ -90,7 +90,7 @@
 {% block extra_js %}
 {% endblock %}
 {% block title %}
-    gov-portion
+{{ _("gov-portion") }}
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -104,14 +104,14 @@
                      title="Scene">
                 <h2>{{ _("Change proportion") }}</h2>
                 <div class="pico" style="display: inline-block; margin-left: 5rem">
-                    <button class="outline" id="upload-button">upload proportion</button>
+                    <button class="outline" id="upload-button">{{ _("upload proportion")}}</button>
                 </div>
             </div>
-            <p>Below is a list of <b>21 types of waste</b> that our system offers, and you can help us adjust the amount
-                of
-                <b>free proportion</b> we offer to the public, expressed as a <i>percentage</i>. The maximum acceptable
-                free level for each
-                type of waste is <i>half</i></p>
+            <p>{{ _("Below is a list of")}} <b>{{ _("21 types of waste")}}</b> {{ _("that our system offers, and you can help
+                    us adjust the amount of")}}
+                <b>{{ _("free proportion")}}</b> {{ _("we offer to the public, expressed as a")}} <i>{{ _("percentage") }}</i>.
+                {{ _("The maximum acceptable")}}
+                {{ _("free level for each type of waste is")}} <i>{{ _("half") }}</i></p>
             <div class="free-container">
                 {% for free in free_list %}
                     <div class="free-range-container pico">
@@ -203,7 +203,7 @@
                         if (response.message === "successful") {
                             Swal.fire({
                                 toast: true,
-                                text: "Update successful",
+                                text: "{{_('Update successful')}}",
                                 icon: "success",
                                 position: 'top-start',
                                 timer: 2000,

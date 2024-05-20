@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-18 21:29+0800\n"
+"POT-Creation-Date: 2024-05-20 16:33+0800\n"
 "PO-Revision-Date: 2024-03-27 14:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,201 +18,662 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: templates/login.html:26
-msgid "Login Page"
-msgstr "登录页"
-
-#: templates/login.html:31
-msgid "Choose your identity"
-msgstr "选择你的身份"
-
-#: templates/login.html:35
-msgid "Three types:"
-msgstr "三种类型："
-
-#: templates/login.html:37
-msgid "Choose…"
-msgstr "选择..."
-
-#: templates/department/index.html:11 templates/login.html:39
-msgid "Department Manager"
-msgstr "部门管理"
-
-#: templates/login.html:39
-msgid "Development"
-msgstr "部门人员"
-
-#: templates/login.html:41
+#: templates/base.html:102 templates/base.html:123 templates/base2.html:98
+#: templates/base2.html:119
 #, fuzzy
-msgid "Government Manager"
-msgstr "政府人员"
+msgid "Are you sure to logout"
+msgstr "你确定退出登录吗？"
 
-#: templates/login.html:41
-msgid "Government"
-msgstr "政府人员"
+#: templates/base.html:105 templates/base.html:126 templates/base2.html:65
+#: templates/base2.html:101 templates/base2.html:122
+#: templates/government/base.html:63 templates/government/base.html:99
+#: templates/government/base.html:120 templates/individual/base.html:76
+#: templates/individual/base.html:97
+msgid "Yes"
+msgstr "是"
 
-#: templates/login.html:43
-msgid "Waste Manager"
-msgstr "资源经理"
+#: templates/base.html:106 templates/base.html:127 templates/base2.html:66
+#: templates/base2.html:102 templates/base2.html:123
+#: templates/department/create_order.html:750
+#: templates/department/create_order.html:826
+#: templates/department/edit_order.html:138 templates/government/base.html:64
+#: templates/government/base.html:100 templates/government/base.html:121
+#: templates/individual/base.html:77 templates/individual/base.html:98
+#: templates/individual/create.html:819 templates/individual/create.html:893
+#: templates/individual/recognize.html:449
+msgid "No"
+msgstr "否"
 
-#: templates/login.html:43
-msgid "Waste"
-msgstr "资源经理"
+#: templates/base2.html:19
+msgid "W-Management"
+msgstr "废弃物管理系统"
 
-#: templates/login.html:45
-#, fuzzy
-msgid "Individual User"
-msgstr "独立个体"
+#: templates/base2.html:62
+msgid "Please login to use functions"
+msgstr "请登陆后使用"
 
-#: templates/login.html:45
-msgid "Individual user"
-msgstr "独立个体"
-
-#: templates/department/edit_order.html:28 templates/login.html:50
-#: templates/waste/approval_order.html:74
-#: templates/waste/approval_order.html:104
-#: templates/waste/approval_order.html:128
-msgid "Cancel"
-msgstr "取消"
-
-#: templates/department/edit_order.html:29 templates/login.html:51
-msgid "Confirm"
-msgstr "确认"
-
-#: templates/login.html:55 templates/login.html:82 templates/login.html:109
-msgid "Show Password"
-msgstr "展示密码"
-
-#: templates/login.html:56
-msgid "Hide Password"
-msgstr "隐藏密码"
-
-#: templates/login.html:68
-msgid "Create Account"
-msgstr "创建一个新账户"
-
-#: templates/login.html:70
-msgid "by use your email for registering"
-msgstr "通过邮箱注册"
-
-#: templates/login.html:73 templates/login.html:97 templates/login.html:160
-msgid "Username"
-msgstr "用户名"
-
-#: templates/login.html:74 templates/login.html:164
-msgid "Email"
-msgstr "邮箱"
-
-#: templates/login.html:78 templates/login.html:101
-msgid "Password"
-msgstr "密码"
-
-#: templates/login.html:84
-msgid "Choose one identity?"
-msgstr "选择一个身份？"
-
-#: templates/login.html:86
-msgid "Register"
-msgstr "注册"
-
-#: templates/login.html:94
-msgid "Enter System"
-msgstr "进入系统"
-
-#: templates/login.html:96
-msgid "by use your username and password"
-msgstr "通过用户名和密码登录"
-
-#: templates/login.html:111
-msgid "Forget Your Password?"
-msgstr "忘记密码？"
-
-#: templates/login.html:113
+#: templates/base2.html:155 templates/government/base.html:153
+#: templates/individual/base.html:130 templates/login.html:114
 msgid "Login"
 msgstr "登录"
 
-#: templates/login.html:121
-msgid "Welcome Back!"
-msgstr "欢迎回来"
+#: templates/base2.html:156 templates/department/edit_order.html:28
+#: templates/government/base.html:154 templates/individual/base.html:131
+#: templates/login.html:51 templates/waste/approval_order.html:132
+#: templates/waste/approval_order.html:165
+#: templates/waste/approval_order.html:194
+#: templates/waste/approval_order.html:666
+#: templates/waste/approval_order.html:831
+#: templates/waste/approval_order.html:955
+#: templates/waste/approval_order2.html:92
+#: templates/waste/approval_order2.html:123
+#: templates/waste/approval_order2.html:146
+#: templates/waste/approval_order2.html:645
+#: templates/waste/approval_order2.html:813
+#: templates/waste/approval_order2.html:942
+msgid "Cancel"
+msgstr "取消"
 
-#: templates/login.html:122
-msgid "Enter your personal details to use all site features"
-msgstr "输入个人信息以便使用全部功能"
+#: templates/content.html:8
+msgid "Clash studio"
+msgstr "Clash工作室"
 
-#: templates/login.html:123
-msgid "Switch to Login"
-msgstr "返回登录"
+#: templates/content.html:9 templates/footer.html:4 templates/footer1.html:4
+#: templates/footer2.html:4
+#, fuzzy
+msgid "Waste Management"
+msgstr "废弃物订单经理"
 
-#: templates/login.html:125
-msgid "Password must contain the following:"
-msgstr "密码必须包含以下字符："
+#: templates/content.html:10
+msgid "Let's recycle and protect the environment"
+msgstr "让我们循环利用，保护环境"
 
-#: templates/login.html:126
-msgid "length from"
-msgstr "长度是"
+#: templates/content.html:11
+msgid ""
+"We are committed to recycling waste, reducing carbon emissions and making"
+" the\n"
+"                            planet a better place"
+msgstr "我们致力于回收废物，减少碳排放，并使地球更美好"
 
-#: templates/login.html:128 templates/login.html:131 templates/login.html:134
-#: templates/login.html:136
-msgid "A"
-msgstr "一个"
+#: templates/content.html:22
+msgid "About us"
+msgstr "关于我们"
 
-#: templates/login.html:128
-msgid "lowercase"
-msgstr "小写"
+#: templates/content.html:23
+msgid "What are the goals and pursuits of our company"
+msgstr "我们公司的目标和追求是什么"
 
-#: templates/login.html:128 templates/login.html:131 templates/login.html:136
-msgid "letter"
-msgstr "字母"
+#: templates/content.html:24
+msgid "We have our own equipment to deal with waste"
+msgstr "我们有自己的设备来处理垃圾"
 
-#: templates/login.html:131
-msgid "uppercase"
-msgstr "大写"
+#: templates/content.html:25
+msgid ""
+"and we want to make it available to the public to help everyone protect "
+"the environment"
+msgstr "我们希望将其提供给公众，以帮助每个人自己保护环境"
 
-#: templates/login.html:134
-msgid "number"
-msgstr "数字"
+#: templates/content.html:33
+msgid ""
+"Deal with all kinds of harmful substances to reduce carbon emissions in "
+"society"
+msgstr "处理各种有害物质，减少在社会碳排放"
 
-#: templates/login.html:136
-msgid "special"
-msgstr "特殊"
+#: templates/content.html:41
+msgid "Provide a powerful waste treatment device, users can use a certain amount"
+msgstr "提供强大的废物处理装置，用户可以使用一定的份额"
 
-#: templates/login.html:143
-msgid "Hello Friend!"
-msgstr "朋友你好！"
+#: templates/content.html:49
+msgid ""
+"Reducing energy consumption and improving the efficiency of waste "
+"disposal through clear\n"
+"                            operational\n"
+"                            processes improves one-stop solutions for "
+"customers."
+msgstr "减少能源消耗，提高废物利用效率通过clear进行处置操作流程改进一站式解决方案"
 
-#: templates/login.html:144
-msgid "Register with your personal details to use all site features"
-msgstr "使用个人信息注册以便使用全部功能"
+#: templates/content.html:59
+msgid ""
+"Maximize recycling and reuse of resources and reduce environmental impact"
+" through centralized waste\n"
+"                            disposal"
+msgstr "通过集中处理废物，最大限度地回收和再利用资源，减少对环境的影响"
 
-#: templates/login.html:145
-msgid "Switch to Register"
-msgstr "前去注册"
+#: templates/content.html:68
+msgid ""
+"Dispose of waste in strict compliance with environmental protection "
+"regulations to safeguard the\n"
+"                            work environment and public health"
+msgstr "严格按照环保原则处置废物，保护地球安全，工作环境和公共卫生"
 
-#: templates/login.html:161
-msgid "Enter Username"
-msgstr "输入用户名"
+#: templates/content.html:77
+msgid ""
+"Actively fulfilling social responsibility to achieve truly efficient and "
+"sound waste disposal\n"
+"                            through projects and government oversight"
+msgstr "积极履行社会责任，通过项目和政府监督实现真正的高效和合理的废物处理通过项目和政府监督"
 
-#: templates/login.html:165
-msgid "Enter Email"
-msgstr "输入邮箱"
+#: templates/content.html:95
+msgid "Trusted For Our Services"
+msgstr "相信我们的服务"
 
-#: templates/login.html:167
-msgid "New password"
-msgstr "输入新密码"
+#: templates/content.html:96
+msgid ""
+"We will protect your data and the environment with a high degree\n"
+"                of responsibility"
+msgstr "我们将以高度责任保护您的数据和环境"
 
-#: templates/login.html:168
-msgid "Enter new password"
-msgstr "输入新密码"
+#: templates/content.html:106
+#, fuzzy
+msgid "Waste Deal"
+msgstr "废热"
 
-#: templates/login.html:171
-msgid "Retrieve Password"
-msgstr "重设密码"
+#: templates/content.html:109
+msgid ""
+"We will dispose of the waste you want to dispose of, and submitted waste "
+"orders go through an\n"
+"                            interlocking disposal process"
+msgstr "我们会处理你想处理的废物，以及提交的废物，订单通过连锁处理过程"
 
-#: templates/swiper.html:5
+#: templates/content.html:112
+msgid ""
+"Waste orders submitted by customers will pass through two interlocking "
+"stages\n"
+"                        of\n"
+"                        confirmation and disposal, depending on important"
+" attributes such as the sector from which they\n"
+"                        come, the weight, the properties of the waste, "
+"and the percentage of the waste, and will eventually\n"
+"                        be turned into non-hazardous goods and end up "
+"being recycled"
+msgstr "客户提交的废品订单将通过两道连锁确认与处置，视轻重而定属性，例如它们所在的行业来，废物的重量和性质，和浪费的百分比，并最终将变成非危险品，最后回收"
+
+#: templates/content.html:121 templates/content.html:150
+#: templates/content.html:202 templates/content.html:229
+#: templates/content.html:255
+msgid "View Detail"
+msgstr "查看细节"
+
+#: templates/content.html:131
+msgid "Tough Predict"
+msgstr "严格的预测"
+
+#: templates/content.html:134
+msgid ""
+"Based on the properties of the waste in the order we will predict for you"
+" the best way to handle it\n"
+"                            and the expected completion time"
+msgstr "根据废物的性质，我们将按顺序为您预测处理它的最好方法以及预计完成时间"
+
+#: templates/content.html:137
+msgid ""
+"Based on a detailed analysis of the attributes of the waste in your order"
+" -\n"
+"                        including, but not limited to, its weight, rate, "
+"and type of waste - our administrators will develop\n"
+"                        an optimal treatment plan for the waste - one "
+"that has undergone a rigorous Environmental Impact\n"
+"                        Assessment to ensure minimal disruption to the "
+"ecosystem while maximizing recycling and reuse of\n"
+"                        resources"
+msgstr "根据对你们订单中废品属性的详细分析包括但不限于，它的重量，速率，和废物的类型-我们的管理员将开发废物的最佳处理方案-一历了严格的环境影响评估以确保对生态系统，同时最大限度地回收和再利用资源"
+
+#: templates/content.html:142
+msgid ""
+"We will also provide you with an expected completion time, with the aim "
+"of creating a\n"
+"                            cost-effective\n"
+"                            and environmentally friendly solution, while "
+"ensuring that the production process is not affected by\n"
+"                            the accumulation of waste"
+msgstr "我们还将为您提供预期的完成时间，目的是创建一个成本效益和环保的解决方案，而确保生产过程不受的影响废物堆积”"
+
+#: templates/content.html:160
+msgid "Concl. Exhibited"
+msgstr "展示总结"
+
+#: templates/content.html:163
+msgid ""
+"Presentation of the results of the treatment and the contribution of this"
+" initiative to the\n"
+"                            environment, increasing your enthusiasm"
+msgstr "治疗结果的介绍及其贡献倡议到环境，增加你的热情"
+
+#: templates/content.html:166
+msgid ""
+"Provide efficient results of waste disposal services, our page focuses on"
+"\n"
+"                        presenting the positive impact of these results "
+"on environmental protection. Provide detailed\n"
+"                        documentation and transparent reporting for each "
+"disposal task, including the type of waste,\n"
+"                        treatment method, reuse or recycling rate, and "
+"final disposal method"
+msgstr "提供高效率的废物处理服务，本网页的重点是展示这些结果的积极影响在环境保护方面。提供详细文件和透明的报告处置任务，包括废物的种类，处理方法、再使用或再循环率最终处置方法"
+
+#: templates/content.html:184
+msgid "Hazard Analyze"
+msgstr "危害分析"
+
+#: templates/content.html:187
+msgid "Analyze waste hazards and use interesting effects to show you how"
+msgstr "分析废物危害，并使用有趣的效果向您展示"
+
+#: templates/content.html:189
+msgid ""
+"By analyzing waste hazards, we can also raise public awareness of the\n"
+"                        importance\n"
+"                        of waste disposal and environmental protection"
+msgstr "通过分析废物危害，我们也可以提高公众对环境的认识。重要性废物处理与环境保护"
+
+#: templates/content.html:192
+msgid ""
+"As a waste management organization, we understand that improper waste "
+"disposal, including but not\n"
+"                            limited to chemical, biological and physical "
+"hazards, poses a serious threat to the environment and\n"
+"                            human health. Therefore, a careful assessment"
+" of the hazards of waste is conducted to ensure that\n"
+"                            the most appropriate treatment measures are "
+"taken and to educate users on the importance of waste\n"
+"                            disposal"
+msgstr "作为一个废物管理机构，我们明白不适当的废物处置，包括但不包括仅限于化学、生物和物理危害，对环境和人类构成严重威胁人类健康。因此，仔细评估废物的危害是进行确保最合适的治疗措施是，并教育用户废物的重要性。处理"
+
+#: templates/content.html:212
+msgid "AI Guide"
+msgstr "AI指引"
+
+#: templates/content.html:215
+msgid ""
+"Our system has a separate AI Assistant plugin that helps users use the "
+"site and learn relevant\n"
+"                            specialized content"
+msgstr "我们的系统有一个独立的AI助手插件，可以帮助用户使用网站和学习相关专业内容"
+
+#: templates/content.html:218
+msgid ""
+"We have introduced an advanced AI Assistant plug-in, which not only "
+"enhances\n"
+"                        the\n"
+"                        interactivity of our website, but also provides a"
+" powerful platform for users to learn and grow -\n"
+"                        the AI Assistant plug-in provides real-time "
+"online consultation and Q&A to help users quickly solve\n"
+"                        any problems encountered in the course of using "
+"the website. At the same time AI Guide contains a\n"
+"                        rich knowledge base covering a more comprehensive"
+" range of specialized knowledge in the waste\n"
+"                        treatment industry"
+msgstr "我们推出了一个先进的人工智能助手插件，它不仅增强我们网站的互动性，同时也提供为用户提供强大的学习和成长平台AI助手插件提供实时在线咨询答疑，帮助用户快速解决使用过程中遇到的任何问题网站。同时AI指南包含一个知识库丰富，覆盖更全面废物的专业知识范围处理行业"
+
+#: templates/content.html:239
+msgid "News Share"
+msgstr "新闻分享"
+
+#: templates/content.html:242
+msgid ""
+"Offers a range of useful environmentally related news and recommended "
+"sites"
+msgstr "提供一系列有用的环保资讯及推荐的网站"
+
+#: templates/content.html:244
+msgid ""
+"We are committed to promoting environmental awareness and sustainable\n"
+"                        development. With these websites and resources "
+"not only provide us with valuable information, but\n"
+"                        also help us and our clients to stay up-to-date "
+"with the latest developments in the field of\n"
+"                        environmental protection, so that we can better "
+"serve the community and promote the development of\n"
+"                        environmental protection. Through these channels,"
+" we are able to access industry information in a\n"
+"                        timely manner and continuously improve the "
+"quality of our services, as well as educate and inspire\n"
+"                        the public to work together for a greener and "
+"more sustainable world"
+msgstr "我们致力推广环保意识和可持续发展。发展。有了这些网站和资源不仅为我们提供了有价值的信息，而且也能帮助我们和我们的客户跟上时代。随着领域的最新发展环保，让我们更好服务社会，促进发展环境保护。通过这些渠道，我们能够在短时间内获取行业信息。及时态度和持续改进我们的服务质量，以及教育和激励市民应共同努力，缔造更环保及更可持续的世界"
+
+#: templates/content.html:264
+msgid "The steps we will work"
+msgstr "我们将采取的步骤"
+
+#: templates/content.html:265
+msgid "All waste will be handled according to the following procedures"
+msgstr "所有废物将按下列程序处理"
+
+#: templates/content.html:266
+msgid ""
+"Thank you for your\n"
+"                contribution to protecting the environment"
+msgstr "谢谢你的关心为保护环境作出贡献"
+
+#: templates/content.html:274 templates/department/dashboard.html:207
+#: templates/department/view_order.html:23
+#: templates/department/view_order.html:58
+#: templates/individual/contribution.html:380
+#: templates/waste/approval_order.html:212
+#: templates/waste/approval_order2.html:164
+#, fuzzy
+msgid "Unconfirmed"
+msgstr "未确认"
+
+#: templates/content.html:278
+msgid ""
+"Orders for waste disposal are submitted with complete attribute\n"
+"                                    information, such as type, quantity, "
+"and source of the waste"
+msgstr "提交的废物处理订单带有完整的属性信息，例如类型、数量，和废物的来源"
+
+#: templates/content.html:284
+msgid ""
+"These details are crucial for determining the treatment method and\n"
+"                                    estimating costs"
+msgstr "这些细节对于确定治疗方法和治疗效果至关重要。估算成本"
+
+#: templates/content.html:290
+msgid ""
+"After submission, orders await review by administrators to ensure all\n"
+"                                    necessary\n"
+"                                    information\n"
+"                                    is provided and complies with the "
+"standards and regulations of the waste management\n"
+"                                    center"
+msgstr "提交后，订单等待管理员审查，以确保所有订单都符合要求。必要信息提供并符合《废物管理标准及规例》中心"
+
+#: templates/content.html:299
+msgid ""
+"dministrators may contact the submitter for additional details or\n"
+"                                    clarification if\n"
+"                                    needed"
+msgstr "管理员请与提交者联系以获取更多详细信息或澄清如果需要"
+
+#: templates/content.html:306
+msgid ""
+"This stage is the starting point of the process, ensuring that all\n"
+"                                    subsequent steps can\n"
+"                                    proceed smoothly"
+msgstr "这个阶段是整个过程的起点，确保所有的后续步骤可以顺利进行"
+
+#: templates/content.html:324
+msgid ""
+"Once an order is confirmed by administrators, it indicates acceptance\n"
+"                                    and readiness to begin processing the"
+" waste"
+msgstr "一旦订单被管理员确认，它表示接受准备好开始处理废物"
+
+#: templates/content.html:329
+msgid ""
+"Waste materials are collected and transported according to a\n"
+"                                    predetermined schedule"
+msgstr "废物的收集和运输都是按照一个标准进行的。预定时间表"
+
+#: templates/content.html:334
+msgid ""
+"During this stage, waste may be temporarily stored before further\n"
+"                                    processing"
+msgstr "在此阶段，废物可暂时储存，以作进一步处理。处理"
+
+#: templates/content.html:339
+msgid ""
+"Transport and storage must adhere to strict safety and environmental\n"
+"                                    protection standards to prevent "
+"pollution"
+msgstr "运输和储存必须遵守严格的安全和环保要求。防护标准防范污染"
+
+#: templates/content.html:344
+msgid ""
+"Simultaneously, the waste management center may start preparing\n"
+"                                    resources and equipment needed for "
+"processing, such as scheduling personnel and\n"
+"                                    equipment"
+msgstr "与此同时，废物管理中心可能会开始准备所需的资源和设备处理，如调度人员和设备"
+
+#: templates/content.html:355 templates/department/dashboard.html:221
+#: templates/department/view_order.html:35
+#: templates/department/view_order.html:68
+#: templates/individual/contribution.html:390
+#: templates/waste/approval_order.html:224
+#: templates/waste/approval_order2.html:176
+msgid "Processing"
+msgstr "处理中"
+
+#: templates/content.html:359
+msgid ""
+"Upon arrival at the treatment facility, waste materials begin\n"
+"                                    specialized, targeted harmless "
+"treatment"
+msgstr "到达处理设施后，废物开始专业化、针对性、无害化治疗"
+
+#: templates/content.html:364
+msgid ""
+"Treatment methods are selected based on the type and characteristics\n"
+"                                    of\n"
+"                                    the waste, which may include "
+"physical, chemical, or biological technologies"
+msgstr "根据类型和特点选择处理方法。废物，可能包括物理、化学或生物技术"
+
+#: templates/content.html:370
+msgid ""
+"The goal of this stage is to reduce or eliminate the hazardous nature\n"
+"                                    of the waste, transforming it into a "
+"form that is harmless or poses minimal harm to the\n"
+"                                    environment"
+msgstr "这一阶段的目标是减少或消除有害物质。将废物转化为对环境无害或危害最小的形式环境"
+
+#: templates/content.html:376
+msgid ""
+"Treatment must strictly follow environmental protection regulations\n"
+"                                    and\n"
+"                                    safety operation procedures to "
+"prevent secondary pollution"
+msgstr "处理必须严格按照环保规定执行。和《安全操作规程》防止二次污染"
+
+#: templates/content.html:382
+msgid ""
+"By-products such as energy recovery and metal recycling may be\n"
+"                                    generated during treatment, which can"
+" be used for further resource utilization"
+msgstr "副产品，如能源回收和金属循环利用，可能是在治疗过程中产生，可以用于进一步的资源利用"
+
+#: templates/content.html:393 templates/department/dashboard.html:228
+#: templates/department/view_order.html:41
+#: templates/department/view_order.html:73
+#: templates/individual/contribution.html:395
+#: templates/waste/approval_order.html:230
+#: templates/waste/approval_order2.html:182
+msgid "Finished"
+msgstr "已完成"
+
+#: templates/content.html:397
+msgid ""
+"Once the waste materials have undergone harmless treatment, the\n"
+"                                    process\n"
+"                                    moves to the finished stage"
+msgstr "废物一旦经过无害化处理，就会产生巨大的污染。过程移动到完成阶段"
+
+#: templates/content.html:403
+msgid ""
+"This signifies that the waste is no longer hazardous and can be safely\n"
+"                                    disposed of or utilized"
+msgstr "这意味着废物不再是危险的，可以安全地处理。处置或利用"
+
+#: templates/content.html:408
+msgid ""
+"Treated waste may be sent to landfills for final disposal or resourced\n"
+"                                    based on its characteristics"
+msgstr "经处理的废物可送往堆填区作最后处置或进行资源化处理。基于其特点"
+
+#: templates/content.html:413
+msgid ""
+"For example, metals and recyclable materials may be recovered and\n"
+"                                    reused, reducing the demand for new "
+"resources"
+msgstr "例如，金属和可回收材料可以被回收和使用。重复使用，减少对新产品的需求资源"
+
+#: templates/content.html:418
+msgid ""
+"The waste management center records and reports the treatment outcomes\n"
+"                                    to demonstrate that the waste has "
+"been properly treated according to regulations"
+msgstr "废物管理中心记录并报告处理结果。以证明废物已已按规定妥善处理"
+
+#: templates/content.html:423
+msgid ""
+"The completion of this stage marks the end of an order and provides\n"
+"                                    valuable data and experience for the "
+"waste management center to improve future\n"
+"                                    processes"
+msgstr "此阶段的完成标志着订单的结束，并提供宝贵的数据和经验废物管理中心改善未来过程"
+
+#: templates/content.html:440 templates/content.html:497
+#: templates/content.html:548
+#, fuzzy
+msgid "management"
+msgstr "管理操作"
+
+#: templates/content.html:441 templates/content.html:498
+#: templates/content.html:549
+msgid "Switch to pages to deal with waste"
+msgstr "切换到页面来处理污染物"
+
+#: templates/content.html:442 templates/content.html:499
+msgid ""
+"You can view or manage your order and check how much you are contributing"
+" to\n"
+"                        the\n"
+"                        environment"
+msgstr "您可以查看或管理您的订单，并查看您对环境的贡献"
+
+#: templates/content.html:452 templates/content.html:559
+#, fuzzy
+msgid "Creat order"
+msgstr "创建工单"
+
+#: templates/content.html:454
+msgid ""
+"Users can create stand-alone waste orders, select waste sources and "
+"attributes, and simply\n"
+"                                    operate"
+msgstr "您可以查看或管理您的订单，并查看您的贡献用户可以创建独立的废物订单，选择废物来源和属性和简单的操作到环境"
+
+#: templates/content.html:467 templates/content.html:574
+msgid "View contr"
+msgstr "查看贡献"
+
+#: templates/content.html:469
+msgid ""
+"Users can see the trend of their treated waste from hazardous to non-"
+"hazardous and can\n"
+"                                    fully\n"
+"                                    enlighten the public."
+msgstr "用户可以看到他们处理过的废物从有害到无害的趋势。危险和可以完全启迪大众。"
+
+#: templates/content.html:483 templates/content.html:589
+#, fuzzy
+msgid "Recognize waste"
+msgstr "分析污染物"
+
+#: templates/content.html:485 templates/content.html:591
+msgid "Identify types of waste and improve the efficiency of waste disposal"
+msgstr "识别废物种类，提高废物处理效率"
+
+#: templates/content.html:509 templates/content.html:604
+msgid "Projection time"
+msgstr "时间预测"
+
+#: templates/content.html:511
+msgid ""
+"The government can see the weight and hazards of different wastes "
+"produced by our company\n"
+"                                    at\n"
+"                                    different times"
+msgstr "政府可以看到不同废物的重量和危害。由我公司生产在不同的时间"
+
+#: templates/content.html:522 templates/content.html:619
+msgid "Projection weight"
+msgstr "重量预测"
+
+#: templates/content.html:524
+msgid ""
+"The government can see the company's projections of the maximum waste "
+"content capacity that\n"
+"                            the world in its current state can handle"
+msgstr "政府可以看到公司对最大浪费的预测。内容容量目前的世界可以应付"
+
+#: templates/content.html:534 templates/content.html:634
+msgid "Carbon neutral data"
+msgstr "碳足迹追踪"
+
+#: templates/content.html:536
+msgid ""
+"Governments can see our company's contribution to protecting the "
+"environment and tracking\n"
+"                            our\n"
+"                            carbon neutral footprint."
+msgstr "政府可以看到我们公司对保护地球的贡献。环境和跟踪我们碳中和足迹。"
+
+#: templates/content.html:550
+msgid ""
+"You can view or manage your order and check how much you are contributing"
+" to the\n"
+"                    environment"
+msgstr "您可以查看或管理您的订单，并查看您贡献的金额到次环境"
+
+#: templates/content.html:561
+msgid ""
+"Users can create stand-alone waste orders, select waste sources and "
+"attributes, and simply\n"
+"                                operate"
+msgstr "用户可以创建独立的废物订单，选择废物来源和属性和简单的操作"
+
+#: templates/content.html:576
+msgid ""
+"Users can see the trend of their treated waste from hazardous to non-"
+"hazardous and can fully\n"
+"                                enlighten the public"
+msgstr "用户可以看到他们处理过的废物从有害到无害的趋势。危险和完全可以启迪大众"
+
+#: templates/content.html:606
+msgid ""
+"The government can see the weight and hazards of different wastes "
+"produced by our company at\n"
+"                                different times"
+msgstr "政府可以看到不同废物的重量和危害。我公司在生产不同的时代"
+
+#: templates/content.html:621
+msgid ""
+"The government can see the company's projections of the maximum waste "
+"content capacity that the\n"
+"                        world in its current state can handle"
+msgstr "政府可以看到公司对最大浪费的预测。内容容量，即当前状态下的世界可以处理"
+
+#: templates/content.html:636
+msgid ""
+"Governments can see our company's contribution to protecting the "
+"environment and tracking our\n"
+"                        carbon neutral footprint"
+msgstr "政府可以看到我们公司对保护地球的贡献。环境和跟踪我们的碳中和足迹"
+
+#: templates/content.html:650
+msgid "hazard"
+msgstr "危害"
+
+#: templates/content.html:651
+msgid "Discussed For Waste"
+msgstr "讨论污染物"
+
+#: templates/content.html:652
+msgid ""
+"You can see the types of wastes we can handle and the\n"
+"                corresponding hazards in the form of an infinite wheeling"
+" slide"
+msgstr "你可以看到我们可以处理的废物种类和它们的价值。相应的危险以无限旋转的形式出现"
+
+#: templates/content.html:659 templates/swiper.html:5
 msgid "Heavy metal water"
 msgstr "重金属废水"
 
-#: templates/swiper.html:6
+#: templates/content.html:660 templates/swiper.html:6
 msgid ""
 "Produced from metallurgical industry, electroplating factory, mine, etc.,"
 "\n"
@@ -224,11 +685,11 @@ msgid ""
 "environment and human health."
 msgstr "产自冶金工业、电镀厂、矿山等，含有铅、镉、汞等重金属。这类废水如果未经处理直接排放，会严重污染水源，危害生态环境与人类健康。"
 
-#: templates/swiper.html:11
+#: templates/content.html:666 templates/swiper.html:11
 msgid "Exhaust gas"
 msgstr "废气"
 
-#: templates/swiper.html:12
+#: templates/content.html:667 templates/swiper.html:12
 msgid ""
 "It mainly comes from the combustion of fuel in the industrial production "
 "process,\n"
@@ -239,11 +700,11 @@ msgid ""
 "                    problems such as acid rain and greenhouse effect."
 msgstr "主要来源于工业生产过程中燃料的燃烧，包含二氧化硫、氮氧化物等有害气体。废气的排放不仅导致空气污染，还可能引起酸雨、温室效应等环境问题。"
 
-#: templates/swiper.html:18
+#: templates/content.html:673 templates/swiper.html:18
 msgid "Mineral residue"
 msgstr "矿物残渣"
 
-#: templates/swiper.html:19
+#: templates/content.html:674 templates/swiper.html:19
 msgid ""
 "It is produced during mining and mineral processing, mainly including "
 "rock\n"
@@ -254,11 +715,11 @@ msgid ""
 "                    quality."
 msgstr "在采矿和矿物加工过程中产生，主要包括岩石碎片、矿物加工副产品等。这些残渣如果不妥善处理，会占用大量土地，影响土壤和水质。"
 
-#: templates/swiper.html:25
+#: templates/content.html:680 templates/swiper.html:25
 msgid "Cutting fluid"
 msgstr "切削液"
 
-#: templates/swiper.html:26
+#: templates/content.html:681 templates/swiper.html:26
 msgid ""
 "Used in metal working to reduce temperature and friction and extend tool "
 "life.\n"
@@ -267,11 +728,11 @@ msgid ""
 "                    discharged, will pollute water and soil."
 msgstr "在金属加工中使用，以降低温度和摩擦，延长工具寿命。包含矿物油、乳化剂等成分，如果未经处理直接排放，会污染水体和土壤。"
 
-#: templates/swiper.html:31
+#: templates/content.html:686 templates/swiper.html:31
 msgid "Metal chips"
 msgstr "金属屑"
 
-#: templates/swiper.html:32
+#: templates/content.html:687 templates/swiper.html:32
 msgid ""
 "The debris and chips produced during metal processing may contain metals "
 "such as\n"
@@ -280,11 +741,11 @@ msgid ""
 "                    resources, but also may cause environmental pollution."
 msgstr "金属加工过程中产生的碎片和屑末，可能含有铁、铜、铝等金属。如果回收不当，不仅浪费资源，还可能造成环境污染。"
 
-#: templates/swiper.html:37
+#: templates/content.html:692 templates/swiper.html:37
 msgid "Plastic waste"
 msgstr "塑料"
 
-#: templates/swiper.html:38
+#: templates/content.html:693 templates/swiper.html:38
 msgid ""
 "Waste plastics produced in the manufacturing process of high-end "
 "mechanical\n"
@@ -294,11 +755,11 @@ msgid ""
 "soil and water pollution."
 msgstr "高端机械设备制造过程中产生的废弃塑料，包括零件包装、保护膜等。塑料分解缓慢，不当处理会导致严重的土壤和水体污染。"
 
-#: templates/swiper.html:43
+#: templates/content.html:698 templates/swiper.html:43
 msgid "Composite metal cutting waste"
 msgstr "复合材料切割废料"
 
-#: templates/swiper.html:44
+#: templates/content.html:699 templates/swiper.html:44
 msgid ""
 "Waste produced when cutting composite materials such as carbon fiber and "
 "glass\n"
@@ -307,11 +768,11 @@ msgid ""
 "                    to the environment if not handled properly."
 msgstr "在切割碳纤维、玻璃纤维等复合材料时产生的废料。这些废料难以降解，如果处理不当，会对环境造成长期污染。"
 
-#: templates/swiper.html:49
+#: templates/content.html:706 templates/swiper.html:49
 msgid "Waste paint fluid"
 msgstr "废漆"
 
-#: templates/swiper.html:50
+#: templates/content.html:707 templates/swiper.html:50
 msgid ""
 "Including expired paint, residual paint mist in the spraying process. "
 "Contains\n"
@@ -320,11 +781,11 @@ msgid ""
 "                    also harmful to human health."
 msgstr "包括过期漆料、喷涂过程中的残留漆雾等。含有有机溶剂和重金属，对水体和土壤造成污染，对人体健康也有害。"
 
-#: templates/swiper.html:55
+#: templates/content.html:712 templates/swiper.html:55
 msgid "Dust"
 msgstr "粉尘"
 
-#: templates/swiper.html:56
+#: templates/content.html:713 templates/swiper.html:56
 msgid ""
 "Fine particles produced during material processing, cutting, grinding, "
 "etc.\n"
@@ -333,11 +794,11 @@ msgid ""
 "                    cause harm to the human respiratory system."
 msgstr "在材料加工、切割、研磨等过程中产生的细小颗粒物。长期暴露于粉尘环境中，不仅对环境有害，还可能对人体呼吸系统造成伤害。"
 
-#: templates/swiper.html:61
+#: templates/content.html:718 templates/swiper.html:61
 msgid "Chemicals things"
 msgstr "化学品"
 
-#: templates/swiper.html:62
+#: templates/content.html:719 templates/swiper.html:62
 msgid ""
 "Waste chemicals produced in laboratories or chemical manufacturing "
 "processes,\n"
@@ -349,11 +810,11 @@ msgid ""
 "accidents"
 msgstr "实验室或化学品制造过程中产生的废弃化学物质，包括反应未完成的原料、副产品等。这些化学品如果处理不当，可能引起土壤、水体污染和火灾、爆炸等安全事故。"
 
-#: templates/swiper.html:68
+#: templates/content.html:725 templates/swiper.html:68
 msgid "Catalyzer"
 msgstr "催化剂"
 
-#: templates/swiper.html:69
+#: templates/content.html:726 templates/swiper.html:69
 msgid ""
 "A substance that accelerates the rate of a chemical reaction without "
 "being\n"
@@ -362,11 +823,11 @@ msgid ""
 "                    special treatment to prevent environmental pollution."
 msgstr "在化学反应中加速反应速率而不被消耗的物质。使用后的催化剂可能含有有害物质，需要特殊处理以防止环境污染。"
 
-#: templates/swiper.html:74
+#: templates/content.html:731 templates/swiper.html:74
 msgid "Chemical propellants"
 msgstr "化学推进剂"
 
-#: templates/swiper.html:75
+#: templates/content.html:732 templates/swiper.html:75
 msgid ""
 "Chemicals used in rockets and missiles to generate thrust. These "
 "substances are\n"
@@ -375,11 +836,11 @@ msgid ""
 "                    disposal and recycling procedures."
 msgstr "用于火箭和导弹中的化学物质，用于产生推力。这些物质对环境有极强的腐蚀性和污染性，需要严格的处置和回收程序。"
 
-#: templates/swiper.html:80
+#: templates/content.html:737 templates/swiper.html:80
 msgid "Fuel residues"
 msgstr "燃料残渣"
 
-#: templates/swiper.html:81
+#: templates/content.html:738 templates/swiper.html:81
 msgid ""
 "Waste generated during the production and use of new energy, such as "
 "biomass\n"
@@ -388,11 +849,11 @@ msgid ""
 "                    will pollute the environment"
 msgstr "新能源生产和使用过程中，如生物质能、太阳能板制造等产生的废弃物。这些残渣如果处理不当，会对环境造成污染。"
 
-#: templates/swiper.html:86
+#: templates/content.html:743 templates/swiper.html:86
 msgid "Discarded electronic components"
 msgstr "废弃电子元器件"
 
-#: templates/swiper.html:87
+#: templates/content.html:744 templates/swiper.html:87
 msgid ""
 "Including discarded chips, circuit boards, displays and other electronic\n"
 "                    equipment components. It contains heavy metals and "
@@ -400,11 +861,11 @@ msgid ""
 "                    serious threat to the environment."
 msgstr "包括废弃的芯片、电路板、显示器等电子设备部件。含有重金属和有害化学物质，对环境构成严重威胁。"
 
-#: templates/swiper.html:92
+#: templates/content.html:751 templates/swiper.html:92
 msgid "Hydraulic oils"
 msgstr "液压油"
 
-#: templates/swiper.html:93
+#: templates/content.html:752 templates/swiper.html:93
 msgid ""
 "Oils used to transmit power in machinery and equipment. If the hydraulic "
 "oil\n"
@@ -413,11 +874,11 @@ msgid ""
 "                    water and soil."
 msgstr "用于机械和设备中传递动力的油。使用后的液压油如果未经处理直接排放，会严重污染水体和土壤。"
 
-#: templates/swiper.html:98
+#: templates/content.html:757 templates/swiper.html:98
 msgid "Lubricant waste"
 msgstr "润滑油废料"
 
-#: templates/swiper.html:99
+#: templates/content.html:758 templates/swiper.html:99
 msgid ""
 "Waste lubricating oil produced during equipment maintenance, including "
 "oil, gear\n"
@@ -426,11 +887,11 @@ msgid ""
 "                    professionally treated for reuse or disposal."
 msgstr "设备维护中产生的废旧润滑油，包括机油、齿轮油等。这些废油含有有害物质，需要经过专业处理再利用或处置。"
 
-#: templates/swiper.html:104
+#: templates/content.html:763 templates/swiper.html:104
 msgid "Hazardous chemicals"
 msgstr "有害化学品"
 
-#: templates/swiper.html:105
+#: templates/content.html:764 templates/swiper.html:105
 msgid ""
 "Hazardous chemicals used in laboratories, including corrosive, toxic, "
 "flammable\n"
@@ -440,11 +901,11 @@ msgid ""
 " regulations."
 msgstr "实验室中使用的有害化学品，包括腐蚀性、毒性、易燃易爆等危险化学品。这些化学品需要严格按照危险品管理规定进行存储、使用和处置。"
 
-#: templates/swiper.html:110
+#: templates/content.html:769 templates/swiper.html:110
 msgid "Waste experimental equipment"
 msgstr "废弃实验器材"
 
-#: templates/swiper.html:111
+#: templates/content.html:770 templates/swiper.html:111
 msgid ""
 "Including damaged experimental instruments, experimental consumables that"
 " have\n"
@@ -453,12 +914,12 @@ msgid ""
 "                    require special treatment to prevent contamination."
 msgstr "包括破损的实验仪器、已经无法使用的实验耗材等。这些废弃物可能含有有害化学品残留，需要特殊处理以防止污染。"
 
-#: templates/swiper.html:116
+#: templates/content.html:775 templates/swiper.html:116
 #, fuzzy
 msgid "Waste paper"
 msgstr "废纸"
 
-#: templates/swiper.html:117
+#: templates/content.html:776 templates/swiper.html:117
 msgid ""
 "Waste paper generated in offices, schools, etc., including documents, "
 "newspapers,\n"
@@ -468,11 +929,11 @@ msgid ""
 "environmental pollution."
 msgstr "办公室、学校等场所产生的废弃纸张，包括文件、报纸、杂志等。废纸是可回收资源，但如果处理不当，会造成资源浪费和环境污染。"
 
-#: templates/swiper.html:122
+#: templates/content.html:781 templates/swiper.html:122
 msgid "Household waste"
 msgstr "生活垃圾"
 
-#: templates/swiper.html:123
+#: templates/content.html:782 templates/swiper.html:123
 msgid ""
 "Waste from household daily life, including kitchen waste, plastic, paper,"
 " etc.\n"
@@ -481,12 +942,12 @@ msgid ""
 "                    environment."
 msgstr "来自家庭日常生活的废弃物，包括厨余垃圾、塑料、纸张等。不同类型的生活垃圾需要分类处理，以减少对环境的影响。"
 
-#: templates/swiper.html:128
+#: templates/content.html:787 templates/swiper.html:128
 #, fuzzy
 msgid "Waste heat"
 msgstr "废热"
 
-#: templates/swiper.html:129
+#: templates/content.html:788 templates/swiper.html:129
 msgid ""
 "Waste heat generated during the operation of data centers, factories, "
 "etc. If not\n"
@@ -496,6 +957,355 @@ msgid ""
 "ecological balance."
 msgstr "数据中心、工厂等在运行过程中产生的余热。如果未经回收利用，这些废热不仅浪费能源，还可能导致局部环境温度升高，影响生态平衡。"
 
+#: templates/context_menu.html:5
+#, fuzzy
+msgid "Data"
+msgstr "日期"
+
+#: templates/context_menu.html:9
+msgid "Add"
+msgstr "添加"
+
+#: templates/context_menu.html:13
+msgid "Pic"
+msgstr "图片"
+
+#: templates/context_menu.html:17
+msgid "Share"
+msgstr "分享"
+
+#: templates/context_menu.html:22
+#, fuzzy
+msgid "Delete"
+msgstr "删除"
+
+#: templates/footer.html:6 templates/footer1.html:6 templates/footer2.html:6
+msgid ""
+"Waste disposal is open to the public free of charge, but the amount of "
+"processing requires users to pay\n"
+"                        a certain fee"
+msgstr "废物处置是免费向公众开放的，但额外处理需要用户支付一定的费用"
+
+#: templates/footer.html:35 templates/footer1.html:36 templates/footer2.html:36
+msgid "Quick Links"
+msgstr "快速链接"
+
+#: templates/footer.html:38
+msgid "About Us"
+msgstr "关于我们"
+
+#: templates/footer.html:41 templates/footer1.html:42 templates/footer2.html:42
+#: templates/header.html:10
+msgid "Service"
+msgstr "服务"
+
+#: templates/footer.html:44 templates/footer1.html:45 templates/footer2.html:45
+#: templates/header.html:13
+msgid "Flow"
+msgstr "流程"
+
+#: templates/footer.html:47 templates/footer1.html:48 templates/footer2.html:48
+#: templates/header.html:16
+#, fuzzy
+msgid "Manage"
+msgstr "操作"
+
+#: templates/footer.html:52 templates/footer1.html:53 templates/footer2.html:53
+msgid "Services"
+msgstr "服务"
+
+#: templates/footer.html:55
+#, fuzzy
+msgid "create order"
+msgstr "创建工单"
+
+#: templates/footer.html:58
+#, fuzzy
+msgid "view contribution"
+msgstr "查看贡献"
+
+#: templates/footer.html:61
+#, fuzzy
+msgid "recognize waste"
+msgstr "分析污染物"
+
+#: templates/footer.html:64
+msgid "project time"
+msgstr "预测时间"
+
+#: templates/footer.html:67
+#, fuzzy
+msgid "project weight"
+msgstr "预测重量"
+
+#: templates/footer.html:70
+msgid "carbon neutral data"
+msgstr "碳足迹数据"
+
+#: templates/footer.html:75 templates/footer1.html:70 templates/footer2.html:70
+#, fuzzy
+msgid "Community"
+msgstr "社区"
+
+#: templates/footer.html:79
+msgid "SDGs"
+msgstr "SDGs"
+
+#: templates/footer.html:85 templates/footer1.html:80 templates/footer2.html:80
+msgid ""
+"Green\n"
+"                        Peace"
+msgstr "Green Peace"
+
+#: templates/footer.html:96 templates/footer1.html:91 templates/footer2.html:91
+msgid "2024 Waste Management. All Rights Reserved by"
+msgstr "2024废物管理。版权所有"
+
+#: templates/footer1.html:39 templates/footer2.html:39 templates/header.html:7
+msgid "About"
+msgstr "关于"
+
+#: templates/footer1.html:56 templates/footer2.html:56 templates/header1.html:7
+#: templates/header2.html:7
+msgid "Home"
+msgstr "主页"
+
+#: templates/footer1.html:59 templates/header1.html:10
+msgid "Free portion"
+msgstr "免费比率"
+
+#: templates/footer1.html:62 templates/header1.html:13
+#, fuzzy
+msgid "Statistics"
+msgstr "数据统计"
+
+#: templates/footer1.html:65 templates/header1.html:16
+msgid "Forecast"
+msgstr "预测"
+
+#: templates/department/create_order.html:244
+#: templates/department/create_order.html:407
+#: templates/department/index.html:18 templates/footer2.html:59
+#: templates/header2.html:10 templates/individual/create.html:322
+msgid "Create"
+msgstr "创建工单"
+
+#: templates/footer2.html:62 templates/header2.html:13
+#: templates/individual/contribution.html:281
+#, fuzzy
+msgid "Contribution"
+msgstr "贡献度"
+
+#: templates/footer2.html:65 templates/header2.html:16
+msgid "Recognize"
+msgstr "分析"
+
+#: templates/header.html:19
+msgid "Contact"
+msgstr "联系"
+
+#: templates/header.html:23
+#, fuzzy
+msgid "LOGIN"
+msgstr "登录"
+
+#: templates/login.html:27
+msgid "Login Page"
+msgstr "登录页"
+
+#: templates/login.html:32
+msgid "Choose your identity"
+msgstr "选择你的身份"
+
+#: templates/login.html:36
+msgid "Three types:"
+msgstr "三种类型："
+
+#: templates/login.html:38
+msgid "Choose…"
+msgstr "选择..."
+
+#: templates/department/index.html:11 templates/login.html:40
+msgid "Department Manager"
+msgstr "部门管理"
+
+#: templates/login.html:40
+#, fuzzy
+msgid "Department"
+msgstr "部门名称"
+
+#: templates/login.html:42
+#, fuzzy
+msgid "Government Manager"
+msgstr "政府人员"
+
+#: templates/login.html:42
+msgid "Government"
+msgstr "政府人员"
+
+#: templates/login.html:44
+msgid "Waste Manager"
+msgstr "资源经理"
+
+#: templates/login.html:44 templates/waste/index.html:4
+msgid "Waste"
+msgstr "资源经理"
+
+#: templates/login.html:46
+#, fuzzy
+msgid "Individual User"
+msgstr "独立个体"
+
+#: templates/login.html:46
+msgid "Individual user"
+msgstr "独立个体"
+
+#: templates/department/edit_order.html:29 templates/login.html:52
+#: templates/waste/approval_order.html:665
+#: templates/waste/approval_order.html:830
+#: templates/waste/approval_order.html:954
+#: templates/waste/approval_order2.html:644
+#: templates/waste/approval_order2.html:812
+#: templates/waste/approval_order2.html:941
+msgid "Confirm"
+msgstr "确认"
+
+#: templates/login.html:56 templates/login.html:83 templates/login.html:110
+msgid "Show Password"
+msgstr "展示密码"
+
+#: templates/login.html:57
+msgid "Hide Password"
+msgstr "隐藏密码"
+
+#: templates/login.html:69
+msgid "Create Account"
+msgstr "创建一个新账户"
+
+#: templates/login.html:71
+msgid "by use your email for registering"
+msgstr "通过邮箱注册"
+
+#: templates/login.html:72
+#, fuzzy
+msgid "password needs"
+msgstr "密码"
+
+#: templates/login.html:74 templates/login.html:98 templates/login.html:161
+msgid "Username"
+msgstr "用户名"
+
+#: templates/login.html:75 templates/login.html:165
+msgid "Email"
+msgstr "邮箱"
+
+#: templates/login.html:79 templates/login.html:102
+msgid "Password"
+msgstr "密码"
+
+#: templates/login.html:85
+msgid "Choose one identity?"
+msgstr "选择一个身份？"
+
+#: templates/login.html:87
+msgid "Register"
+msgstr "注册"
+
+#: templates/login.html:95
+msgid "Enter System"
+msgstr "进入系统"
+
+#: templates/login.html:97
+msgid "by use your username and password"
+msgstr "通过用户名和密码登录"
+
+#: templates/login.html:112
+msgid "Forget Your Password?"
+msgstr "忘记密码？"
+
+#: templates/login.html:122
+msgid "Welcome Back!"
+msgstr "欢迎回来"
+
+#: templates/login.html:123
+msgid "Enter your personal details to use all site features"
+msgstr "输入个人信息以便使用全部功能"
+
+#: templates/login.html:124
+msgid "Switch to Login"
+msgstr "返回登录"
+
+#: templates/login.html:126
+msgid "Password must contain the following:"
+msgstr "密码必须包含以下字符："
+
+#: templates/login.html:127
+msgid "length from"
+msgstr "长度是"
+
+#: templates/login.html:129 templates/login.html:132 templates/login.html:135
+#: templates/login.html:137
+msgid "A"
+msgstr "一个"
+
+#: templates/login.html:129
+msgid "lowercase"
+msgstr "小写"
+
+#: templates/login.html:129 templates/login.html:132 templates/login.html:137
+msgid "letter"
+msgstr "字母"
+
+#: templates/login.html:132
+msgid "uppercase"
+msgstr "大写"
+
+#: templates/login.html:135
+msgid "number"
+msgstr "数字"
+
+#: templates/login.html:137
+msgid "special"
+msgstr "特殊"
+
+#: templates/login.html:144
+msgid "Hello Friend!"
+msgstr "朋友你好！"
+
+#: templates/login.html:145
+msgid "Register with your personal details to use all site features"
+msgstr "使用个人信息注册以便使用全部功能"
+
+#: templates/login.html:146
+msgid "Switch to Register"
+msgstr "前去注册"
+
+#: templates/login.html:162
+msgid "Enter Username"
+msgstr "输入用户名"
+
+#: templates/login.html:166
+msgid "Enter Email"
+msgstr "输入邮箱"
+
+#: templates/login.html:168
+msgid "New password"
+msgstr "输入新密码"
+
+#: templates/login.html:169
+msgid "Enter new password"
+msgstr "输入新密码"
+
+#: templates/login.html:172
+msgid "Retrieve Password"
+msgstr "重设密码"
+
+#: templates/progress_bar.html:2 templates/progress_bar.html:3
+#: templates/progress_bar.html:4 templates/progress_bar.html:5
+#, fuzzy
+msgid "step"
+msgstr "资源经理"
+
 #: templates/switch.html:4
 msgid "Language_Switch"
 msgstr "语言切换"
@@ -504,424 +1314,1171 @@ msgstr "语言切换"
 msgid "Theme_Switch"
 msgstr "主题切换"
 
-#: templates/department/create_order.html:17
+#: templates/department/create_order.html:195
+#: templates/department/create_order.html:365
+#: templates/individual/create.html:280
+msgid "Create Order"
+msgstr "创建工单"
+
+#: templates/department/create_order.html:201
 msgid "Please create a department"
 msgstr "请创建一种部门"
 
-#: templates/department/create_order.html:22
+#: templates/department/create_order.html:206
 msgid "Metallurgy"
 msgstr "冶金类"
 
-#: templates/department/create_order.html:27
+#: templates/department/create_order.html:211
 msgid "Equipment Manufacturing"
 msgstr "高端机械制造类"
 
-#: templates/department/create_order.html:31
+#: templates/department/create_order.html:215
 msgid "Composite Material"
 msgstr "复合材料类"
 
-#: templates/department/create_order.html:35
+#: templates/department/create_order.html:219
 msgid "New Energy"
 msgstr "新能源类"
 
-#: templates/department/create_order.html:39
+#: templates/department/create_order.html:223
 msgid "Automation System"
 msgstr "自动化系统类"
 
-#: templates/department/create_order.html:43
+#: templates/department/create_order.html:227
 #, fuzzy
 msgid "Equipment Maintenance"
 msgstr "设备维护类"
 
-#: templates/department/create_order.html:47
+#: templates/department/create_order.html:231
 msgid "Laboratory"
 msgstr "实验类"
 
-#: templates/department/create_order.html:50
+#: templates/department/create_order.html:234
 msgid "Data Center"
 msgstr "数据中心类"
 
-#: templates/department/create_order.html:53
+#: templates/department/create_order.html:237
 msgid "Office"
 msgstr "办公类"
 
-#: templates/department/create_order.html:54
+#: templates/department/create_order.html:238
 #, fuzzy
 msgid "Department name:"
 msgstr "部门名称"
 
-#: templates/department/create_order.html:57
+#: templates/department/create_order.html:241
 #, fuzzy
 msgid "Department address:"
 msgstr "部门地址"
 
-#: templates/department/create_order.html:60
-#: templates/department/create_order.html:127
-#: templates/department/index.html:17
-msgid "Create"
-msgstr "创建工单"
+#: templates/department/create_order.html:253
+#: templates/individual/create.html:330
+msgid "Templates"
+msgstr "模板"
 
-#: templates/department/create_order.html:71
+#: templates/department/create_order.html:256
+#: templates/individual/create.html:333
+#, fuzzy
+msgid "You can choose one type of"
+msgstr "你可以去处理这些种类的废料。"
+
+#: templates/department/create_order.html:256
+#: templates/individual/create.html:333
+#, fuzzy
+msgid "waste"
+msgstr "资源经理"
+
+#: templates/department/create_order.html:256
+#: templates/individual/create.html:333
+msgid "set one"
+msgstr "设置一个"
+
+#: templates/department/create_order.html:257
+#: templates/individual/create.html:333
+#, fuzzy
+msgid "template name"
+msgstr "部门名称"
+
+#: templates/department/create_order.html:258
+#: templates/individual/create.html:334
+msgid "then add many different"
+msgstr "然后添加任意不同的"
+
+#: templates/department/create_order.html:258
+#: templates/individual/create.html:334
+#, fuzzy
+msgid "attributes"
+msgstr "属性"
+
+#: templates/department/create_order.html:258
+#: templates/individual/create.html:334
+#, fuzzy
+msgid "to create one"
+msgstr "去创建一个"
+
+#: templates/department/create_order.html:259
+#: templates/individual/create.html:334
+msgid "template"
+msgstr "模板"
+
+#: templates/department/create_order.html:261
+msgid ""
+"Middle area's button is to create a text, you need to type in, like CO2, "
+"SO4, if you want to\n"
+"                add a new attribution, please fill all text, or right-"
+"click to delete."
+msgstr ""
+"中间区域的按钮是创建文本，你需要输入，比如Co2，So4，如果你想\n"
+"的话。添加一个新的归属，请填写所有文本，或者右点击删除。"
+
+#: templates/department/create_order.html:263
+#: templates/individual/create.html:338
+msgid "You can select one template to create one order"
+msgstr "您可以选择一个模板来创建一个订单"
+
+#: templates/department/create_order.html:269
+#: templates/individual/create.html:344
+#, fuzzy
+msgid "choose one type: "
+msgstr "选择一个身份？"
+
+#: templates/department/create_order.html:302
+#: templates/department/edit_order.html:53
+#: templates/department/view_order.html:86
+#: templates/individual/contribution.html:408
+#: templates/individual/create.html:377
+#, fuzzy
+msgid "Name"
+msgstr "工单名"
+
+#: templates/department/create_order.html:304
+#: templates/individual/create.html:379
+#, fuzzy
+msgid "W-Type"
+msgstr "废弃物类型"
+
+#: templates/department/create_order.html:307
+#: templates/individual/create.html:382
+msgid "Attrs."
+msgstr "属性"
+
+#: templates/department/create_order.html:310
+#: templates/individual/create.html:385
+msgid "Opts"
+msgstr "操作"
+
+#: templates/department/create_order.html:344
 msgid "Introduction"
 msgstr "引言"
 
-#: templates/department/create_order.html:73
+#: templates/department/create_order.html:346
 msgid "Hi, the "
 msgstr "你好，"
 
-#: templates/department/create_order.html:73
+#: templates/department/create_order.html:347
 msgid " Manager, welcome."
 msgstr "管理员，欢迎。"
 
-#: templates/department/create_order.html:77
+#: templates/department/create_order.html:351
 msgid "You can choose these types to handle. "
 msgstr "你可以去处理这些种类的废料。"
 
-#: templates/department/create_order.html:78
+#: templates/department/create_order.html:352
 msgid ""
 "you need to select one of the waste types and set the required weight, "
 "attributes, and comments. "
 msgstr "你需要选择一种废物类型，设置所需重量、属性和备注。"
 
-#: templates/department/create_order.html:86
-msgid "Create Order"
-msgstr "创建工单"
-
-#: templates/department/create_order.html:89
+#: templates/department/create_order.html:368
+#: templates/individual/create.html:284
 msgid "Order name:"
 msgstr "工单名："
 
-#: templates/department/create_order.html:94
+#: templates/department/create_order.html:373
 msgid "Please choose: "
 msgstr "请选择："
 
-#: templates/department/create_order.html:104
+#: templates/department/create_order.html:383
+#: templates/individual/create.html:299
 msgid "Weight: "
 msgstr "重量："
 
-#: templates/department/create_order.html:110
+#: templates/department/create_order.html:389
 msgid "Attributes:"
 msgstr "属性："
 
-#: templates/department/create_order.html:124
+#: templates/department/create_order.html:404
+#: templates/individual/create.html:313
 msgid "Order comment:"
 msgstr "工单备注："
 
-#: templates/department/create_order.html:134
+#: templates/department/create_order.html:414
 msgid "Description"
 msgstr "废品描述"
 
+#: templates/department/create_order.html:469
+msgid "Please select a department type and enter a department name."
+msgstr "请选择部门类型并输入部门名称"
+
+#: templates/department/create_order.html:492
+#: templates/department/create_order.html:558
+#: templates/department/create_order.html:709
+#, fuzzy
+msgid "create successful"
+msgstr "创建成功"
+
+#: templates/department/create_order.html:532
+#, fuzzy
+msgid "Please input all required fields except comments."
+msgstr "请填写所有必填项"
+
+#: templates/department/create_order.html:611
+#, fuzzy
+msgid "Please fill all texts."
+msgstr "请填写所有必填项"
+
+#: templates/department/create_order.html:678
+msgid "Please fill all information."
+msgstr "请填写所有必填项"
+
+#: templates/department/create_order.html:746
+#: templates/individual/create.html:815
+#, fuzzy
+msgid "Are you sure to delete this template?"
+msgstr "你确定删除这个模板吗？"
+
+#: templates/department/create_order.html:749
+#: templates/department/create_order.html:825
+#: templates/department/edit_order.html:137
+#: templates/individual/create.html:818 templates/individual/create.html:892
+#: templates/individual/recognize.html:448
+msgid "Yes!"
+msgstr "是"
+
+#: templates/department/create_order.html:763
+#: templates/department/edit_order.html:150
+#: templates/individual/create.html:830
+#, fuzzy
+msgid "Delete successful"
+msgstr "删除成功"
+
+#: templates/department/create_order.html:776
+#: templates/department/create_order.html:790
+#: templates/department/edit_order.html:163
+#: templates/department/edit_order.html:177
+#: templates/individual/create.html:843 templates/individual/create.html:857
+msgid "Delete failed"
+msgstr "删除失败"
+
+#: templates/department/create_order.html:805
+#: templates/department/edit_order.html:192
+#: templates/individual/create.html:872
+msgid "Deletion cancelled"
+msgstr "删除取消"
+
+#: templates/department/create_order.html:806
+#: templates/department/create_order.html:858
+#: templates/individual/create.html:873 templates/individual/create.html:925
+msgid "Your template is safe"
+msgstr "您的模板很安全"
+
+#: templates/department/create_order.html:822
+#: templates/individual/create.html:889
+#, fuzzy
+msgid "Are you sure to use this template?"
+msgstr "你确定使用这个模板吗？"
+
+#: templates/department/create_order.html:844
+#: templates/individual/create.html:911
+msgid "Apply successfully"
+msgstr "应用成功"
+
+#: templates/department/create_order.html:857
+#: templates/individual/create.html:924
+#, fuzzy
+msgid "Use cancelled"
+msgstr "取消"
+
+#: templates/department/dashboard.html:81 templates/waste/ratio_order.html:100
+#: templates/waste/ratio_order.html:134 templates/waste/ratio_order2.html:80
+#: templates/waste/ratio_order2.html:103
+#, fuzzy
+msgid "Ratio Dashboard"
+msgstr "比率仪表盘"
+
+#: templates/department/dashboard.html:89
+msgid "7 days order"
+msgstr "7天工单"
+
+#: templates/department/dashboard.html:100
+msgid "types clarify"
+msgstr "类型明确"
+
+#: templates/department/dashboard.html:109 templates/department/index.html:33
+msgid "Dashboard"
+msgstr "仪表盘"
+
+#: templates/department/dashboard.html:122
+#, fuzzy
+msgid "days order"
+msgstr "天工单"
+
+#: templates/department/dashboard.html:168
+#, fuzzy
+msgid "Order Count"
+msgstr "工单数量"
+
+#: templates/department/dashboard.html:214
+#: templates/department/view_order.html:29
+#: templates/department/view_order.html:63
+#: templates/individual/contribution.html:385
+#: templates/waste/approval_order.html:218
+#: templates/waste/approval_order2.html:170
+#, fuzzy
+msgid "Confirmed"
+msgstr "已确认"
+
+#: templates/department/dashboard.html:235
+msgid "Whole"
+msgstr "全部"
+
+#: templates/department/edit_order.html:7
+#, fuzzy
+msgid "Edit Order"
+msgstr "创建工单"
+
 #: templates/department/edit_order.html:13
-#: templates/waste/approval_order.html:53
-#: templates/waste/approval_order.html:82
+#: templates/waste/approval_order.html:108
+#: templates/waste/approval_order.html:140
+#: templates/waste/approval_order2.html:70
+#: templates/waste/approval_order2.html:100
 #, fuzzy
 msgid "Name:"
 msgstr "工单名"
 
 #: templates/department/edit_order.html:16
-#: templates/waste/approval_order.html:61
-#: templates/waste/approval_order.html:90
+#: templates/waste/approval_order.html:116
+#: templates/waste/approval_order.html:148
+#: templates/waste/approval_order2.html:76
+#: templates/waste/approval_order2.html:106
 #, fuzzy
 msgid "Date:"
 msgstr "日期"
 
 #: templates/department/edit_order.html:18
-#: templates/waste/approval_order.html:63
-#: templates/waste/approval_order.html:92
+#: templates/waste/approval_order.html:118
+#: templates/waste/approval_order.html:150
+#: templates/waste/approval_order2.html:78
+#: templates/waste/approval_order2.html:108
 #, fuzzy
 msgid "Weight:"
 msgstr "重量："
 
 #: templates/department/edit_order.html:20
-#: templates/waste/approval_order.html:65
-#: templates/waste/approval_order.html:96
+#: templates/waste/approval_order.html:120
+#: templates/waste/approval_order.html:154
+#: templates/waste/approval_order2.html:80
+#: templates/waste/approval_order2.html:112
 #, fuzzy
 msgid "Attribution:"
 msgstr "属性："
 
 #: templates/department/edit_order.html:22
-#: templates/waste/approval_order.html:67
-#: templates/waste/approval_order.html:98
+#: templates/waste/approval_order.html:125
+#: templates/waste/approval_order.html:159
+#: templates/waste/approval_order2.html:85
+#: templates/waste/approval_order2.html:117
 #, fuzzy
 msgid "Comment:"
 msgstr "工单备注："
 
 #: templates/department/edit_order.html:40
 #: templates/department/view_order.html:51
-#: templates/waste/approval_order.html:174
+#: templates/waste/approval_order.html:240
+#: templates/waste/approval_order2.html:192
 msgid "Tables"
 msgstr "工单列表"
 
-#: templates/department/edit_order.html:49
+#: templates/department/edit_order.html:51
 msgid "OID"
 msgstr "工单编号"
 
-#: templates/department/edit_order.html:51
-#: templates/department/view_order.html:84
-#, fuzzy
-msgid "Name"
-msgstr "工单名"
-
-#: templates/department/edit_order.html:53
-#: templates/department/view_order.html:86
-#: templates/waste/approval_order.html:189
-#: templates/waste/approval_order.html:324
+#: templates/department/edit_order.html:55
+#: templates/department/view_order.html:88
+#: templates/individual/contribution.html:410
+#: templates/waste/approval_order.html:257
+#: templates/waste/approval_order.html:402
+#: templates/waste/approval_order2.html:208
+#: templates/waste/approval_order2.html:375
 #, fuzzy
 msgid "Date"
 msgstr "日期"
 
-#: templates/department/edit_order.html:56
-#: templates/department/view_order.html:89
+#: templates/department/edit_order.html:58
+#: templates/department/view_order.html:91
+#: templates/individual/contribution.html:413
 msgid "Type"
 msgstr "类型"
 
-#: templates/department/edit_order.html:59
-#: templates/department/view_order.html:92
-#: templates/waste/approval_order.html:232
+#: templates/department/edit_order.html:61
+#: templates/department/view_order.html:94
+#: templates/individual/contribution.html:416
+#: templates/waste/approval_order.html:303
+#: templates/waste/approval_order2.html:262
 #, fuzzy
 msgid "Weight"
 msgstr "重量"
 
-#: templates/department/edit_order.html:62
-#: templates/waste/approval_order.html:192
-#: templates/waste/approval_order.html:238
-#: templates/waste/approval_order.html:285
-#: templates/waste/approval_order.html:327
+#: templates/department/edit_order.html:64
+#: templates/waste/approval_order.html:260
+#: templates/waste/approval_order.html:309
+#: templates/waste/approval_order.html:359
+#: templates/waste/approval_order2.html:212
+#: templates/waste/approval_order2.html:269
+#: templates/waste/approval_order2.html:329
 #, fuzzy
 msgid "Operation"
 msgstr "操作"
 
-#: templates/department/edit_order.html:119
+#: templates/department/edit_order.html:134
 msgid "Are you sure to delete this order?"
 msgstr "你确定删除这个工单吗？"
 
-#: templates/department/edit_order.html:125
-msgid "Delete success"
-msgstr "删除成功"
+#: templates/department/edit_order.html:193
+msgid "Your order is safe"
+msgstr "您的工单很安全"
 
-#: templates/department/edit_order.html:128
-#: templates/department/edit_order.html:133
-msgid "Delete failed"
-msgstr "删除失败"
-
-#: templates/department/edit_order.html:172
+#: templates/department/edit_order.html:235
 msgid "Please fill in all required fields"
 msgstr "请填写所有必填项"
 
-#: templates/department/edit_order.html:189
+#: templates/department/edit_order.html:261
 msgid "Edit success"
 msgstr "修改成功"
 
-#: templates/department/edit_order.html:203
-#: templates/department/edit_order.html:208
+#: templates/department/edit_order.html:284
+#: templates/department/edit_order.html:297
 msgid "Edit failed"
 msgstr "修改失败"
 
-#: templates/department/index.html:21
+#: templates/department/index.html:23
 msgid "Edit"
 msgstr "编辑工单"
 
-#: templates/department/index.html:25
+#: templates/department/index.html:28
 msgid "History"
 msgstr "历史工单"
 
-#: templates/department/index.html:29
-msgid "Dashboard"
-msgstr "数据统计"
-
-#: templates/department/index.html:35 templates/waste/index.html:32
+#: templates/department/index.html:39 templates/waste/index.html:49
 msgid "Logout"
 msgstr "退出"
 
+#: templates/department/view_order.html:7
+#, fuzzy
+msgid "View Order"
+msgstr "创建工单"
+
 #: templates/department/view_order.html:17
-#: templates/waste/approval_order.html:140
+#: templates/waste/approval_order.html:206
+#: templates/waste/approval_order2.html:158
 msgid "Total statistics"
 msgstr "总数据统计"
 
-#: templates/department/view_order.html:23
-#: templates/department/view_order.html:58
-#: templates/waste/approval_order.html:146
-#, fuzzy
-msgid "Unconfirmed"
-msgstr "未确认"
-
-#: templates/department/view_order.html:29
-#: templates/department/view_order.html:63
-#: templates/waste/approval_order.html:152
-#, fuzzy
-msgid "Confirmed"
-msgstr "已确认"
-
-#: templates/department/view_order.html:35
-#: templates/department/view_order.html:68
-#: templates/waste/approval_order.html:158
-msgid "Processing"
-msgstr "处理中"
-
-#: templates/department/view_order.html:41
-#: templates/department/view_order.html:73
-#: templates/waste/approval_order.html:164
-msgid "Finished"
-msgstr "已完成"
-
-#: templates/department/view_order.html:83
-#: templates/waste/approval_order.html:182
-#: templates/waste/approval_order.html:226
-#: templates/waste/approval_order.html:273
-#: templates/waste/approval_order.html:315
+#: templates/department/view_order.html:85
+#: templates/individual/contribution.html:407
+#: templates/waste/approval_order.html:250
+#: templates/waste/approval_order.html:297
+#: templates/waste/approval_order.html:347
+#: templates/waste/approval_order.html:393
+#: templates/waste/approval_order2.html:202
+#: templates/waste/approval_order2.html:256
+#: templates/waste/approval_order2.html:314
+#: templates/waste/approval_order2.html:370
 msgid "Serial num"
 msgstr "序号"
 
-#: templates/department/view_order.html:95
+#: templates/department/view_order.html:97
+#: templates/individual/contribution.html:422
 msgid "Status"
 msgstr "处理状态"
 
-#: templates/waste/approval_order.html:55
-#: templates/waste/approval_order.html:84
+#: templates/government/base.html:60
+msgid "Please login to use functions!"
+msgstr "请登陆后使用功能"
+
+#: templates/government/base.html:96 templates/government/base.html:117
+#: templates/individual/base.html:73 templates/individual/base.html:94
+#, fuzzy
+msgid "Are you sure to logout?"
+msgstr "你确定退出吗？"
+
+#: templates/government/forecast.html:64
+msgid "gov-forecast"
+msgstr "政府预测"
+
+#: templates/government/forecast.html:75
+msgid "Duration forcast"
+msgstr "持续时间预测"
+
+#: templates/government/forecast.html:85 templates/government/forecast.html:109
+msgid "The chart below is for "
+msgstr "下面的图表是"
+
+#: templates/government/forecast.html:85 templates/government/forecast.html:109
+msgid "reference only"
+msgstr "仅供参考"
+
+#: templates/government/forecast.html:85 templates/government/forecast.html:109
+#, fuzzy
+msgid "The"
+msgstr "这"
+
+#: templates/government/forecast.html:85
+msgid ""
+"average completion\n"
+"                    duration"
+msgstr "平均完成度持续时间"
+
+#: templates/government/forecast.html:86
+msgid "of a certain waste"
+msgstr "关于一个废弃物"
+
+#: templates/government/forecast.html:87
+msgid "in"
+msgstr "在"
+
+#: templates/government/forecast.html:87 templates/government/forecast.html:112
+msgid "30 days"
+msgstr "30天里"
+
+#: templates/government/forecast.html:87 templates/government/forecast.html:112
+msgid "is calculated and the completion period in the next"
+msgstr "在接下来区域计算和完成"
+
+#: templates/government/forecast.html:88 templates/government/forecast.html:112
+msgid "5 days"
+msgstr "5天后"
+
+#: templates/government/forecast.html:88 templates/government/forecast.html:113
+msgid "is predicted"
+msgstr "被预测"
+
+#: templates/government/forecast.html:99
+#, fuzzy
+msgid "Weight forcast"
+msgstr "重量预测"
+
+#: templates/government/forecast.html:109
+msgid ""
+"average completion\n"
+"                    weight"
+msgstr "平均完成度重量"
+
+#: templates/government/forecast.html:111
+msgid "of a certain waste in"
+msgstr "关于一个废弃物"
+
+#: templates/government/forecast.html:251
+#, fuzzy
+msgid "No duration"
+msgstr "没有持续时间"
+
+#: templates/government/forecast.html:252
+#: templates/government/forecast.html:267
+msgid "No data for this type of waste"
+msgstr "这个类型没有数据"
+
+#: templates/government/forecast.html:255
+#: templates/government/forecast.html:270
+msgid "OK"
+msgstr "好的"
+
+#: templates/government/forecast.html:266
+#, fuzzy
+msgid "No weight"
+msgstr "没有重量"
+
+#: templates/government/free_proportion.html:93
+#, fuzzy
+msgid "gov-portion"
+msgstr "政府免费份额"
+
+#: templates/government/free_proportion.html:105
+msgid "Change proportion"
+msgstr "改变份额"
+
+#: templates/government/free_proportion.html:107
+msgid "upload proportion"
+msgstr "上传份额"
+
+#: templates/government/free_proportion.html:110
+msgid "Below is a list of"
+msgstr "下面的是一系列"
+
+#: templates/government/free_proportion.html:110
+msgid "21 types of waste"
+msgstr "21种污染物的"
+
+#: templates/government/free_proportion.html:110
+msgid ""
+"that our system offers, and you can help\n"
+"                    us adjust the amount of"
+msgstr "系统提供的，你可以适应数量"
+
+#: templates/government/free_proportion.html:112
+msgid "free proportion"
+msgstr "免费份额"
+
+#: templates/government/free_proportion.html:112
+msgid "we offer to the public, expressed as a"
+msgstr "我们向公众提供，表示为"
+
+#: templates/government/free_proportion.html:112
+#, fuzzy
+msgid "percentage"
+msgstr "百分比"
+
+#: templates/government/free_proportion.html:113
+msgid "The maximum acceptable"
+msgstr "可接受的最大值"
+
+#: templates/government/free_proportion.html:114
+msgid "free level for each type of waste is"
+msgstr "每种废物的免费水平为"
+
+#: templates/government/free_proportion.html:114
+msgid "half"
+msgstr "一半"
+
+#: templates/government/free_proportion.html:206
+#, fuzzy
+msgid "Update successful"
+msgstr "更新成功"
+
+#: templates/government/statistics.html:71
+#, fuzzy
+msgid "gov-statistics"
+msgstr "政府统计"
+
+#: templates/government/statistics.html:82
+msgid "3D AI Prediction"
+msgstr "3D AI预测"
+
+#: templates/government/statistics.html:87
+msgid "This 3D chart displays the"
+msgstr "这个3D表表示"
+
+#: templates/government/statistics.html:87
+msgid "predicted average values"
+msgstr "预测的平均值"
+
+#: templates/government/statistics.html:87
+msgid ""
+"for all types of waste.\n"
+"                    These calculations are based on the"
+msgstr "对于所有类型的废弃物。这些计算基于"
+
+#: templates/government/statistics.html:89
+msgid "weight and duration time"
+msgstr "重量和持续时间"
+
+#: templates/government/statistics.html:90
+msgid "of all orders for each type of waste. To avoid the influence of"
+msgstr "关于所有工单。为了避免影响"
+
+#: templates/government/statistics.html:91
+msgid "outliers and extreme values"
+msgstr "异常值和极值"
+
+#: templates/government/statistics.html:91
+msgid "relevant machine learning algorithms have been used for"
+msgstr "相关的机器学习算法已经被用于"
+
+#: templates/government/statistics.html:92
+msgid "centralization calculations"
+msgstr "中心化计算"
+
+#: templates/government/statistics.html:104
+msgid "Annual treatment result"
+msgstr "年处理结果"
+
+#: templates/government/statistics.html:109
+msgid "he chart below shows the total weight distribution of"
+msgstr "总权重分布如下图所示"
+
+#: templates/government/statistics.html:109
+msgid "1 types of waste in a year"
+msgstr "每种类型一年"
+
+#: templates/government/statistics.html:110
+msgid "include today"
+msgstr "包括今天"
+
+#: templates/government/statistics.html:111
+msgid "You can dynamically display the data intensity by pulling the "
+msgstr "可以动态显示数据强度通过拉动"
+
+#: templates/government/statistics.html:112
+msgid "time bar"
+msgstr "时间条"
+
+#: templates/government/statistics.html:112
+msgid "below"
+msgstr "下面的"
+
+#: templates/government/statistics.html:179
+#, fuzzy
+msgid "Annual Waste Weight Distribution"
+msgstr "年度废弃物重量分布"
+
+#: templates/individual/contribution.html:245
+#, fuzzy
+msgid "indi-contribution"
+msgstr "个人贡献"
+
+#: templates/individual/contribution.html:258
+msgid "Frequency chart"
+msgstr "频率表"
+
+#: templates/individual/contribution.html:292
+msgid "You are planting"
+msgstr "你正在种"
+
+#: templates/individual/contribution.html:295
+msgid "trees!"
+msgstr "树"
+
+#: templates/individual/contribution.html:305
+msgid "You are protecting"
+msgstr "你正在保护"
+
+#: templates/individual/contribution.html:308
+msgid "kg water!"
+msgstr "千克水"
+
+#: templates/individual/contribution.html:318
+msgid "You are purifying"
+msgstr "你正在净化"
+
+#: templates/individual/contribution.html:331
+msgid "You"
+msgstr "你"
+
+#: templates/individual/contribution.html:331
+msgid "are"
+msgstr "在"
+
+#: templates/individual/contribution.html:331
+msgid "saving"
+msgstr "保护"
+
+#: templates/individual/contribution.html:334
+msgid "soils!"
+msgstr "土地"
+
+#: templates/individual/contribution.html:348
+msgid "You are retrenching"
+msgstr "你在再利用"
+
+#: templates/individual/contribution.html:351
+#, fuzzy
+msgid "energy!"
+msgstr "新能源类"
+
+#: templates/individual/contribution.html:373
+#, fuzzy
+msgid "Orders"
+msgstr "工单"
+
+#: templates/individual/contribution.html:419
+#: templates/waste/approval_order2.html:210
+#: templates/waste/approval_order2.html:267
+#: templates/waste/approval_order2.html:326
+#: templates/waste/approval_order2.html:378
+msgid "Source"
+msgstr "来源"
+
+#: templates/individual/create.html:269
+#, fuzzy
+msgid "indi-create"
+msgstr "个人创建"
+
+#: templates/individual/create.html:289
+#, fuzzy
+msgid "Please choose one waste type: "
+msgstr "请选择一种类型："
+
+#: templates/individual/create.html:305
+#, fuzzy
+msgid "Attributes: (percentage)"
+msgstr "属性（百分比）："
+
+#: templates/individual/create.html:317
+#, fuzzy
+msgid "Your address:"
+msgstr "你的地址"
+
+#: templates/individual/create.html:336
+msgid ""
+"Middle area's button is to create a text, you need to type in, like CO2, "
+"SO4, if you want to\n"
+"                    add a new attribution, please fill all text, or "
+"right-click to delete."
+msgstr ""
+"你可以动态地显示数据强度，通过拉动中间区域的按钮是创建一个文本，你需要输入，比如Co2，So4，如果你想\n"
+"的话。添加新的归属，请填写所有文本，或者右键删除。"
+
+#: templates/individual/create.html:533
+#, fuzzy
+msgid "Create successful"
+msgstr "创建成功"
+
+#: templates/individual/create.html:576
+msgid "Scan QR code to pay"
+msgstr "扫描二维码去支付"
+
+#: templates/individual/create.html:598
+msgid "Verified!"
+msgstr "验证成功"
+
+#: templates/individual/create.html:599
+msgid "Your order is being processed"
+msgstr "你的工单正在处理中"
+
+#: templates/individual/create.html:624
+#, fuzzy
+msgid "Please input all required fields except comments"
+msgstr "请填写所有必填项"
+
+#: templates/individual/create.html:680
+#, fuzzy
+msgid "Please fill all texts"
+msgstr "请填写所有必填项"
+
+#: templates/individual/create.html:747
+msgid "Please fill all information"
+msgstr "请填写所有必填项"
+
+#: templates/individual/recognize.html:273
+msgid "indi-recognition"
+msgstr "个人分析"
+
+#: templates/individual/recognize.html:284
+msgid "Upload image"
+msgstr "上传图片"
+
+#: templates/individual/recognize.html:296
+msgid "No image selected yet!"
+msgstr "没有选中的图片"
+
+#: templates/individual/recognize.html:303
+msgid "File name here"
+msgstr "文件名"
+
+#: templates/individual/recognize.html:308
+#, fuzzy
+msgid "choose an image"
+msgstr "选择一个图片"
+
+#: templates/individual/recognize.html:309
+#, fuzzy
+msgid "analyze it"
+msgstr "分析"
+
+#: templates/individual/recognize.html:317
+msgid "Result"
+msgstr "结果"
+
+#: templates/individual/recognize.html:321
+msgid "Uploading and analyze..."
+msgstr "上传中，分析中"
+
+#: templates/individual/recognize.html:410
+#: templates/individual/recognize.html:435
+msgid "Please upload image file"
+msgstr "请上传图片"
+
+#: templates/individual/recognize.html:445
+#, fuzzy
+msgid "Are you sure to analyze this image"
+msgstr "你确定删除这个图片吗？"
+
+#: templates/individual/recognize.html:493
+#, fuzzy
+msgid "Analyze failed"
+msgstr "分析失败"
+
+#: templates/individual/recognize.html:508
+msgid "Flask wrong"
+msgstr "Flask有误"
+
+#: templates/individual/recognize.html:523
+msgid "Analyze cancelled"
+msgstr "分析取消"
+
+#: templates/individual/recognize.html:524
+msgid "Your information is safe"
+msgstr "您的信息很安全"
+
+#: templates/waste/approval_order.html:110
+#: templates/waste/approval_order.html:142
 #, fuzzy
 msgid "Dept-Name:"
 msgstr "部门名称"
 
-#: templates/waste/approval_order.html:57
-#: templates/waste/approval_order.html:86
+#: templates/waste/approval_order.html:112
+#: templates/waste/approval_order.html:144
 msgid "Dept-Type:"
 msgstr "部门类型"
 
-#: templates/waste/approval_order.html:59
-#: templates/waste/approval_order.html:88
+#: templates/waste/approval_order.html:114
+#: templates/waste/approval_order.html:146
+#: templates/waste/approval_order2.html:74
+#: templates/waste/approval_order2.html:104
 #, fuzzy
 msgid "Waste-Type:"
 msgstr "废物类型"
 
-#: templates/waste/approval_order.html:94
+#: templates/waste/approval_order.html:122
+#: templates/waste/approval_order.html:156
+#: templates/waste/approval_order2.html:82
+#: templates/waste/approval_order2.html:114
+msgid "Address:"
+msgstr "地址"
+
+#: templates/waste/approval_order.html:152
+#: templates/waste/approval_order2.html:110
 msgid "Multiplier:"
 msgstr "倍率"
 
-#: templates/waste/approval_order.html:111
+#: templates/waste/approval_order.html:172
+#: templates/waste/approval_order2.html:130
 msgid "Start-Date:"
 msgstr "开始时间"
 
-#: templates/waste/approval_order.html:113
+#: templates/waste/approval_order.html:174
+#: templates/waste/approval_order2.html:132
 #, fuzzy
-msgid "End-Date:"
-msgstr "结束时间"
+msgid "Est.Date:"
+msgstr "预计结束"
 
-#: templates/waste/approval_order.html:115
+#: templates/waste/approval_order.html:176
+#: templates/waste/approval_order2.html:134
 #, fuzzy
 msgid "Whole-Weight:"
 msgstr "总重量："
 
-#: templates/waste/approval_order.html:117
+#: templates/waste/approval_order.html:178
+#: templates/waste/approval_order2.html:136
 #, fuzzy
 msgid "Less-Weight:"
 msgstr "剩余重量："
 
-#: templates/waste/approval_order.html:119
+#: templates/waste/approval_order.html:180
+#: templates/waste/approval_order2.html:138
 msgid "Accomplish-Rate:"
 msgstr "完成率："
 
-#: templates/waste/approval_order.html:183
-#: templates/waste/approval_order.html:227
-#: templates/waste/approval_order.html:274
+#: templates/waste/approval_order.html:251
+#: templates/waste/approval_order.html:298
+#: templates/waste/approval_order.html:348
+#: templates/waste/approval_order2.html:203
+#: templates/waste/approval_order2.html:257
+#: templates/waste/approval_order2.html:315
 #, fuzzy
 msgid "Order-Name"
 msgstr "工单名："
 
-#: templates/waste/approval_order.html:184
-#: templates/waste/approval_order.html:316
+#: templates/waste/approval_order.html:252
+#: templates/waste/approval_order.html:394
 #, fuzzy
 msgid "Dept-Name"
 msgstr "部门名称"
 
-#: templates/waste/approval_order.html:186
-#: templates/waste/approval_order.html:229
-#: templates/waste/approval_order.html:276
-#: templates/waste/approval_order.html:321
+#: templates/waste/approval_order.html:254
+#: templates/waste/approval_order.html:300
+#: templates/waste/approval_order.html:350
+#: templates/waste/approval_order.html:399
+#: templates/waste/approval_order2.html:205
+#: templates/waste/approval_order2.html:259
+#: templates/waste/approval_order2.html:317
+#: templates/waste/approval_order2.html:372
 #, fuzzy
 msgid "Waste-Type"
 msgstr "废物类型"
 
-#: templates/waste/approval_order.html:235
+#: templates/waste/approval_order.html:306
+#: templates/waste/approval_order2.html:265
 msgid "Multiple"
 msgstr "倍率"
 
-#: templates/waste/approval_order.html:279
+#: templates/waste/approval_order.html:353
+#: templates/waste/approval_order2.html:320
 msgid "Start-Date"
 msgstr "开始时间"
 
-#: templates/waste/approval_order.html:282
+#: templates/waste/approval_order.html:356
+#: templates/waste/approval_order2.html:323
 #, fuzzy
-msgid "End-Date"
-msgstr "结束日期"
+msgid "Est.Date"
+msgstr "预计结束"
 
-#: templates/waste/approval_order.html:318
+#: templates/waste/approval_order.html:396
 #, fuzzy
 msgid "Dept-Type"
 msgstr "部门类型"
 
-#: templates/waste/approval_order.html:599
+#: templates/waste/approval_order.html:662
+#: templates/waste/approval_order2.html:641
 msgid "Are you sure to confirm this order?"
 msgstr "你确定确认这个工单吗？"
 
-#: templates/waste/approval_order.html:605
+#: templates/waste/approval_order.html:680
+#: templates/waste/approval_order2.html:665
 #, fuzzy
 msgid "Confirm success"
 msgstr "已确认"
 
-#: templates/waste/approval_order.html:698
+#: templates/waste/approval_order.html:725
+#: templates/waste/approval_order2.html:710
+msgid "Confirmation cancelled"
+msgstr "确认已取消"
+
+#: templates/waste/approval_order.html:726
+#: templates/waste/approval_order.html:893
+#: templates/waste/approval_order.html:1013
+#: templates/waste/approval_order2.html:711
+#: templates/waste/approval_order2.html:881
+#: templates/waste/approval_order2.html:1006
+#, fuzzy
+msgid "order is safe"
+msgstr "工单很安全"
+
+#: templates/waste/approval_order.html:782
+msgid "Multiplier updated successfully"
+msgstr "倍率更新成功"
+
+#: templates/waste/approval_order.html:801
+#: templates/waste/approval_order2.html:784
+msgid "Please enter a valid positive number"
+msgstr "请输入有效的正数"
+
+#: templates/waste/approval_order.html:827
+#: templates/waste/approval_order2.html:809
 msgid "Are you sure to make this order processing?"
 msgstr "你确定处理这个工单吗"
+
+#: templates/waste/approval_order.html:892
+#: templates/waste/approval_order2.html:880
+#, fuzzy
+msgid "Processing cancelled"
+msgstr "处理取消"
+
+#: templates/waste/approval_order.html:951
+#: templates/waste/approval_order2.html:938
+#, fuzzy
+msgid "Are you sure to make this order finished?"
+msgstr "你确定完成这个工单吗"
+
+#: templates/waste/approval_order.html:968
+#: templates/waste/approval_order2.html:961
+#, fuzzy
+msgid "Order finished success"
+msgstr "完成成功"
+
+#: templates/waste/approval_order.html:1012
+#: templates/waste/approval_order2.html:1005
+#, fuzzy
+msgid "Finish cancelled"
+msgstr "完成取消"
+
+#: templates/waste/approval_order2.html:72
+#: templates/waste/approval_order2.html:102
+msgid "Source:"
+msgstr "来源"
+
+#: templates/waste/approval_order2.html:955
+msgid "Paid"
+msgstr "支付"
+
+#: templates/waste/approval_order2.html:957
+#, fuzzy
+msgid "Free"
+msgstr "免费"
+
+#: templates/waste/capacity_dashboard.html:40
+#: templates/waste/capacity_dashboard.html:71
+#, fuzzy
+msgid "Capacity Dashboard"
+msgstr "容量统计仪表盘"
 
 #: templates/waste/capacity_dashboard.html:45
 #, fuzzy
 msgid "Waste Storage"
 msgstr "废物储存库"
 
-#: templates/waste/capacity_dashboard.html:47
+#: templates/waste/capacity_dashboard.html:55
 #, fuzzy
 msgid "Processing Capacity"
 msgstr "处理仓"
 
-#: templates/waste/capacity_dashboard.html:55
+#: templates/waste/index.html:11
 #, fuzzy
-msgid "Capacity Dashboard"
-msgstr "容量统计仪表盘"
+msgid "Management System"
+msgstr "管理系统"
 
-#: templates/waste/index.html:18
+#: templates/waste/index.html:19
 msgid "Capacity"
-msgstr "容量仪表盘"
+msgstr "容量"
 
-#: templates/waste/index.html:22
-msgid "Approval"
-msgstr "审批工单"
-
-#: templates/waste/index.html:26
-msgid "Ratio"
-msgstr "比率仪表盘"
-
-#: templates/waste/ratio_order.html:81
-msgid "Statue Ratio"
-msgstr "状态比率"
-
-#: templates/waste/ratio_order.html:85
+#: templates/waste/index.html:25
 #, fuzzy
-msgid "Waste Weight Ratio"
-msgstr "废物重量比率"
+msgid "Approval-IN"
+msgstr "审批部门工单"
 
-#: templates/waste/ratio_order.html:91
+#: templates/waste/index.html:32
+#, fuzzy
+msgid "Approval-EX"
+msgstr "审批个人工单"
+
+#: templates/waste/index.html:38
+#, fuzzy
+msgid "Ratio-IN"
+msgstr "部门比率"
+
+#: templates/waste/index.html:43
+#, fuzzy
+msgid "Ratio-EX"
+msgstr "个人比率"
+
+#: templates/waste/ratio_order.html:107
 #, fuzzy
 msgid "Department Order Ratio"
 msgstr "部门工单比率"
 
-#: templates/waste/ratio_order.html:95
+#: templates/waste/ratio_order.html:113
 msgid "Department Waste Weight Ratio"
 msgstr "部门废物重量比率"
 
-#: templates/waste/ratio_order.html:105
+#: templates/waste/ratio_order.html:119 templates/waste/ratio_order2.html:88
 #, fuzzy
-msgid "Ratio Dashboard"
-msgstr "比率仪表盘"
+msgid "Status Ratio"
+msgstr "状态比率"
+
+#: templates/waste/ratio_order.html:123 templates/waste/ratio_order2.html:92
+#, fuzzy
+msgid "Waste Weight Ratio"
+msgstr "废物重量比率"
 
 #~ msgid "Login failed"
 #~ msgstr "登录失败"
+
+#~ msgid "Development"
+#~ msgstr "部门人员"
+
+#~ msgid "End-Date:"
+#~ msgstr "结束时间"
+
+#~ msgid "End-Date"
+#~ msgstr "结束日期"
 

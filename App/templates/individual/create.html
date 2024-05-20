@@ -266,7 +266,7 @@
     <script type='text/javascript' src='../../static/js/utils/qrcode.min.js'></script>
 {% endblock %}
 {% block title %}
-    indi-create
+{{ _("indi-create") }}
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -330,12 +330,12 @@
                 <h2>{{ _("Templates") }}</h2>
             </div>
             <div class="jiangjiechuanglimoban">
-                <p>You can choose one type of <b>waste</b>, set one <b>template name</b>, then add many
-                    different <b>attributes</b> to create one <b>template</b>.
+                <p>{{ _("You can choose one type of")}} <b>{{ _("waste") }}</b>, {{ _("set one")}} <b>{{ _("template name")}}</b>,
+                    {{ _("then add many different")}} <b>{{ _("attributes") }}</b> {{ _("to create one")}} <b>{{ _("template") }}</b>.
                 </p>
-                <p>Middle area's button is to create a text, you need to type in, like CO2, SO4, if you want to
-                    add a new attribution, please fill all text, or right-click to delete.
-                    <br>You can select one template to create one order</p>
+                <p>{{ _("Middle area's button is to create a text, you need to type in, like CO2, SO4, if you want to
+                    add a new attribution, please fill all text, or right-click to delete.")}}
+                    <br>{{ _("You can select one template to create one order")}}</p>
             </div>
             <div class="chuangjianmoban">
                 <div class="quyu1 pico">
@@ -530,7 +530,7 @@
                         if (response.message === "successful") {
                             Swal.fire({
                                 toast: true,
-                                text: "Create successful",
+                                text: "{{_('Create successful')}}",
                                 icon: "success",
                                 position: 'top-start',
                                 timer: 2000,
@@ -573,7 +573,7 @@
                 // 确保二维码渲染完成后再显示 Swal 弹窗
                 setTimeout(() => {
                     Swal.fire({
-                        title: 'Scan QR code to pay',
+                        title: '{{_("Scan QR code to pay")}}',
                         html: qrCodeContainer.outerHTML + '<input id="verification-code" class="swal2-input" placeholder="Enter verification code">',
                         focusConfirm: false,
                         showCancelButton: true, // 显示取消按钮
@@ -595,8 +595,8 @@
                         if (result.isConfirmed) {
                             // 如果用户点击了确认并且验证码正确
                             Swal.fire({
-                                title: 'Verified!',
-                                text: 'Your order is being processed.',
+                                title: '{{_("Verified!")}}',
+                                text: '{{_("Your order is being processed")}}.',
                                 icon: 'success',
                                 timer: 1500
                             });
@@ -621,7 +621,7 @@
                 });
                 if (orderName === "" || weight === "" || type === "" || attribution === "") {
                     Swal.fire({
-                        text: "Please input all required fields except comments.",
+                        text: "{{_('Please input all required fields except comments')}}.",
                         icon: "question",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -677,7 +677,7 @@
                 if (lastInput.length !== 0 && lastInput.val().trim() === '') {
                     Swal.fire({
                         toast: true,
-                        text: "Please fill all texts.",
+                        text: "{{_("Please fill all texts")}}.",
                         icon: "error",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -744,7 +744,7 @@
                 if (!isValid) {
                     Swal.fire({
                         toast: true,
-                        text: "Please fill all information.",
+                        text: "{{_('Please fill all information')}}.",
                         icon: "error",
                         closeOnClickOutside: true,
                         closeOnEsc: true,

@@ -57,11 +57,11 @@
                 event.preventDefault();
                 Swal.fire({
                     position: 'top',
-                    title: 'Please login to use functions!',
+                    title: '{{_("Please login to use functions!")}}',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
+                    confirmButtonText: '{{_("Yes")}}',
+                    cancelButtonText: '{{_("No")}}',
                     reverseButtons: true,
                     timer: 4000,
                     timerProgressBar: true,
@@ -93,11 +93,11 @@
             // 使用 Swal 弹出确认对话框
             Swal.fire({
                 position: 'top',
-                title: 'Are you sure to logout?',
+                title: '{{_("Are you sure to logout?")}}',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
+                confirmButtonText: '{{_("Yes")}}',
+                cancelButtonText: '{{_("No")}}',
                 reverseButtons: true,
                 timer: 4000,
                 timerProgressBar: true,
@@ -114,11 +114,11 @@
             if (event.which === 27) {
                 Swal.fire({
                     position: 'top',
-                    title: 'Are you sure to logout?',
+                    title: '{{_("Are you sure to logout?")}}',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
+                    confirmButtonText: '{{_("Yes")}}',
+                    cancelButtonText: '{{_("No")}}',
                     reverseButtons: true,
                     timer: 4000,
                     timerProgressBar: true,
@@ -150,8 +150,8 @@
                     text: content,
                     icon: 'info',
                     showCancelButton: true,
-                    confirmButtonText: 'Login',
-                    cancelButtonText: 'Cancel',
+                    confirmButtonText: '{{_("Login")}}',
+                    cancelButtonText: '{{_("Cancel")}}',
                     background: swalcolor,
                     reverseButtons: true,
                 }).then((result) => {

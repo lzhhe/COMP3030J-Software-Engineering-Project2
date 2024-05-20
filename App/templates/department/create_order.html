@@ -192,7 +192,7 @@
     <script src="../../static/js/utils/swiper-bundle.min.js"></script>
     <script src="../../static/js/swiper.js"></script>
 {% endblock %}
-{% block title %}Create Order{% endblock %}
+{% block title %}{{ _("Create Order") }}{% endblock %}
 
 {% block mainBody %}
     <dialog id="createDepartment" class="pico">
@@ -253,12 +253,14 @@
             <h2>{{ _("Templates") }}</h2>
         </div>
         <div class="jiangjiechuanglimoban">
-            <p>You can choose one type of <b>waste</b>, set one <b>template name</b>, then add many
-                different <b>attributes</b> to create one <b>template</b>.
+            <p>{{ _("You can choose one type of") }} <b>{{ _("waste") }}</b>, {{ _("set one") }}
+                <b>{{ _("template name") }}</b>,
+                {{ _("then add many different") }} <b>{{ _("attributes") }}</b> {{ _("to create one") }}
+                <b>{{ _("template") }}</b>.
             </p>
-            <p>Middle area's button is to create a text, you need to type in, like CO2, SO4, if you want to
-                add a new attribution, please fill all text, or right-click to delete.
-                <br>You can select one template to create one order</p>
+            <p>{{ _("Middle area's button is to create a text, you need to type in, like CO2, SO4, if you want to
+                add a new attribution, please fill all text, or right-click to delete.") }}
+                <br>{{ _("You can select one template to create one order") }}</p>
         </div>
         <div class="chuangjianmoban">
             <div class="quyu1 pico">
@@ -464,7 +466,7 @@
                 const departmentAddress = $("#departmentAddress").val();
                 if (departmentType === undefined || departmentName === "") {
                     Swal.fire({
-                        text: "Please select a department type and enter a department name.",
+                        text: "{{ _('Please select a department type and enter a department name.') }}",
                         icon: "info",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -487,7 +489,7 @@
                         if (response.message === "successful") {
                             Swal.fire({
                                 toast: true,
-                                text: "create successful",
+                                text: "{{_('create successful')}}",
                                 icon: "success",
                                 closeOnClickOutside: true,
                                 closeOnEsc: true,
@@ -527,7 +529,7 @@
                 });
                 if (orderName === "" || weight === "" || type === "" || attribution === "") {
                     Swal.fire({
-                        text: "Please input all required fields except comments.",
+                        text: "{{_('Please input all required fields except comments.')}}",
                         icon: "question",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -553,7 +555,7 @@
                         if (response.message === "successful") {
                             Swal.fire({
                                 toast: true,
-                                text: "create successful",
+                                text: "{{_('create successful')}}",
                                 icon: "success",
                                 closeOnClickOutside: true,
                                 closeOnEsc: true,
@@ -606,7 +608,7 @@
                 if (lastInput.length !== 0 && lastInput.val().trim() === '') {
                     Swal.fire({
                         toast: true,
-                        text: "Please fill all texts.",
+                        text: "{{_('Please fill all texts.')}}",
                         icon: "error",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -673,7 +675,7 @@
                 if (!isValid) {
                     Swal.fire({
                         toast: true,
-                        text: "Please fill all information.",
+                        text: "{{_('Please fill all information.')}}",
                         icon: "error",
                         closeOnClickOutside: true,
                         closeOnEsc: true,
@@ -704,7 +706,7 @@
                             if (response.message === "successful") {
                                 Swal.fire({
                                     toast: true,
-                                    text: "create successful",
+                                    text: "{{_('create successful')}}",
                                     icon: "success",
                                     closeOnClickOutside: true,
                                     closeOnEsc: true,

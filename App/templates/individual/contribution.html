@@ -242,7 +242,7 @@
     </script>
 {% endblock %}
 {% block title %}
-    indi-contribution
+{{ _("indi-contribution") }}
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -289,10 +289,10 @@
                         <img alt="" src="../../static/image/contribution/tree3.svg"
                              style="z-index: 1;left: 3rem;top: 10rem;height: 3rem;width: 3rem">
                         <p style="z-index: 1;font-weight: 600;margin-left:16rem;font-size: 4rem; font-family: IndieFlower,sans-serif">
-                            You are planting
+                            {{ _("You are planting")}}
                             <br><b
                                 style="z-index: 1;font-size: 4.5rem; font-family: HanaleiFill,sans-serif;color: var(--sky4)">{{ waste_dict.normal.tree }}</b>
-                            trees!</p>
+                            {{ _("trees!")}}</p>
                     </div>
                     <div class="div2">
                         <img alt="" src="../../static/image/contribution/water1.png"
@@ -302,10 +302,10 @@
                         <img alt="" src="../../static/image/contribution/water3.svg"
                              style="z-index: 1;left: 3rem;top: 10rem;">
                         <p style="z-index: 1;font-weight: 500;margin-left:14rem;font-size: 3.5rem; font-family: Lobster-Regular,sans-serif">
-                            You are protecting
+                            {{ _("You are protecting")}}
                             <br><b
                                 style="z-index: 1;font-size: 4.5rem; font-family: Merienda-Regular,sans-serif;color: var(--luotianyi4)">{{ waste_dict.normal.water }}</b>
-                            kg water!</p>
+                            {{ _("kg water!")}}</p>
                     </div>
                     <div class="div3">
                         <img alt="" src="../../static/image/contribution/o21.png"
@@ -315,7 +315,7 @@
                         <img alt="" src="../../static/image/contribution/o23.png"
                              style="z-index: 1;left: 3rem;top: 10rem;height: 3rem;width: 3rem">
                         <p style="z-index: 2;font-weight: 600;margin-left:10rem;font-size: 4rem; font-family: GloriaHallelujah,sans-serif">
-                            You are purifying
+                            {{ _("You are purifying")}}
                             <br><b
                                 style="font-size: 5rem; font-family: RuslanDisplay,sans-serif;color: var(--done1)">{{ waste_dict.normal.air }}</b>
                         </p>
@@ -328,10 +328,10 @@
                         <img alt="" src="../../static/image/contribution/soil3.png"
                              style="z-index: 1;left: 4rem;top: 10rem;height: 3rem;width: 3rem">
                         <p style="z-index: 1;font-weight: 400;margin-left:16rem;font-size: 3rem; font-family: Monoton-Regular,sans-serif">
-                            You&nbsp;&nbsp;&nbsp;are&nbsp;&nbsp;&nbsp;saving
+                            {{ _("You") }}&nbsp;&nbsp;&nbsp;{{ _("are") }}&nbsp;&nbsp;&nbsp;{{ _("saving") }}
                             <br><b
                                 style="z-index: 1;font-size: 4.5rem; font-family: GloriaHallelujah,sans-serif;color: var(--skin1)">{{ waste_dict.normal.soil }}</b>
-                            &nbsp;&nbsp;&nbsp;kg&nbsp;&nbsp;&nbsp;soils!</p>
+                            &nbsp;&nbsp;&nbsp;kg&nbsp;&nbsp;&nbsp;{{ _("soils!")}}</p>
                     </div>
                     <div class="div5" style="overflow: hidden">
                         <img alt="" src="../../static/image/contribution/energy1.svg"
@@ -345,10 +345,10 @@
                         <img alt="" src="../../static/image/contribution/energy5.png"
                              style="right: 6rem;top: 7rem;">
                         <p style="font-weight: 500;margin-left:15rem;font-size: 3rem; font-family: Merienda-Regular,sans-serif">
-                            You are retrenching
+                            {{ _("You are retrenching")}}
                             <br><b
                                 style="font-size: 4rem; font-family: Merriweather,sans-serif;color: var(--sky4)">{{ waste_dict.normal.energy }}</b>
-                            J energy!</p>
+                            J {{ _("energy!")}}</p>
                     </div>
                     <div class="div6">
                         <img alt="" src="../../static/image/contribution/co21.png"
@@ -508,7 +508,7 @@
                 autoWidth: true,
                 columnDefs: [
                     {
-                        targets: [0, 1, 2, 3, 4, 5],
+                        targets: [0, 1, 2, 3, 4, 5, 6],
                         className: 'dt-head-center'
                     },
                     {
@@ -516,7 +516,7 @@
                         className: 'dt-body-left'
                     },
                     {
-                        targets: [0, 5],
+                        targets: [0, 5, 6],
                         className: 'dt-body-center'
                     },
                     {

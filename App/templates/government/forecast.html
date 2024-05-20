@@ -61,7 +61,7 @@
     </script>
 {% endblock %}
 {% block title %}
-    gov-forecast
+    {{ _("gov-forecast") }}
 {% endblock %}
 {% block content %}
     {% include 'switch2.html' %}
@@ -82,8 +82,10 @@
                     </select>
                 </div>
             </div>
-            <p>The chart below is for <i>reference only</i>. The <i>average completion duration</i> of a certain waste
-                in <b>30 days</b> is calculated and the completion period in the next <b>5 days</b> is predicted
+            <p>{{ _("The chart below is for ") }}<i>{{ _("reference only") }}</i>. {{ _("The") }} <i>{{ _("average completion
+                    duration") }}</i> {{ _("of a certain waste") }}
+                {{ _("in") }} <b>{{ _("30 days") }}</b> {{ _("is calculated and the completion period in the next") }}
+                <b>{{ _("5 days") }}</b> {{ _("is predicted") }}
             </p>
             <div id="chart1"
                  style="width: 92%; height: 30rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;
@@ -104,8 +106,11 @@ border-radius: 0.6rem; z-index: 1">
                     </select>
                 </div>
             </div>
-            <p>The chart below is for <i>reference only</i>. The <i>average completion weight</i> of a certain waste in
-                <b>30 days</b> is calculated and the completion period in the next <b>5 days</b> is predicted
+            <p>{{ _("The chart below is for ") }}<i>{{ _("reference only") }}</i>. {{ _("The") }} <i>{{ _("average completion
+                    weight")}}</i>
+                {{ _("of a certain waste in")}}
+                <b>{{ _("30 days")}}</b> {{_("is calculated and the completion period in the next")}} <b>{{ _("5 days")}}</b>
+                {{_("is predicted")}}
             </p>
             <div id="chart2"
                  style="width: 92%; height: 30rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
@@ -243,11 +248,11 @@ border-radius: 0.6rem; z-index: 1">
                     setupChart(chart1, durationDataset, durationTrend, color1, 'Duration condition', 'Date', 'Duration', key);
                 } else {
                     Swal.fire({
-                        title: 'No duration',
-                        text: 'No data for this type of waste',
+                        title: '{{_("No duration")}}',
+                        text: '{{_("No data for this type of waste")}}',
                         icon: 'warning',
                         confirmButtonColor: swalcolor,
-                        confirmButtonText: 'OK'
+                        confirmButtonText: '{{_("OK")}}'
                     });
                 }
             });
@@ -258,11 +263,11 @@ border-radius: 0.6rem; z-index: 1">
                     setupChart(chart2, weightDataset, weightTrend, color2, 'Duration condition', 'Date', 'Weight', key);
                 } else {
                     Swal.fire({
-                        title: 'No weight',
-                        text: 'No data for this type of waste',
+                        title: '{{_("No weight")}}',
+                        text: '{{_("No data for this type of waste")}}',
                         icon: 'warning',
                         confirmButtonColor: swalcolor,
-                        confirmButtonText: 'OK'
+                        confirmButtonText: '{{_("OK")}}'
                     });
                 }
             });
