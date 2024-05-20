@@ -1,4 +1,3 @@
-from copy import deepcopy
 from collections import defaultdict
 from copy import deepcopy
 from datetime import timedelta
@@ -8,7 +7,6 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from statsmodels.tsa.arima.model import ARIMA
 
-from .models import *
 from .views_utils import *
 
 government = Blueprint('government', __name__, url_prefix='/government')  # government is name of blueprint
@@ -134,7 +132,7 @@ def buildWeightDataset():
     for category in dataset:
         dataset[category].sort(key=lambda x: x[0])
 
-    print("weight dataset: ", dict(dataset))
+    # print("weight dataset: ", dict(dataset))
     return dict(dataset)
 
 
@@ -196,7 +194,7 @@ def buildTimeDataset():
 
     for category in dataset:
         dataset[category].sort(key=lambda x: x[0])
-    print("Time dataset: ", dict(dataset))
+    # print("Time dataset: ", dict(dataset))
     return dict(dataset)
 
 
@@ -238,14 +236,54 @@ def build_arima():
     weightDataset = buildWeightDataset()
     weightForecasts = forecastWeight(weightDataset)
     weightForecasts = {category: forecast for category, forecast in weightForecasts.items()}
+
     print("Weight Forecasts:", weightForecasts)
+
+    for category, data in weightDataset.items():
+        for item in data:
+            item[0] = item[0].strftime('%Y-%m-%d')
+    print("weight_dataset: ", weightDataset)
+
+    weight_trend_dict = {}
+    for category, forecast in weightForecasts.items():
+        if category not in weight_trend_dict:
+            weight_trend_dict[category] = []
+        i = 1
+        for weight_forecast in forecast:
+            weight_trend_dict[category].append(
+                [(datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d'), weight_forecast])
+            i += 1
+    print("weight_trend_forecast: ", weight_trend_dict)
 
     timeDataset = buildTimeDataset()
     timeForecasts = forecastTime(timeDataset)
     timeForecasts = {category: forecast for category, forecast in timeForecasts.items()}
+
     print("Time Forecasts:", timeForecasts)
-    return jsonify({'weight_forecasts': weightForecasts, 'time_forecasts': timeForecasts})
-    # return jsonify({'forecasts': weightForecasts})
+
+    for category, data in timeDataset.items():
+        for item in data:
+            item[0] = item[0].strftime('%Y-%m-%d')
+            if len(item[1]) != 0:
+                item[1] = sum(item[1]) / len(item[1])
+            else:
+                item[1] = 0
+    print("time_dataset: ", timeDataset)
+
+    time_trend_dict = {}
+    for category, forecast in timeForecasts.items():
+        if category not in time_trend_dict:
+            time_trend_dict[category] = []
+        i = 1
+        for time_forecast in forecast:
+            time_trend_dict[category].append(
+                [(datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d'), time_forecast])
+            i += 1
+    print("time_trend_forecast: ", time_trend_dict)
+
+    return jsonify(
+        {"weight_dataset: ": weightDataset, "time_dataset: ": timeDataset, "weight_trend_forecast: ": weight_trend_dict,
+         "time_trend_forecast: ": time_trend_dict})
 
 
 '''更改免费份额'''
