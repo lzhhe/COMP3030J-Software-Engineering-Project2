@@ -15,8 +15,8 @@ from .views_utils import utils
 HOSTNAME = "127.0.0.1"
 PORT = 3306
 USERNAME = "root"
-PASSWORD = "131a2abLZH"
-# PASSWORD = "123456"
+# PASSWORD = "131a2abLZH"
+PASSWORD = "123456"
 FLASK_DB = "waste_management"
 
 

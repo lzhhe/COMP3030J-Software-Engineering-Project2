@@ -12,7 +12,7 @@ from .models import *
 
 utils = Blueprint('utils', __name__)  # department is name of blueprint
 
-my_client = ZhipuAI(api_key='3f093e7f95656722be8262fdf323db43.PuQs4UvOcDHwDcDt')
+my_client = ZhipuAI(api_key='a1d4aa0704345924d340c472316988ee.VeAYM19flHyW545V')
 waste_types_info_zh = """
 在我们的网站上，您可以找到多种废弃物类型供您选择。选择一种废弃物类型来创建订单，我们将帮助您处理这些废弃物，让地球变得更加绿色。我们处理的废弃物包括：
 - **冶金类废物**
@@ -54,6 +54,10 @@ waste_types_info_zh = """
 5. 如果订单需要大量的处理能力，甚至超过处理能力，则不会进行处理。
 6. 对于每个订单，需要选择相应废弃物的类型和重量，以及一些特殊属性，例如二氧化碳含量等。
 7. 订单确认后，系统将对其进行智能判断，以确定是否需要更多的处理能力。
+8. 对于个人用户来说一段时间内会有一定量的免费处理份额能力，如果超出对应的能力限制就要进行扫码付费进行处理
+9. 个人用户可以查看自己对于环境的贡献，政府用户可以查看公司对于环境的优化工作
+10. 个人用户可以上传图片，通过我们公司自己的算法来识别图片中的废弃物类型，从而更加方便的创建订单
+11. 对于政府用户，我们提供了更多的数据分析功能，可以查看公司的废弃物处理情况，以及对于环境的贡献情况，包括3D中心预测，以及对未来一段时间废弃物的情况
 
 作为用户，您可以看到公司对环境的优化工作。让我们一起努力，为了地球的绿色未来！
 """
@@ -99,6 +103,10 @@ On our website, you can find a variety of waste types for you to choose from. Se
 5. If the order requires a significant amount of processing capacity, or even more than the processing capacity, it will not be processed.
 6. For each order, you need to select the type and weight of the corresponding waste, as well as some special attributes, such as carbon dioxide content, etc.
 7. After the order is confirmed, the system will make an intelligent judgment on it to determine if more processing capacity is needed.
+8. For individual users, there is a certain amount of free processing capacity for a period of time, and if it exceeds the corresponding capacity limit, it is necessary to scan the code and pay for processing
+9. Individual users can view their own contribution to the environment, and government users can view the company's environmental optimization work
+10. Individual users can upload pictures and identify the types of waste in the pictures through our company's own algorithm, so as to create orders more conveniently
+11. For government users, we provide more data analysis functions to see the company's waste treatment and contribution to the environment, including 3D center forecasts and the future of waste
 
 As a user, you can see the company's optimization of the environment. Let's work together for a greener future for the Earth!
 """
