@@ -231,7 +231,7 @@ def contribution():
 def parse_attribution(attribution_str, simple_keywords, compound_keywords):
     attribution_dict = {}
 
-    attribution_list = attribution_str[:-1].split(" ")
+    attribution_list = attribution_str.strip().split(' ')
     # print("attribution_list", attribution_list)
     for attribution in attribution_list:
         # 将化学式和百分比分开
