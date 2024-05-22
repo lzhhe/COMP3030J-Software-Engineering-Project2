@@ -188,6 +188,8 @@ def register():
     weight = data.get('weight')
     attribution = data.get('attribution')
     comment = data.get('comment', '')  # 如果没有提供，使用空字符串
+    print(data)
+    print(department_id, order_name, waste_type, weight, attribution, comment)
     # order_status = data.get('orderStatus', 'UNCONFIRMED')
 
     # 验证数据是否完整

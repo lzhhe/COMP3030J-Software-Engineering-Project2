@@ -369,7 +369,7 @@
                                 <input type="text" id="order-name" name="order-name" required>
                             </label>
                             <div class="order-choose">
-                                <details class="pico dropdown" data-value="">
+                                <details class="pico dropdown" data-value="" id="createO">
                                     <summary>{{ _("Please choose: ") }}</summary>
                                     <ul>
                                         {% for waste in wastes %}
@@ -519,7 +519,7 @@
                 const did = $('.user-department').data('did');
                 const orderName = $("#order-name").val();
                 const weight = $("#order-weight").val();
-                const type = $('.dropdown').data('value');
+                const type = $('#createO').data('value');
                 const comment = $("#order-comment").val();
                 let attribution = '';
                 document.querySelectorAll('.order-attribute').forEach(function (item) {

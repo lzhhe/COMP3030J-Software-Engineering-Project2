@@ -285,7 +285,7 @@
                         <input type="text" id="order-name" name="order-name" required>
                     </label>
                     <div class="order-choose">
-                        <details class="pico dropdown" data-value="" style="font-family: Sunflower-Medium, sans-serif">
+                        <details class="pico dropdown" id="createO" data-value="" style="font-family: Sunflower-Medium, sans-serif">
                             <summary>{{ _("Please choose one waste type: ") }}</summary>
                             <ul>
                                 {% for waste in wastes %}
@@ -610,7 +610,7 @@
                 e.preventDefault();
                 const orderName = $("#order-name").val();
                 const weight = $("#order-weight").val();
-                const type = $('.dropdown').data('value');
+                const type = $('#createO').data('value');
                 const comment = $("#order-comment").val();
                 const address = $('#order-address').val();
                 let attribution = '';
