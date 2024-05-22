@@ -4,6 +4,7 @@ from datetime import timedelta
 
 import numpy as np
 import pandas as pd
+from pmdarima import auto_arima
 from sklearn.cluster import KMeans
 from statsmodels.tsa.arima.model import ARIMA
 
@@ -139,10 +140,9 @@ def buildWeightDataset():
     return dict(dataset)
 
 
-def forecastWeight(dataset, days=5, order=(1, 1, 1)):
+def forecastWeight(dataset, days=5):
     forecasts = {}
     for category, data in dataset.items():
-        # 提取每个类别的重量和日期数据
         dates = [entry[0] for entry in data]
         weights = [entry[1] for entry in data]
         df = pd.DataFrame({'Date': dates, 'Weight': weights})
@@ -150,16 +150,13 @@ def forecastWeight(dataset, days=5, order=(1, 1, 1)):
         df['Date'] = pd.to_datetime(df['Date'])
         df.set_index('Date', inplace=True)
         df.index.freq = 'D'
-        # 应用ARIMA模型
-        model = ARIMA(df, order=order, freq='D')
 
-        fitted_model = model.fit()
+        model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore",
+                           trace=False)
 
-        # 进行预测
-        forecast = fitted_model.forecast(steps=days)
-        forecast_values = forecast.values.tolist()
-
-        forecasts[category] = forecast_values
+        fitted_model = model.fit(df)
+        forecast = fitted_model.predict(n_periods=days)
+        forecasts[category] = forecast.tolist()
 
     return forecasts
 
@@ -201,38 +198,25 @@ def buildTimeDataset():
     return dict(dataset)
 
 
-def forecastTime(dataset, days=5, order=(1, 1, 1)):
+def forecastTime(dataset, days=5):
     forecasts = {}
     for category, data in dataset.items():
-        # 提取每个类别的重量和日期数据
         dates = [entry[0] for entry in data]
-        # print(dates)
-        times = []
-        for entry in data:
-            if len(entry[1]) != 0:
-                averageTime = sum(entry[1]) / len(entry[1])
-            else:
-                averageTime = 0
-            times.append(averageTime)
-        # print(times)
+        times = [sum(entry[1]) / len(entry[1]) if len(entry[1]) != 0 else 0 for entry in data]
         df = pd.DataFrame({'Date': dates, 'Times': times})
 
         df['Date'] = pd.to_datetime(df['Date'])
         df.set_index('Date', inplace=True)
         df.index.freq = 'D'
-        # 应用ARIMA模型
-        model = ARIMA(df, order=order, freq='D')
 
-        fitted_model = model.fit()
+        model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore",
+                           trace=False)
 
-        # 进行预测
-        forecast = fitted_model.forecast(steps=days)
-        forecast_values = forecast.values.tolist()
-
-        forecasts[category] = forecast_values
+        fitted_model = model.fit(df)
+        forecast = fitted_model.predict(n_periods=days)
+        forecasts[category] = forecast.tolist()
 
     return forecasts
-
 
 @government.route('/build_arima')
 def build_arima():
