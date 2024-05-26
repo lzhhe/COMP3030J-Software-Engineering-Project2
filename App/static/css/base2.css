@@ -244,6 +244,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 20% 20%;
+    background-attachment: fixed;
     height: 100dvh;
     overflow: hidden;
     margin-bottom: 5.33rem;
