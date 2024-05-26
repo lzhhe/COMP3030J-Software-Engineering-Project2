@@ -23,7 +23,7 @@ def index():
 def create():
     api_key = "392c5833885dafa9515b33b18592414e"
     api_security = "2e288d9ae8003f33cc1b58b5fd941663"
-    bing_api = "Alq9HEx7RGafIXHgY_oQiWYC9zxJWP-TTp5KZuGetS1YmaojcXw9FSa8cv_jeIKE"
+    bing_api = "AhW0o1eP-z1W5DblVYgvO5Pp10Mh3YBqhw97xKJCMJNXJXr027Z7IQMPibvr09aA"
     wastes = None
     user = g.user
     uid = user.UID
