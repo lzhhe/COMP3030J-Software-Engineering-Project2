@@ -250,15 +250,9 @@ body {
     margin-bottom: 5.33rem;
 }
 
-:root[data-theme="dark"] .wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3); /* 半透明黑色遮罩 */
-    z-index: 1;
+:root[data-theme="dark"] .wrapper {
+    border-image-slice: fill 1;
+    border-image-source: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
 }
 
 .main {

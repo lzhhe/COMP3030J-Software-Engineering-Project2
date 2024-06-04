@@ -45,6 +45,32 @@ def statistics():
                            scatter_data=scatter_data, categories_string=categories_string)
 
 
+@government.route('/forecast')
+def forecast():
+    wasteTypes = Waste.query.all()
+    wastes = []
+    for w in wasteTypes:
+        wastes.append(w.wasteType)
+    durationDataset = buildTimeDataset('HEAVY_METAL_WASTEWATER')
+    durationForecasts = forecastTime(durationDataset)
+    durationTrendDict = {}
+    for i, value in enumerate(durationForecasts):
+        forecast_date = (datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d')
+        durationTrendDict[forecast_date] = value
+    weightDataset = buildWeightDataset('HEAVY_METAL_WASTEWATER')
+    weightForecasts = forecastWeight(weightDataset)
+
+    weightTrendDict = {}
+    for i, value in enumerate(weightForecasts):
+        forecast_date = (datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d')
+        weightTrendDict[forecast_date] = value
+
+    return render_template('government/forecast.html', wasteTypes=wastes,
+                           durationDataset=durationDataset, durationTrend=durationTrendDict,
+                           weightDataset=weightDataset,
+                           weightTrend=weightTrendDict)
+
+
 def buildKmeansDataset():
     orders = Order.query.filter(Order.orderStatus == "FINISHED").all()
     dataset = defaultdict(list)
@@ -102,6 +128,7 @@ def generate_weight_dict():
     date_dict = {current_date - timedelta(days=i): 0.0 for i in range(30)}
     return date_dict
 
+
 def buildWeightDataset(wasteType):
     thirty_days_ago = datetime.now() - timedelta(days=30)
     orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
@@ -119,6 +146,7 @@ def buildWeightDataset(wasteType):
     sorted_dateDict = OrderedDict(sorted(dateDict.items(), key=lambda x: x[0]))
     return sorted_dateDict
 
+
 def forecastWeight(dataset: dict, days=5):
     dates = [entry for entry in dataset.keys()]
     weights = [entry for entry in dataset.values()]
@@ -135,7 +163,8 @@ def forecastWeight(dataset: dict, days=5):
 
     return forecast.tolist()
 
-@government.route('/getoneforecastweight')
+
+@government.route('/getoneforecastweight/<wasteType>')
 def get_one_forecast_weight(wasteType):
     weightDataset = buildWeightDataset(wasteType)
     weightForecasts = forecastWeight(weightDataset)
@@ -145,12 +174,15 @@ def get_one_forecast_weight(wasteType):
         forecast_date = (datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d')
         weightTrendDict[forecast_date] = value
 
-    return jsonify(weightDataset=weightDataset, weightTrendDict=weightTrendDict)
+    return jsonify({'message': 'ok', 'weightDataset': weightDataset, 'weightTrend': weightTrendDict}
+                   , 200)
+
 
 def generate_time_dict():
     current_date = datetime.now().date()
     date_values = {current_date - timedelta(days=i): [] for i in range(30)}
     return date_values
+
 
 def buildTimeDataset(wasteType):
     thirty_days_ago = datetime.now() - timedelta(days=30)
@@ -160,13 +192,16 @@ def buildTimeDataset(wasteType):
     dateDict = generate_time_dict()
 
     for order in orders:
-        order_date = order.date.date()
+        order_date = order.date
         process_time = (order.finishDate - order.date).days
 
+        if order_date not in dateDict:
+            dateDict[order_date] = []
         dateDict[order_date].append(process_time)
 
     sorted_dateDict = OrderedDict(sorted(dateDict.items(), key=lambda x: x[0]))
     return sorted_dateDict
+
 
 def forecastTime(dataset, days=5):
     dates = [entry for entry in dataset.keys()]
@@ -184,7 +219,8 @@ def forecastTime(dataset, days=5):
 
     return forecast.tolist()
 
-@government.route('/getoneforecasttime')
+
+@government.route('/getoneforecasttime/<wasteType>')
 def get_one_forecast_time(wasteType):
     durationDataset = buildTimeDataset(wasteType)
     durationForecasts = forecastTime(durationDataset)
@@ -194,7 +230,8 @@ def get_one_forecast_time(wasteType):
         forecast_date = (datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d')
         durationTrendDict[forecast_date] = value
 
-    return jsonify(durationDataset=durationDataset, durationTrendDict=durationTrendDict)
+    return jsonify({'message': 'ok', 'durationDataset': durationDataset, 'durationTrend': durationTrendDict}
+                   , 200)
 
 
 '''更改免费份额'''

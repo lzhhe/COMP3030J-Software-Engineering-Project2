@@ -107,10 +107,11 @@ border-radius: 0.6rem; z-index: 1">
                 </div>
             </div>
             <p>{{ _("The chart below is for ") }}<i>{{ _("reference only") }}</i>. {{ _("The") }} <i>{{ _("average completion
-                    weight")}}</i>
-                {{ _("of a certain waste in")}}
-                <b>{{ _("30 days")}}</b> {{_("is calculated and the completion period in the next")}} <b>{{ _("5 days")}}</b>
-                {{_("is predicted")}}
+                    weight") }}</i>
+                {{ _("of a certain waste in") }}
+                <b>{{ _("30 days") }}</b> {{ _("is calculated and the completion period in the next") }}
+                <b>{{ _("5 days") }}</b>
+                {{ _("is predicted") }}
             </p>
             <div id="chart2"
                  style="width: 92%; height: 30rem; margin-bottom: 2rem;margin-left: auto;margin-right: auto;">
@@ -156,15 +157,10 @@ border-radius: 0.6rem; z-index: 1">
             let panel = rootStyle.getPropertyValue('--panel2-color').trim();
             let text = rootStyle.getPropertyValue('--dark-orange').trim();
 
-            console.log(durationDataset)
-            console.log(weightDataset)
-            console.log(durationTrend)
-            console.log(weightTrend)
-
             function setupChart(chart, dataset, trend, color, title, x, y, key) {
                 // 根据 key 提取对应的数据
-                const selectedData = dataset[key] || [];
-                const selectedTrend = trend[key] || [];
+                const selectedData = dataset || [];
+                const selectedTrend = trend || [];
                 const allDates = [...selectedData.map(item => item[0]), ...selectedTrend.map(item => item[0])];
 
                 const words = key.split('_');
@@ -244,32 +240,76 @@ border-radius: 0.6rem; z-index: 1">
 
             select1.change(function () {
                 const key = select1.val();
-                if (durationDataset[key] !== undefined) {
-                    setupChart(chart1, durationDataset, durationTrend, color1, 'Duration condition', 'Date', 'Duration', key);
-                } else {
-                    Swal.fire({
-                        title: '{{_("No duration")}}',
-                        text: '{{_("No data for this type of waste")}}',
-                        icon: 'warning',
-                        confirmButtonColor: swalcolor,
-                        confirmButtonText: '{{_("OK")}}'
-                    });
-                }
+                $.ajax({
+                    url: `/government/getoneforecastduration/${key}`,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (res) {
+                        if (res.message === 'ok') {
+                            durationDataset = res.durationDataset;
+                            durationTrend = res.durationTrend;
+                            setupChart(chart1, durationDataset, durationTrend, color1, 'Duration condition', 'Date', 'Duration', key);
+                        } else {
+                            Swal.fire({
+                                title: '{{_("No duration")}}',
+                                text: '{{_("No data for this type of waste")}}',
+                                icon: 'warning',
+                                confirmButtonColor: swalcolor,
+                                confirmButtonText: '{{_("OK")}}'
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        Swal.fire({
+                            title: 'WROTE ERROR',
+                            text: '{{_("No data for this type of waste")}}',
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            background: swalcolor,
+                        });
+                    }
+                });
             });
 
             select2.change(function () {
                 const key = select2.val();
-                if (weightDataset[key] !== undefined) {
-                    setupChart(chart2, weightDataset, weightTrend, color2, 'Duration condition', 'Date', 'Weight', key);
-                } else {
-                    Swal.fire({
-                        title: '{{_("No weight")}}',
-                        text: '{{_("No data for this type of waste")}}',
-                        icon: 'warning',
-                        confirmButtonColor: swalcolor,
-                        confirmButtonText: '{{_("OK")}}'
-                    });
-                }
+                $.ajax({
+                    url: `/government/getoneforecastweight/${key}`,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (res) {
+                        if (res.message === 'ok') {
+                            weightDataset = res.weightDataset;
+                            weightTrend = res.weightTrend;
+                            setupChart(chart2, weightDataset, weightTrend, color2, 'Weight condition', 'Date', 'Weight', key);
+                        } else {
+                            Swal.fire({
+                                title: '{{_("No weight")}}',
+                                text: '{{_("No data for this type of waste")}}',
+                                icon: 'warning',
+                                confirmButtonColor: swalcolor,
+                                confirmButtonText: '{{_("OK")}}'
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        Swal.fire({
+                            title: 'WROTE ERROR',
+                            text: '{{_("No data for this type of waste")}}',
+                            icon: "error",
+                            closeOnClickOutside: true,
+                            closeOnEsc: true,
+                            position: 'top-end',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            background: swalcolor,
+                        });
+                    }
+                });
             });
         });
     </script>
