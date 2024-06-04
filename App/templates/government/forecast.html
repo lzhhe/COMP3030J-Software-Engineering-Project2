@@ -161,8 +161,7 @@ border-radius: 0.6rem; z-index: 1">
                 // 根据 key 提取对应的数据
                 const selectedData = dataset || [];
                 const selectedTrend = trend || [];
-                const allDates = [...selectedData.map(item => item[0]), ...selectedTrend.map(item => item[0])];
-
+                const allDates = [...Object.keys(selectedData), ...Object.keys(selectedTrend)];
                 const words = key.split('_');
                 title = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 
@@ -212,8 +211,8 @@ border-radius: 0.6rem; z-index: 1">
                     series: [
                         {
                             data: allDates.map(date => {
-                                let item = selectedData.find(item => item[0] === date);
-                                return item ? [date, item[1]] : [date, null]; // 保证数据与日期对齐
+                                let value = selectedData[date];
+                                return [date, value];
                             }),
                             type: 'line',
                             symbol: 'circle',
@@ -221,8 +220,8 @@ border-radius: 0.6rem; z-index: 1">
                         },
                         {
                             data: allDates.map(date => {
-                                let item = selectedTrend.find(item => item[0] === date);
-                                return item ? [date, item[1]] : [date, null]; // 保证数据与日期对齐
+                                let value = selectedTrend[date];
+                                return [date, value];
                             }),
                             type: 'line',
                             itemStyle: {color: color}, // 突出显示的颜色
@@ -231,6 +230,7 @@ border-radius: 0.6rem; z-index: 1">
                         }
                     ]
                 };
+                chart.hideLoading();
                 chart.setOption(options, {notMerge: true});
             }
 
@@ -240,6 +240,7 @@ border-radius: 0.6rem; z-index: 1">
 
             select1.change(function () {
                 const key = select1.val();
+                chart1.showLoading();
                 $.ajax({
                     url: `/government/getoneforecastduration/${key}`,
                     type: 'GET',
@@ -250,6 +251,7 @@ border-radius: 0.6rem; z-index: 1">
                             durationTrend = res.durationTrend;
                             setupChart(chart1, durationDataset, durationTrend, color1, 'Duration condition', 'Date', 'Duration', key);
                         } else {
+                            chart1.hideLoading();
                             Swal.fire({
                                 title: '{{_("No duration")}}',
                                 text: '{{_("No data for this type of waste")}}',
@@ -260,6 +262,7 @@ border-radius: 0.6rem; z-index: 1">
                         }
                     },
                     error: function (err) {
+                        chart1.hideLoading();
                         Swal.fire({
                             title: 'WROTE ERROR',
                             text: '{{_("No data for this type of waste")}}',
@@ -277,6 +280,7 @@ border-radius: 0.6rem; z-index: 1">
 
             select2.change(function () {
                 const key = select2.val();
+                chart2.showLoading();
                 $.ajax({
                     url: `/government/getoneforecastweight/${key}`,
                     type: 'GET',
@@ -287,6 +291,7 @@ border-radius: 0.6rem; z-index: 1">
                             weightTrend = res.weightTrend;
                             setupChart(chart2, weightDataset, weightTrend, color2, 'Weight condition', 'Date', 'Weight', key);
                         } else {
+                            chart2.hideLoading();
                             Swal.fire({
                                 title: '{{_("No weight")}}',
                                 text: '{{_("No data for this type of waste")}}',
@@ -297,6 +302,7 @@ border-radius: 0.6rem; z-index: 1">
                         }
                     },
                     error: function (err) {
+                        chart2.hideLoading();
                         Swal.fire({
                             title: 'WROTE ERROR',
                             text: '{{_("No data for this type of waste")}}',
