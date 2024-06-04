@@ -1,12 +1,10 @@
-from collections import defaultdict
-from copy import deepcopy
+from collections import defaultdict, OrderedDict
 from datetime import timedelta
 
 import numpy as np
 import pandas as pd
 from pmdarima import auto_arima
 from sklearn.cluster import KMeans
-from statsmodels.tsa.arima.model import ARIMA
 
 from .views_utils import *
 
@@ -47,18 +45,6 @@ def statistics():
                            scatter_data=scatter_data, categories_string=categories_string)
 
 
-@government.route('/forecast')
-def forecast():
-    wasteTypes = Waste.query.all()
-    wastes = []
-    for w in wasteTypes:
-        wastes.append(w.wasteType)
-    weightDataset, durationDataset, weightTrend, durationTrend = build_arima()
-    return render_template('government/forecast.html', wasteTypes=wastes,
-                           durationDataset=durationDataset, durationTrend=durationTrend, weightDataset=weightDataset,
-                           weightTrend=weightTrend)
-
-
 def buildKmeansDataset():
     orders = Order.query.filter(Order.orderStatus == "FINISHED").all()
     dataset = defaultdict(list)
@@ -96,171 +82,119 @@ def TypeKmeansCenter(dataset, k=1):  # 聚类中心为1
 
 @government.route('/build_kmeans')
 def build_kmeans():
+    start_time1 = time.time()
     dataset = buildKmeansDataset()
+    start_time2 = time.time()
     centers = TypeKmeansCenter(dataset)
+    start_time3 = time.time()
     centers = {category: center.tolist() for category, center in centers.items()}
+    start_time4 = time.time()
+    print("build dataset time", start_time2 - start_time1)
+    print("kmeans calculation time", start_time3 - start_time2)
+    print("index time", start_time4 - start_time3)
+    print("total time", start_time4 - start_time1)
     print("KMeans Centers:", centers)
     return centers
 
 
-def generate_array():
+def generate_weight_dict():
     current_date = datetime.now().date()
-    date_values = [[current_date - timedelta(days=i), 0.0] for i in range(30)]
-    return date_values
+    date_dict = {current_date - timedelta(days=i): 0.0 for i in range(30)}
+    return date_dict
 
-
-def buildWeightDataset():
-    # 获取最近30天内的订单数据
+def buildWeightDataset(wasteType):
     thirty_days_ago = datetime.now() - timedelta(days=30)
-    orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.date >= thirty_days_ago).all()
-    dataset = defaultdict(list)
-    dateList = generate_array()  # [date, 0]
+    orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
+                                Order.date >= thirty_days_ago).all()
 
-    # 构建每个类别的时间序列
+    dateDict = generate_weight_dict()
+
     for order in orders:
-        waste_type_name = order.wasteType.name
         multiplier = order.multiplier
-        weight = float(order.weight * multiplier)  # 将重量转换为float类型，乘以倍率
-        order_date = order.date
+        weight = float(order.weight * multiplier)
+        order_date = order.date.date()
 
-        # 检查废物类型是否在数据集中，如果不在，则初始化为 dateList
-        if waste_type_name not in dataset:
-            dataset[waste_type_name] = deepcopy(dateList)  # 深拷贝 dateList
+        dateDict[order_date] = dateDict.get(order_date, 0) + weight
 
-        for entry in dataset[waste_type_name]:
-            if entry[0] == order_date:
-                entry[1] = entry[1] + weight
-                break
+    sorted_dateDict = OrderedDict(sorted(dateDict.items(), key=lambda x: x[0]))
+    return sorted_dateDict
 
-    # 对每个类别的数据按日期进行排序
-    for category in dataset:
-        dataset[category].sort(key=lambda x: x[0])
+def forecastWeight(dataset: dict, days=5):
+    dates = [entry for entry in dataset.keys()]
+    weights = [entry for entry in dataset.values()]
+    df = pd.DataFrame({'Date': dates, 'Weight': weights})
 
-    # print("weight dataset: ", dict(dataset))
-    return dict(dataset)
+    df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date', inplace=True)
+    df.index.freq = 'D'
 
+    model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore", trace=False)
 
-def forecastWeight(dataset, days=5):
-    forecasts = {}
-    for category, data in dataset.items():
-        dates = [entry[0] for entry in data]
-        weights = [entry[1] for entry in data]
-        df = pd.DataFrame({'Date': dates, 'Weight': weights})
+    fitted_model = model.fit(df)
+    forecast = fitted_model.predict(n_periods=days)
 
-        df['Date'] = pd.to_datetime(df['Date'])
-        df.set_index('Date', inplace=True)
-        df.index.freq = 'D'
+    return forecast.tolist()
 
-        model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore",
-                           trace=False)
+@government.route('/getoneforecastweight')
+def get_one_forecast_weight(wasteType):
+    weightDataset = buildWeightDataset(wasteType)
+    weightForecasts = forecastWeight(weightDataset)
 
-        fitted_model = model.fit(df)
-        forecast = fitted_model.predict(n_periods=days)
-        forecasts[category] = forecast.tolist()
+    weightTrendDict = {}
+    for i, value in enumerate(weightForecasts):
+        forecast_date = (datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d')
+        weightTrendDict[forecast_date] = value
 
-    return forecasts
+    return jsonify(weightDataset=weightDataset, weightTrendDict=weightTrendDict)
 
-
-def generate_time_array():
+def generate_time_dict():
     current_date = datetime.now().date()
-    date_values = [[current_date - timedelta(days=i), []] for i in range(30)]
+    date_values = {current_date - timedelta(days=i): [] for i in range(30)}
     return date_values
 
-
-def buildTimeDataset():
-    # 获取最近30天内的订单数据
+def buildTimeDataset(wasteType):
     thirty_days_ago = datetime.now() - timedelta(days=30)
-    orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.date >= thirty_days_ago).all()
-    dataset = defaultdict(list)
-    dateList = generate_time_array()  # [date, []]
+    orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
+                                Order.date >= thirty_days_ago).all()
 
-    # 构建每个类别的时间序列
+    dateDict = generate_time_dict()
+
     for order in orders:
-        waste_type_name = order.wasteType.name
-        order_date = order.date
-        process_time = (order.finishDate - order.date).days  # 计算处理时间（天）
+        order_date = order.date.date()
+        process_time = (order.finishDate - order.date).days
 
-        # 检查废物类型是否在数据集中，如果不在，则初始化为 dateList
-        if waste_type_name not in dataset:
-            dataset[waste_type_name] = deepcopy(dateList)  # 深拷贝 dateList
+        dateDict[order_date].append(process_time)
 
-        # print("category: ", waste_type_name)
-        for entry in dataset[waste_type_name]:
-            if entry[0] == order_date:
-                # print("category: ", waste_type_name, " date: ", order_date, " process time: ", process_time)
-                entry[1].append(process_time)
-                # print(entry)
-                break
-
-    for category in dataset:
-        dataset[category].sort(key=lambda x: x[0])
-    # print("Time dataset: ", dict(dataset))
-    return dict(dataset)
-
+    sorted_dateDict = OrderedDict(sorted(dateDict.items(), key=lambda x: x[0]))
+    return sorted_dateDict
 
 def forecastTime(dataset, days=5):
-    forecasts = {}
-    for category, data in dataset.items():
-        dates = [entry[0] for entry in data]
-        times = [sum(entry[1]) / len(entry[1]) if len(entry[1]) != 0 else 0 for entry in data]
-        df = pd.DataFrame({'Date': dates, 'Times': times})
+    dates = [entry for entry in dataset.keys()]
+    times = [sum(entry) / len(entry) if len(entry) != 0 else 0 for entry in dataset.values()]
+    df = pd.DataFrame({'Date': dates, 'Times': times})
 
-        df['Date'] = pd.to_datetime(df['Date'])
-        df.set_index('Date', inplace=True)
-        df.index.freq = 'D'
+    df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date', inplace=True)
+    df.index.freq = 'D'
 
-        model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore",
-                           trace=False)
+    model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore", trace=False)
 
-        fitted_model = model.fit(df)
-        forecast = fitted_model.predict(n_periods=days)
-        forecasts[category] = forecast.tolist()
+    fitted_model = model.fit(df)
+    forecast = fitted_model.predict(n_periods=days)
 
-    return forecasts
+    return forecast.tolist()
 
-@government.route('/build_arima')
-def build_arima():
-    weightDataset = buildWeightDataset()
-    weightForecasts = forecastWeight(weightDataset)
-    weightForecasts = {category: forecast for category, forecast in weightForecasts.items()}
+@government.route('/getoneforecasttime')
+def get_one_forecast_time(wasteType):
+    durationDataset = buildTimeDataset(wasteType)
+    durationForecasts = forecastTime(durationDataset)
 
-    for category, data in weightDataset.items():
-        for item in data:
-            item[0] = item[0].strftime('%Y-%m-%d')
+    durationTrendDict = {}
+    for i, value in enumerate(durationForecasts):
+        forecast_date = (datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d')
+        durationTrendDict[forecast_date] = value
 
-    weight_trend_dict = {}
-    for category, forecast in weightForecasts.items():
-        if category not in weight_trend_dict:
-            weight_trend_dict[category] = []
-        i = 1
-        for weight_forecast in forecast:
-            weight_trend_dict[category].append(
-                [(datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d'), weight_forecast])
-            i += 1
-
-    timeDataset = buildTimeDataset()
-    timeForecasts = forecastTime(timeDataset)
-    timeForecasts = {category: forecast for category, forecast in timeForecasts.items()}
-
-    for category, data in timeDataset.items():
-        for item in data:
-            item[0] = item[0].strftime('%Y-%m-%d')
-            if len(item[1]) != 0:
-                item[1] = sum(item[1]) / len(item[1])
-            else:
-                item[1] = 0
-
-    time_trend_dict = {}
-    for category, forecast in timeForecasts.items():
-        if category not in time_trend_dict:
-            time_trend_dict[category] = []
-        i = 1
-        for time_forecast in forecast:
-            time_trend_dict[category].append(
-                [(datetime.now().date() + timedelta(days=i)).strftime('%Y-%m-%d'), time_forecast])
-            i += 1
-
-    return weightDataset, timeDataset, weight_trend_dict, time_trend_dict
+    return jsonify(durationDataset=durationDataset, durationTrendDict=durationTrendDict)
 
 
 '''更改免费份额'''
