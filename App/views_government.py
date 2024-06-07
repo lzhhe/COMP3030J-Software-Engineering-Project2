@@ -1,4 +1,4 @@
-from collections import defaultdict, OrderedDict
+from collections import defaultdict
 from datetime import timedelta
 
 import numpy as np
@@ -24,7 +24,7 @@ def free_p():
 
 @government.route('statistics')
 def statistics():
-    today = datetime.now()
+    today = datetime(2024, 6, 15).date()
     last_year_today = today - timedelta(days=365)
     orders = Order.query.filter(Order.date.between(last_year_today, today)).all()
     daily_weight = {}
@@ -112,7 +112,7 @@ def forecast():
     durationForecasts = forecastTime(durationDataset)
     durationTrendDict = {}
     for i, value in enumerate(durationForecasts):
-        forecast_date = (datetime.now().date() + timedelta(days=i+1)).strftime('%Y-%m-%d')
+        forecast_date = (datetime.now().date() + timedelta(days=i + 1)).strftime('%Y-%m-%d')
         forecast_date = str(forecast_date)
         durationTrendDict[forecast_date] = value
 
@@ -125,7 +125,7 @@ def forecast():
 
     weightTrendDict = {}
     for i, value in enumerate(weightForecasts):
-        forecast_date = (datetime.now().date() + timedelta(days=i+1)).strftime('%Y-%m-%d')
+        forecast_date = (datetime.now().date() + timedelta(days=i + 1)).strftime('%Y-%m-%d')
         forecast_date = str(forecast_date)
         weightTrendDict[forecast_date] = value
 
@@ -142,9 +142,9 @@ def generate_weight_dict():
 
 
 def buildWeightDataset(wasteType):
-    thirty_days_ago = datetime.now() - timedelta(days=30)
+    thirty_days_ago = datetime.now().date() - timedelta(days=30)
     orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
-                                Order.date >= thirty_days_ago, Order.date < datetime.now()).all()
+                                Order.date >= thirty_days_ago, Order.date <= datetime.now().date()).all()
 
     dateDict = generate_weight_dict()
 
@@ -173,6 +173,8 @@ def forecastWeight(dataset: dict, days=5):
     fitted_model = model.fit(df)
     forecast = fitted_model.predict(n_periods=days)
 
+    forecast = np.maximum(forecast, 0)
+
     return forecast.tolist()
 
 
@@ -187,7 +189,7 @@ def get_one_forecast_weight(wasteType):
 
     weightTrendDict = {}
     for i, value in enumerate(weightForecasts):
-        forecast_date = (datetime.now().date() + timedelta(days=i+1)).strftime('%Y-%m-%d')
+        forecast_date = (datetime.now().date() + timedelta(days=i + 1)).strftime('%Y-%m-%d')
         forecast_date = str(forecast_date)
         weightTrendDict[forecast_date] = value
     print(w)
@@ -197,14 +199,15 @@ def get_one_forecast_weight(wasteType):
 
 def generate_time_dict():
     current_date = datetime.now().date()
+    # current_date = datetime(2024, 6, 15).date()
     date_values = {current_date - timedelta(days=i): [] for i in range(30)}
     return date_values
 
 
 def buildTimeDataset(wasteType):
-    thirty_days_ago = datetime.now() - timedelta(days=30)
+    thirty_days_ago = datetime.now().date() - timedelta(days=30)
     orders = Order.query.filter(Order.orderStatus == "FINISHED", Order.wasteType == wasteType,
-                                Order.date >= thirty_days_ago, Order.date < datetime.now() ).all()
+                                Order.date >= thirty_days_ago, Order.date <= datetime.now().date()).all()
 
     dateDict = generate_time_dict()
 
@@ -223,18 +226,21 @@ def buildTimeDataset(wasteType):
 def forecastTime(dataset, days=5):
     dates = [entry for entry in dataset.keys()]
     times = [sum(entry) / len(entry) if len(entry) != 0 else 0 for entry in dataset.values()]
-    # print(dates)
-    # print(times)
     df = pd.DataFrame({'Date': dates, 'Times': times})
 
     df['Date'] = pd.to_datetime(df['Date'])
     df.set_index('Date', inplace=True)
     df = df.asfreq('D')  # 强制频率为日
 
-    model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore", trace=False)
+    # 修改模型参数以更好地捕捉数据的波动
+    model = auto_arima(df, seasonal=True, m=7, stepwise=True, suppress_warnings=True,
+                       error_action="ignore", trace=True, information_criterion='aic',
+                       start_p=1, start_q=1, max_p=3, max_q=3, d=None)
 
     fitted_model = model.fit(df)
     forecast = fitted_model.predict(n_periods=days)
+
+    forecast = np.maximum(forecast, 0)
 
     return forecast.tolist()
 
@@ -249,7 +255,7 @@ def get_one_forecast_time(wasteType):
     durationForecasts = forecastTime(durationDataset)
     durationTrendDict = {}
     for i, value in enumerate(durationForecasts):
-        forecast_date = (datetime.now().date() + timedelta(days=i+1)).strftime('%Y-%m-%d')
+        forecast_date = (datetime.now().date() + timedelta(days=i + 1)).strftime('%Y-%m-%d')
         forecast_date = str(forecast_date)
         durationTrendDict[forecast_date] = value
 
@@ -288,7 +294,7 @@ def adjust_free_proportion():
 
 @government.route('/update_free_proportion')
 def update_free_proportion_monthly():
-    current_date = datetime.now()
+    current_date = datetime.now().date()
     if current_date.day == 1:
         renew_free_capacity()
 
