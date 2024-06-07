@@ -285,7 +285,7 @@ def analyze_image():
 
 
 def perform_analysis(image):
-    model = YOLO("App/best.pt")
+    model = YOLO("best.pt")
 
     # 对传入的图像进行预测
     results = model.predict(image)
